@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="winter">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta property="og:title" content="Josué Leiva | Telematics Engineering">
+        <meta property="og:description" content="System-focused Telematics Engineering student specializing in backend architecture, distributed systems, and real-time telemetry.">
+        <meta property="og:type" content="website">
+        <title>Josué Leiva | Telematics Engineering</title>
+        <link rel="stylesheet" href="./main.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+        <style>
+            #bgCanvas {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                pointer-events: none;
+                opacity: 0.9;
+            }
+            body{
+                position: relative;
+            }
+        </style>
+    </head>
+    <body class="min-h-screen bg-base-100 text-base-content">
+
+        <canvas id="bgCanvas"></canvas>
+
+        <div class="container mx-auto px-4 py-12 max-w-4xl">
+            <header class="mb-16">
+                <h1 class="text-5xl font-bold mb-4">Josué Leiva</h1>
+                <div class="flex items-center gap-2 mb-4">
+                    <span class="relative flex h-3 w-3">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-success opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-3 w-3 bg-success"></span>
+                    </span>
+                    <p class="text-lg opacity-80">System: Online | Telematics Engineering Student</p>
+                </div>
+                <div class="mt-6 flex gap-4">
+                    <a href="https://github.com/not-four13r" class="btn btn-primary btn-sm">GitHub</a>
+                    <a href="https://linkedin.com/in/josuenicolas" class="btn btn-outline btn-sm">LinkedIn</a>
+                    <a href="#" class="btn btn-ghost btn-sm">Download CV</a>
+                </div>
+            </header>
+
+            <section class="mb-12">
+                <h2 class="text-2xl font-semibold mb-6 border-b-2 border-primary/20 pb-2">Technical Strengths</h2>
+                <div class="flex flex-wrap gap-2">
+                    <span class="badge badge-primary badge-outline">Python</span>
+                    <span class="badge badge-primary badge-outline">C++</span>
+                    <span class="badge badge-primary badge-outline">SQL/PostgreSQL</span>
+                    <span class="badge badge-primary badge-outline">Django</span>
+                    <span class="badge badge-primary badge-outline">Docker</span>
+                    <span class="badge badge-primary badge-outline">Linux</span>
+                    <span class="badge badge-primary badge-outline">System Architecture</span>
+                    <span class="badge badge-primary badge-outline">Computer Networks</span>
+                </div>
+            </section>
+
+            <section class="mb-12">
+                <h2 class="text-2xl font-semibold mb-6 border-b-2 border-primary/20 pb-2">Active Lab</h2>
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div class="card bg-base-200 border-l-4 border-secondary p-4">
+                        <h3 class="font-bold">Mastering Django</h3>
+                        <p class="text-sm opacity-70">Ongoing development of Proyecto SOS's web.</p>
+                    </div>
+                    <div class="card bg-base-200 border-l-4 border-primary p-4">
+                        <h3 class="font-bold">Learning Track</h3>
+                        <p class="text-sm opacity-70">Deepening Java & Spring Boot for enterprise-grade backend development.</p>
+                    </div>
+                    <div class="card bg-base-200 border-l-4 border-secondary p-4">
+                        <h3 class="font-bold">Next Project</h3>
+                        <p class="text-sm opacity-70">Developing a distributed telemetry monitor using Dockerized microservices.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="mb-12">
+                <h2 class="text-2xl font-semibold mb-6 border-b-2 border-primary/20 pb-2">Projects <span class="font-bold text-sm">(Not course projects)</span></h2>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="card bg-base-200 shadow-sm">
+                        <div class="card-body">
+                            <h3 class="card-title">WebSOS <a href="https://www.proyectosos.cl" target="_blank" class="font-bold text-accent ">(Link)</a></h3>
+                            <p class="text-sm opacity-70">Full-Stack System Architecture (Django/PostgreSQL)</p>
+                            <p class="mt-2 text-sm">Institutional process management platform with focus on data consistency and hierarchy automation.</p>
+                        </div>
+                    </div>
+                    <div class="card bg-base-200 shadow-sm">
+                        <div class="card-body">
+                            <h3 class="card-title">Plazas Inteligentes</h3>
+                            <p class="text-sm opacity-70">Distributed Urban Telemetry (C++/Python)</p>
+                            <p class="mt-2 text-sm">High-availability telemetry pipeline for Raspberry Pi 5, processing urban sensor data for cloud sync.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <footer class="footer footer-center p-10 text-base-content opacity-50">
+            <div>
+                <p>Built with Tailwind + DaisyUI | <a href="https://github.com/n0t-f0ur13r/n0t-f0ur13r.github.io" class="link">Source Code</a></p>
+                <p>Copyright © 2026 - Josué Leiva</p>
+            </div>
+        </footer>
+
+        <script>
+            let scene, camera, renderer, particles;
+
+            function init() {
+                scene = new THREE.Scene();
+                camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+                renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('bgCanvas'), alpha: true });
+                renderer.setSize(window.innerWidth, window.innerHeight);
+
+                const geometry = new THREE.BufferGeometry();
+                const vertices = [];
+                for (let i = 0; i < 2000; i++) {
+                    vertices.push(Math.random() * 2000 - 1000, Math.random() * 2000 - 1000, Math.random() * 2000 - 1000);
+                }
+                geometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
+                const material = new THREE.PointsMaterial({ color: 0x3b82f6, size: 2 });
+                particles = new THREE.Points(geometry, material);
+                scene.add(particles);
+
+                camera.position.z = 500;
+            }
+
+            function animate() {
+                requestAnimationFrame(animate);
+                particles.rotation.x += 0.0002;
+                particles.rotation.y += 0.0005;
+                renderer.render(scene, camera);
+            }
+
+            window.addEventListener('resize', () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            });
+
+            init();
+            animate();
+        </script>
+    </body>
+</html>
