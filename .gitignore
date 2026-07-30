@@ -4,3 +4,4 @@
 *.synctex.gz
 package-lock.json
 node_modules/
+djangoPortfolio/.env
