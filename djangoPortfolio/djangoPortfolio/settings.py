@@ -11,13 +11,9 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
 from email.policy import default
-
-import environ
-
-env = environ.Env()
-environ.Env.read_env()
-
 from pathlib import Path
+
+from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -27,12 +23,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = env("SECRET_KEY", default="unsafe-M0YO4O$!n7V6^x&5*9sY7nP8NAGlV7")
+SECRET_KEY = config("SECRET_KEY", default="unsafe-M0YO4O$!n7V6^x&5*9sY7nP8NAGlV7")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1']
+ALLOWED_HOSTS = ['127.0.0.1', 'josnic.cl']
 
 
 # Application definition
@@ -83,11 +79,11 @@ WSGI_APPLICATION = "djangoPortfolio.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": env("POSTGRES_DB"),
-        "USER": env("POSTGRES_USER"),
-        "PASSWORD": env("POSTGRES_PASSWORD"),
-        "HOST": "host",
-        "PORT": 5432
+        "NAME": config("POSTGRES_DB"),
+        "USER": config("POSTGRES_USER"),
+        "PASSWORD": config("POSTGRES_PASSWORD"),
+        "HOST": config("POSTGRES_HOST"),
+        "PORT": config("POSTGRES_PORT", default="5432")
     }
 }
 
