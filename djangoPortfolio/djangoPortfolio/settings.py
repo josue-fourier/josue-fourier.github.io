@@ -126,3 +126,16 @@ STATIC_ROOT = BASE_DIR / "staticfiles"
 STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
+
+# settings.py
+
+# Add your exact domain(s) using HTTPS
+CSRF_TRUSTED_ORIGINS = [
+    'https://www.josnic.cl',
+    'https://josnic.cl',
+]
+
+# Tell Django to trust the X-Forwarded-Proto header sent by Nginx/Cloudflare
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+USE_X_FORWARDED_HOST = True
+USE_X_FORWARDED_PORT = True
