@@ -1,5 +1,4 @@
 node_modules/
 .hugo_build.lock
-cv.pdf
 package-lock.json
 package.json
