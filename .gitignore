@@ -4,6 +4,6 @@
 *.synctex.gz
 package-lock.json
 node_modules/
-djangoPortfolio/.env
+.env
 djangoPortfolio/portfolio/__pycache__/
 djangoPortfolio/djangoPortfolio/__pycache__/
