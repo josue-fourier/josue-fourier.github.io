@@ -20,6 +20,6 @@ from django.urls import path
 from portfolio import views as portfolio_views
 
 urlpatterns = [
-    path("admin/", admin.site.urls),
+    path("brutally-amazing-portfolio/", admin.site.urls),
     path("", portfolio_views.RootPage.as_view(), name="root")
 ]
