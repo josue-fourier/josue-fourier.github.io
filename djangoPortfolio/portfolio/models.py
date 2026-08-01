@@ -6,7 +6,7 @@ class Project(models.Model):
     active = models.BooleanField(default=False)
     description = models.CharField(null=False, max_length=200)
     stack = models.CharField(null=False, max_length=100)
-    link = models.URLField(null=True)
+    link = models.URLField(null=True, blank=True)
 
     def __str__ (self):
         return f"Project {self.name}. Active? {self.active}"
