@@ -34,6 +34,7 @@ ALLOWED_HOSTS = ['127.0.0.1', 'josnic.cl', 'www.josnic.cl']
 # Application definition
 
 INSTALLED_APPS = [
+    'modeltranslation',
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
