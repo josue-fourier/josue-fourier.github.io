@@ -2,7 +2,7 @@ from django.db import models
 
 
 class TechnicalStrength(models.Model):
-    technology = models.CharField(null=False, max_length=50)
+    technology = models.CharField(null=False, max_length=50, unique=True)
 
     def __str__ (self):
         return self.technology
@@ -11,7 +11,7 @@ class TechnicalStrength(models.Model):
 class Project(models.Model):
     name = models.CharField(null=False, max_length=100)
     active = models.BooleanField(default=False)
-    description = models.CharField(null=False, max_length=200)
+    description = models.TextField(null=False)
     stack = models.ManyToManyField(TechnicalStrength, related_name="projects", related_query_name="project")
     link = models.URLField(null=True, blank=True)
 

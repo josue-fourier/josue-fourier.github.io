@@ -10,7 +10,7 @@ class RootPage (TemplateView):
 
         context = super().get_context_data(**kwargs)
 
-        context["projects"] = Project.objects.filter(active=True)
+        context["projects"] = Project.objects.filter(active=True).prefetch_related("stack")
         context["technical_strengths"] = TechnicalStrength.objects.all()
 
         return context
