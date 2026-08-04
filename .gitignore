@@ -6,4 +6,5 @@ package-lock.json
 node_modules/
 .env
 djangoPortfolio/portfolio/__pycache__/
+djangoPortfolio/portfolio/migrations/__pycache__/
 djangoPortfolio/djangoPortfolio/__pycache__/
