@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Retail Logistics: Knapsack Optimizer</title>
+
+        {% load static %}
+        <!-- Existing Static CSS -->
+        <link rel="stylesheet" href="{% static 'portfolio/main.css' %}">
+
+    <!-- HTMX via CDN -->
+        <script src="https://unpkg.com/htmx.org@1.9.11"></script>
+    <!-- Phosphor Icons -->
+        <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+        <style>
+        /* Smooth transitions for the progress bars */
+            progress {
+                transition: value 0.5s ease-in-out;
+            }
+
+        /* Custom scrollbar for the table */
+            .custom-scrollbar::-webkit-scrollbar {
+                width: 6px;
+            }
+            .custom-scrollbar::-webkit-scrollbar-track {
+                background: #1f2937; /* Tailwind gray-800 */
+            }
+            .custom-scrollbar::-webkit-scrollbar-thumb {
+                background: #4b5563; /* Tailwind gray-600 */
+                border-radius: 4px;
+            }
+            .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+                background: #6b7280; /* Tailwind gray-500 */
+            }
+        </style>
+    </head>
+    <body class="bg-base-300 min-h-screen font-sans text-base-content selection:bg-primary selection:text-primary-content">
+
+    <!-- Navbar -->
+        <div class="navbar bg-base-100 shadow-xl border-b border-base-200">
+            <div class="flex-1">
+                <a class="btn btn-ghost text-xl gap-2 normal-case">
+                    <i class="ph ph-package text-primary text-2xl"></i>
+                    <span class="font-bold tracking-tight">LogiOptima</span>
+                    <span class="font-light text-base-content/60 hidden sm:inline">| B2B Fleet Manager</span>
+                </a>
+            </div>
+            <div class="flex-none gap-2">
+                <div class="dropdown dropdown-end">
+                    <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar placeholder">
+                        <div class="bg-neutral text-neutral-content rounded-full w-10">
+                            <span class="text-xs">MGR</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    <!-- Main Content -->
+        <div class="container mx-auto p-4 lg:p-8 max-w-7xl">
+
+        <!-- Header Section -->
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
+                <div>
+                    <h1 class="text-3xl font-bold text-base-content flex items-center gap-3">
+                        <i class="ph ph-truck text-secondary"></i>
+                        Dispatch Optimizer
+                    </h1>
+                    <p class="text-base-content/70 mt-1">Maximize cargo value within physical truck limits.</p>
+                </div>
+
+                <div class="stats shadow bg-base-100 border border-base-200">
+                    <div class="stat px-4 py-2">
+                        <div class="stat-title text-xs">Algorithm</div>
+                        <div class="stat-value text-lg text-primary">Dynamic Prog.</div>
+                        <div class="stat-desc">0/1 Knapsack</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+            <!-- LEFT PANEL: Configuration & Available Packages -->
+                <div class="lg:col-span-5 flex flex-col gap-6">
+
+                <!-- Truck Configuration Card -->
+                    <div class="card bg-base-100 shadow-lg border border-base-200">
+                        <div class="card-body p-6">
+                            <h2 class="card-title text-lg mb-4 border-b border-base-200 pb-2">
+                                <i class="ph ph-sliders"></i>
+                                Truck Capacity Limits
+                            </h2>
+
+                            <form id="optimizer-form" hx-post="/optimize/" hx-target="#results-container" hx-indicator="#loading-indicator">
+
+                            <!-- Range Slider for Max Weight -->
+                                <div class="form-control w-full mb-4">
+                                    <label class="label pb-1">
+                                        <span class="label-text font-medium text-base-content/80">Max Weight Capacity (kg)</span>
+                                        <span class="label-text-alt font-mono text-primary font-bold" id="weightVal">1000</span>
+                                    </label>
+                                    <input type="range" name="max_weight" min="100" max="2000" value="1000" class="range range-primary range-sm" oninput="document.getElementById('weightVal').innerText = this.value" />
+                                    <div class="w-full flex justify-between text-xs px-2 mt-1 text-base-content/50">
+                                        <span>100</span>
+                                        <span>2000</span>
+                                    </div>
+                                </div>
+
+                            <!-- Note: Real knapsack usually takes 1 constraint. We will use Weight for the classic 0/1 knapsack algorithm, but show Volume in UI for realism. -->
+                            <!-- To keep the math exact for the classic problem, we optimize based purely on weight capacity vs value. -->
+
+                                <div class="alert alert-info bg-info/10 text-info border-info/20 text-sm mt-4">
+                                    <i class="ph ph-info text-xl shrink-0"></i>
+                                    <span>The algorithm will select the exact combination of packages that yields the highest total value without exceeding the weight limit.</span>
+                                </div>
+
+                                <div class="mt-6 flex gap-2">
+                                    <button type="button" class="btn btn-neutral flex-1" onclick="generateRandomPackages()">
+                                        <i class="ph ph-arrows-clockwise"></i>
+                                        Regenerate Cargo
+                                    </button>
+                                    <button type="submit" class="btn btn-primary flex-1 shadow-lg shadow-primary/30">
+                                        <i class="ph ph-magic-wand"></i>
+                                        Optimize Load
+                                    </button>
+                                </div>
+
+                            <!-- Hidden input to store generated packages JSON -->
+                                <input type="hidden" name="packages_data" id="packages_data_input">
+                            </form>
+                        </div>
+                    </div>
+
+                <!-- Available Packages Table -->
+                    <div class="card bg-base-100 shadow-lg border border-base-200 flex-grow flex flex-col h-[500px]">
+                        <div class="card-body p-0 flex flex-col h-full">
+                            <div class="p-4 border-b border-base-200 flex justify-between items-center bg-base-200/50">
+                                <h2 class="card-title text-sm m-0">
+                                    <i class="ph ph-boxes"></i>
+                                    Pending in Warehouse
+                                </h2>
+                                <span class="badge badge-sm badge-neutral" id="total-pkg-count">0 items</span>
+                            </div>
+
+                            <div class="overflow-x-auto overflow-y-auto custom-scrollbar flex-grow p-0">
+                                <table class="table table-xs table-pin-rows table-pin-cols w-full">
+                                    <thead>
+                                        <tr class="bg-base-200 text-base-content/70">
+                                            <th>ID</th>
+                                            <th>Type</th>
+                                            <th class="text-right">Weight</th>
+                                            <th class="text-right">Value</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="packages-table-body" class="font-mono text-xs">
+                                    <!-- Populated by JS -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            <!-- RIGHT PANEL: Live Results & Truck Visualization -->
+                <div class="lg:col-span-7 flex flex-col gap-6">
+
+                <!-- Loading Indicator -->
+                    <div id="loading-indicator" class="htmx-indicator w-full h-full flex items-center justify-center min-h-[400px] bg-base-100 rounded-2xl border border-base-200 shadow-lg">
+                        <div class="flex flex-col items-center gap-4 text-primary">
+                            <span class="loading loading-bars loading-lg"></span>
+                            <p class="font-mono text-sm animate-pulse text-base-content/70">Calculating optimal matrix...</p>
+                        </div>
+                    </div>
+
+                <!-- HTMX Target Container -->
+                    <div id="results-container" class="h-full flex flex-col gap-6 transition-all duration-300">
+
+                    <!-- Initial Empty State -->
+                        <div class="card bg-base-100 shadow-lg border border-base-200 h-full min-h-[600px] flex items-center justify-center p-8 text-center border-dashed">
+                            <div class="max-w-md">
+                                <div class="w-24 h-24 bg-base-200 rounded-full flex items-center justify-center mx-auto mb-6 text-base-content/30">
+                                    <i class="ph ph-truck text-5xl"></i>
+                                </div>
+                                <h3 class="text-xl font-bold mb-2">Truck is Empty</h3>
+                                <p class="text-base-content/60 text-sm">Configure your limits and click "Optimize Load" to run the dynamic programming algorithm. The system will find the mathematically perfect combination of packages.</p>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    <!--
+        ========================================================================
+        MOCK DJANGO BACKEND SCRIPT
+        ========================================================================
+        This script intercepts the HTMX request to simulate a Django backend
+        processing the 0/1 Knapsack problem. In a real app, this logic lives
+        in views.py.
+    -->
+        <script>
+        // --- 1. Package Generation Logic ---
+            const packageTypes = [
+                { name: "Electronics", valRange: [100, 800], wtRange: [5, 40], icon: "ph-desktop" },
+                { name: "Apparel", valRange: [20, 150], wtRange: [1, 10], icon: "ph-t-shirt" },
+                { name: "Home Goods", valRange: [50, 300], wtRange: [10, 60], icon: "ph-armchair" },
+                { name: "Industrial", valRange: [200, 1200], wtRange: [50, 200], icon: "ph-engine" },
+                { name: "Medical", valRange: [500, 2000], wtRange: [2, 15], icon: "ph-first-aid" }
+            ];
+
+            let currentPackages = [];
+
+            function getRandomInt(min, max) {
+                return Math.floor(Math.random() * (max - min + 1)) + min;
+            }
+
+            function generateRandomPackages() {
+                const count = getRandomInt(20, 35); // Generate between 20 and 35 packages
+                currentPackages = [];
+
+                for (let i = 1; i <= count; i++) {
+                    const type = packageTypes[getRandomInt(0, packageTypes.length - 1)];
+                    const weight = getRandomInt(type.wtRange[0], type.wtRange[1]);
+                    const value = getRandomInt(type.valRange[0], type.valRange[1]);
+
+                // Add an arbitrary "Urgent" flag for visual realism (though classic knapsack uses value/weight)
+                    const isUrgent = Math.random() > 0.85;
+
+                    currentPackages.push({
+                        id: `PKG-${1000 + i}`,
+                        category: type.name,
+                        icon: type.icon,
+                        weight: weight,
+                        value: value,
+                        urgent: isUrgent
+                    });
+                }
+
+                renderPackagesTable();
+            // Store as stringified JSON in the hidden input for the "form submit"
+                document.getElementById('packages_data_input').value = JSON.stringify(currentPackages);
+
+            // Reset results view if it exists
+                const resultsContainer = document.getElementById('results-container');
+                resultsContainer.innerHTML = `
+                <div class="card bg-base-100 shadow-lg border border-base-200 h-full min-h-[600px] flex items-center justify-center p-8 text-center border-dashed">
+                    <div class="max-w-md">
+                        <div class="w-24 h-24 bg-base-200 rounded-full flex items-center justify-center mx-auto mb-6 text-base-content/30">
+                            <i class="ph ph-truck text-5xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">Warehouse Updated</h3>
+                        <p class="text-base-content/60 text-sm">New cargo generated. Run optimizer to load truck.</p>
+                    </div>
+                </div>
+            `;
+            }
+
+            function renderPackagesTable() {
+                const tbody = document.getElementById('packages-table-body');
+                document.getElementById('total-pkg-count').innerText = `${currentPackages.length} items`;
+
+                tbody.innerHTML = currentPackages.map(pkg => `
+                <tr class="hover:bg-base-200/50 transition-colors">
+                    <td>
+                        <div class="flex items-center gap-2">
+                            ${pkg.urgent ? '<div class="w-2 h-2 rounded-full bg-error animate-pulse" title="Urgent"></div>' : '<div class="w-2 h-2 rounded-full bg-base-300"></div>'}
+                            <span class="text-base-content/70">${pkg.id}</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="flex items-center gap-2">
+                            <i class="ph ${pkg.icon} text-base-content/50"></i>
+                            <span class="truncate max-w-[80px] block" title="${pkg.category}">${pkg.category}</span>
+                        </div>
+                    </td>
+                    <td class="text-right">${pkg.weight} kg</td>
+                    <td class="text-right text-success font-medium">$${pkg.value}</td>
+                </tr>
+            `).join('');
+            }
+
+        // Initialize on load
+            document.addEventListener('DOMContentLoaded', () => {
+                generateRandomPackages();
+            });
+
+        // --- 2. The 0/1 Knapsack Algorithm (Simulating Django View) ---
+        // In a real scenario, this would be in views.py
+            function solveKnapsack(capacity, items) {
+                const n = items.length;
+            // Create 2D DP array initialized to 0
+                const dp = Array(n + 1).fill(0).map(() => Array(capacity + 1).fill(0));
+
+            // Build table dp[][] in bottom-up manner
+                for (let i = 1; i <= n; i++) {
+                    const currentWeight = items[i - 1].weight;
+                    const currentValue = items[i - 1].value;
+
+                    for (let w = 1; w <= capacity; w++) {
+                        if (currentWeight <= w) {
+                            dp[i][w] = Math.max(
+                                currentValue + dp[i - 1][w - currentWeight],
+                                dp[i - 1][w]
+                            );
+                        } else {
+                            dp[i][w] = dp[i - 1][w];
+                        }
+                    }
+                }
+
+            // The maximum value is at dp[n][capacity]
+                const maxValue = dp[n][capacity];
+
+            // Backtrack to find which items were selected
+                let res = maxValue;
+                let w = capacity;
+                const selectedItems = [];
+
+                for (let i = n; i > 0 && res > 0; i--) {
+                // If value came from the row above, item wasn't included
+                    if (res === dp[i - 1][w]) {
+                        continue;
+                    } else {
+                    // Item was included
+                        const item = items[i - 1];
+                        selectedItems.push(item);
+                        res -= item.value;
+                        w -= item.weight;
+                    }
+                }
+
+                return {
+                    maxValue: maxValue,
+                    selectedItems: selectedItems,
+                    totalWeightUsed: capacity - w
+                };
+            }
+
+        // --- 3. HTMX Interceptor ---
+            document.addEventListener('htmx:beforeSend', function(evt) {
+            // Intercept the specific POST request to /optimize/
+                if (evt.detail.requestConfig.path === '/optimize/') {
+                    evt.preventDefault(); // Stop HTMX from making a real network call
+
+                // Show indicator manually since we prevented default
+                    document.getElementById('loading-indicator').classList.add('htmx-request');
+                    document.getElementById('results-container').classList.add('hidden');
+
+                // Simulate network latency & Python processing time (1.5s)
+                    setTimeout(() => {
+                        const formData = new FormData(evt.detail.elt);
+                        const capacity = parseInt(formData.get('max_weight'), 10);
+                        const packagesJson = formData.get('packages_data');
+
+                        if(!packagesJson) {
+                            alert("No packages generated!");
+                            return;
+                        }
+
+                        const items = JSON.parse(packagesJson);
+
+                    // --- RUN ALGORITHM ---
+                        const result = solveKnapsack(capacity, items);
+
+                    // Prepare data for rendering
+                        const totalAvailableValue = items.reduce((sum, item) => sum + item.value, 0);
+                        const totalAvailableWeight = items.reduce((sum, item) => sum + item.weight, 0);
+
+                        const weightPct = Math.round((result.totalWeightUsed / capacity) * 100);
+                        const valuePct = Math.round((result.maxValue / totalAvailableValue) * 100);
+
+                    // Determine progress bar color based on utilization
+                        let progressColor = "progress-success";
+                        if (weightPct < 70) progressColor = "progress-warning";
+                        if (weightPct < 40) progressColor = "progress-error";
+
+                    // --- GENERATE HTML RESPONSE (Simulating Django Template Rendering) ---
+                        const htmlResponse = `
+                        <!-- KPIs -->
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="stat bg-base-100 shadow border border-base-200 rounded-box">
+                                <div class="stat-figure text-primary">
+                                    <i class="ph ph-currency-dollar text-3xl"></i>
+                                </div>
+                                <div class="stat-title">Maximized Value</div>
+                                <div class="stat-value text-primary">$${result.maxValue.toLocaleString()}</div>
+                                <div class="stat-desc text-success flex items-center gap-1">
+                                    <i class="ph ph-trend-up"></i>
+                                    Captures ${valuePct}% of total warehouse value
+                                </div>
+                            </div>
+
+                            <div class="stat bg-base-100 shadow border border-base-200 rounded-box">
+                                <div class="stat-figure ${weightPct > 90 ? 'text-success' : 'text-warning'}">
+                                    <i class="ph ph-scales text-3xl"></i>
+                                </div>
+                                <div class="stat-title">Weight Utilization</div>
+                                <div class="stat-value">${result.totalWeightUsed} <span class="text-sm text-base-content/50">/ ${capacity} kg</span></div>
+                                <div class="stat-desc">
+                                    <progress class="progress ${progressColor} w-full mt-2" value="${weightPct}" max="100"></progress>
+                                    <div class="mt-1 text-right">${weightPct}% Full</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Truck Visualization -->
+                        <div class="card bg-base-100 shadow border border-base-200">
+                            <div class="card-body p-5">
+                                <div class="flex justify-between items-center mb-4">
+                                    <h3 class="font-bold flex items-center gap-2">
+                                        <i class="ph ph-truck text-lg text-base-content/70"></i>
+                                        Cargo Manifest
+                                    </h3>
+                                    <div class="badge badge-primary badge-outline">${result.selectedItems.length} items loaded</div>
+                                </div>
+
+                                <!-- Visual abstract representation of packages -->
+                                <div class="bg-base-200 rounded-lg p-4 border border-base-300 min-h-[120px] flex flex-wrap gap-2 content-start shadow-inner">
+                                    ${result.selectedItems.length > 0 ?
+                                        result.selectedItems.map(item => `
+                        <div class="tooltip tooltip-primary tooltip-top" data-tip="${item.id} | $${item.value} | ${item.weight}kg">
+                        <div class="flex items-center justify-center bg-primary text-primary-content text-xs font-mono rounded shadow-sm hover:scale-105 transition-transform cursor-help border border-primary-content/20"
+                        style="width: ${Math.max(40, (item.weight / capacity) * 500)}px; height: ${Math.max(30, (item.value / 2000) * 60)}px; min-width: 40px;">
+                        ${item.urgent ? '<i class="ph-fill ph-warning-circle text-[10px] mr-1 text-warning"></i>' : ''}
+                        </div>
+                        </div>
+                        `).join('')
+                                        : '<div class="w-full text-center text-base-content/50 italic py-8">Truck is empty (Capacity too low)</div>'
+                                    }
+                                </div>
+                                <div class="text-xs text-center mt-2 text-base-content/50 flex justify-center items-center gap-2">
+                                    <i class="ph ph-info"></i> Box width represents relative weight. Height represents relative value.
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Loaded Items Table -->
+                        <div class="card bg-base-100 shadow border border-base-200 flex-grow">
+                            <div class="overflow-x-auto h-[250px] custom-scrollbar rounded-box">
+                                <table class="table table-sm table-pin-rows">
+                                    <thead>
+                                        <tr class="bg-base-200">
+                                            <th>Package ID</th>
+                                            <th>Category</th>
+                                            <th class="text-right">Weight (kg)</th>
+                                            <th class="text-right">Value ($)</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="font-mono text-sm">
+                                        ${result.selectedItems.map(item => `
+                        <tr>
+                        <td>
+                        <span class="badge ${item.urgent ? 'badge-error badge-outline' : 'badge-ghost'} badge-sm font-mono mr-2">
+                        ${item.id}
+                        </span>
+                        </td>
+                        <td>${item.category}</td>
+                        <td class="text-right text-base-content/70">${item.weight}</td>
+                        <td class="text-right text-success font-semibold">${item.value}</td>
+                        </tr>
+                        `).join('')}
+                                    </tbody>
+                                    <tfoot>
+                                        <tr class="bg-base-200/50 font-bold">
+                                            <td colspan="2" class="text-right">TOTAL LOADED:</td>
+                                            <td class="text-right">${result.totalWeightUsed} kg</td>
+                                            <td class="text-right text-primary">$${result.maxValue}</td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    `;
+
+                    // Hide indicator, show results, insert HTML
+                        document.getElementById('loading-indicator').classList.remove('htmx-request');
+                        const resultsContainer = document.getElementById('results-container');
+                        resultsContainer.innerHTML = htmlResponse;
+                        resultsContainer.classList.remove('hidden');
+
+                    }, 1200); // 1.2 second simulated delay
+                }
+            });
+        </script>
+    </body>
+</html>

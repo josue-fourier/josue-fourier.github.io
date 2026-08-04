@@ -23,6 +23,7 @@ from portfolio import views as portfolio_views
 urlpatterns = [
     path("brutally-amazing-portfolio/", admin.site.urls),
     path("i18n/", include("django.conf.urls.i18n")),
+    path("logistica/", include("logisticaApp.urls"), name="logistica"),
 ]
 
 urlpatterns += i18n_patterns(
