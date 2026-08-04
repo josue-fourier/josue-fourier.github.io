@@ -9,7 +9,7 @@ class Project(models.Model):
     link = models.URLField(null=True, blank=True)
 
     def __str__ (self):
-        return f"Project {self.name}. Active? {self.active}"
+        return f"Project {self.name}"
 
 class TechnicalStrength(models.Model):
     technology = models.CharField(null=False, max_length=50)

@@ -1,4 +1,5 @@
 {% load static %}
+{% load i18n %}
 <!DOCTYPE html>
 <html lang="en" data-theme="forest">
     <head>
@@ -177,6 +178,43 @@
         <div class="noise-overlay"></div>
         <div id="cursor"></div>
 
+        <!-- Language Selector (Fixed Top Right) -->
+        <div class="fixed top-6 right-6 z-[9500] dropdown dropdown-end interactive-element">
+            <!-- Dropdown Trigger Button -->
+            <div tabindex="0" role="button" class="glass-panel px-4 py-2 flex items-center gap-2 font-mono text-xs text-gray-300 hover:text-white transition-colors">
+                <!-- Globe Icon -->
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-brand-primary">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="2" y1="12" x2="22" y2="12"></line>
+                    <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                </svg>
+                {% get_current_language as LANGUAGE_CODE %}
+                <span class="uppercase">{{ LANGUAGE_CODE }}</span>
+                <!-- Chevron Down -->
+                <svg width="10" height="10" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" class="opacity-50">
+                    <path d="M3.5 5.25L7 8.75L10.5 5.25" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </div>
+
+            <!-- Django Form / Dropdown Menu -->
+            <form action="{% url 'set_language' %}" method="post" tabindex="0" class="dropdown-content z-[1] menu p-2 shadow-2xl bg-[#0a0e17]/95 backdrop-blur-2xl border border-white/10 rounded-2xl w-44 mt-3">
+                {% csrf_token %}
+                <input name="next" type="hidden" value="{{ redirect_to }}">
+                {% get_available_languages as LANGUAGES %}
+                {% get_language_info_list for LANGUAGES as languages %}
+
+                <ul class="flex flex-col gap-1 m-0 p-0">
+                    {% for language in languages %}
+                        <li class="m-0 p-0 list-none">
+                            <button type="submit" name="language" value="{{ language.code }}" class="flex items-center w-full px-3 py-2.5 rounded-xl font-mono text-xs transition-all duration-200 cursor-pointer {% if language.code == LANGUAGE_CODE %}bg-brand-primary/10 text-brand-primary font-bold{% else %}text-gray-400 hover:text-white hover:bg-white/5{% endif %}">
+                                {{ language.name_local|title }} ({{ language.code }})
+                            </button>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </form>
+        </div>
+
         <canvas id="bgCanvas"></canvas>
         <div class="ambient-orb orb-1"></div>
         <div class="ambient-orb orb-2"></div>
@@ -191,7 +229,7 @@
                             <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-primary opacity-75"></span>
                             <span class="relative inline-flex rounded-full h-2 w-2 bg-brand-primary"></span>
                         </span>
-                        System: Online // Availability: Open
+                        {% translate "System: Online // Availability: Open" %}
                     </p>
                 </div>
 
@@ -202,7 +240,7 @@
                 <div class="grid grid-cols-1 md:grid-cols-12 gap-8 mt-12 w-full">
                     <div class="md:col-span-5 md:col-start-8 gsap-reveal">
                         <p class="text-xl text-gray-400 font-light leading-relaxed mb-10">
-                            Telematics Engineering student specializing in <strong class="text-white font-medium">backend architecture</strong>, <strong class="text-white font-medium">distributed systems</strong>, and <strong class="text-white font-medium">real-time telemetry</strong>. Bridging hardware communication with scalable software infrastructure.
+                            {% translate "Telematics Engineering student specializing in" %} <strong class="text-white font-medium">{% translate "backend architecture" %}</strong>, <strong class="text-white font-medium">{% translate "distributed systems" %}</strong>, {% translate "and" %} <strong class="text-white font-medium">{% translate "real-time telemetry" %}</strong>.
                         </p>
 
                         <div class="flex flex-wrap gap-6 items-center">
@@ -218,7 +256,7 @@
                             </div>
                             <div class="magnetic-wrap">
                                 <a href="/cv" class="btn-magnetic font-mono text-sm !border-brand-primary !text-brand-primary hover:!text-black interactive-element">
-                                    Download_CV.pdf
+                                    {% translate "Download_CV.pdf" %}
                                 </a>
                             </div>
                         </div>
@@ -228,12 +266,11 @@
 
             <section class="py-24 section-gsap">
                 <div class="flex items-center gap-6 mb-12 gsap-reveal">
-                    <h2 class="text-4xl md:text-5xl font-display font-medium text-white">Technical Architecture</h2>
+                    <h2 class="text-4xl md:text-5xl font-display font-medium text-white">{% translate "Technical Architecture" %}</h2>
                     <div class="h-px flex-grow bg-gradient-to-r from-white/20 to-transparent"></div>
                 </div>
 
                 <div class="flex flex-wrap gap-3 gsap-stagger-container">
-                    <!-- DJANGO INTEGRATION: Technical Strengths -->
                     {% for strength in technical_strengths %}
                         <div class="gsap-stagger-item px-5 py-3 rounded-full border border-white/10 bg-white/5 backdrop-blur-md text-gray-300 font-mono text-sm hover:border-brand-primary/50 hover:text-white transition-colors duration-300 cursor-default interactive-element">
                             {{ strength.technology }}
@@ -245,8 +282,8 @@
             <section class="py-24 section-gsap">
                 <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16 gsap-reveal">
                     <div>
-                        <h2 class="text-4xl md:text-5xl font-display font-medium text-white mb-4">Independent Systems</h2>
-                        <p class="text-brand-primary font-mono text-sm">NOT_COURSE_PROJECTS // ACTIVE_WORK</p>
+                        <h2 class="text-4xl md:text-5xl font-display font-medium text-white mb-4">{% translate "Independent Systems" %}</h2>
+                        <p class="text-brand-primary font-mono text-sm">{% translate "NOT_COURSE_PROJECTS // ACTIVE_WORK" %}</p>
                     </div>
                 </div>
 
@@ -294,7 +331,7 @@
                 <div class="flex gap-6">
                     <a href="https://github.com/josue-fourier" class="hover:text-brand-primary transition-colors interactive-element">[ SOURCE ]</a>
                     <span class="text-gray-700">JOSUE LEIVA</span>
-                    <span class="text-gray-700">Frontend created thanks to Gemini</span>
+                    <span class="text-gray-700">{% translate "Frontend created thanks to Gemini" %}</span>
                 </div>
             </div>
         </footer>

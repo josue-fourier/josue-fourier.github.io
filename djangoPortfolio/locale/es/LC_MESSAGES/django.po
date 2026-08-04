@@ -1,0 +1,71 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-08-03 22:54-0400\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: djangoPortfolio/settings.py:117
+msgid "Spanish"
+msgstr "Español"
+
+#: djangoPortfolio/settings.py:118
+msgid "English"
+msgstr "Inglés"
+
+#: portfolio/templates/portfolio/index.html:195
+msgid "System: Online // Availability: Open"
+msgstr "Sistema: En Línea // Disponibilidad: Abierto"
+
+#: portfolio/templates/portfolio/index.html:206
+msgid "Telematics Engineering student specializing in"
+msgstr "Estudiante de Ingeniería Civil Telemática especializándose en"
+
+#: portfolio/templates/portfolio/index.html:206
+msgid "backend architecture"
+msgstr "arquitectura backend"
+
+#: portfolio/templates/portfolio/index.html:206
+msgid "distributed systems"
+msgstr "sistemas distribuidos"
+
+#: portfolio/templates/portfolio/index.html:206
+msgid "and"
+msgstr "y"
+
+#: portfolio/templates/portfolio/index.html:206
+msgid "real-time telemetry"
+msgstr "telemetría en tiempo real"
+
+#: portfolio/templates/portfolio/index.html:222
+msgid "Download_CV.pdf"
+msgstr "Descargar_CV.pdf"
+
+#: portfolio/templates/portfolio/index.html:232
+msgid "Technical Architecture"
+msgstr "Arquitectura Técnica"
+
+#: portfolio/templates/portfolio/index.html:248
+msgid "Independent Systems"
+msgstr "Sistemas Independientes"
+
+#: portfolio/templates/portfolio/index.html:249
+msgid "NOT_COURSE_PROJECTS // ACTIVE_WORK"
+msgstr "PROYECTOS_NO_UNIVERSITARIOS // TRABAJO_ACTIVO"
+
+#: portfolio/templates/portfolio/index.html:297
+msgid "Frontend created thanks to Gemini"
+msgstr "Frontend creado gracias a Gemini"
