@@ -6,7 +6,7 @@
 
 /* 3. Import and configure the daisyUI plugin */
 @plugin "daisyui" {
-    themes: forest --default;
+    themes: forest --default, dark;
 }
 
 /* 4. Define your custom theme variables */
