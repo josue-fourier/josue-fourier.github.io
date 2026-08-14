@@ -5,6 +5,7 @@ Acknowledgments: https://josnic.cl
 # Policies and Guidelines
 # -----------------------
 # Hiring: I am currently unable to hire, but any and all help is welcome and greatly appreciated.
+# Bounty/Payment: I am currently unable to provide financial compensation or bug bounties in honor of security work done. However, I will consider such actions in the future whenever I am able to do so.
 # Acknowledgments: Acknowledgments will be added to the josnic.cl webpage at the appropriate time for valid reports.
 # Disclosure Policy: Please do not disclose any security issues publicly until I explicitly state that the issue has been fixed.
 # Proof of Concept: All reports must include a Proof of Concept (PoC) with clear, step-by-step instructions to reproduce the failure.
