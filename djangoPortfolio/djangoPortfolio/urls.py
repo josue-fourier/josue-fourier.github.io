@@ -24,6 +24,9 @@ from portfolio import views as portfolio_views
 urlpatterns = [
     path(config("ADMIN_URL", default="brutally-amazing-portfolio/"), admin.site.urls),
     path("i18n/", include("django.conf.urls.i18n")),
+    path("logging/", portfolio_views.LoggingView.as_view()),
+    path("api/logs/<uuid:log_id>", portfolio_views.single_log, name="single_log"),
+    path("api/logs/list", portfolio_views.log_list, name="log_list")
 ]
 
 urlpatterns += i18n_patterns(

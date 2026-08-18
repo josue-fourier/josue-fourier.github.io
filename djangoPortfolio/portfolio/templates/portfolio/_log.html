@@ -1,0 +1,24 @@
+<header class="mb-8 border-b border-black/5 pb-6">
+    <div class="flex items-center gap-3 mb-4">
+        <span class="px-2 py-1 bg-brand-primary/10 text-[var(--brand-primary)] font-bold text-xs font-mono rounded border border-[var(--brand-primary)]">
+            {{ log.project.name|default:"System" }}
+        </span>
+        <span class="text-xs font-mono text-slate-500 font-medium">{{ log.date|date:"Y-m-d" }}</span>
+    </div>
+    <h1 class="text-3xl lg:text-4xl font-bold text-slate-900 mb-4">{{ log.title }}</h1>
+    
+    {% if log.stack.all %}
+    <div class="flex flex-wrap gap-2">
+        {% for tech in log.stack.all %}
+        <span class="px-3 py-1 bg-white text-slate-700 text-xs font-mono rounded-full border border-slate-200 shadow-sm font-medium">
+            {{ tech.technology }}
+        </span>
+        {% endfor %}
+    </div>
+    {% endif %}
+</header>
+<div class="markdown-body">
+    <!-- Note: Make sure to parse log.content into HTML in your Django view using a library like 'markdown' 
+         before passing it to the template, or use a custom template filter. -->
+    {{ log.html_content|default:log.content|safe }}
+</div>

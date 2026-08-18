@@ -1,0 +1,31 @@
+{% for log in page_obj %}
+<button class="log-item glass-panel hud-border p-4 rounded-lg text-left w-full lg:w-[280px] flex flex-col gap-2 {% if forloop.first and not page_obj.has_previous %}active{% endif %}"
+        hx-get="{% url 'single_log' log.id %}"
+        hx-target="#log-content-area"
+        hx-swap="innerHTML">
+        
+    <div class="flex justify-between items-start w-full">
+        <span class="text-[10px] font-mono text-[var(--brand-primary)] font-bold">{{ log.date|date:"Y-m-d" }}</span>
+        <span class="text-[10px] font-mono text-slate-500 bg-slate-100 px-2 py-0.5 rounded">{{ log.project.name|default:"System" }}</span>
+    </div>
+    
+    <h3 class="text-sm font-bold text-slate-900 line-clamp-2 mt-1">{{ log.title }}</h3>
+    
+    {% if log.stack.all %}
+    <div class="flex gap-2 mt-2">
+        {% for tech in log.stack.all|slice:":2" %}
+            <span class="text-[9px] font-mono text-slate-500 border border-slate-200 bg-white/50 px-1 rounded shadow-sm">{{ tech.technology }}</span>
+        {% endfor %}
+    </div>
+    {% endif %}
+</button>
+{% endfor %}
+
+<!-- Infinite Scroll Trigger for the next page -->
+{% if page_obj.has_next %}
+<div hx-get="{% url 'log_list' %}?page={{ page_obj.next_page_number }}" 
+     hx-trigger="revealed" 
+     hx-swap="outerHTML">
+     <div class="w-4 h-4 border-2 border-brand-primary border-t-transparent rounded-full animate-spin mx-auto mt-8 mb-8"></div>
+</div>
+{% endif %}

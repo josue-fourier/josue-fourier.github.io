@@ -1,3 +1,5 @@
+import uuid
+
 from django.db import models
 
 
@@ -17,3 +19,16 @@ class Project(models.Model):
 
     def __str__ (self):
         return f"Project {self.name}"
+
+
+class LogEntry(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    title = models.CharField(null=False, blank=False, max_length=200)
+    date = models.DateField(auto_now_add=True, null=False)
+    content = models.TextField(null=False, blank=False)
+
+    project = models.ForeignKey(Project, on_delete=models.SET_NULL, null=True)
+    stack = models.ManyToManyField(TechnicalStrength, related_name="logs", related_query_name="log")
+
+    def __str__(self):
+        return f"Log {self.title}"

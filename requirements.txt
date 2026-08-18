@@ -3,3 +3,4 @@ python-decouple>=3.8
 psycopg==3.3.4
 gunicorn==26.0.0
 django-modeltranslation==0.20.3
+markdown==3.10.3
