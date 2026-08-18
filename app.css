@@ -6,7 +6,7 @@
 
 /* 3. Import and configure the daisyUI plugin */
 @plugin "daisyui" {
-    themes: forest --default, dark;
+    themes: lofi --default, light;
 }
 
 /* 4. Define your custom theme variables */
@@ -21,8 +21,8 @@
     --font-info: "Miranda Sans", sans-serif;
 
     /* Custom color utilities (creates class="text-brand-primary", class="bg-brand-dark", etc.) */
-    --color-brand-dark: #050505;
-    --color-brand-primary: #2dd4bf;
-    /* Teal for telematics/tech vibe */
-    --color-brand-accent: #3b82f6;
+    --color-brand-dark: #f8fafc;
+    --color-brand-primary: #0d9488;
+    /* Teal for telematics/tech vibe (darker for light mode readability) */
+    --color-brand-accent: #2563eb;
 }

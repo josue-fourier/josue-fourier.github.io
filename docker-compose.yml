@@ -2,7 +2,7 @@ services:
   db:
     image: postgres:15-alpine
     ports:
-      - 54321:5432
+      - 5432:5432
     restart: unless-stopped
     environment:
       - POSTGRES_USER
