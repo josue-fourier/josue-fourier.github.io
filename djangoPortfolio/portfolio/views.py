@@ -1,8 +1,9 @@
 from typing import override
 
 from django.core.paginator import Paginator
-from django.http import HttpResponse, Http404
-from django.shortcuts import render, get_object_or_404
+from django.db.models import Count, F
+from django.http import Http404, HttpResponse
+from django.shortcuts import get_object_or_404, render
 from django.views.generic import TemplateView
 
 from .models import LogEntry, Project, TechnicalStrength
@@ -15,8 +16,10 @@ class RootPage (TemplateView):
 
         context = super().get_context_data(**kwargs)
 
-        context["projects"] = Project.objects.filter(active=True).prefetch_related("stack")
-        context["technical_strengths"] = TechnicalStrength.objects.all()
+        context["projects"] = Project.objects.filter(active=True).prefetch_related("stack").annotate(stack_count=Count("stack")).order_by("-stack_count")
+        context["technical_strengths"] = TechnicalStrength.objects.all().annotate(project_count=Count("project")).filter(project_count__gt=0).order_by("-project_count")
+        context["latest_logs"] = LogEntry.objects.defer("content").select_related("project").prefetch_related("stack").order_by("-date")[:3]
+        context["total_projects"] = Project.objects.count()
 
         return context
 
@@ -28,11 +31,12 @@ class LoggingView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        log_list = LogEntry.objects.select_related('project').prefetch_related('stack').order_by('-date')
+        log_list = LogEntry.objects.defer('content').select_related('project').prefetch_related('stack').order_by('-date')
         paginator = Paginator(log_list, 10)
         context["page_obj"] = paginator.get_page(1)
         context["log_count"] = LogEntry.objects.count()
-        
+        context["target_log_id"] = self.request.GET.get('log_id')
+
         return context
 
 
@@ -40,7 +44,7 @@ def single_log(request, log_id):
     if request.method == "GET":
         import markdown
         log = get_object_or_404(LogEntry.objects.select_related('project').prefetch_related('stack'), id=log_id)
-        
+
         # Parse markdown to HTML
         log.html_content = markdown.markdown(log.content, extensions=['fenced_code', 'tables'])
 
@@ -59,7 +63,7 @@ def single_log(request, log_id):
 
 def log_list(request):
     if request.method == "GET":
-        queryset = LogEntry.objects.select_related('project').prefetch_related('stack').order_by('-date')
+        queryset = LogEntry.objects.defer('content').select_related('project').prefetch_related('stack').order_by('-date')
         paginator = Paginator(queryset, 10)
 
         page_number = request.GET.get("page")

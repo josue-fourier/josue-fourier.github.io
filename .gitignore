@@ -8,3 +8,4 @@ node_modules/
 djangoPortfolio/*/__pycache__/
 djangoPortfolio/*/migrations/__pycache__/
 djangoPortfolio/*/__pycache__/
+djangoPortfolio/*/templatetags/__pycache__/

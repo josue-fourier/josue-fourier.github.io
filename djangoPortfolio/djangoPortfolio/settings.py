@@ -28,7 +28,7 @@ SECRET_KEY = config("SECRET_KEY", default="unsafe-M0YO4O$!n7V6^x&5*9sY7nP8NAGlV7
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config("DEBUG", default=False, cast=bool)
 
-ALLOWED_HOSTS = ['127.0.0.1', 'josnic.cl', 'www.josnic.cl']
+ALLOWED_HOSTS = ['127.0.0.1', 'josnic.cl', 'www.josnic.cl', '192.168.1.105']
 
 
 # Application definition

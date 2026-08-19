@@ -90,6 +90,16 @@
         }
         .hud-border::before { top: -1px; left: -1px; border-width: 1px 0 0 1px; }
         .hud-border::after { bottom: -1px; right: -1px; border-width: 0 1px 1px 0; }
+        
+        .htmx-indicator {
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.15s ease-out;
+        }
+        .htmx-request .htmx-indicator,
+        .htmx-request.htmx-indicator {
+            opacity: 1;
+        }
         .hud-border:hover::before, .hud-border:hover::after {
             width: 12px; height: 12px;
             border-width: 2px;
@@ -103,7 +113,7 @@
                 display: flex;
                 align-items: center;
                 justify-content: flex-start;
-                padding-left: 2rem;
+                padding-left: 3.5rem;
             }
             .log-item {
                 position: absolute;
@@ -138,19 +148,65 @@
                 display: flex;
                 overflow-x: auto;
                 scroll-snap-type: x mandatory;
-                gap: 1rem;
-                padding: 1rem;
+                gap: 2rem;
+                padding: 2rem;
                 scrollbar-width: none;
+                position: relative;
             }
             #log-nav::-webkit-scrollbar { display: none; }
             .log-item {
                 flex: 0 0 85%;
                 scroll-snap-align: center;
                 transition: all 0.3s ease;
+                position: relative !important;
+                transform: none !important;
+                opacity: 1 !important;
+                pointer-events: auto !important;
+                left: auto !important;
+                top: auto !important;
             }
             .log-item.active {
                 border-color: rgba(13, 148, 136, 0.6);
                 background: rgba(13, 148, 136, 0.05);
+            }
+
+            /* Mobile Connecting Splines */
+            .log-item::after {
+                content: '';
+                position: absolute;
+                top: 50%;
+                left: 100%;
+                width: 2rem; /* Covers the flex gap */
+                height: 20px;
+                opacity: 0.2;
+                transform: translateY(-50%);
+                background-size: 100% 100%;
+                background-repeat: no-repeat;
+                transition: opacity 0.3s ease, filter 0.3s ease;
+            }
+            
+            .log-item:nth-child(4n+1)::after {
+                background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='20' viewBox='0 0 32 20' preserveAspectRatio='none'%3E%3Cpath d='M0,10 C10,0 22,0 32,10' stroke='%230d9488' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
+            }
+            .log-item:nth-child(4n+2)::after {
+                background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='20' viewBox='0 0 32 20' preserveAspectRatio='none'%3E%3Cpath d='M0,10 C10,20 22,20 32,10' stroke='%230d9488' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
+            }
+            .log-item:nth-child(4n+3)::after {
+                background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='20' viewBox='0 0 32 20' preserveAspectRatio='none'%3E%3Cpath d='M0,10 C10,0 22,20 32,10' stroke='%230d9488' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
+            }
+            .log-item:nth-child(4n+0)::after {
+                background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='20' viewBox='0 0 32 20' preserveAspectRatio='none'%3E%3Cpath d='M0,10 C10,20 22,0 32,10' stroke='%230d9488' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
+            }
+
+            /* Hide splines for the last item */
+            .log-item:last-child::after {
+                display: none;
+            }
+            
+            /* Enhance active state splines */
+            .log-item.active::after {
+                opacity: 0.8;
+                filter: drop-shadow(0 0 2px var(--brand-primary));
             }
         }
         
@@ -218,6 +274,26 @@
             border: 1px solid rgba(0,0,0,0.05);
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
         }
+        
+        /* Custom HUD Scrollbar */
+        .custom-scrollbar {
+            overflow-x: hidden;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: rgba(13, 148, 136, 0.05);
+            border-left: 1px solid rgba(13, 148, 136, 0.1);
+            border-radius: 0 8px 8px 0;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background-color: var(--brand-primary);
+            border-radius: 8px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background-color: #0f766e;
+        }
     </style>
 </head>
 <body class="min-h-screen selection:bg-brand-primary selection:text-white text-slate-800">
@@ -247,17 +323,41 @@
                     </div>
             
             <div id="log-nav" class="flex-grow w-full relative">
+                <!-- Constellation Spine Minimap (Desktop only) -->
+                <div class="absolute left-6 top-8 bottom-8 w-px bg-gradient-to-b from-transparent via-brand-primary/20 to-transparent hidden lg:block z-0 pointer-events-none">
+                    <!-- Active glowing node -->
+                    <div id="spine-node" class="absolute left-1/2 -translate-x-1/2 w-1.5 h-6 rounded-full bg-brand-primary shadow-[0_0_10px_#0d9488] transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]"></div>
+                </div>
+                
                 {% include 'portfolio/_log_nav_partial.html' %}
             </div>
         </aside>
 
         <!-- Right Content: Rendering Area -->
-        <section id="log-scroll-container" class="w-full lg:w-[65%] p-6 lg:p-12 flex-grow overflow-y-auto">
-            <div id="log-content-area" class="glass-panel hud-border p-8 lg:p-12 rounded-xl min-h-full">
+        <section id="log-scroll-container" class="w-full lg:w-[65%] p-6 lg:p-12 flex-grow h-full overflow-hidden relative">
+            <div id="log-content-area" class="glass-panel hud-border p-8 lg:p-12 rounded-xl h-full overflow-y-auto custom-scrollbar relative z-10">
                 <!-- HTMX Target Area. Initial load placeholder -->
                 <div class="flex items-center justify-center h-full text-slate-500 font-mono text-sm">
                     AWAITING_SELECTION...
                 </div>
+            </div>
+
+            <!-- HTMX Skeleton Loader Overlay -->
+            <div id="log-skeleton" class="htmx-indicator absolute inset-6 lg:inset-12 z-20 glass-panel hud-border p-8 lg:p-12 rounded-xl bg-white/90 overflow-hidden flex flex-col pointer-events-none">
+                <!-- Skeleton Header -->
+                <div class="w-1/3 h-8 bg-slate-200/80 rounded animate-pulse mb-4"></div>
+                <div class="w-1/4 h-4 bg-slate-200/80 rounded animate-pulse mb-12"></div>
+                
+                <!-- Skeleton Body -->
+                <div class="w-full h-4 bg-slate-200/80 rounded animate-pulse mb-4"></div>
+                <div class="w-[90%] h-4 bg-slate-200/80 rounded animate-pulse mb-4"></div>
+                <div class="w-[95%] h-4 bg-slate-200/80 rounded animate-pulse mb-4"></div>
+                <div class="w-[80%] h-4 bg-slate-200/80 rounded animate-pulse mb-12"></div>
+                
+                <div class="w-full h-48 bg-slate-200/80 rounded-lg animate-pulse mb-12"></div>
+                
+                <div class="w-full h-4 bg-slate-200/80 rounded animate-pulse mb-4"></div>
+                <div class="w-[85%] h-4 bg-slate-200/80 rounded animate-pulse"></div>
             </div>
         </section>
     </main>
@@ -319,6 +419,16 @@
                     }
                 }
             });
+
+            // Update Constellation Spine Minimap
+            const spineNode = document.getElementById('spine-node');
+            if (spineNode && isDesktop) {
+                const maxIndex = Math.max(1, items.length - 1);
+                const percentage = (activeIndex / maxIndex) * 100;
+                const clamped = Math.max(0, Math.min(100, percentage));
+                spineNode.style.top = `${clamped}%`;
+                spineNode.style.transform = 'translate(-50%, -50%)';
+            }
         }
 
         window.addEventListener('resize', updateNavPositions);
@@ -336,9 +446,46 @@
             activeIndex = allItems.indexOf(btn);
             updateNavPositions();
             
-            document.getElementById('log-scroll-container').scrollTop = 0;
-            contentArea.style.opacity = 0.5;
+            // Only fade out content if this button actually targets the content area
+            if (btn.getAttribute('hx-target') === '#log-content-area') {
+                document.getElementById('log-content-area').scrollTop = 0;
+                contentArea.style.opacity = 0.5;
+            }
         });
+
+        // Handle mouse wheel scrolling for the radial HUD (Desktop only)
+        let wheelThrottle;
+        const asideContainer = document.querySelector('aside');
+        
+        asideContainer.addEventListener('wheel', (e) => {
+            if (window.innerWidth < 1024) return; // Only apply on desktop layout
+            
+            e.preventDefault(); // Prevent native page scrolling while over the HUD
+            
+            if (wheelThrottle) return;
+            wheelThrottle = setTimeout(() => wheelThrottle = null, 100);
+            
+            const allItems = Array.from(document.querySelectorAll('.log-item'));
+            if (allItems.length === 0) return;
+            
+            let newIndex = activeIndex;
+            if (e.deltaY > 0) {
+                if (activeIndex < allItems.length - 1) newIndex = activeIndex + 1;
+            } else if (e.deltaY < 0) {
+                if (activeIndex > 0) newIndex = activeIndex - 1;
+            }
+            
+            if (newIndex !== activeIndex) {
+                const targetBtn = allItems[newIndex];
+                targetBtn.click();
+                
+                // Extra debounce if we just hit the "Load More" button to prevent rapid pagination firing
+                if (targetBtn.hasAttribute('hx-get') && targetBtn.getAttribute('hx-get').includes('page=')) {
+                    clearTimeout(wheelThrottle);
+                    wheelThrottle = setTimeout(() => wheelThrottle = null, 1000);
+                }
+            }
+        }, { passive: false });
 
         // After HTMX swaps new content
         document.body.addEventListener('htmx:afterSettle', function(evt) {
@@ -359,9 +506,9 @@
 
                 // Run mermaid on newly injected HTML
                 mermaid.init(undefined, evt.detail.target.querySelectorAll('.mermaid'));
-            }
-            
-            if (targetId === 'log-nav' || evt.detail.target.closest('#log-nav')) {
+            } else {
+                // If it wasn't the content area, it was likely the pagination swap.
+                // The target element might be detached now, so run positions unconditionally.
                 updateNavPositions();
             }
         });
@@ -369,11 +516,25 @@
         // Initial setup
         updateNavPositions();
         
-        // Auto-load first item on boot
+        // Auto-load target item or first item on boot
         window.addEventListener('DOMContentLoaded', () => {
-            const firstItem = document.querySelector('.log-item');
-            if (firstItem) {
-                htmx.trigger(firstItem, 'click');
+            const targetLogId = '{{ target_log_id|default_if_none:"" }}';
+            let targetItem = null;
+            
+            if (targetLogId) {
+                const items = Array.from(document.querySelectorAll('.log-item'));
+                targetItem = items.find(item => {
+                    const hxGet = item.getAttribute('hx-get');
+                    return hxGet && hxGet.includes(targetLogId);
+                });
+            }
+            
+            if (!targetItem) {
+                targetItem = document.querySelector('.log-item');
+            }
+            
+            if (targetItem) {
+                htmx.trigger(targetItem, 'click');
             }
         });
     </script>
