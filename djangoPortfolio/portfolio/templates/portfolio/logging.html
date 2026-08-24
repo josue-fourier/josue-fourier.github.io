@@ -148,8 +148,8 @@
                 display: flex;
                 overflow-x: auto;
                 scroll-snap-type: x mandatory;
-                gap: 2rem;
-                padding: 2rem;
+                gap: 1rem;
+                padding: 1rem;
                 scrollbar-width: none;
                 position: relative;
             }
@@ -277,7 +277,7 @@
         
         /* Custom HUD Scrollbar */
         .custom-scrollbar {
-            overflow-x: hidden;
+            overflow-x: auto;
         }
         .custom-scrollbar::-webkit-scrollbar {
             width: 6px;
@@ -334,8 +334,8 @@
         </aside>
 
         <!-- Right Content: Rendering Area -->
-        <section id="log-scroll-container" class="w-full lg:w-[65%] p-6 lg:p-12 flex-grow h-full overflow-hidden relative">
-            <div id="log-content-area" class="glass-panel hud-border p-8 lg:p-12 rounded-xl h-full overflow-y-auto custom-scrollbar relative z-10">
+        <section id="log-scroll-container" class="w-full lg:w-[65%] p-4 lg:p-12 flex-grow min-h-0 lg:min-w-0 flex flex-col relative">
+            <div id="log-content-area" class="glass-panel hud-border p-6 lg:p-12 rounded-xl flex-grow min-h-0 overflow-y-auto custom-scrollbar relative z-10">
                 <!-- HTMX Target Area. Initial load placeholder -->
                 <div class="flex items-center justify-center h-full text-slate-500 font-mono text-sm">
                     AWAITING_SELECTION...
@@ -343,7 +343,7 @@
             </div>
 
             <!-- HTMX Skeleton Loader Overlay -->
-            <div id="log-skeleton" class="htmx-indicator absolute inset-6 lg:inset-12 z-20 glass-panel hud-border p-8 lg:p-12 rounded-xl bg-white/90 overflow-hidden flex flex-col pointer-events-none">
+            <div id="log-skeleton" class="htmx-indicator absolute inset-4 lg:inset-12 z-20 glass-panel hud-border p-6 lg:p-12 rounded-xl bg-white/90 overflow-hidden flex flex-col pointer-events-none">
                 <!-- Skeleton Header -->
                 <div class="w-1/3 h-8 bg-slate-200/80 rounded animate-pulse mb-4"></div>
                 <div class="w-1/4 h-4 bg-slate-200/80 rounded animate-pulse mb-12"></div>
