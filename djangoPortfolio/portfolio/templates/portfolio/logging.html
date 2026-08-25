@@ -22,7 +22,6 @@
         body {
             color: #1e293b;
             font-family: 'Inter', sans-serif;
-            overflow: hidden;
         }
         
         /* Light Weave - Aura */
@@ -298,12 +297,12 @@
         }
     </style>
 </head>
-<body class="min-h-screen selection:bg-brand-primary selection:text-white text-slate-800">
+<body class="min-h-screen selection:bg-brand-primary selection:text-white text-slate-800 overflow-x-hidden lg:overflow-hidden">
     <div class="aura-bg">
         <div class="aura-layer-1" aria-hidden="true"></div>
         <div class="aura-layer-2" aria-hidden="true"></div>
         <div class="aura-layer-3" aria-hidden="true"></div>
-        <div style="position: relative; z-index: 1;" class="h-[100dvh] flex flex-col overflow-hidden">
+        <div style="position: relative; z-index: 1;" class="min-h-[100dvh] lg:h-[100dvh] flex flex-col lg:overflow-hidden">
             <!-- Top Nav HUD -->
             <nav class="w-full border-b border-black/5 bg-white/40 backdrop-blur-md sticky top-0 z-50">
                 <div class="max-w-[1800px] mx-auto px-6 py-4 flex justify-between items-center">
@@ -316,9 +315,9 @@
             </nav>
 
             <!-- Split Screen Layout -->
-            <main class="flex-grow flex flex-col lg:flex-row w-full max-w-[1800px] mx-auto overflow-hidden">
+            <main class="flex-grow flex flex-col lg:flex-row w-full max-w-[1800px] mx-auto lg:overflow-hidden">
                 <!-- Left Nav: Radial Wheel (Desktop) / Horizontal Scroll (Mobile) -->
-                <aside class="w-full lg:w-[35%] h-auto lg:h-full lg:border-r border-black/5 relative overflow-hidden flex flex-col flex-shrink-0">
+                <aside class="w-full lg:w-[35%] h-auto lg:h-full lg:border-r border-black/5 relative lg:overflow-hidden flex flex-col flex-shrink-0">
                     <div class="p-6 border-b border-black/5 lg:border-none">
                         <p class="text-xs font-mono text-slate-500 mb-1 font-medium">TOTAL_RECORDS // {{ log_count|default:0 }}</p>
                         <h2 class="text-2xl font-bold text-slate-900">Engineering Logs</h2>
@@ -336,7 +335,7 @@
         </aside>
 
         <!-- Right Content: Rendering Area -->
-        <section id="log-scroll-container" class="w-full lg:w-[65%] p-4 lg:p-12 flex-grow min-h-0 lg:h-full lg:min-w-0 flex flex-col overflow-hidden relative">
+        <section id="log-scroll-container" class="w-full lg:w-[65%] p-4 lg:p-12 flex-grow min-h-0 lg:h-full lg:min-w-0 flex flex-col lg:overflow-hidden relative">
             <div id="log-content-area" class="glass-panel hud-border p-6 lg:p-12 rounded-xl flex-grow min-h-0 lg:h-full overflow-y-auto custom-scrollbar relative z-10">
                 <!-- HTMX Target Area. Initial load placeholder -->
                 <div class="flex items-center justify-center h-full text-slate-500 font-mono text-sm">
@@ -451,6 +450,9 @@
             // Only fade out content if this button actually targets the content area
             if (btn.getAttribute('hx-target') === '#log-content-area') {
                 document.getElementById('log-content-area').scrollTop = 0;
+                if (window.innerWidth < 1024) {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
                 contentArea.style.opacity = 0.5;
             }
         });
