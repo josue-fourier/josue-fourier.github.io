@@ -256,6 +256,8 @@
             border-collapse: collapse;
             margin-bottom: 1rem;
             font-size: 0.9em;
+            display: block;
+            overflow-x: auto;
         }
         .markdown-body th, .markdown-body td {
             border: 1px solid rgba(0,0,0,0.05);
@@ -277,7 +279,7 @@
         
         /* Custom HUD Scrollbar */
         .custom-scrollbar {
-            overflow-x: auto;
+            overflow-x: hidden;
         }
         .custom-scrollbar::-webkit-scrollbar {
             width: 6px;
@@ -334,8 +336,8 @@
         </aside>
 
         <!-- Right Content: Rendering Area -->
-        <section id="log-scroll-container" class="w-full lg:w-[65%] p-4 lg:p-12 flex-grow min-h-0 lg:min-w-0 flex flex-col relative">
-            <div id="log-content-area" class="glass-panel hud-border p-6 lg:p-12 rounded-xl flex-grow min-h-0 overflow-y-auto custom-scrollbar relative z-10">
+        <section id="log-scroll-container" class="w-full lg:w-[65%] p-4 lg:p-12 flex-grow min-h-0 lg:h-full lg:min-w-0 flex flex-col overflow-hidden relative">
+            <div id="log-content-area" class="glass-panel hud-border p-6 lg:p-12 rounded-xl flex-grow min-h-0 lg:h-full overflow-y-auto custom-scrollbar relative z-10">
                 <!-- HTMX Target Area. Initial load placeholder -->
                 <div class="flex items-center justify-center h-full text-slate-500 font-mono text-sm">
                     AWAITING_SELECTION...
