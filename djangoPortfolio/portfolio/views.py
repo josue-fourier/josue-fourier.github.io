@@ -18,7 +18,17 @@ class RootPage (TemplateView):
 
         context["projects"] = Project.objects.filter(active=True).prefetch_related("stack").annotate(stack_count=Count("stack")).order_by("-stack_count")
         context["technical_strengths"] = TechnicalStrength.objects.all().annotate(project_count=Count("project")).filter(project_count__gt=0).order_by("-project_count")
-        context["latest_logs"] = LogEntry.objects.defer("content").select_related("project").prefetch_related("stack").order_by("-date")[:3]
+        
+        # Featured logs
+        featured_logs = LogEntry.objects.filter(is_featured=True).select_related("project").prefetch_related("stack").order_by("-date")
+        context["featured_logs"] = featured_logs
+        
+        if featured_logs.exists():
+            featured_ids = [log.id for log in featured_logs]
+            context["latest_logs"] = LogEntry.objects.exclude(id__in=featured_ids).defer("content").select_related("project").prefetch_related("stack").order_by("-date")[:3]
+        else:
+            context["latest_logs"] = LogEntry.objects.defer("content").select_related("project").prefetch_related("stack").order_by("-date")[:3]
+            
         context["total_projects"] = Project.objects.count()
 
         return context
@@ -35,7 +45,18 @@ class LoggingView(TemplateView):
         paginator = Paginator(log_list, 10)
         context["page_obj"] = paginator.get_page(1)
         context["log_count"] = LogEntry.objects.count()
-        context["target_log_id"] = self.request.GET.get('log_id')
+        
+        target_log_id = self.request.GET.get('log_id')
+        context["target_log_id"] = target_log_id
+        
+        if target_log_id:
+            try:
+                import markdown
+                target_log = LogEntry.objects.select_related('project').prefetch_related('stack').get(id=target_log_id)
+                target_log.html_content = markdown.markdown(target_log.content, extensions=['fenced_code', 'tables'])
+                context["target_log"] = target_log
+            except LogEntry.DoesNotExist:
+                pass
 
         return context
 
@@ -72,5 +93,29 @@ def log_list(request):
         return render(request, "portfolio/_log_nav_partial.html", {
             "page_obj": page_obj
         })
+
+    return HttpResponse(status=405)
+
+def project_detail(request, project_id):
+    if request.method == "GET":
+        import markdown
+        project = get_object_or_404(Project.objects.prefetch_related('stack'), id=project_id)
+
+        # Parse markdown to HTML if content exists
+        if project.content:
+            project.html_content = markdown.markdown(project.content, extensions=['fenced_code', 'tables'])
+        else:
+            project.html_content = ""
+
+        context = {
+            "project": project
+        }
+
+        return render(
+            request,
+            "portfolio/project.html",
+            context,
+            content_type="text/html"
+        )
 
     return HttpResponse(status=405)

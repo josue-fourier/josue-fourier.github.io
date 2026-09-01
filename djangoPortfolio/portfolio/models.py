@@ -14,6 +14,7 @@ class Project(models.Model):
     name = models.CharField(null=False, max_length=100)
     active = models.BooleanField(default=False)
     description = models.TextField(null=False)
+    content = models.TextField(null=True, blank=True, help_text="Markdown content for the project case study")
     stack = models.ManyToManyField(TechnicalStrength, related_name="projects", related_query_name="project")
     link = models.URLField(null=True, blank=True)
 
@@ -26,6 +27,7 @@ class LogEntry(models.Model):
     title = models.CharField(null=False, blank=False, max_length=200)
     date = models.DateTimeField(auto_now_add=True, null=False)
     content = models.TextField(null=False, blank=False)
+    is_featured = models.BooleanField(default=False)
 
     project = models.ForeignKey(Project, on_delete=models.SET_NULL, null=True, blank=True)
     stack = models.ManyToManyField(TechnicalStrength, related_name="logs", related_query_name="log", blank=True)

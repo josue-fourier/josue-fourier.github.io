@@ -1,683 +1,239 @@
-{% load static %}
+{% extends 'portfolio/base.html' %}
 {% load i18n %}
 {% load hud_tags %}
-<!DOCTYPE html>
-<html lang="en" data-theme="lofi">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta property="og:title" content="Josué Leiva | Telematics Engineering">
-        <meta property="og:description" content="System-focused Telematics Engineering student specializing in backend architecture, distributed systems, and real-time telemetry.">
-        <meta property="og:type" content="website">
-        <title>Josué Leiva | Telematics Engineering</title>
+{% load static %}
 
-        <!-- Existing Static CSS -->
-        <link rel="stylesheet" href="{% static 'portfolio/main.css' %}">
+{% block content %}
+        <main class="relative z-10 w-full min-h-screen px-6 py-12 md:px-12 md:py-24 max-w-[1600px] mx-auto">
 
-        <!-- Google Fonts: Inter for UI, Space Grotesk for Headings, JetBrains Mono for Tech -->
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-
-        <!-- Tailwind & DaisyUI -->
-
-        <!-- GSAP & Lenis for Smooth Scrolling and Premium Animations -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-        <script src="https://unpkg.com/@studio-freight/lenis@1.0.34/dist/lenis.min.js"></script>
-
-        <!-- Three.js for Particle Network -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-        <!-- Analytics -->
-        <script defer src="https://analytics.proyectosos.cl/script.js" data-website-id="31434b15-eee1-4168-8f9f-bd302c62124a"></script>
-
-
-        <style>
-            /* Base resets & smooth scrolling framework */
-            html.lenis { height: auto; }
-            .lenis.lenis-smooth { scroll-behavior: auto !important; }
-            .lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
-            .lenis.lenis-stopped { overflow: hidden; }
-            .lenis.lenis-scrolling iframe { pointer-events: none; }
-
-            body {
-                color: #1e293b;
-                overflow-x: hidden;
-            }
-
-            /* Custom Cursor */
-            @media (pointer: fine) {
-                body { cursor: none; }
-                #cursor {
-                    position: fixed;
-                    top: 0;
-                    left: 0;
-                    width: 20px;
-                    height: 20px;
-                    pointer-events: none;
-                    z-index: 9999;
-                    transform: translate3d(var(--cx, 50vw), var(--cy, 50vh), 0) translate(-50%, -50%);
-                    will-change: transform;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                }
-                #cursor::after {
-                    content: '';
-                    width: 100%;
-                    height: 100%;
-                    border-radius: 50%;
-                    background: rgba(13, 148, 136, 0.8);
-                    transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), background 0.2s ease;
-                }
-                #cursor.hover-state::after {
-                    transform: scale(3);
-                    background: rgba(13, 148, 136, 0.2);
-                }
-            }
-            @media (pointer: coarse) {
-                #cursor { display: none !important; }
-            }
-
-            /* Light Weave - Aura */
-            .aura-bg {
-                position: relative;
-                overflow: hidden;
-                min-height: 100vh; /* height must be explicit - absolute layers add none */
-                background-color: #faf8f2;
-            }
-
-            /* Layer 1 - normal */
-            .aura-layer-1 {
-                position: absolute;
-                inset: 0;
-                background: linear-gradient(rgba(14,165,233,0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(14,165,233,0.08) 1px, transparent 1px);
-                background-size: 40px 40px;
-                mix-blend-mode: normal;
-                transform: translateZ(0);
-                will-change: transform;
-                pointer-events: none;
-            }
-
-            /* Layer 2 - normal */
-            .aura-layer-2 {
-                position: absolute;
-                inset: 0;
-                background: radial-gradient(circle at 51% 39%, rgba(56,189,248,0.25) 0%, transparent 50%);
-                mix-blend-mode: normal;
-                filter: blur(150px); /* use 216px on desktop */
-                transform: translateZ(0);
-                will-change: transform;
-                pointer-events: none;
-            }
-            @media (min-width: 768px) {
-                .aura-layer-2 { filter: blur(216px); }
-            }
-
-            /* Layer 3 - normal */
-            .aura-layer-3 {
-                position: absolute;
-                inset: 0;
-                background: radial-gradient(circle at 30% 70%, rgba(99,102,241,0.15) 0%, transparent 40%);
-                mix-blend-mode: normal;
-                filter: blur(125px); /* use 180px on desktop */
-                transform: translateZ(0);
-                will-change: transform;
-                pointer-events: none;
-            }
-            @media (min-width: 768px) {
-                .aura-layer-3 { filter: blur(180px); }
-            }
-
-            /* Premium Glassmorphism */
-            .glass-panel {
-                background: rgba(255, 255, 255, 0.5);
-                backdrop-filter: blur(16px);
-                -webkit-backdrop-filter: blur(16px);
-                border: 1px solid rgba(0, 0, 0, 0.05);
-                border-radius: 24px;
-                transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-                box-shadow: 0 4px 30px rgba(0, 0, 0, 0.03);
-
-                /* Safari/WebKit fixes for blur filter bleeding past border-radius */
-                overflow: hidden;
-                transform: translateZ(0);
-                -webkit-mask-image: -webkit-radial-gradient(white, black);
-            }
-
-            /* GPU-Accelerated Filter Transitions */
-            .filter-transition {
-                transition: opacity 0.4s ease, transform 0.4s ease;
-                will-change: opacity, transform;
-            }
-            .filter-hidden {
-                opacity: 0 !important;
-                transform: scale(0.95) !important;
-                pointer-events: none;
-            }
-            .glass-panel:hover {
-                background: rgba(255, 255, 255, 0.7);
-                border-color: rgba(13, 148, 136, 0.3);
-                box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.05), 0 0 20px rgba(13, 148, 136, 0.1);
-            }
-
-            /* Magnetic Button Utility */
-            .magnetic-wrap { display: inline-block; padding: 20px; margin: -20px; }
-            .btn-magnetic {
-                display: inline-flex;
-                align-items: center;
-                justify-content: center;
-                border: 1px solid rgba(0, 0, 0, 0.1);
-                background: transparent;
-                border-radius: 9999px;
-                padding: 12px 28px;
-                font-weight: 500;
-                transition: color 0.3s ease, border-color 0.3s ease;
-                position: relative;
-                overflow: hidden;
-                color: #334155;
-            }
-            .btn-magnetic::before {
-                content: '';
-                position: absolute;
-                top: 100%;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background: #0d9488;
-                transition: top 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-                z-index: -1;
-                border-radius: 50% 50% 0 0;
-            }
-            .btn-magnetic:hover { border-color: #0d9488; color: #ffffff; }
-            .btn-magnetic:hover::before { top: 0; border-radius: 0; }
-
-            /* Massive Typography Styling */
-            .hero-title {
-                font-size: clamp(4rem, 12vw, 12rem);
-                line-height: 0.85;
-                letter-spacing: -0.04em;
-                background: linear-gradient(180deg, #0f172a 0%, rgba(15, 23, 42, 0.6) 100%);
-                -webkit-background-clip: text;
-                -webkit-text-fill-color: transparent;
-            }
-
-            /* Noise Overlay for texture */
-            .noise-overlay {
-                position: fixed;
-                top: 0; left: 0; width: 100vw; height: 100vh;
-                pointer-events: none;
-                z-index: 9998;
-                opacity: 0.03;
-                background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-            }
-
-            /* Hide scrollbar completely */
-            ::-webkit-scrollbar { display: none; }
-        </style>
-    </head>
-    <body class="antialiased selection:bg-brand-primary selection:text-white text-slate-800">
-        <div class="aura-bg">
-            <div class="aura-layer-1" aria-hidden="true"></div>
-            <div class="aura-layer-2" aria-hidden="true"></div>
-            <div class="aura-layer-3" aria-hidden="true"></div>
-            <div style="position: relative; z-index: 1;">
-                <div id="boot-loader-bar" class="fixed top-0 left-0 h-1 bg-brand-primary z-[10000] w-0 transition-all duration-500 ease-out shadow-[0_0_10px_#0d9488]"></div>
-                <div id="scroll-progress" class="fixed top-0 left-0 h-1 bg-brand-primary z-[9000] shadow-[0_0_10px_#0d9488] w-0 transition-all duration-100 ease-out"></div>
-                <div class="noise-overlay"></div>
-                <div id="cursor"></div>
-
-        <!-- Language Selector (Fixed Top Right) -->
-                <div class="fixed top-6 right-6 z-[9500] dropdown dropdown-end interactive-element">
-            <!-- Dropdown Trigger Button -->
-                    <div tabindex="0" role="button" class="glass-panel px-4 py-2 flex items-center gap-2 font-mono text-xs text-slate-600 hover:text-slate-900 transition-colors">
-                <!-- Globe Icon -->
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-brand-primary">
-                            <circle cx="12" cy="12" r="10"></circle>
-                            <line x1="2" y1="12" x2="22" y2="12"></line>
-                            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
-                        </svg>
-                        {% get_current_language as LANGUAGE_CODE %}
-                        <span class="uppercase">{{ LANGUAGE_CODE }}</span>
-                <!-- Chevron Down -->
-                        <svg width="10" height="10" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" class="opacity-50">
-                            <path d="M3.5 5.25L7 8.75L10.5 5.25" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                    </div>
-
-            <!-- Django Form / Dropdown Menu -->
-                    <form action="{% url 'set_language' %}" method="post" tabindex="0" class="dropdown-content z-[1] menu p-2 shadow-2xl bg-white/90 backdrop-blur-2xl border border-slate-200 rounded-2xl w-44 mt-3">
-                        {% csrf_token %}
-                        <input name="next" type="hidden" value="{{ redirect_to }}">
-                        {% get_available_languages as LANGUAGES %}
-                        {% get_language_info_list for LANGUAGES as languages %}
-
-                        <ul class="flex flex-col gap-1 m-0 p-0">
-                            {% for language in languages %}
-                                <li class="m-0 p-0 list-none">
-                                    <button type="submit" name="language" value="{{ language.code }}" class="flex items-center w-full px-3 py-2.5 rounded-xl font-mono text-xs transition-all duration-200 cursor-pointer {% if language.code == LANGUAGE_CODE %}bg-brand-primary/10 text-brand-primary font-bold{% else %}text-slate-600 hover:text-slate-900 hover:bg-slate-100{% endif %}">
-                                        {{ language.name_local|title }} ({{ language.code }})
-                                    </button>
-                                </li>
-                            {% endfor %}
-                        </ul>
-                    </form>
+            <header class="min-h-[85vh] flex flex-col justify-center section-gsap">
+                <div class="overflow-hidden mb-4">
+                    <p class="text-brand-primary font-mono text-sm tracking-widest uppercase inline-flex items-center gap-3 gsap-reveal">
+                        <span class="relative flex h-2 w-2">
+                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-primary opacity-75"></span>
+                            <span class="relative inline-flex rounded-full h-2 w-2 bg-brand-primary"></span>
+                        </span>
+                        {% translate "System: Online // Availability: Open" %}
+                    </p>
                 </div>
 
-        <!-- Old WebGL Background Removed -->
+                <h1 class="hero-title font-display font-bold uppercase z-10 mix-blend-screen gsap-reveal">
+                    Josué<br>Leiva.
+                </h1>
 
-        <!-- MAIN CONTAINER -->
-                <main class="relative z-10 w-full min-h-screen px-6 py-12 md:px-12 md:py-24 max-w-[1600px] mx-auto">
-
-                    <header class="min-h-[85vh] flex flex-col justify-center section-gsap">
-                        <div class="overflow-hidden mb-4">
-                            <p class="text-brand-primary font-mono text-sm tracking-widest uppercase inline-flex items-center gap-3 gsap-reveal">
-                                <span class="relative flex h-2 w-2">
-                                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-primary opacity-75"></span>
-                                    <span class="relative inline-flex rounded-full h-2 w-2 bg-brand-primary"></span>
-                                </span>
-                                {% translate "System: Online // Availability: Open" %}
-                            </p>
-                        </div>
-
-                        <h1 class="hero-title font-display font-bold uppercase z-10 mix-blend-screen gsap-reveal">
-                            Josué<br>Leiva.
-                        </h1>
-
-                        <div class="grid grid-cols-1 md:grid-cols-12 gap-8 mt-12 w-full">
-                            <div class="md:col-span-5 md:col-start-8 gsap-reveal">
-                                <p class="text-xl text-slate-600 font-light leading-relaxed mb-10">
-                                    {% translate "Telematics Engineering student specializing in" %} <strong class="text-slate-900 font-medium">{% translate "backend architecture" %}</strong>, <strong class="text-slate-900 font-medium">{% translate "distributed systems" %}</strong>, {% translate "and" %} <strong class="text-slate-900 font-medium">{% translate "real-time telemetry" %}</strong>.
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-8 mt-12 w-full items-end">
+                    <!-- Left Side: Github Activity -->
+                    <div class="md:col-span-7 md:col-start-1 gsap-reveal mt-12 md:mt-0">
+                        <div class="w-full bg-white/50 dark:bg-slate-900/50 p-6 md:p-8 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm backdrop-blur-sm">
+                            <div class="flex justify-between items-center mb-6">
+                                <p class="font-mono text-xs text-slate-500 uppercase tracking-widest flex items-center gap-2">
+                                    <span class="w-2 h-2 rounded-full bg-brand-primary animate-pulse"></span>
+                                    {% translate "Github_Activity // Live" %}
                                 </p>
-
-                                <div class="flex flex-wrap gap-6 items-center">
-                                    <div class="magnetic-wrap">
-                                        <a href="https://github.com/josue-fourier" target="_blank" data-umami-event="GitHub Click" class="btn-magnetic font-mono text-sm interactive-element">
-                                            [ GitHub ]
-                                        </a>
-                                    </div>
-                                    <div class="magnetic-wrap">
-                                        <a href="https://linkedin.com/in/josuenicolas" data-umami-event="LinkedIn Click" target="_blank" class="btn-magnetic font-mono text-sm interactive-element">
-                                            [ LinkedIn ]
-                                        </a>
-                                    </div>
-                                    <div class="magnetic-wrap">
-                                        <a href="/cv" target="_blank" data-umami-event="CV Download" class="btn-magnetic font-mono text-sm !border-brand-primary !text-brand-primary hover:!text-white interactive-element">
-                                            {% translate "Download_CV.pdf" %}
-                                        </a>
-                                    </div>
-                                </div>
+                                <span class="text-xs font-mono text-slate-400">josue-fourier</span>
                             </div>
-                        </div>
-                    </header>
-
-                    <section class="py-12 section-gsap">
-                        <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 gsap-reveal">
-                            <div>
-                                <h2 class="text-3xl md:text-4xl font-display font-medium text-slate-900 mb-2">{% translate "Engineering Logs" %}</h2>
-                                <p class="text-brand-primary font-mono text-xs font-medium">{% translate "SYSTEM_TELEMETRY // LATEST_REPORTS" %}</p>
+                            <div class="w-full overflow-hidden opacity-90 hover:opacity-100 transition-opacity duration-300">
+                                <img src="https://ghchart.rshah.org/14b8a6/josue-fourier" alt="Josue's GitHub Activity Graph" loading="lazy" class="w-full h-auto gh-chart drop-shadow-sm" />
                             </div>
-                            <div class="magnetic-wrap hidden md:block">
-                                <a href="/logging/" class="btn-magnetic font-mono text-sm interactive-element">
-                                    [ VIEW_ALL_LOGS ]
-                                </a>
-                            </div>
-                        </div>
-
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                            {% for log in latest_logs %}
-                                <a href="/logging/?log_id={{ log.id }}" class="block group tilt-element interactive-element gsap-reveal">
-                                    <article class="glass-panel h-full p-5 relative overflow-hidden flex flex-col min-h-[160px]">
-                                        <!-- Hover Blur Aura -->
-                                        <div class="absolute -top-16 -right-16 w-32 h-32 bg-brand-primary/20 rounded-full blur-[40px] group-hover:bg-brand-primary/40 transition-colors duration-700"></div>
-
-                                        <div class="relative z-10 flex justify-between items-start mb-3">
-                                            <span class="inline-block px-2 py-0.5 rounded bg-brand-primary/10 text-brand-primary font-mono text-[9px] font-bold tracking-widest border border-brand-primary/20">
-                                                {{ log.date|short_timesince }}
-                                            </span>
-                                            <span class="text-[9px] font-mono text-slate-400 uppercase tracking-wider text-right max-w-[50%] truncate">
-                                                {{ log.project.name }}
-                                            </span>
-                                        </div>
-
-                                        <div class="relative z-10 flex-grow">
-                                            <h3 class="text-lg font-display font-bold text-slate-900 group-hover:text-brand-primary transition-colors duration-300 leading-tight mb-3">
-                                                {{ log.title }}
-                                            </h3>
-                                        </div>
-
-                                        <div class="relative z-10 mt-auto flex justify-between items-end">
-                                            <div class="flex gap-1.5 flex-wrap max-w-[70%]">
-                                                {% for item in log.stack.all|slice:":3" %}
-                                                    <span class="text-[9px] font-mono text-slate-500 uppercase">#{{ item.technology }}</span>
-                                                {% endfor %}
-                                            </div>
-                                            <!-- Arrow Icon -->
-                                            <div class="w-7 h-7 rounded-full border border-slate-300 flex items-center justify-center group-hover:bg-brand-primary group-hover:border-brand-primary group-hover:text-white text-slate-500 transition-all duration-300 -rotate-45 group-hover:rotate-0 flex-shrink-0">
-                                                <svg width="10" height="10" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                    <path d="M1 7H13M13 7L7 1M13 7L7 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                                </svg>
-                                            </div>
-                                        </div>
-                                    </article>
-                                </a>
-                            {% endfor %}
-                        </div>
-                        <div class="mt-8 md:hidden text-center magnetic-wrap">
-                            <a href="/logging/" class="mt-4 btn-magnetic font-mono text-sm interactive-element w-full">
-                                [ VIEW_ALL_LOGS ]
-                            </a>
-                        </div>
-                    </section>
-
-                    <section class="py-16 section-gsap">
-                        <div class="flex items-center gap-6 mb-12 gsap-reveal">
-                            <h2 class="text-4xl md:text-5xl font-display font-medium text-slate-900">{% translate "Technical Architecture" %}</h2>
-                            <div class="h-px flex-grow bg-gradient-to-r from-slate-300 to-transparent"></div>
-                        </div>
-
-                        <div class="flex flex-wrap gap-3 gsap-stagger-container">
-                            {% for strength in technical_strengths %}
-                                <button data-tech="{{ strength.technology }}" class="tech-filter-btn gsap-stagger-item px-5 py-3 rounded-full border border-slate-200 bg-white/80 text-slate-700 font-mono text-sm hover:border-brand-primary hover:text-brand-primary hover:bg-white transition-all duration-300 cursor-pointer interactive-element will-change-transform">
-                                    {{ strength.technology }} ({{ strength.project_count }} / {{ total_projects }})
-                                </button>
-                            {% endfor %}
-                        </div>
-                    </section>
-
-                    <section class="py-16 section-gsap">
-                        <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16 gsap-reveal">
-                            <div>
-                                <h2 class="text-4xl md:text-5xl font-display font-medium text-slate-900 mb-4">{% translate "Independent Systems" %}</h2>
-                                <p class="text-brand-primary font-mono text-sm font-medium">{% translate "NOT_COURSE_PROJECTS // ACTIVE_WORK" %}</p>
-                            </div>
-                        </div>
-
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <!-- DJANGO INTEGRATION: Projects Loop -->
-                            {% for project in projects %}
-                                <a href="{{ project.link }}" class="project-card filter-transition block group tilt-element interactive-element gsap-reveal" data-techs="{% for item in project.stack.all %}{{ item.technology }},{% endfor %}">
-                                    <article class="glass-panel h-full p-8 md:p-10 relative overflow-hidden flex flex-col justify-between">
-                                <!-- Hover Blur Aura -->
-                                        <div class="absolute -top-32 -right-32 w-64 h-64 bg-brand-primary/20 rounded-full blur-[80px] group-hover:bg-brand-primary/40 transition-colors duration-700"></div>
-
-                                        <div class="relative z-10 mb-8">
-                                            <div class="flex justify-between items-start mb-6">
-                                                <h3 class="text-3xl font-display font-bold text-slate-900 group-hover:text-brand-primary transition-colors duration-300">
-                                                    {{ project.name }}
-                                                </h3>
-                                        <!-- Arrow Icon -->
-                                                <div class="w-10 h-10 rounded-full border border-slate-300 flex items-center justify-center group-hover:bg-brand-primary group-hover:border-brand-primary group-hover:text-white text-slate-500 transition-all duration-300 -rotate-45 group-hover:rotate-0">
-                                                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                        <path d="M1 7H13M13 7L7 1M13 7L7 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                                    </svg>
-                                                </div>
-                                            </div>
-                                            <p class="text-slate-600 leading-relaxed font-light">
-                                                {{ project.description }}
-                                            </p>
-                                        </div>
-
-                                        <div class="relative z-10 mt-auto">
-                                            <p class="inline-block px-3 py-1 rounded border border-slate-200 bg-white/60 font-mono text-xs text-brand-primary font-medium">
-                                                STACK:
-                                                {% for item in project.stack.all %}{{item.technology}}{% if forloop.last %}.{% else %}, {% endif %}{% endfor %}
-                                            </p>
-                                        </div>
-                                    </article>
-                                </a>
-                            {% endfor %}
-                        </div>
-                    </section>
-
-                </main>
-
-                <footer class="relative z-10 border-t border-slate-200 mt-20">
-                    <div class="max-w-[1600px] mx-auto px-6 py-10 flex flex-col md:flex-row justify-between items-center gap-6 text-xs font-mono text-slate-500 uppercase">
-                        <p>josnic.cl © 2026</p>
-                        <div class="flex gap-6">
-                            <a href="https://github.com/josue-fourier" class="hover:text-brand-primary transition-colors interactive-element">[ SOURCE ]</a>
-                            <span class="text-slate-400">JOSUE LEIVA</span>
-                            <span class="text-slate-400">{% translate "Frontend created with Antigravity" %}</span>
                         </div>
                     </div>
-                </footer>
 
-                <script>
-        // System Boot Sequence (Top Progress Bar)
-                    const bootLoader = document.getElementById('boot-loader-bar');
-                    let bootProgress = 0;
-                    const bootInterval = setInterval(() => {
-                        bootProgress += Math.random() * 30;
-                        if(bootProgress > 90) bootProgress = 90;
-                        if(bootLoader) bootLoader.style.width = `${bootProgress}%`;
-                    }, 100);
+                    <!-- Right Side: Bio & Links -->
+                    <div class="md:col-span-5 md:col-start-8 gsap-reveal">
+                        <p class="text-xl text-slate-600 font-light leading-relaxed mb-10">
+                            {% translate "Telematics Engineering student specializing in" %} <strong class="text-slate-900 font-medium">{% translate "backend architecture" %}</strong>, <strong class="text-slate-900 font-medium">{% translate "distributed systems" %}</strong>, {% translate "and" %} <strong class="text-slate-900 font-medium">{% translate "real-time telemetry" %}</strong>.
+                        </p>
 
-                    window.addEventListener('load', () => {
-                        clearInterval(bootInterval);
-                        if(bootLoader) {
-                            bootLoader.style.width = '100%';
-                            setTimeout(() => {
-                                bootLoader.style.opacity = '0';
-                                setTimeout(() => bootLoader.remove(), 500);
-                            }, 500);
-                        }
-                    });
-            // --- 1. Custom Cursor Logic ---
-                    if (window.matchMedia('(pointer: fine)').matches) {
-                        const cursor = document.getElementById('cursor');
-                        let mouseX = window.innerWidth / 2;
-                        let mouseY = window.innerHeight / 2;
-                        let cursorX = window.innerWidth / 2;
-                        let cursorY = window.innerHeight / 2;
-                        let isMoving = false;
+                        <div class="flex flex-wrap gap-6 items-center">
+                            <div class="magnetic-wrap">
+                                <a href="https://github.com/josue-fourier" target="_blank" data-umami-event="GitHub Click" class="btn-magnetic font-mono text-sm interactive-element">
+                                    [ GitHub ]
+                                </a>
+                            </div>
+                            <div class="magnetic-wrap">
+                                <a href="https://linkedin.com/in/josuenicolas" data-umami-event="LinkedIn Click" target="_blank" class="btn-magnetic font-mono text-sm interactive-element">
+                                    [ LinkedIn ]
+                                </a>
+                            </div>
+                            <div class="magnetic-wrap">
+                                <a href="/cv" target="_blank" data-umami-event="CV Download" class="btn-magnetic font-mono text-sm !border-brand-primary !text-brand-primary hover:!text-white interactive-element">
+                                    {% translate "Download_CV.pdf" %}
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
 
-                        document.addEventListener('mousemove', (e) => {
-                            mouseX = e.clientX;
-                            mouseY = e.clientY;
-                            if (!isMoving) {
-                                isMoving = true;
-                                requestAnimationFrame(animateCursor);
-                            }
-                        }, { passive: true });
+            <section class="py-12 section-gsap">
+                <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 gsap-reveal">
+                    <div>
+                        <h2 class="text-3xl md:text-4xl font-display font-medium text-slate-900 mb-2">{% translate "Engineering Logs" %}</h2>
+                        <p class="text-brand-primary font-mono text-xs font-medium">{% translate "SYSTEM_TELEMETRY // LATEST_REPORTS" %}</p>
+                    </div>
+                    <div class="magnetic-wrap hidden md:block">
+                        <a href="/logging/" preload="mouseover" class="btn-magnetic font-mono text-sm interactive-element">
+                            [ VIEW_ALL_LOGS ]
+                        </a>
+                    </div>
+                </div>
+                {% if featured_logs %}
+                    {% for featured_log in featured_logs %}
+                    <div class="mb-6">
+                        <a href="/logging/?log_id={{ featured_log.id }}" preload="mouseover" class="block group tilt-element interactive-element gsap-reveal">
+                            <article class="glass-panel w-full p-8 relative overflow-hidden flex flex-col md:flex-row gap-6 border-2 border-brand-primary/30 dark:border-brand-primary/50 bg-brand-primary/5 dark:bg-brand-primary/10">
+                                <!-- Hover Blur Aura -->
+                                <div class="absolute -top-32 -right-32 w-64 h-64 bg-brand-primary/20 rounded-full blur-[80px] group-hover:bg-brand-primary/50 transition-colors duration-700"></div>
+                                
+                                <div class="flex-grow relative z-10">
+                                    <div class="flex items-center gap-3 mb-4">
+                                        <span class="px-2 py-1 bg-brand-primary text-white font-mono text-[10px] font-bold tracking-widest uppercase rounded">
+                                            Featured Deep Dive
+                                        </span>
+                                        <span class="inline-block px-2 py-0.5 rounded bg-brand-primary/10 text-brand-primary font-mono text-[10px] font-bold tracking-widest border border-brand-primary/20">
+                                            {{ featured_log.date|short_timesince }}
+                                        </span>
+                                    </div>
+                                    <h3 class="text-2xl md:text-3xl font-display font-bold text-slate-900 group-hover:text-brand-primary transition-colors duration-300 leading-tight mb-4">
+                                        {{ featured_log.title }}
+                                    </h3>
+                                    <div class="flex gap-2 flex-wrap">
+                                        {% for item in featured_log.stack.all %}
+                                            <span class="text-xs font-mono text-slate-500 uppercase px-2 py-1 bg-white/50 dark:bg-slate-800/50 rounded border border-slate-200 dark:border-slate-700">#{{ item.technology }}</span>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                                <div class="relative z-10 flex items-center justify-end md:justify-center md:px-6">
+                                    <!-- Arrow Icon -->
+                                    <div class="w-12 h-12 rounded-full border-2 border-brand-primary flex items-center justify-center group-hover:bg-brand-primary group-hover:text-white text-brand-primary transition-all duration-300 -rotate-45 group-hover:rotate-0 flex-shrink-0">
+                                        <svg width="16" height="16" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M1 7H13M13 7L7 1M13 7L7 13" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                    </div>
+                                </div>
+                            </article>
+                        </a>
+                    </div>
+                    {% endfor %}
+                {% endif %}
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    {% for log in latest_logs %}
+                        <a href="/logging/?log_id={{ log.id }}" preload="mouseover" class="block group tilt-element interactive-element gsap-reveal">
+                            <article class="glass-panel h-full p-5 relative overflow-hidden flex flex-col min-h-[160px]">
+                                <!-- Hover Blur Aura -->
+                                <div class="absolute -top-16 -right-16 w-32 h-32 bg-brand-primary/20 rounded-full blur-[40px] group-hover:bg-brand-primary/40 transition-colors duration-700"></div>
 
-                        function lerp(start, end, amt) {
-                            return (1 - amt) * start + amt * end;
-                        }
+                                <div class="relative z-10 flex justify-between items-start mb-3">
+                                    <span class="inline-block px-2 py-0.5 rounded bg-brand-primary/10 text-brand-primary font-mono text-[9px] font-bold tracking-widest border border-brand-primary/20">
+                                        {{ log.date|short_timesince }}
+                                    </span>
+                                    <span class="text-[9px] font-mono text-slate-400 uppercase tracking-wider text-right max-w-[50%] truncate">
+                                        {{ log.project.name }}
+                                    </span>
+                                </div>
 
-                        function animateCursor() {
-                            cursorX = lerp(cursorX, mouseX, 0.15);
-                            cursorY = lerp(cursorY, mouseY, 0.15);
-                            cursor.style.setProperty('--cx', `${cursorX}px`);
-                            cursor.style.setProperty('--cy', `${cursorY}px`);
+                                <div class="relative z-10 flex-grow">
+                                    <h3 class="text-lg font-display font-bold text-slate-900 group-hover:text-brand-primary transition-colors duration-300 leading-tight mb-3">
+                                        {{ log.title }}
+                                    </h3>
+                                </div>
 
-                            if (Math.abs(mouseX - cursorX) > 0.1 || Math.abs(mouseY - cursorY) > 0.1) {
-                                requestAnimationFrame(animateCursor);
-                            } else {
-                                isMoving = false;
-                            }
-                        }
+                                <div class="relative z-10 mt-auto flex justify-between items-end">
+                                    <div class="flex gap-1.5 flex-wrap max-w-[70%]">
+                                        {% for item in log.stack.all|slice:":3" %}
+                                            <span class="text-[9px] font-mono text-slate-500 uppercase">#{{ item.technology }}</span>
+                                        {% endfor %}
+                                    </div>
+                                    <!-- Arrow Icon -->
+                                    <div class="w-7 h-7 rounded-full border border-slate-300 flex items-center justify-center group-hover:bg-brand-primary group-hover:border-brand-primary group-hover:text-white text-slate-500 transition-all duration-300 -rotate-45 group-hover:rotate-0 flex-shrink-0">
+                                        <svg width="10" height="10" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M1 7H13M13 7L7 1M13 7L7 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                    </div>
+                                </div>
+                            </article>
+                        </a>
+                    {% endfor %}
+                </div>
+                <div class="mt-8 md:hidden text-center magnetic-wrap">
+                    <a href="/logging/" preload="mouseover" class="mt-4 btn-magnetic font-mono text-sm interactive-element w-full">
+                        [ VIEW_ALL_LOGS ]
+                    </a>
+                </div>
+            </section>
 
-                        document.querySelectorAll('.interactive-element').forEach(el => {
-                            el.addEventListener('mouseenter', () => cursor.classList.add('hover-state'));
-                            el.addEventListener('mouseleave', () => cursor.classList.remove('hover-state'));
-                        });
-                    }
+            <section class="py-16 section-gsap">
+                <div class="flex items-center gap-6 mb-12 gsap-reveal">
+                    <h2 class="text-4xl md:text-5xl font-display font-medium text-slate-900">{% translate "Technical Architecture" %}</h2>
+                    <div class="h-px flex-grow bg-gradient-to-r from-slate-300 to-transparent"></div>
+                </div>
 
+                <div class="flex flex-wrap gap-3 gsap-stagger-container">
+                    {% for strength in technical_strengths %}
+                        <button data-tech="{{ strength.technology }}" class="tech-filter-btn gsap-stagger-item px-5 py-3 rounded-full border border-slate-200 bg-white/80 text-slate-700 font-mono text-sm hover:border-brand-primary hover:text-brand-primary hover:bg-white transition-all duration-300 cursor-pointer interactive-element will-change-transform">
+                            {{ strength.technology }} ({{ strength.project_count }} / {{ total_projects }})
+                        </button>
+                    {% endfor %}
+                </div>
+            </section>
 
-            // --- 2. Magnetic Buttons ---
-                    const magnets = document.querySelectorAll('.magnetic-wrap');
-                    magnets.forEach(magnet => {
-                        const btn = magnet.querySelector('.btn-magnetic');
-                        magnet.addEventListener('mousemove', (e) => {
-                            const rect = magnet.getBoundingClientRect();
-                            const x = e.clientX - rect.left - rect.width / 2;
-                            const y = e.clientY - rect.top - rect.height / 2;
+            <section id="projects" class="py-16 section-gsap">
+                <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16 gsap-reveal">
+                    <div>
+                        <h2 class="text-4xl md:text-5xl font-display font-medium text-slate-900 mb-4">{% translate "Independent Systems" %}</h2>
+                        <p class="text-brand-primary font-mono text-sm font-medium">{% translate "NOT_COURSE_PROJECTS // ACTIVE_WORK" %}</p>
+                    </div>
+                </div>
 
-                    // Move button slightly towards mouse
-                            gsap.to(btn, {
-                                x: x * 0.4,
-                                y: y * 0.4,
-                                duration: 0.5,
-                                ease: "power2.out"
-                            });
-                        });
-                        magnet.addEventListener('mouseleave', () => {
-                            gsap.to(btn, {
-                                x: 0,
-                                y: 0,
-                                duration: 0.7,
-                                ease: "elastic.out(1, 0.3)"
-                            });
-                        });
-                    });
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <!-- DJANGO INTEGRATION: Projects Loop -->
+                    {% for project in projects %}
+                        <a href="{% url 'project_detail' project.id %}" preload="mouseover" class="project-card filter-transition block group tilt-element interactive-element gsap-reveal" data-techs="{% for item in project.stack.all %}{{ item.technology }},{% endfor %}">
+                            <article class="glass-panel h-full p-8 md:p-10 relative overflow-hidden flex flex-col justify-between">
+                        <!-- Hover Blur Aura -->
+                                <div class="absolute -top-32 -right-32 w-64 h-64 bg-brand-primary/20 rounded-full blur-[80px] group-hover:bg-brand-primary/40 transition-colors duration-700"></div>
 
+                                <div class="relative z-10 mb-8">
+                                    <div class="flex justify-between items-start mb-6">
+                                        <h3 class="text-3xl font-display font-bold text-slate-900 group-hover:text-brand-primary transition-colors duration-300">
+                                            {{ project.name }}
+                                        </h3>
+                                <!-- Arrow Icon -->
+                                        <div class="w-10 h-10 rounded-full border border-slate-300 flex items-center justify-center group-hover:bg-brand-primary group-hover:border-brand-primary group-hover:text-white text-slate-500 transition-all duration-300 -rotate-45 group-hover:rotate-0">
+                                            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M1 7H13M13 7L7 1M13 7L7 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                            </svg>
+                                        </div>
+                                    </div>
+                                    <p class="text-slate-600 leading-relaxed font-light">
+                                        {{ project.description }}
+                                    </p>
+                                </div>
 
-            // --- 3. 3D Tilt Effect on Cards (Vanilla JS) ---
-                    const tiltElements = document.querySelectorAll('.tilt-element');
-                    tiltElements.forEach(el => {
-                        const panel = el.querySelector('.glass-panel');
-                        el.addEventListener('mousemove', e => {
-                            const rect = el.getBoundingClientRect();
-                            const x = e.clientX - rect.left;
-                            const y = e.clientY - rect.top;
-                            const centerX = rect.width / 2;
-                            const centerY = rect.height / 2;
-                            const rotateX = ((y - centerY) / centerY) * -10;
-                            const rotateY = ((x - centerX) / centerX) * 10;
+                                <div class="relative z-10 mt-auto">
+                                    <p class="inline-block px-3 py-1 rounded border border-slate-200 bg-white/60 font-mono text-xs text-brand-primary font-medium">
+                                        STACK:
+                                        {% for item in project.stack.all %}{{item.technology}}{% if forloop.last %}.{% else %}, {% endif %}{% endfor %}
+                                    </p>
+                                </div>
+                            </article>
+                        </a>
+                    {% endfor %}
+                </div>
+            </section>
 
-                            panel.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
-                        });
+        </main>
 
-                        el.addEventListener('mouseleave', () => {
-                            panel.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
-                        });
-                    });
-
-
-            // --- 4. Smooth Scrolling (Lenis) ---
-                    const lenis = new Lenis({
-                        duration: 1.2,
-                        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // easeOutExpo
-                        direction: 'vertical',
-                        gestureDirection: 'vertical',
-                        smooth: true,
-                        mouseMultiplier: 1,
-                    });
-
-                    function raf(time) {
-                        lenis.raf(time);
-                        requestAnimationFrame(raf);
-                    }
-                    requestAnimationFrame(raf);
-
-
-            // --- 5. GSAP Scroll Animations ---
-                    gsap.registerPlugin(ScrollTrigger);
-
-            // Generic fade up reveal
-                    gsap.utils.toArray('.gsap-reveal').forEach(elem => {
-                        gsap.fromTo(elem,
-                            { y: 50, opacity: 0 },
-                            {
-                                y: 0,
-                                opacity: 1,
-                                duration: 1,
-                                ease: "power3.out",
-                                scrollTrigger: {
-                                    trigger: elem,
-                                    start: "top 85%", // Triggers when element is 85% from top of viewport
-                                }
-                            }
-                        );
-                    });
-
-            // Staggered reveals for tech stack
-                    gsap.utils.toArray('.gsap-stagger-container').forEach(container => {
-                        const items = container.querySelectorAll('.gsap-stagger-item');
-                        gsap.set(items, { y: 20, opacity: 0 }); // Pre-set to avoid forced reflows from computed style reads
-                        gsap.to(items, {
-                            y: 0,
-                            opacity: 1,
-                            duration: 0.6,
-                            stagger: 0.03, // Faster, cheaper CPU overhead
-                            ease: "power2.out",
-                            scrollTrigger: {
-                                trigger: container,
-                                start: "top 85%",
-                            }
-                        });
-                    });
-
-
-            // --- 6. Telematics WebGL Background Removed ---
-
-                    console.log(
-                        "%c🟢 SYSTEM ONLINE: Josué Leiva\n%c\nLooking under the hood? I like your style. \nI'm a Telematics Engineering student specializing in backend architecture, distributed systems, and real-time telemetry. \n\nLet's build something scalable. \n👉 GitHub: https://github.com/josue-fourier\n👉 LinkedIn: https://linkedin.com/in/josuenicolas",
-                        "color: #10b981; font-size: 24px; font-weight: 900; font-family: 'Archivo Black', sans-serif; text-shadow: 0 0 10px rgba(16,185,129,0.5);",
-                        "color: #a6adbb; font-size: 14px; font-family: monospace; line-height: 1.5;"
-                    );
-            // Ambient Scroll Progress
-                    window.addEventListener('scroll', () => {
-                        const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-                        const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-                        const scrolled = (winScroll / height) * 100;
-                        document.getElementById("scroll-progress").style.width = scrolled + "%";
-                    });
-
-            // --- 7. Frontend Project Filtering ---
-            // --- 7. Frontend Project Filtering ---
-                    const filterBtns = document.querySelectorAll('.tech-filter-btn');
-                    const projectCards = document.querySelectorAll('.project-card');
-                    let activeFilter = null;
-
-                    filterBtns.forEach(btn => {
-                        btn.addEventListener('click', () => {
-                            const tech = btn.getAttribute('data-tech');
-
-                            if (activeFilter === tech) {
-                                // Clear filter
-                                activeFilter = null;
-                                filterBtns.forEach(b => {
-                                    b.classList.remove('border-brand-primary', 'text-brand-primary', 'bg-white', 'shadow-md');
-                                    b.classList.add('border-slate-200', 'text-slate-700', 'bg-white/80');
-                                });
-                                projectCards.forEach(card => {
-                                    card.style.display = 'block';
-                                    requestAnimationFrame(() => card.classList.remove('filter-hidden'));
-                                });
-                                setTimeout(() => ScrollTrigger.refresh(), 450);
-                            } else {
-                                // Apply filter
-                                activeFilter = tech;
-                                filterBtns.forEach(b => {
-                                    if (b === btn) {
-                                        b.classList.remove('border-slate-200', 'text-slate-700', 'bg-white/80');
-                                        b.classList.add('border-brand-primary', 'text-brand-primary', 'bg-white', 'shadow-md');
-                                    } else {
-                                        b.classList.remove('border-brand-primary', 'text-brand-primary', 'bg-white', 'shadow-md');
-                                        b.classList.add('border-slate-200', 'text-slate-700', 'bg-white/80');
-                                    }
-                                });
-
-                                projectCards.forEach(card => {
-                                    const cardTechs = card.getAttribute('data-techs');
-                                    if ((`,` + cardTechs).includes(`,${tech},`)) {
-                                        card.style.display = 'block';
-                                        requestAnimationFrame(() => card.classList.remove('filter-hidden'));
-                                    } else {
-                                        card.classList.add('filter-hidden');
-                                        setTimeout(() => {
-                                            if (activeFilter === tech) card.style.display = 'none';
-                                        }, 400); // Wait for CSS transition
-                                    }
-                                });
-                                setTimeout(() => ScrollTrigger.refresh(), 450);
-                            }
-                        });
-                    });
-                </script>
+        <footer class="relative z-10 border-t border-slate-200 mt-20">
+            <div class="max-w-[1600px] mx-auto px-6 pt-10 pb-24 md:py-10 flex flex-col md:flex-row justify-between items-center gap-6 text-xs font-mono text-slate-500 uppercase">
+                <p>josnic.cl © 2026</p>
+                <div class="flex gap-6">
+                    <a href="https://github.com/josue-fourier" class="hover:text-brand-primary transition-colors interactive-element">[ SOURCE ]</a>
+                    <span class="text-slate-400">JOSUE LEIVA</span>
+                    <span class="text-slate-400">{% translate "Frontend created with Antigravity" %}</span>
+                </div>
             </div>
-        </div>
-    </body>
-</html>
+        </footer>
+    </div>
+</div>
+{% endblock %}

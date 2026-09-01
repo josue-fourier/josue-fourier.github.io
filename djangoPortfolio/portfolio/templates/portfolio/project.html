@@ -1,0 +1,81 @@
+{% extends 'portfolio/base.html' %}
+{% load static %}
+{% load hud_tags %}
+{% load i18n %}
+
+{% block meta %}
+    <title>{{ project.name }} // Project Case Study</title>
+    <meta property="og:title" content="{{ project.name }} | Project Case Study">
+    <meta property="og:description" content="{{ project.description }}">
+    <meta property="og:type" content="article">
+{% endblock %}
+
+{% block extra_head %}
+    <!-- Mermaid.js for rendering diagrams -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+{% endblock %}
+
+{% block content %}
+    <div class="max-w-4xl mx-auto px-6 py-12 md:py-20 relative z-10">
+        <!-- Back button -->
+        <a href="/" class="inline-flex items-center gap-2 text-sm font-mono text-[var(--brand-primary)] hover:opacity-80 transition-opacity mb-10">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="19" y1="12" x2="5" y2="12"></line>
+                <polyline points="12 19 5 12 12 5"></polyline>
+            </svg>
+            RETURN_TO_SYSTEM
+        </a>
+
+        <header class="mb-12 border-b border-black/10 dark:border-white/10 pb-8">
+            <h1 class="text-4xl md:text-5xl font-bold mb-6 text-slate-900 dark:text-white">{{ project.name }}</h1>
+            <p class="text-lg text-slate-600 dark:text-slate-400 mb-6">{{ project.description }}</p>
+            
+            <div class="flex flex-wrap items-center gap-4 mb-6">
+                {% if project.link %}
+                <a href="{{ project.link }}" target="_blank" class="px-4 py-2 bg-[var(--brand-primary)] text-white font-mono text-sm rounded font-medium hover:opacity-90 transition-opacity">
+                    [ VIEW_LIVE_PROJECT ]
+                </a>
+                {% endif %}
+            </div>
+
+            {% if project.stack.all %}
+            <div class="flex flex-wrap gap-2 mt-6">
+                {% for tech in project.stack.all %}
+                <span class="px-3 py-1 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-xs font-mono rounded-full border border-slate-200 dark:border-slate-700 shadow-sm font-medium">
+                    {{ tech.technology }}
+                </span>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </header>
+
+        <main class="markdown-body relative z-10 glass-panel p-8">
+            {% if project.html_content %}
+                {{ project.html_content|safe }}
+            {% else %}
+                <p><em>No detailed case study available yet.</em></p>
+            {% endif %}
+        </main>
+    </div>
+{% endblock %}
+
+{% block extra_js %}
+    <script>
+        // Initialize Mermaid (theme switcher logic is handled by base.html)
+        mermaid.initialize({ startOnLoad: false, theme: document.documentElement.getAttribute('data-theme') === 'dracula' ? 'dark' : 'default' });
+
+        document.addEventListener("DOMContentLoaded", () => {
+            // Convert python-markdown code blocks into div.mermaid for mermaid.js
+            document.querySelectorAll('code.language-mermaid').forEach(el => {
+                const pre = el.parentElement;
+                const div = document.createElement('div');
+                div.className = 'mermaid';
+                div.textContent = el.textContent;
+                pre.replaceWith(div);
+            });
+
+            // Run mermaid
+            mermaid.run();
+        });
+    </script>
+{% endblock %}

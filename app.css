@@ -6,7 +6,7 @@
 
 /* 3. Import and configure the daisyUI plugin */
 @plugin "daisyui" {
-    themes: lofi --default, light;
+    themes: lofi --default, dracula;
 }
 
 /* 4. Define your custom theme variables */

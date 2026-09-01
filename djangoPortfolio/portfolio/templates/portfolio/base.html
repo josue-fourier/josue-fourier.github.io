@@ -1,0 +1,143 @@
+{% load static %}
+{% load i18n %}
+{% load hud_tags %}
+<!DOCTYPE html>
+<html lang="en" data-theme="lofi">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        {% block meta %}
+        <meta property="og:title" content="Josué Leiva | Telematics Engineering">
+        <meta property="og:description" content="System-focused Telematics Engineering student specializing in backend architecture, distributed systems, and real-time telemetry.">
+        <meta property="og:type" content="website">
+        <title>Josué Leiva | Telematics Engineering</title>
+        {% endblock %}
+
+        <!-- Static CSS -->
+        <link rel="stylesheet" href="{% static 'portfolio/main.css' %}">
+        <link rel="stylesheet" href="{% static 'portfolio/css/custom.css' %}">
+
+        <!-- Google Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+        <!-- GSAP & Lenis for Smooth Scrolling and Premium Animations -->
+        <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+        <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+        <script defer src="https://unpkg.com/@studio-freight/lenis@1.0.34/dist/lenis.min.js"></script>
+
+        <!-- HTMX -->
+        <script defer src="https://unpkg.com/htmx.org@1.9.10"></script>
+        <script defer src="https://unpkg.com/htmx.org/dist/ext/preload.js"></script>
+
+        <!-- Analytics -->
+        <script defer src="https://analytics.proyectosos.cl/script.js" data-website-id="31434b15-eee1-4168-8f9f-bd302c62124a"></script>
+
+        {% block extra_head %}{% endblock %}
+    </head>
+    <body class="antialiased selection:bg-brand-primary selection:text-white text-slate-800">
+        <div class="aura-bg">
+            <div class="aura-layer-1" aria-hidden="true"></div>
+            <div class="aura-layer-2" aria-hidden="true"></div>
+            <div class="aura-layer-3" aria-hidden="true"></div>
+            
+            <div style="position: relative; z-index: 1;">
+                <div id="boot-loader-bar" class="fixed top-0 left-0 h-1 bg-brand-primary z-[10000] w-0 transition-all duration-500 ease-out shadow-[0_0_10px_#0d9488]"></div>
+                <div id="scroll-progress" class="fixed top-0 left-0 h-1 bg-brand-primary z-[9000] shadow-[0_0_10px_#0d9488] w-0 transition-all duration-100 ease-out"></div>
+                <div class="noise-overlay"></div>
+                <div id="cursor"></div>
+
+                <!-- Global Navigation Bar -->
+                <nav class="fixed bottom-6 left-1/2 -translate-x-1/2 md:top-6 md:bottom-auto z-[9600] glass-panel px-2 py-2 rounded-full flex items-center gap-1 md:gap-2 shadow-2xl border border-slate-200/50 backdrop-blur-xl transition-all hover:shadow-brand-primary/10 interactive-element">
+                    <a href="/" class="px-4 py-2 rounded-full font-mono text-[10px] md:text-xs font-bold transition-all tracking-widest uppercase text-center {% if request.path == '/' %}bg-brand-primary text-white shadow-md shadow-brand-primary/20{% else %}text-slate-600 hover:text-brand-primary hover:bg-brand-primary/10{% endif %}">Home</a>
+                    <a href="/#projects" class="px-4 py-2 rounded-full font-mono text-[10px] md:text-xs font-bold transition-all tracking-widest uppercase text-center text-slate-600 hover:text-brand-primary hover:bg-brand-primary/10">Projects</a>
+                    <a href="/logging/" class="px-4 py-2 rounded-full font-mono text-[10px] md:text-xs font-bold transition-all tracking-widest uppercase text-center {% if '/logging/' in request.path %}bg-brand-primary text-white shadow-md shadow-brand-primary/20{% else %}text-slate-600 hover:text-brand-primary hover:bg-brand-primary/10{% endif %}">Logs</a>
+                </nav>
+
+                {% block floating_toggles %}
+                <!-- Theme Toggle (Fixed Top Right) -->
+                <div class="fixed top-6 right-[120px] z-[9500] interactive-element">
+                    <label class="swap swap-rotate glass-panel px-3 py-2 text-slate-600 hover:text-slate-900 transition-colors">
+                        <input type="checkbox" class="theme-controller" value="dracula" />
+                        <!-- sun icon -->
+                        <svg class="swap-off fill-current w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5.64,17l-.71.71a1,1,0,0,0,0,1.41,1,1,0,0,0,1.41,0l.71-.71A1,1,0,0,0,5.64,17ZM5,12a1,1,0,0,0-1-1H3a1,1,0,0,0,0,2H4A1,1,0,0,0,5,12Zm7-7a1,1,0,0,0,1-1V3a1,1,0,0,0-2,0V4A1,1,0,0,0,12,5ZM5.64,7.05a1,1,0,0,0,.7.29,1,1,0,0,0,.71-.29,1,1,0,0,0,0-1.41l-.71-.71A1,1,0,0,0,4.93,6.34Zm12,.29a1,1,0,0,0,.7-.29l.71-.71a1,1,0,1,0-1.41-1.41L17,5.64a1,1,0,0,0,0,1.41A1,1,0,0,0,17.66,7.34ZM21,11H20a1,1,0,0,0,0,2h1a1,1,0,0,0,0-2Zm-9,8a1,1,0,0,0-1,1v1a1,1,0,0,0,2,0V20A1,1,0,0,0,12,19ZM18.36,17A1,1,0,0,0,17,18.36l.71.71a1,1,0,0,0,1.41,0,1,1,0,0,0,0-1.41ZM12,6.5A5.5,5.5,0,1,0,17.5,12,5.51,5.51,0,0,0,12,6.5Zm0,9A3.5,3.5,0,1,1,15.5,12,3.5,3.5,0,0,1,12,15.5Z"/></svg>
+                        <!-- moon icon -->
+                        <svg class="swap-on fill-current w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21.64,13a1,1,0,0,0-1.05-.14,8.05,8.05,0,0,1-3.37.73A8.15,8.15,0,0,1,9.08,5.49a8.59,8.59,0,0,1,.25-2A1,1,0,0,0,8,2.36,10.14,10.14,0,1,0,22,14.05,1,1,0,0,0,21.64,13Zm-9.5,6.69A8.14,8.14,0,0,1,7.08,5.22v.27A10.15,10.15,0,0,0,17.22,15.63a9.79,9.79,0,0,0,2.1-.22A8.11,8.11,0,0,1,12.14,19.73Z"/></svg>
+                    </label>
+                </div>
+
+                <!-- Language Selector (Fixed Top Right) -->
+                <div class="fixed top-6 right-6 z-[9500] dropdown dropdown-end interactive-element">
+                    <!-- Dropdown Trigger Button -->
+                    <div tabindex="0" role="button" class="glass-panel px-4 py-2 flex items-center gap-2 font-mono text-xs text-slate-600 hover:text-slate-900 transition-colors">
+                        <!-- Globe Icon -->
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-brand-primary">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="2" y1="12" x2="22" y2="12"></line>
+                            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                        </svg>
+                        {% get_current_language as LANGUAGE_CODE %}
+                        <span class="uppercase">{{ LANGUAGE_CODE }}</span>
+                        <!-- Chevron Icon -->
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="opacity-50">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    </div>
+
+                    <!-- Dropdown Menu -->
+                    <ul tabindex="0" class="dropdown-content menu p-2 shadow-xl bg-white/90 backdrop-blur-md rounded-box w-40 mt-2 border border-slate-200">
+                        <li class="menu-title px-4 py-2 text-[10px] uppercase tracking-wider text-slate-400 font-mono">Select Language</li>
+                        {% get_available_languages as LANGUAGES %}
+                        {% get_language_info_list for LANGUAGES as languages %}
+                        {% for language in languages %}
+                            <li>
+                                <form action="{% url 'set_language' %}" method="post" class="block w-full">
+                                    {% csrf_token %}
+                                    <input name="next" type="hidden" value="{{ request.get_full_path }}">
+                                    <input name="language" type="hidden" value="{{ language.code }}">
+                                    <button type="submit" class="w-full text-left font-mono text-sm px-4 py-2 hover:bg-brand-primary/10 hover:text-brand-primary rounded transition-colors {% if language.code == LANGUAGE_CODE %}text-brand-primary font-bold bg-brand-primary/5{% else %}text-slate-600{% endif %}">
+                                        {{ language.name_local }} ({{ language.code }})
+                                    </button>
+                                </form>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endblock %}
+
+                <!-- MAIN CONTENT BLOCK -->
+                {% block content %}
+                {% endblock %}
+
+                {% block footer %}
+                <!-- Footer -->
+                <footer class="pt-12 pb-24 md:pb-12 mt-20 border-t border-slate-200/50 dark:border-slate-800/50">
+                    <div class="max-w-6xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-4">
+                        <div class="font-mono text-xs text-slate-500">
+                            © {% now "Y" %} Josué Leiva. {% translate "All rights reserved." %}
+                        </div>
+                        <div class="flex gap-4">
+                            <a href="https://github.com/josue-fourier" target="_blank" class="text-slate-400 hover:text-brand-primary transition-colors">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+                            </a>
+                            <a href="https://linkedin.com/in/josuenicolas" target="_blank" class="text-slate-400 hover:text-brand-primary transition-colors">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+                            </a>
+                        </div>
+                        <div class="font-mono text-xs flex items-center gap-2">
+                            <span class="w-2 h-2 rounded-full bg-brand-primary animate-pulse"></span>
+                            <span class="text-slate-400">{% translate "Frontend created with Antigravity" %}</span>
+                        </div>
+                    </div>
+                </footer>
+                {% endblock %}
+
+                <!-- Main JS -->
+                <script src="{% static 'portfolio/js/main.js' %}"></script>
+                {% block extra_js %}{% endblock %}
+            </div>
+        </div>
+    </body>
+</html>
