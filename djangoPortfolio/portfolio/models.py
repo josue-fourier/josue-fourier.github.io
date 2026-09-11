@@ -35,6 +35,7 @@ class LogEntry(models.Model):
     class Meta:
         get_latest_by="-date"
         ordering = ["-date",]
+        verbose_name_plural = "Log entries"
 
     def __str__(self):
         return f"Log {self.title}"

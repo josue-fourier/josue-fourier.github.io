@@ -1,28 +1,125 @@
 /* 1. Import Tailwind v4 Core */
+
 @import "tailwindcss";
 
+
+
 /* 2. Tell Tailwind where to look for class names in your Django templates */
+
 @source "./djangoPortfolio/**/templates/**/*.html";
 
+
+
 /* 3. Import and configure the daisyUI plugin */
+
 @plugin "daisyui" {
+
     themes: lofi --default, dracula;
+
 }
 
+
+
 /* 4. Define your custom theme variables */
+
 @theme {
+
     /* Overriding default Tailwind font families */
+
     --font-sans: "Inter", sans-serif;
+
     --font-mono: "JetBrains Mono", monospace;
 
+
+
     /* Custom font utilities (creates class="font-display" and class="font-info") */
+
     --font-display: "Space Grotesk", sans-serif;
+
     /* Or keep "Archivo Black" if you prefer! */
+
     --font-info: "Miranda Sans", sans-serif;
 
+
+
     /* Custom color utilities (creates class="text-brand-primary", class="bg-brand-dark", etc.) */
+
     --color-brand-dark: #f8fafc;
+
     --color-brand-primary: #0d9488;
+
     /* Teal for telematics/tech vibe (darker for light mode readability) */
+
     --color-brand-accent: #2563eb;
+
+}
+
+
+
+/* 5. Custom Variants */
+
+@custom-variant dark (&:where([data-theme="dracula"], :root:has(.theme-controller[value="dracula"]:checked)), &:where([data-theme="dracula"] *, :root:has(.theme-controller[value="dracula"]:checked) *));
+
+
+
+/* 6. Dracula Theme Overrides */
+
+:root:has(input.theme-controller[value=dracula]:checked), [data-theme=dracula] {
+
+  color-scheme: dark;
+
+  /* Premium 'Slate' Theme - Softer, less dark, highly legible */
+  --color-base-100: #1e293b; /* slate-800 */
+  --color-base-200: #334155; /* slate-700 */
+  --color-base-300: #475569; /* slate-600 */
+  --color-base-content: #f1f5f9; /* slate-100 */
+  
+  /* Keep brand teal for primary */
+  --color-primary: oklch(65% 0.12 180); /* Muted, professional teal */
+  --color-primary-content: oklch(98% 0 0);
+  
+  /* Neutral accents for professional look */
+  --color-secondary: oklch(35% 0.01 250); 
+  --color-secondary-content: oklch(95% 0 0);
+
+  --color-accent: oklch(85% 0.14 150);
+
+  --color-accent-content: oklch(20% 0.02 280);
+
+  --color-neutral: oklch(35% 0.02 280);
+
+  --color-neutral-content: oklch(95% 0 0);
+
+  --color-info: oklch(80% 0.1 230);
+
+  --color-info-content: oklch(15% 0.02 280);
+
+  --color-success: oklch(78% 0.15 150);
+
+  --color-success-content: oklch(15% 0.02 280);
+
+  --color-warning: oklch(85% 0.15 80);
+
+  --color-warning-content: oklch(15% 0.02 280);
+
+  --color-error: oklch(65% 0.2 25);
+
+  --color-error-content: oklch(98% 0 0);
+
+  --radius-selector: 1rem;
+
+  --radius-field: 0.5rem;
+
+  --radius-box: 1rem;
+
+  --size-selector: 0.25rem;
+
+  --size-field: 0.25rem;
+
+  --border: 1px;
+
+  --depth: 0;
+
+  --noise: 0;
+
 }

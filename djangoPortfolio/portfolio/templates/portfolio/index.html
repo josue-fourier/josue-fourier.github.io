@@ -26,11 +26,11 @@
                     <div class="md:col-span-7 md:col-start-1 gsap-reveal mt-12 md:mt-0">
                         <div class="w-full bg-white/50 dark:bg-slate-900/50 p-6 md:p-8 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm backdrop-blur-sm">
                             <div class="flex justify-between items-center mb-6">
-                                <p class="font-mono text-xs text-slate-500 uppercase tracking-widest flex items-center gap-2">
+                                <p class="font-mono text-xs text-slate-500 dark:text-slate-300 uppercase tracking-widest flex items-center gap-2">
                                     <span class="w-2 h-2 rounded-full bg-brand-primary animate-pulse"></span>
                                     {% translate "Github_Activity // Live" %}
                                 </p>
-                                <span class="text-xs font-mono text-slate-400">josue-fourier</span>
+                                <span class="text-xs font-mono text-slate-400 dark:text-slate-300">josue-fourier</span>
                             </div>
                             <div class="w-full overflow-hidden opacity-90 hover:opacity-100 transition-opacity duration-300">
                                 <img src="https://ghchart.rshah.org/14b8a6/josue-fourier" alt="Josue's GitHub Activity Graph" loading="lazy" class="w-full h-auto gh-chart drop-shadow-sm" />
@@ -40,8 +40,8 @@
 
                     <!-- Right Side: Bio & Links -->
                     <div class="md:col-span-5 md:col-start-8 gsap-reveal">
-                        <p class="text-xl text-slate-600 font-light leading-relaxed mb-10">
-                            {% translate "Telematics Engineering student specializing in" %} <strong class="text-slate-900 font-medium">{% translate "backend architecture" %}</strong>, <strong class="text-slate-900 font-medium">{% translate "distributed systems" %}</strong>, {% translate "and" %} <strong class="text-slate-900 font-medium">{% translate "real-time telemetry" %}</strong>.
+                        <p class="text-xl text-slate-600 dark:text-slate-300 font-light leading-relaxed mb-10">
+                            {% translate "Telematics Engineering student specializing in" %} <strong class="text-slate-900 dark:text-slate-100 font-medium">{% translate "backend architecture" %}</strong>, <strong class="text-slate-900 dark:text-slate-100 font-medium">{% translate "distributed systems" %}</strong>, {% translate "and" %} <strong class="text-slate-900 dark:text-slate-100 font-medium">{% translate "real-time telemetry" %}</strong>.
                         </p>
 
                         <div class="flex flex-wrap gap-6 items-center">
@@ -68,7 +68,7 @@
             <section class="py-12 section-gsap">
                 <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 gsap-reveal">
                     <div>
-                        <h2 class="text-3xl md:text-4xl font-display font-medium text-slate-900 mb-2">{% translate "Engineering Logs" %}</h2>
+                        <h2 class="text-3xl md:text-4xl font-display font-medium text-slate-900 dark:text-slate-100 mb-2">{% translate "Engineering Logs" %}</h2>
                         <p class="text-brand-primary font-mono text-xs font-medium">{% translate "SYSTEM_TELEMETRY // LATEST_REPORTS" %}</p>
                     </div>
                     <div class="magnetic-wrap hidden md:block">
@@ -94,7 +94,7 @@
                                             {{ featured_log.date|short_timesince }}
                                         </span>
                                     </div>
-                                    <h3 class="text-2xl md:text-3xl font-display font-bold text-slate-900 group-hover:text-brand-primary transition-colors duration-300 leading-tight mb-4">
+                                    <h3 class="text-2xl md:text-3xl font-display font-bold text-slate-900 dark:text-slate-100 group-hover:text-brand-primary transition-colors duration-300 leading-tight mb-4">
                                         {{ featured_log.title }}
                                     </h3>
                                     <div class="flex gap-2 flex-wrap">
@@ -127,13 +127,13 @@
                                     <span class="inline-block px-2 py-0.5 rounded bg-brand-primary/10 text-brand-primary font-mono text-[9px] font-bold tracking-widest border border-brand-primary/20">
                                         {{ log.date|short_timesince }}
                                     </span>
-                                    <span class="text-[9px] font-mono text-slate-400 uppercase tracking-wider text-right max-w-[50%] truncate">
+                                    <span class="text-[9px] font-mono text-slate-400 dark:text-slate-300 uppercase tracking-wider text-right max-w-[50%] truncate">
                                         {{ log.project.name }}
                                     </span>
                                 </div>
 
                                 <div class="relative z-10 flex-grow">
-                                    <h3 class="text-lg font-display font-bold text-slate-900 group-hover:text-brand-primary transition-colors duration-300 leading-tight mb-3">
+                                    <h3 class="text-lg font-display font-bold text-slate-900 dark:text-slate-100 group-hover:text-brand-primary transition-colors duration-300 leading-tight mb-3">
                                         {{ log.title }}
                                     </h3>
                                 </div>
@@ -141,11 +141,11 @@
                                 <div class="relative z-10 mt-auto flex justify-between items-end">
                                     <div class="flex gap-1.5 flex-wrap max-w-[70%]">
                                         {% for item in log.stack.all|slice:":3" %}
-                                            <span class="text-[9px] font-mono text-slate-500 uppercase">#{{ item.technology }}</span>
+                                            <span class="text-[9px] font-mono text-slate-500 dark:text-slate-300 uppercase">#{{ item.technology }}</span>
                                         {% endfor %}
                                     </div>
                                     <!-- Arrow Icon -->
-                                    <div class="w-7 h-7 rounded-full border border-slate-300 flex items-center justify-center group-hover:bg-brand-primary group-hover:border-brand-primary group-hover:text-white text-slate-500 transition-all duration-300 -rotate-45 group-hover:rotate-0 flex-shrink-0">
+                                    <div class="w-7 h-7 rounded-full border border-slate-300 dark:border-slate-700 flex items-center justify-center group-hover:bg-brand-primary group-hover:border-brand-primary group-hover:text-white text-slate-500 dark:text-slate-300 transition-all duration-300 -rotate-45 group-hover:rotate-0 flex-shrink-0">
                                         <svg width="10" height="10" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M1 7H13M13 7L7 1M13 7L7 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                         </svg>
@@ -164,13 +164,13 @@
 
             <section class="py-16 section-gsap">
                 <div class="flex items-center gap-6 mb-12 gsap-reveal">
-                    <h2 class="text-4xl md:text-5xl font-display font-medium text-slate-900">{% translate "Technical Architecture" %}</h2>
+                    <h2 class="text-4xl md:text-5xl font-display font-medium text-slate-900 dark:text-slate-100">{% translate "Technical Architecture" %}</h2>
                     <div class="h-px flex-grow bg-gradient-to-r from-slate-300 to-transparent"></div>
                 </div>
 
                 <div class="flex flex-wrap gap-3 gsap-stagger-container">
                     {% for strength in technical_strengths %}
-                        <button data-tech="{{ strength.technology }}" class="tech-filter-btn gsap-stagger-item px-5 py-3 rounded-full border border-slate-200 bg-white/80 text-slate-700 font-mono text-sm hover:border-brand-primary hover:text-brand-primary hover:bg-white transition-all duration-300 cursor-pointer interactive-element will-change-transform">
+                        <button data-tech="{{ strength.technology }}" class="tech-filter-btn gsap-stagger-item px-5 py-3 rounded-full border border-slate-200 dark:border-slate-700 bg-white/80 dark:bg-slate-800/80 text-slate-700 dark:text-slate-200 font-mono text-sm hover:border-brand-primary hover:text-brand-primary hover:bg-white dark:hover:bg-slate-800 transition-all duration-300 cursor-pointer interactive-element will-change-transform">
                             {{ strength.technology }} ({{ strength.project_count }} / {{ total_projects }})
                         </button>
                     {% endfor %}
@@ -180,7 +180,7 @@
             <section id="projects" class="py-16 section-gsap">
                 <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16 gsap-reveal">
                     <div>
-                        <h2 class="text-4xl md:text-5xl font-display font-medium text-slate-900 mb-4">{% translate "Independent Systems" %}</h2>
+                        <h2 class="text-4xl md:text-5xl font-display font-medium text-slate-900 dark:text-slate-100 mb-4">{% translate "Independent Systems" %}</h2>
                         <p class="text-brand-primary font-mono text-sm font-medium">{% translate "NOT_COURSE_PROJECTS // ACTIVE_WORK" %}</p>
                     </div>
                 </div>
@@ -188,52 +188,51 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
             <!-- DJANGO INTEGRATION: Projects Loop -->
                     {% for project in projects %}
-                        <a href="{% url 'project_detail' project.id %}" preload="mouseover" class="project-card filter-transition block group tilt-element interactive-element gsap-reveal" data-techs="{% for item in project.stack.all %}{{ item.technology }},{% endfor %}">
+                        <div class="project-card filter-transition block group tilt-element gsap-reveal" data-techs="{% for item in project.stack.all %}{{ item.technology }},{% endfor %}">
                             <article class="glass-panel h-full p-8 md:p-10 relative overflow-hidden flex flex-col justify-between">
-                        <!-- Hover Blur Aura -->
-                                <div class="absolute -top-32 -right-32 w-64 h-64 bg-brand-primary/20 rounded-full blur-[80px] group-hover:bg-brand-primary/40 transition-colors duration-700"></div>
+                                <!-- Full Card Link -->
+                                <a href="{% url 'project_detail' project.id %}" preload="mouseover" class="absolute inset-0 z-0 interactive-element"></a>
+                                
+                                <!-- Hover Blur Aura -->
+                                <div class="absolute -top-32 -right-32 w-64 h-64 bg-brand-primary/20 rounded-full blur-[80px] group-hover:bg-brand-primary/40 transition-colors duration-700 pointer-events-none"></div>
 
-                                <div class="relative z-10 mb-8">
+                                <div class="relative z-10 mb-8 pointer-events-none">
                                     <div class="flex justify-between items-start mb-6">
-                                        <h3 class="text-3xl font-display font-bold text-slate-900 group-hover:text-brand-primary transition-colors duration-300">
+                                        <h3 class="text-3xl font-display font-bold text-slate-900 dark:text-slate-100 group-hover:text-brand-primary transition-colors duration-300">
                                             {{ project.name }}
                                         </h3>
                                 <!-- Arrow Icon -->
-                                        <div class="w-10 h-10 rounded-full border border-slate-300 flex items-center justify-center group-hover:bg-brand-primary group-hover:border-brand-primary group-hover:text-white text-slate-500 transition-all duration-300 -rotate-45 group-hover:rotate-0">
+                                        <div class="w-10 h-10 rounded-full border border-slate-300 dark:border-slate-700 flex items-center justify-center group-hover:bg-brand-primary group-hover:border-brand-primary group-hover:text-white text-slate-500 dark:text-slate-300 transition-all duration-300 -rotate-45 group-hover:rotate-0">
                                             <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <path d="M1 7H13M13 7L7 1M13 7L7 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                             </svg>
                                         </div>
                                     </div>
-                                    <p class="text-slate-600 leading-relaxed font-light">
+                                    <p class="text-slate-600 dark:text-slate-300 leading-relaxed font-light">
                                         {{ project.description }}
                                     </p>
                                 </div>
 
-                                <div class="relative z-10 mt-auto">
-                                    <p class="inline-block px-3 py-1 rounded border border-slate-200 bg-white/60 font-mono text-xs text-brand-primary font-medium">
+                                <div class="relative z-20 mt-auto flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-t border-slate-200/50 dark:border-slate-700/50 pt-6 pointer-events-none">
+                                    <p class="inline-block px-3 py-1 rounded border border-slate-200 dark:border-slate-700 bg-white/60 dark:bg-slate-800/60 font-mono text-xs text-brand-primary font-medium">
                                         STACK:
                                         {% for item in project.stack.all %}{{item.technology}}{% if forloop.last %}.{% else %}, {% endif %}{% endfor %}
                                     </p>
+                                    
+                                    {% if project.link %}
+                                    <a href="{{ project.link }}" target="_blank" class="pointer-events-auto px-4 py-2 bg-brand-primary/10 text-brand-primary font-mono text-[10px] font-bold rounded-full border border-brand-primary/30 hover:bg-brand-primary hover:text-white hover:shadow-[0_0_15px_rgba(13,148,136,0.5)] transition-all interactive-element flex items-center gap-2 uppercase tracking-widest w-fit">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-brand-primary animate-pulse group-hover:bg-white transition-colors"></span>
+                                        VIEW_LIVE
+                                    </a>
+                                    {% endif %}
                                 </div>
                             </article>
-                        </a>
+                        </div>
                     {% endfor %}
                 </div>
             </section>
 
         </main>
-
-        <footer class="relative z-10 border-t border-slate-200 mt-20">
-            <div class="max-w-[1600px] mx-auto px-6 pt-10 pb-24 md:py-10 flex flex-col md:flex-row justify-between items-center gap-6 text-xs font-mono text-slate-500 uppercase">
-                <p>josnic.cl © 2026</p>
-                <div class="flex gap-6">
-                    <a href="https://github.com/josue-fourier" class="hover:text-brand-primary transition-colors interactive-element">[ SOURCE ]</a>
-                    <span class="text-slate-400">JOSUE LEIVA</span>
-                    <span class="text-slate-400">{% translate "Frontend created with Antigravity" %}</span>
-                </div>
-            </div>
-        </footer>
     </div>
 </div>
 {% endblock %}

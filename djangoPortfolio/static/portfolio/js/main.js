@@ -227,13 +227,16 @@ if (filterBtns.length > 0 && projectCards.length > 0) {
 const themeController = document.querySelector('.theme-controller');
 const htmlTag = document.documentElement;
 
-// Load saved theme
+// Load saved theme or sync with browser-restored checkbox state
 const savedTheme = localStorage.getItem('theme');
 if (savedTheme) {
     htmlTag.setAttribute('data-theme', savedTheme);
     if (themeController) {
         themeController.checked = (savedTheme === 'dracula');
     }
+} else if (themeController && themeController.checked) {
+    // If browser restored the checkbox state across reload without triggering 'change'
+    htmlTag.setAttribute('data-theme', themeController.value);
 }
 
 // Listen for changes

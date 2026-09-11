@@ -28,20 +28,23 @@
 
         <header class="mb-12 border-b border-black/10 dark:border-white/10 pb-8">
             <h1 class="text-4xl md:text-5xl font-bold mb-6 text-slate-900 dark:text-white">{{ project.name }}</h1>
-            <p class="text-lg text-slate-600 dark:text-slate-400 mb-6">{{ project.description }}</p>
+            <p class="text-lg text-slate-600 dark:text-slate-200 mb-6">{{ project.description }}</p>
             
             <div class="flex flex-wrap items-center gap-4 mb-6">
                 {% if project.link %}
-                <a href="{{ project.link }}" target="_blank" class="px-4 py-2 bg-[var(--brand-primary)] text-white font-mono text-sm rounded font-medium hover:opacity-90 transition-opacity">
-                    [ VIEW_LIVE_PROJECT ]
-                </a>
+                <div class="relative group mt-2">
+                    <div class="absolute -inset-1 bg-gradient-to-r from-brand-primary to-blue-500 rounded-lg blur opacity-25 group-hover:opacity-75 transition duration-500 group-hover:duration-200"></div>
+                    <a href="{{ project.link }}" target="_blank" class="relative px-6 py-3 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg flex items-center justify-center text-brand-primary font-mono text-sm font-bold tracking-widest hover:-translate-y-0.5 hover:shadow-lg transition-all duration-300">
+                        [ VIEW_LIVE_PROJECT ]
+                    </a>
+                </div>
                 {% endif %}
             </div>
 
             {% if project.stack.all %}
             <div class="flex flex-wrap gap-2 mt-6">
                 {% for tech in project.stack.all %}
-                <span class="px-3 py-1 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-xs font-mono rounded-full border border-slate-200 dark:border-slate-700 shadow-sm font-medium">
+                <span class="px-3 py-1 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-100 text-xs font-mono rounded-full border border-slate-200 dark:border-slate-700 shadow-sm font-medium">
                     {{ tech.technology }}
                 </span>
                 {% endfor %}
