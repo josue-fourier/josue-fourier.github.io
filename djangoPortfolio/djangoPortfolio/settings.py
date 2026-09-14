@@ -149,6 +149,7 @@ STATICFILES_DIRS = [
 CSRF_TRUSTED_ORIGINS = [
     'https://www.josnic.cl',
     'https://josnic.cl',
+    'http://127.0.0.1:81',
 ]
 
 # Tell Django to trust the X-Forwarded-Proto header sent by Nginx/Cloudflare

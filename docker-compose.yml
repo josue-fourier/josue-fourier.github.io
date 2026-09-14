@@ -1,8 +1,8 @@
 services:
   db:
     image: postgres:15-alpine
-    ports:
-      - 5432:5432
+    #ports:
+    #  - "5432:5432"
     restart: unless-stopped
     environment:
       - POSTGRES_USER
@@ -20,8 +20,8 @@ services:
     build: .
     restart: unless-stopped
     command: sh -c "python manage.py collectstatic --noinput --clear && gunicorn djangoPortfolio.wsgi:application --bind 0.0.0.0:8000 --workers 3 --access-logfile - --error-logfile - --log-level info --capture-output"
-    ports:
-      - 7777:8000
+    #ports:
+    #  - 7777:8000
     volumes:
       - static_volume:/app/staticfiles
     env_file:
