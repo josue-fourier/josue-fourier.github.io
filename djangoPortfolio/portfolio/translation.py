@@ -1,6 +1,6 @@
 from modeltranslation.translator import TranslationOptions, register
 
-from .models import Project, LogEntry
+from .models import Project, LogEntry, SkillCategory, CoreSkill
 
 
 @register(Project)
@@ -10,3 +10,11 @@ class ProjectTranslationOptions(TranslationOptions):
 @register(LogEntry)
 class LogEntryTranslationOptions(TranslationOptions):
     fields = ('title','content',)
+
+@register(SkillCategory)
+class SkillCategoryTranslationOptions(TranslationOptions):
+    fields = ('name',)
+
+@register(CoreSkill)
+class CoreSkillTranslationOptions(TranslationOptions):
+    fields = ('name',)

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-03 22:54-0400\n"
+"POT-Creation-Date: 2026-10-01 00:00-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,54 +18,86 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: djangoPortfolio/settings.py:117
-msgid "Spanish"
-msgstr "Español"
+#: diff.txt:293 portfolio/templates/portfolio/index.html:31
+msgid "Github_Activity // Live"
+msgstr "Actividad_Github // En_Vivo"
 
-#: djangoPortfolio/settings.py:118
-msgid "English"
-msgstr "Inglés"
-
-#: portfolio/templates/portfolio/index.html:195
-msgid "System: Online // Availability: Open"
-msgstr "Sistema: En Línea // Disponibilidad: Abierto"
-
-#: portfolio/templates/portfolio/index.html:206
+#: diff.txt:306 portfolio/templates/portfolio/index.html:44
 msgid "Telematics Engineering student specializing in"
 msgstr "Estudiante de Ingeniería Civil Telemática especializándose en"
 
-#: portfolio/templates/portfolio/index.html:206
+#: diff.txt:306 portfolio/templates/portfolio/index.html:44
 msgid "backend architecture"
 msgstr "arquitectura backend"
 
-#: portfolio/templates/portfolio/index.html:206
+#: diff.txt:306
 msgid "distributed systems"
 msgstr "sistemas distribuidos"
 
-#: portfolio/templates/portfolio/index.html:206
+#: diff.txt:306 portfolio/templates/portfolio/index.html:44
 msgid "and"
 msgstr "y"
 
-#: portfolio/templates/portfolio/index.html:206
+#: diff.txt:306
 msgid "real-time telemetry"
 msgstr "telemetría en tiempo real"
 
-#: portfolio/templates/portfolio/index.html:222
+#: diff.txt:381 portfolio/templates/portfolio/base.html:131
+msgid "Frontend created with Antigravity"
+msgstr "Frontend creado con Antigravity"
+
+#: djangoPortfolio/settings.py:122
+msgid "Spanish"
+msgstr "Español"
+
+#: djangoPortfolio/settings.py:123
+msgid "English"
+msgstr "Inglés"
+
+#: portfolio/templates/portfolio/base.html:119
+msgid "All rights reserved."
+msgstr "Todos los derechos reservados."
+
+#: portfolio/templates/portfolio/index.html:16
+msgid "System: Online // Availability: Open"
+msgstr "Sistema: En Línea // Disponibilidad: Abierto"
+
+#: portfolio/templates/portfolio/index.html:44
+msgid "automation"
+msgstr "automatización"
+
+#: portfolio/templates/portfolio/index.html:44
+msgid "flows"
+msgstr "flujos"
+
+#: portfolio/templates/portfolio/index.html:44
+msgid "human impact"
+msgstr "impacto humano"
+
+#: portfolio/templates/portfolio/index.html:60
 msgid "Download_CV.pdf"
 msgstr "Descargar_CV.pdf"
 
-#: portfolio/templates/portfolio/index.html:232
+#: portfolio/templates/portfolio/index.html:71
+msgid "Core Competencies"
+msgstr "Competencias Principales"
+
+#: portfolio/templates/portfolio/index.html:101
+msgid "Engineering Logs"
+msgstr "Registros de Ingeniería"
+
+#: portfolio/templates/portfolio/index.html:102
+msgid "SYSTEM_TELEMETRY // LATEST_REPORTS"
+msgstr "TELEMETRÍA_SISTEMA // ÚLTIMOS_REPORTES"
+
+#: portfolio/templates/portfolio/index.html:203
 msgid "Technical Architecture"
 msgstr "Arquitectura Técnica"
 
-#: portfolio/templates/portfolio/index.html:248
+#: portfolio/templates/portfolio/index.html:220
 msgid "Independent Systems"
 msgstr "Sistemas Independientes"
 
-#: portfolio/templates/portfolio/index.html:249
+#: portfolio/templates/portfolio/index.html:221
 msgid "NOT_COURSE_PROJECTS // ACTIVE_WORK"
 msgstr "PROYECTOS_NO_UNIVERSITARIOS // TRABAJO_ACTIVO"
-
-#: portfolio/templates/portfolio/index.html:297
-msgid "Frontend created thanks to Gemini"
-msgstr "Frontend creado gracias a Gemini"

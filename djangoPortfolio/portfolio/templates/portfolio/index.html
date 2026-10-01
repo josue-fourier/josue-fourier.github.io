@@ -41,7 +41,7 @@
                     <!-- Right Side: Bio & Links -->
                     <div class="md:col-span-5 md:col-start-8 gsap-reveal">
                         <p class="text-xl text-slate-600 dark:text-slate-300 font-light leading-relaxed mb-10">
-                            {% translate "Telematics Engineering student specializing in" %} <strong class="text-slate-900 dark:text-slate-100 font-medium">{% translate "backend architecture" %}</strong>, <strong class="text-slate-900 dark:text-slate-100 font-medium">{% translate "distributed systems" %}</strong>, {% translate "and" %} <strong class="text-slate-900 dark:text-slate-100 font-medium">{% translate "real-time telemetry" %}</strong>.
+                            {% translate "Telematics Engineering student specializing in" %} <strong class="text-slate-900 dark:text-slate-100 font-medium">{% translate "backend architecture" %}</strong>, <strong class="text-slate-900 dark:text-slate-100 font-medium">{% translate "automation" %}</strong>, <strong class="text-slate-900 dark:text-slate-100 font-medium">{% translate "flows" %}</strong>, {% translate "and" %} <strong class="text-slate-900 dark:text-slate-100 font-medium">{% translate "human impact" %}</strong>.
                         </p>
 
                         <div class="flex flex-wrap gap-6 items-center">
@@ -55,10 +55,45 @@
                                     [ LinkedIn ]
                                 </a>
                             </div>
+                            <div class="magnetic-wrap">
+                                <a href="/cv" target="_blank" data-umami-event="CV Download" class="btn-magnetic font-mono text-sm interactive-element">
+                                    [ {% translate "Download_CV.pdf" %} ]
+                                </a>
                             </div>
+                        </div>
                     </div>
                 </div>
             </header>
+
+            <section class="py-12 section-gsap relative">
+                <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8 gsap-reveal relative z-10">
+                    <div class="w-full">
+                        <h2 class="text-3xl md:text-4xl font-display font-medium text-slate-900 dark:text-slate-100 mb-2">{% translate "Core Competencies" %}</h2>
+                        <div class="h-px w-full bg-gradient-to-r from-brand-primary/50 to-transparent mt-4 mb-2"></div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 gsap-stagger-container relative z-10 mb-10">
+                    {% for category in core_competencies %}
+                        <div class="glass-panel p-5 border border-slate-200/50 dark:border-slate-700/50 bg-white/40 dark:bg-slate-800/40 backdrop-blur-md rounded-xl shadow-lg gsap-stagger-item hover:-translate-y-1 transition-all duration-300 overflow-hidden relative group interactive-element">
+                            <!-- Animated border glow -->
+                            <div class="absolute inset-0 bg-gradient-to-br from-brand-primary/10 via-transparent to-brand-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+                            
+                            <h3 class="font-mono text-slate-800 dark:text-slate-200 text-xs font-bold tracking-widest uppercase mb-4 relative z-10 flex items-center gap-2">
+                                <span class="w-2 h-2 rounded-full bg-brand-primary shadow-[0_0_8px_rgba(13,148,136,0.8)] group-hover:animate-pulse"></span>
+                                {{ category.name }}
+                            </h3>
+                            <div class="flex flex-wrap gap-2 relative z-10">
+                                {% for skill in category.skills.all %}
+                                    <span class="px-2.5 py-1 text-[10px] font-mono uppercase tracking-wider rounded border border-brand-primary/30 bg-brand-primary/5 text-slate-700 dark:text-slate-300 group-hover:border-brand-primary/60 group-hover:bg-brand-primary/10 transition-colors duration-300">
+                                        {{ skill.name }}
+                                    </span>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </section>
 
             <section class="py-12 section-gsap">
                 <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 gsap-reveal">
@@ -89,9 +124,12 @@
                                             {{ featured_log.date|short_timesince }}
                                         </span>
                                     </div>
-                                    <h3 class="text-2xl md:text-3xl font-display font-bold text-slate-900 dark:text-slate-100 group-hover:text-brand-primary transition-colors duration-300 leading-tight mb-4">
+                                    <h3 class="text-2xl md:text-3xl font-display font-bold text-slate-900 dark:text-slate-100 group-hover:text-brand-primary transition-colors duration-300 leading-tight mb-2">
                                         {{ featured_log.title }}
                                     </h3>
+                                    <p class="text-slate-600 dark:text-slate-400 font-light text-sm mb-4 leading-relaxed">
+                                        {{ featured_log.content|striptags|truncatechars:60 }}
+                                    </p>
                                     <div class="flex gap-2 flex-wrap">
                                         {% for item in featured_log.stack.all %}
                                             <span class="text-xs font-mono text-slate-500 uppercase px-2 py-1 bg-white/50 dark:bg-slate-800/50 rounded border border-slate-200 dark:border-slate-700">#{{ item.technology }}</span>
@@ -128,9 +166,12 @@
                                 </div>
 
                                 <div class="relative z-10 flex-grow">
-                                    <h3 class="text-lg font-display font-bold text-slate-900 dark:text-slate-100 group-hover:text-brand-primary transition-colors duration-300 leading-tight mb-3">
+                                    <h3 class="text-lg font-display font-bold text-slate-900 dark:text-slate-100 group-hover:text-brand-primary transition-colors duration-300 leading-tight mb-2">
                                         {{ log.title }}
                                     </h3>
+                                    <p class="text-slate-600 dark:text-slate-400 font-light text-xs mb-3 leading-relaxed">
+                                        {{ log.content|striptags|truncatechars:60 }}
+                                    </p>
                                 </div>
 
                                 <div class="relative z-10 mt-auto flex justify-between items-end">
@@ -171,6 +212,7 @@
                     {% endfor %}
                 </div>
             </section>
+
 
             <section id="projects" class="py-16 section-gsap">
                 <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16 gsap-reveal">

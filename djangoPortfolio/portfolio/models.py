@@ -39,3 +39,26 @@ class LogEntry(models.Model):
 
     def __str__(self):
         return f"Log {self.title}"
+
+
+class SkillCategory(models.Model):
+    name = models.CharField(null=False, blank=False, max_length=100)
+    order = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        ordering = ["order", "name"]
+        verbose_name_plural = "Skill Categories"
+
+    def __str__(self):
+        return self.name
+
+class CoreSkill(models.Model):
+    category = models.ForeignKey(SkillCategory, on_delete=models.CASCADE, related_name="skills")
+    name = models.CharField(null=False, blank=False, max_length=100)
+
+    class Meta:
+        ordering = ["category__order", "name"]
+        verbose_name_plural = "Core Skills"
+
+    def __str__(self):
+        return self.name

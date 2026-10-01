@@ -6,7 +6,7 @@ from django.http import Http404, HttpResponse
 from django.shortcuts import get_object_or_404, render
 from django.views.generic import TemplateView
 
-from .models import LogEntry, Project, TechnicalStrength
+from .models import LogEntry, Project, TechnicalStrength, SkillCategory
 
 
 class RootPage (TemplateView):
@@ -18,6 +18,7 @@ class RootPage (TemplateView):
 
         context["projects"] = Project.objects.filter(active=True).prefetch_related("stack").annotate(stack_count=Count("stack")).order_by("-stack_count")
         context["technical_strengths"] = TechnicalStrength.objects.all().annotate(project_count=Count("project")).filter(project_count__gt=0).order_by("-project_count")
+        context["core_competencies"] = SkillCategory.objects.prefetch_related("skills").all()
         
         # Featured logs
         featured_logs = LogEntry.objects.filter(is_featured=True).select_related("project").prefetch_related("stack").order_by("-date")
@@ -25,9 +26,9 @@ class RootPage (TemplateView):
         
         if featured_logs.exists():
             featured_ids = [log.id for log in featured_logs]
-            context["latest_logs"] = LogEntry.objects.exclude(id__in=featured_ids).defer("content").select_related("project").prefetch_related("stack").order_by("-date")[:3]
+            context["latest_logs"] = LogEntry.objects.exclude(id__in=featured_ids).select_related("project").prefetch_related("stack").order_by("-date")[:3]
         else:
-            context["latest_logs"] = LogEntry.objects.defer("content").select_related("project").prefetch_related("stack").order_by("-date")[:3]
+            context["latest_logs"] = LogEntry.objects.select_related("project").prefetch_related("stack").order_by("-date")[:3]
             
         context["total_projects"] = Project.objects.count()
 
