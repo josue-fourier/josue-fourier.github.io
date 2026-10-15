@@ -56,9 +56,17 @@
                                 </a>
                             </div>
                             <div class="magnetic-wrap">
-                                <a href="/cv" target="_blank" data-umami-event="CV Download" class="btn-magnetic font-mono text-sm interactive-element">
+
+                                {% get_current_language as LANGUAGE_CODE %}
+                                <!-- Cambiar el inicio del link, para cambiar la redirección según el idioma, sin repetir el link completo-->
+                                {% if LANGUAGE_CODE == "es" %}
+                                <a href="/cv-es" target="_blank" data-umami-event="CV Download ES" class="btn-magnetic font-mono text-sm interactive-element">
+                                {% else %}
+                                <a href="/cv-en" target="_blank" data-umami-event="CV Download EN" class="btn-magnetic font-mono text-sm interactive-element">
+                                {% endif %}
                                     [ {% translate "Download_CV.pdf" %} ]
                                 </a>
+
                             </div>
                         </div>
                     </div>
