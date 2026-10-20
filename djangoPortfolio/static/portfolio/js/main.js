@@ -247,3 +247,20 @@ if (themeController) {
         localStorage.setItem('theme', newTheme);
     });
 }
+
+// --- 9. Carousel Navigation Event Delegation ---
+// Global event delegation works seamlessly with HTMX dynamic swaps and Lenis smooth scroll
+document.addEventListener('click', (e) => {
+    const btn = e.target.closest('[data-carousel-action]');
+    if (!btn) return;
+    const targetId = btn.getAttribute('data-carousel-target');
+    const container = document.getElementById(targetId);
+    if (!container) return;
+    const action = btn.getAttribute('data-carousel-action');
+    const scrollAmount = container.clientWidth;
+    container.scrollBy({
+        left: action === 'next' ? scrollAmount : -scrollAmount,
+        behavior: 'smooth'
+    });
+});
+
