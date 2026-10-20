@@ -28,7 +28,7 @@ SECRET_KEY = config("SECRET_KEY", default="unsafe-M0YO4O$!n7V6^x&5*9sY7nP8NAGlV7
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config("DEBUG", default=False, cast=bool)
 
-ALLOWED_HOSTS = ['127.0.0.1', 'josnic.cl', 'www.josnic.cl', '192.168.1.105']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'testserver', 'josnic.cl', 'www.josnic.cl', '192.168.1.105']
 
 
 # Application definition
@@ -82,16 +82,41 @@ WSGI_APPLICATION = "djangoPortfolio.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
+def _resolve_db_host():
+    host = config("POSTGRES_HOST", default="127.0.0.1")
+    if host in ("127.0.0.1", "localhost"):
+        import socket
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        s.settimeout(0.3)
+        try:
+            s.connect((host, int(config("POSTGRES_PORT", default="5432"))))
+            s.close()
+            return host
+        except (socket.error, socket.timeout, Exception):
+            s.close()
+            try:
+                import subprocess
+                out = subprocess.check_output(
+                    ["docker", "inspect", "-f", "{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}", "n0t-f0ur13rgithubio-db-1"],
+                    text=True, stderr=subprocess.DEVNULL
+                ).strip()
+                if out:
+                    return out
+            except Exception:
+                pass
+    return host
+
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
         "NAME": config("POSTGRES_DB"),
         "USER": config("POSTGRES_USER"),
         "PASSWORD": config("POSTGRES_PASSWORD"),
-        "HOST": config("POSTGRES_HOST"),
+        "HOST": _resolve_db_host(),
         "PORT": config("POSTGRES_PORT", default="5432")
     }
 }
+
 
 
 # Password validation
@@ -142,6 +167,9 @@ STATIC_ROOT = BASE_DIR / "staticfiles"
 STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
+
+MEDIA_URL = "/media/"
+MEDIA_ROOT = BASE_DIR / "media"
 
 # settings.py
 
