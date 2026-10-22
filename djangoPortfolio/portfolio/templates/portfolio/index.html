@@ -78,7 +78,7 @@
         <div class="grid grid-cols-1 lg:grid-cols-12 divide-y lg:divide-y-0 lg:divide-x divide-white/[0.08]">
             
             <!-- Left Cell (7 Cols) -->
-            <div class="lg:col-span-7 min-h-[78vh] p-5 sm:p-8 md:p-12 lg:p-16 flex flex-col justify-between kinetic-block bg-[#050506]">
+            <div class="lg:col-span-7 lg:min-h-[78vh] p-5 sm:p-8 md:p-12 lg:p-16 flex flex-col justify-between kinetic-block bg-[#050506]">
                 <div>
                     <!-- Top Status Tag & Operator Eyebrow -->
                     <div class="flex items-center justify-between gap-3 mb-4 sm:mb-6 md:mb-8 font-mono text-[11px] text-zinc-400 uppercase tracking-wider">
@@ -104,12 +104,16 @@
                         </h1>
 
                         <!-- Profile Portrait Frame with Hover Color Reveal, Corner Calibrations & Moniker Tag -->
-                        <div class="profile-portrait-frame relative shrink-0 aspect-square w-20 h-20 sm:w-28 sm:h-28 md:w-36 md:h-36 lg:w-40 lg:h-40 xl:w-44 xl:h-44 overflow-hidden border border-white/20 bg-[#070709] group shadow-2xl">
+                        <div class="profile-portrait-frame relative shrink-0 aspect-square w-24 h-24 sm:w-32 sm:h-32 md:w-44 md:h-44 lg:w-40 lg:h-40 xl:w-48 xl:h-48 border border-white/20 bg-[#070709] group shadow-2xl">
+                            <!-- Rotating Aura Ring, Holographic Scanline & Glare -->
+                            <span class="portrait-aura" aria-hidden="true"></span>
+                            <span class="portrait-scan" aria-hidden="true"></span>
+                            <span class="portrait-glare" aria-hidden="true"></span>
                             <!-- HUD Corner Calibrations -->
                             <div class="absolute top-1 left-1 w-2 h-2 border-t border-l border-emerald-400/80 z-10 pointer-events-none transition-opacity duration-300 group-hover:border-emerald-300"></div>
                             <div class="absolute bottom-1 right-1 w-2 h-2 border-b border-r border-emerald-400/80 z-10 pointer-events-none transition-opacity duration-300 group-hover:border-emerald-300"></div>
 
-                            <img src="{% static 'portfolio/images/profile.jpg' %}" alt="{% translate 'Josué Leiva' %}" class="w-full h-full object-cover object-center filter grayscale contrast-110 group-hover:grayscale-0 transition-all duration-500 scale-100 group-hover:scale-105" loading="eager">
+                            <img src="{% static 'portfolio/images/profile.jpg' %}" alt="{% translate 'Josué Leiva' %}" class="portrait-img relative w-full h-full object-cover object-center filter grayscale contrast-110 group-hover:grayscale-0 transition-all duration-500" loading="eager">
 
                             <!-- Corner Moniker / ID Badge -->
                             <div class="absolute bottom-0 right-0 bg-[#050506]/90 backdrop-blur-sm px-1.5 py-0.5 border-t border-l border-white/15 font-mono text-[8px] sm:text-[9px] md:text-[10px] text-emerald-400 font-bold uppercase tracking-wider flex items-center gap-1 z-10">
@@ -130,14 +134,14 @@
                 <!-- Action Button Row with Bottom-to-Top Fill Sweep & Crisp Vector Icons -->
                 <div class="flex flex-wrap gap-2.5 sm:gap-3 mt-6 sm:mt-8 md:mt-10 pt-5 sm:pt-6 border-t border-white/[0.08] relative">
                     <div class="grid-line-h absolute top-0 left-0 right-0"></div>
-                    <a href="https://github.com/josue-fourier" target="_blank" rel="noopener noreferrer" class="btn-sweep px-4 sm:px-5 py-2.5 sm:py-3 border border-white/15 text-zinc-200 font-mono text-[11px] sm:text-xs uppercase tracking-wider flex items-center gap-2 sm:gap-2.5 group">
+                    <a href="https://github.com/josue-fourier" target="_blank" rel="noopener noreferrer" data-umami-event="social-click" data-umami-event-network="github" data-umami-event-location="hero" class="btn-sweep px-4 sm:px-5 py-2.5 sm:py-3 border border-white/15 text-zinc-200 font-mono text-[11px] sm:text-xs uppercase tracking-wider flex items-center gap-2 sm:gap-2.5 group">
                         <svg class="w-4 h-4 text-zinc-300 group-hover:text-white transition-colors shrink-0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                             <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"></path>
                         </svg>
                         <span>GitHub</span>
                         <span class="text-[10px] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform">↗</span>
                     </a>
-                    <a href="https://linkedin.com/in/josuenicolas" target="_blank" rel="noopener noreferrer" class="btn-sweep px-4 sm:px-5 py-2.5 sm:py-3 border border-white/15 text-zinc-200 font-mono text-[11px] sm:text-xs uppercase tracking-wider flex items-center gap-2 sm:gap-2.5 group">
+                    <a href="https://linkedin.com/in/josuenicolas" target="_blank" rel="noopener noreferrer" data-umami-event="social-click" data-umami-event-network="linkedin" data-umami-event-location="hero" class="btn-sweep px-4 sm:px-5 py-2.5 sm:py-3 border border-white/15 text-zinc-200 font-mono text-[11px] sm:text-xs uppercase tracking-wider flex items-center gap-2 sm:gap-2.5 group">
                         <svg class="w-4 h-4 text-zinc-300 group-hover:text-white transition-colors shrink-0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                             <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"></path>
                         </svg>
@@ -145,7 +149,7 @@
                         <span class="text-[10px] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform">↗</span>
                     </a>
                     {% if LANGUAGE_CODE == "es" %}
-                    <a href="/cv-es" target="_blank" class="btn-sweep btn-sweep-emerald px-4 sm:px-5 py-2.5 sm:py-3 border border-emerald-500/50 text-emerald-400 font-mono text-[11px] sm:text-xs uppercase tracking-wider flex items-center gap-2 sm:gap-2.5 group">
+                    <a href="/cv-es" target="_blank" data-umami-event="cv-download" data-umami-event-lang="es" class="btn-sweep btn-sweep-emerald px-4 sm:px-5 py-2.5 sm:py-3 border border-emerald-500/50 text-emerald-400 font-mono text-[11px] sm:text-xs uppercase tracking-wider flex items-center gap-2 sm:gap-2.5 group">
                         <svg class="w-4 h-4 text-emerald-400 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                             <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
                             <polyline points="14 2 14 8 20 8"></polyline>
@@ -156,7 +160,7 @@
                         <span class="text-[10px] group-hover:translate-y-0.5 transition-transform">↓</span>
                     </a>
                     {% else %}
-                    <a href="/cv-en" target="_blank" class="btn-sweep btn-sweep-emerald px-4 sm:px-5 py-2.5 sm:py-3 border border-emerald-500/50 text-emerald-400 font-mono text-[11px] sm:text-xs uppercase tracking-wider flex items-center gap-2 sm:gap-2.5 group">
+                    <a href="/cv-en" target="_blank" data-umami-event="cv-download" data-umami-event-lang="en" class="btn-sweep btn-sweep-emerald px-4 sm:px-5 py-2.5 sm:py-3 border border-emerald-500/50 text-emerald-400 font-mono text-[11px] sm:text-xs uppercase tracking-wider flex items-center gap-2 sm:gap-2.5 group">
                         <svg class="w-4 h-4 text-emerald-400 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                             <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
                             <polyline points="14 2 14 8 20 8"></polyline>
@@ -171,13 +175,13 @@
             </div>
 
             <!-- Right Cell (5 Cols: 01 / CORE SKILLS & Live Status) -->
-            <div class="lg:col-span-5 flex flex-col divide-y divide-white/[0.08] bg-[#08080B]">
+            <div class="hero-right-cell lg:col-span-5 flex flex-col md:grid md:grid-cols-2 lg:flex lg:flex-col divide-y md:divide-y-0 md:divide-x lg:divide-x-0 lg:divide-y divide-white/[0.08] bg-[#08080B]">
                 <!-- Mobile Segmented Tab Selector (< lg) -->
-                <div class="flex lg:hidden border-b border-white/[0.08] bg-[#050506] font-mono text-[10px] sm:text-[11px] select-none">
-                    <button type="button" id="hero-tab-capabilities" class="hero-tab-btn flex-1 py-2.5 sm:py-3 px-3 sm:px-4 text-center font-bold tracking-wider uppercase transition-colors text-emerald-400 border-b-2 border-emerald-500 bg-white/[0.02]" data-tab="capabilities">
+                <div class="flex md:hidden border-b border-white/[0.08] bg-[#050506] font-mono text-[10px] sm:text-[11px] select-none">
+                    <button type="button" id="hero-tab-capabilities" data-umami-event="hero-tab" data-umami-event-tab="core-skills" class="hero-tab-btn flex-1 py-2.5 sm:py-3 px-3 sm:px-4 text-center font-bold tracking-wider uppercase transition-colors text-emerald-400 border-b-2 border-emerald-500 bg-white/[0.02]" data-tab="capabilities">
                         {% translate "01 / CORE SKILLS" %}
                     </button>
-                    <button type="button" id="hero-tab-telemetry" class="hero-tab-btn flex-1 py-2.5 sm:py-3 px-3 sm:px-4 text-center font-bold tracking-wider uppercase transition-colors text-zinc-500 hover:text-zinc-300 border-b-2 border-transparent" data-tab="telemetry">
+                    <button type="button" id="hero-tab-telemetry" data-umami-event="hero-tab" data-umami-event-tab="live-status" class="hero-tab-btn flex-1 py-2.5 sm:py-3 px-3 sm:px-4 text-center font-bold tracking-wider uppercase transition-colors text-zinc-500 hover:text-zinc-300 border-b-2 border-transparent" data-tab="telemetry">
                         {% translate "LIVE STATUS" %}
                     </button>
                 </div>
@@ -270,7 +274,7 @@
                         {% endif %}
 
                         {% for log in latest_logs|slice:":1" %}{% if log.title %}
-                        <a href="#chapter-04" data-target-log-id="{{ log.id }}" class="hero-log-jump-link spec-matrix-row flex items-start justify-between gap-4 py-3 px-2 group/link cursor-pointer">
+                        <a href="#chapter-04" data-umami-event="hero-latest-log-click" data-umami-event-log-id="{{ log.id }}" data-target-log-id="{{ log.id }}" class="hero-log-jump-link spec-matrix-row flex items-start justify-between gap-4 py-3 px-2 group/link cursor-pointer">
                             <span class="spec-label text-zinc-500 uppercase tracking-wider">{% translate "LATEST LOG" %}</span>
                             <span class="text-zinc-200 group-hover/link:text-emerald-400 transition-colors text-right break-words min-w-0">
                                 {{ log.title }}
@@ -306,7 +310,7 @@
                 <span class="w-2 h-2 bg-emerald-500 animate-pulse"></span>
                 <span class="font-bold uppercase tracking-wider text-white">{% translate "GITHUB ACTIVITY" %}</span>
                 <span class="text-zinc-600">//</span>
-                <a href="https://github.com/josue-fourier" target="_blank" rel="noopener noreferrer" class="text-zinc-400 hover:text-emerald-400 transition-colors">
+                <a href="https://github.com/josue-fourier" target="_blank" rel="noopener noreferrer" data-umami-event="social-click" data-umami-event-network="github" data-umami-event-location="footer" class="text-zinc-400 hover:text-emerald-400 transition-colors">
                     josue-fourier ↗
                 </a>
             </div>
@@ -347,7 +351,7 @@
             </div>
             <div class="flex items-center gap-4 text-zinc-400">
                 <span class="hidden md:inline font-bold text-emerald-400">{% translate "5★ C++ RANK" %}</span>
-                <a href="https://www.hackerrank.com/profile/xmenmagnet" target="_blank" rel="noopener noreferrer" class="font-mono text-xs text-emerald-400 hover:text-white transition-colors">
+                <a href="https://www.hackerrank.com/profile/xmenmagnet" target="_blank" rel="noopener noreferrer" data-umami-event="social-click" data-umami-event-network="hackerrank" data-umami-event-location="benchmarks" class="font-mono text-xs text-emerald-400 hover:text-white transition-colors">
                     {% translate "HACKERRANK_PROFILE" %} ↗
                 </a>
             </div>
@@ -435,7 +439,7 @@
 
                 <!-- Col 11-12: Right-Aligned Domain Verification Action -->
                 <div class="lg:col-span-1 flex items-center justify-end">
-                    <a href="{{ badge.domain_url }}" target="_blank" rel="noopener noreferrer" class="badge-domain-link font-mono text-[11px] text-emerald-400 hover:text-white transition-colors uppercase tracking-wider inline-flex items-center gap-1 font-bold whitespace-nowrap">
+                    <a href="{{ badge.domain_url }}" target="_blank" rel="noopener noreferrer" data-umami-event="badge-domain-click" data-umami-event-badge="{{ badge.badge_name }}" class="badge-domain-link font-mono text-[11px] text-emerald-400 hover:text-white transition-colors uppercase tracking-wider inline-flex items-center gap-1 font-bold whitespace-nowrap">
                         <span>{% translate "View Domain" %}</span>
                         <span class="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform">↗</span>
                     </a>
@@ -468,7 +472,7 @@
             <div class="flex flex-wrap items-center gap-1.5">
                 <span class="text-zinc-600 text-[10px] hidden sm:inline mr-1">{% translate "FILTER:" %}</span>
                 {% for strength in technical_strengths %}
-                <button type="button" data-tech="{{ strength.technology }}" class="tech-filter-btn px-2.5 py-1 border border-white/10 text-zinc-400 font-mono text-[10px] uppercase tracking-wider cursor-pointer">
+                <button type="button" data-umami-event="tech-filter" data-umami-event-tech="{{ strength.technology }}" data-tech="{{ strength.technology }}" class="tech-filter-btn px-2.5 py-1 border border-white/10 text-zinc-400 font-mono text-[10px] uppercase tracking-wider cursor-pointer">
                     {{ strength.technology }} ({{ strength.project_count }})
                 </button>
                 {% endfor %}
@@ -530,12 +534,12 @@
 
                         <!-- Direct Navigation Action -->
                         <div class="flex items-center justify-between pt-4 border-t border-white/[0.08] font-mono text-xs">
-                            <a href="{% url 'project_detail' project.id %}" class="btn-sweep btn-sweep-emerald px-4 py-2 border border-emerald-500/40 text-emerald-400 uppercase tracking-wider inline-flex items-center gap-2 font-bold text-[11px]">
+                            <a href="{% url 'project_detail' project.id %}" data-umami-event="project-open" data-umami-event-project="{{ project.name }}" data-umami-event-source="card-button" class="btn-sweep btn-sweep-emerald px-4 py-2 border border-emerald-500/40 text-emerald-400 uppercase tracking-wider inline-flex items-center gap-2 font-bold text-[11px]">
                                 <span>{% translate "Inspect Architecture" %}</span>
                                 <span>→</span>
                             </a>
                             {% if project.link %}
-                            <a href="{{ project.link }}" target="_blank" rel="noopener noreferrer" class="text-zinc-400 hover:text-white transition-colors uppercase tracking-wider text-[11px] inline-flex items-center gap-1">
+                            <a href="{{ project.link }}" target="_blank" rel="noopener noreferrer" data-umami-event="project-external-link" data-umami-event-project="{{ project.name }}" class="text-zinc-400 hover:text-white transition-colors uppercase tracking-wider text-[11px] inline-flex items-center gap-1">
                                 <span>{% translate "Live Demo" %}</span>
                                 <span>↗</span>
                             </a>
@@ -546,14 +550,14 @@
                     <!-- Right Cell: Framed 16:9 Parallax Viewport (7 Cols) -->
                     <div class="lg:col-span-7 p-6 md:p-8 lg:p-10 bg-[#050507] flex items-center justify-center">
                         {% if project.preview_image %}
-                        <a href="{% url 'project_detail' project.id %}" class="w-full aspect-video border border-white/10 overflow-hidden relative block group/img bg-[#050506]">
+                        <a href="{% url 'project_detail' project.id %}" data-umami-event="project-open" data-umami-event-project="{{ project.name }}" data-umami-event-source="card-image" class="w-full aspect-video border border-white/10 overflow-hidden relative block group/img bg-[#050506]">
                             <img src="{{ project.preview_image.file.url }}" alt="{{ project.name }} preview" loading="lazy" class="parallax-media w-full h-full object-cover scale-[1.08] filter grayscale contrast-125 group-hover/img:grayscale-0 transition-all duration-700" />
                             <div class="absolute bottom-0 right-0 bg-[#050506]/90 backdrop-blur-sm border-t border-l border-white/15 px-3 py-1.5 font-mono text-[10px] text-zinc-300 group-hover/img:bg-emerald-500 group-hover/img:text-black group-hover/img:border-emerald-500 transition-colors uppercase tracking-widest font-bold">
                                 {% translate "INSPECT SYSTEM" %} ↗
                             </div>
                         </a>
                         {% else %}
-                        <a href="{% url 'project_detail' project.id %}" class="w-full aspect-video border border-white/10 bg-[#0A0A0D] flex flex-col items-center justify-center font-mono text-xs text-zinc-500 hover:border-emerald-500/40 transition-colors uppercase tracking-widest relative group/img">
+                        <a href="{% url 'project_detail' project.id %}" data-umami-event="project-open" data-umami-event-project="{{ project.name }}" data-umami-event-source="card-image" class="w-full aspect-video border border-white/10 bg-[#0A0A0D] flex flex-col items-center justify-center font-mono text-xs text-zinc-500 hover:border-emerald-500/40 transition-colors uppercase tracking-widest relative group/img">
                             <span>{% translate "ARCHITECTURE DOCUMENTED" %}</span>
                             <div class="absolute bottom-0 right-0 bg-[#050506]/90 border-t border-l border-white/15 px-3 py-1.5 font-mono text-[10px] text-zinc-300 group-hover/img:bg-emerald-500 group-hover/img:text-black transition-colors uppercase tracking-widest font-bold">
                                 {% translate "INSPECT SYSTEM" %} ↗

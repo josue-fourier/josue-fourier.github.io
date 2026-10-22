@@ -1054,6 +1054,70 @@ if (typeof gsap !== 'undefined') {
         tabTelem.addEventListener('click', () => setTab('telemetry'));
     }
 
+    // 2m. Hero Portrait: pointer-driven 3D tilt & glare, plus Umami scroll-chapter / theme events
+    function initPortraitFx() {
+        const frame = document.querySelector('.profile-portrait-frame');
+        if (!frame || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        frame.addEventListener('pointermove', (e) => {
+            const r = frame.getBoundingClientRect();
+            const px = (e.clientX - r.left) / r.width;
+            const py = (e.clientY - r.top) / r.height;
+            frame.style.setProperty('--tilt-y', ((px - 0.5) * 14).toFixed(2) + 'deg');
+            frame.style.setProperty('--tilt-x', ((0.5 - py) * 14).toFixed(2) + 'deg');
+            frame.style.setProperty('--glare-x', (px * 100).toFixed(1) + '%');
+            frame.style.setProperty('--glare-y', (py * 100).toFixed(1) + '%');
+        });
+        frame.addEventListener('pointerleave', () => {
+            frame.style.setProperty('--tilt-x', '0deg');
+            frame.style.setProperty('--tilt-y', '0deg');
+        });
+    }
+    window.initPortraitFx = initPortraitFx;
+    initPortraitFx();
+
+    function track(name, data) {
+        if (window.umami && typeof window.umami.track === 'function') {
+            window.umami.track(name, data);
+        }
+    }
+    window.trackUmami = track;
+
+    // Chapter views (fires once per chapter when >=50% visible)
+    if ('IntersectionObserver' in window) {
+        const seen = new Set();
+        const chapterObs = new IntersectionObserver((entries) => {
+            entries.forEach(en => {
+                if (en.isIntersecting && !seen.has(en.target.id)) {
+                    seen.add(en.target.id);
+                    track('chapter-view', { chapter: en.target.id, title: en.target.dataset.chapterTitle || '' });
+                }
+            });
+        }, { threshold: 0.4 });
+        document.querySelectorAll('section[data-chapter]').forEach(s => chapterObs.observe(s));
+    }
+
+    // Scroll depth milestones
+    (function () {
+        const marks = [25, 50, 75, 100];
+        const fired = new Set();
+        window.addEventListener('scroll', () => {
+            const h = document.documentElement.scrollHeight - window.innerHeight;
+            if (h <= 0) return;
+            const pct = (window.scrollY / h) * 100;
+            marks.forEach(m => {
+                if (pct >= m - 1 && !fired.has(m)) { fired.add(m); track('scroll-depth', { percent: m }); }
+            });
+        }, { passive: true });
+    })();
+
+    // Sidebar chapter nav & theme/language toggles (delegated)
+    document.addEventListener('click', (e) => {
+        const nav = e.target.closest('.sec-nav-link');
+        if (nav) track('chapter-nav-click', { target: nav.dataset.sectionTarget || '' });
+        const theme = e.target.closest('[data-theme-toggle], #theme-toggle');
+        if (theme) track('theme-toggle');
+    });
+
     // 2l. Skills Progressive Disclosure (+N MORE / LESS)
     function initSkillExpander() {
         const expandBtns = document.querySelectorAll('.skill-expand-btn');

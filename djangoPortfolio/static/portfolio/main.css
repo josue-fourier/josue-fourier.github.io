@@ -2820,8 +2820,8 @@
   .h-14 {
     height: calc(var(--spacing) * 14);
   }
-  .h-20 {
-    height: calc(var(--spacing) * 20);
+  .h-24 {
+    height: calc(var(--spacing) * 24);
   }
   .h-32 {
     height: calc(var(--spacing) * 32);
@@ -2855,9 +2855,6 @@
   }
   .min-h-\[76px\] {
     min-height: 76px;
-  }
-  .min-h-\[78vh\] {
-    min-height: 78vh;
   }
   .min-h-\[85vh\] {
     min-height: 85vh;
@@ -2907,8 +2904,8 @@
   .w-12 {
     width: calc(var(--spacing) * 12);
   }
-  .w-20 {
-    width: calc(var(--spacing) * 20);
+  .w-24 {
+    width: calc(var(--spacing) * 24);
   }
   .w-32 {
     width: calc(var(--spacing) * 32);
@@ -2980,12 +2977,6 @@
   .-translate-y-1\/2 {
     --tw-translate-y: calc(calc(1 / 2 * 100%) * -1);
     translate: var(--tw-translate-x) var(--tw-translate-y);
-  }
-  .scale-100 {
-    --tw-scale-x: 100%;
-    --tw-scale-y: 100%;
-    --tw-scale-z: 100%;
-    scale: var(--tw-scale-x) var(--tw-scale-y);
   }
   .scale-\[1\.08\] {
     scale: 1.08;
@@ -3865,12 +3856,6 @@
       --tw-translate-y: calc(var(--spacing) * 0.5);
       translate: var(--tw-translate-x) var(--tw-translate-y);
     }
-    .group-hover\:scale-105:is(:where(.group):hover *) {
-      --tw-scale-x: 105%;
-      --tw-scale-y: 105%;
-      --tw-scale-z: 105%;
-      scale: var(--tw-scale-x) var(--tw-scale-y);
-    }
     .group-hover\:rotate-0:is(:where(.group):hover *) {
       rotate: 0deg;
     }
@@ -4013,11 +3998,11 @@
     .sm\:inline {
       display: inline;
     }
-    .sm\:h-28 {
-      height: calc(var(--spacing) * 28);
+    .sm\:h-32 {
+      height: calc(var(--spacing) * 32);
     }
-    .sm\:w-28 {
-      width: calc(var(--spacing) * 28);
+    .sm\:w-32 {
+      width: calc(var(--spacing) * 32);
     }
     .sm\:w-\[200px\] {
       width: 200px;
@@ -4162,8 +4147,8 @@
     .md\:inline {
       display: inline;
     }
-    .md\:h-36 {
-      height: calc(var(--spacing) * 36);
+    .md\:h-44 {
+      height: calc(var(--spacing) * 44);
     }
     .md\:h-\[750px\] {
       height: 750px;
@@ -4180,8 +4165,8 @@
     .md\:min-h-\[84px\] {
       min-height: 84px;
     }
-    .md\:w-36 {
-      width: calc(var(--spacing) * 36);
+    .md\:w-44 {
+      width: calc(var(--spacing) * 44);
     }
     .md\:w-full {
       width: 100%;
@@ -4245,12 +4230,25 @@
     .md\:gap-8 {
       gap: calc(var(--spacing) * 8);
     }
+    :where(.md\:divide-x > :not(:last-child)) {
+      --tw-divide-x-reverse: 0;
+      border-inline-style: var(--tw-border-style);
+      border-inline-start-width: calc(1px * var(--tw-divide-x-reverse));
+      border-inline-end-width: calc(1px * calc(1 - var(--tw-divide-x-reverse)));
+    }
     :where(.md\:divide-y > :not(:last-child)) {
       --tw-divide-y-reverse: 0;
       border-bottom-style: var(--tw-border-style);
       border-top-style: var(--tw-border-style);
       border-top-width: calc(1px * var(--tw-divide-y-reverse));
       border-bottom-width: calc(1px * calc(1 - var(--tw-divide-y-reverse)));
+    }
+    :where(.md\:divide-y-0 > :not(:last-child)) {
+      --tw-divide-y-reverse: 0;
+      border-bottom-style: var(--tw-border-style);
+      border-top-style: var(--tw-border-style);
+      border-top-width: calc(0px * var(--tw-divide-y-reverse));
+      border-bottom-width: calc(0px * calc(1 - var(--tw-divide-y-reverse)));
     }
     :where(.md\:divide-white\/\[0\.08\] > :not(:last-child)) {
       border-color: color-mix(in srgb, #fff 8%, transparent);
@@ -4372,14 +4370,14 @@
     .lg\:flex {
       display: flex;
     }
-    .lg\:hidden {
-      display: none;
-    }
     .lg\:h-40 {
       height: calc(var(--spacing) * 40);
     }
     .lg\:h-\[820px\] {
       height: 820px;
+    }
+    .lg\:min-h-\[78vh\] {
+      min-height: 78vh;
     }
     .lg\:w-40 {
       width: calc(var(--spacing) * 40);
@@ -4407,6 +4405,19 @@
       border-inline-style: var(--tw-border-style);
       border-inline-start-width: calc(1px * var(--tw-divide-x-reverse));
       border-inline-end-width: calc(1px * calc(1 - var(--tw-divide-x-reverse)));
+    }
+    :where(.lg\:divide-x-0 > :not(:last-child)) {
+      --tw-divide-x-reverse: 0;
+      border-inline-style: var(--tw-border-style);
+      border-inline-start-width: calc(0px * var(--tw-divide-x-reverse));
+      border-inline-end-width: calc(0px * calc(1 - var(--tw-divide-x-reverse)));
+    }
+    :where(.lg\:divide-y > :not(:last-child)) {
+      --tw-divide-y-reverse: 0;
+      border-bottom-style: var(--tw-border-style);
+      border-top-style: var(--tw-border-style);
+      border-top-width: calc(1px * var(--tw-divide-y-reverse));
+      border-bottom-width: calc(1px * calc(1 - var(--tw-divide-y-reverse)));
     }
     :where(.lg\:divide-y-0 > :not(:last-child)) {
       --tw-divide-y-reverse: 0;
@@ -4443,11 +4454,11 @@
     .xl\:inline {
       display: inline;
     }
-    .xl\:h-44 {
-      height: calc(var(--spacing) * 44);
+    .xl\:h-48 {
+      height: calc(var(--spacing) * 48);
     }
-    .xl\:w-44 {
-      width: calc(var(--spacing) * 44);
+    .xl\:w-48 {
+      width: calc(var(--spacing) * 48);
     }
     .xl\:grid-cols-\[380px_1fr\] {
       grid-template-columns: 380px 1fr;
@@ -4774,21 +4785,6 @@
   inherits: false;
   initial-value: 0;
 }
-@property --tw-scale-x {
-  syntax: "*";
-  inherits: false;
-  initial-value: 1;
-}
-@property --tw-scale-y {
-  syntax: "*";
-  inherits: false;
-  initial-value: 1;
-}
-@property --tw-scale-z {
-  syntax: "*";
-  inherits: false;
-  initial-value: 1;
-}
 @property --tw-rotate-x {
   syntax: "*";
   inherits: false;
@@ -5040,9 +5036,6 @@
       --tw-translate-x: 0;
       --tw-translate-y: 0;
       --tw-translate-z: 0;
-      --tw-scale-x: 1;
-      --tw-scale-y: 1;
-      --tw-scale-z: 1;
       --tw-rotate-x: initial;
       --tw-rotate-y: initial;
       --tw-rotate-z: initial;

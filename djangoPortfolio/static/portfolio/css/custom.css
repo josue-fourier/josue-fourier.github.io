@@ -1271,3 +1271,74 @@ main#log-content-area.markdown-body {
 
 
 
+
+/* ==========================================================================
+   Hero Portrait FX: aura ring, holographic scanline, pointer glare, tilt
+   ========================================================================== */
+.profile-portrait-frame {
+    isolation: isolate;
+    overflow: visible;
+    transform: perspective(700px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg));
+    transition: transform 0.25s ease-out, border-color 0.3s ease, box-shadow 0.3s ease;
+    will-change: transform;
+}
+.profile-portrait-frame .portrait-img { display: block; }
+.profile-portrait-frame .portrait-aura {
+    position: absolute;
+    inset: -3px;
+    z-index: -1;
+    background: conic-gradient(from var(--aura-angle, 0deg), transparent 0%, rgba(16,185,129,0.9) 12%, transparent 30%, rgba(6,182,212,0.8) 55%, transparent 75%);
+    filter: blur(6px);
+    opacity: 0.55;
+    animation: portraitAura 6s linear infinite;
+}
+@property --aura-angle { syntax: '<angle>'; inherits: false; initial-value: 0deg; }
+@keyframes portraitAura { to { --aura-angle: 360deg; } }
+.profile-portrait-frame .portrait-scan {
+    position: absolute;
+    left: 0; right: 0; top: 0;
+    height: 28%;
+    z-index: 5;
+    pointer-events: none;
+    background: linear-gradient(to bottom, transparent, rgba(16,185,129,0.22), transparent);
+    border-bottom: 1px solid rgba(16,185,129,0.55);
+    mix-blend-mode: screen;
+    animation: portraitScan 4.5s ease-in-out infinite;
+}
+@keyframes portraitScan {
+    0% { transform: translateY(-110%); opacity: 0; }
+    15% { opacity: 1; }
+    85% { opacity: 1; }
+    100% { transform: translateY(380%); opacity: 0; }
+}
+.profile-portrait-frame .portrait-glare {
+    position: absolute;
+    inset: 0;
+    z-index: 4;
+    pointer-events: none;
+    background: radial-gradient(circle at var(--glare-x, 50%) var(--glare-y, 30%), rgba(255,255,255,0.22), transparent 55%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+.profile-portrait-frame:hover .portrait-glare { opacity: 1; }
+[data-theme="lofi"] .profile-portrait-frame .portrait-aura { opacity: 0.4; }
+[data-theme="lofi"] .profile-portrait-frame .portrait-scan {
+    background: linear-gradient(to bottom, transparent, rgba(5,150,105,0.2), transparent);
+    border-bottom-color: rgba(5,150,105,0.6);
+    mix-blend-mode: multiply;
+}
+[data-theme="lofi"] .profile-portrait-frame .portrait-glare {
+    background: radial-gradient(circle at var(--glare-x, 50%) var(--glare-y, 30%), rgba(255,255,255,0.5), transparent 55%);
+}
+
+/* Hero right cell: show both panels side-by-side on tablets (md), tabs only on phones */
+@media (min-width: 768px) {
+    #hero-panel-capabilities { display: block !important; }
+    #hero-panel-telemetry { display: flex !important; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .profile-portrait-frame .portrait-aura,
+    .profile-portrait-frame .portrait-scan { animation: none; }
+    .profile-portrait-frame { transform: none !important; }
+}

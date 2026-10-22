@@ -1,6 +1,7 @@
 {% load hud_tags i18n %}
 {% for log in page_obj %}
 <button class="log-item p-4 lg:p-5 text-left w-[72vw] sm:w-[260px] md:w-full flex-none snap-center md:snap-align-none flex flex-col justify-between gap-2 {% if forloop.first and not page_obj.has_previous %}active{% endif %} cursor-pointer"
+        data-umami-event="log-open" data-umami-event-log="{{ log.title }}" data-umami-event-log-id="{{ log.id }}" data-umami-event-project="{{ log.project.name|default:'System' }}"
         hx-get="{% url 'single_log' log.id %}"
         hx-target="#log-content-area"
         hx-swap="innerHTML transition:true"
@@ -27,6 +28,7 @@
 <!-- Manual Load More Button -->
 {% if page_obj.has_next %}
 <button class="log-item btn-sweep btn-sweep-emerald p-4 text-center w-[55vw] sm:w-[200px] md:w-full flex-none snap-center md:snap-align-none flex items-center justify-center min-h-[76px] md:min-h-[84px] cursor-pointer text-emerald-400"
+        data-umami-event="logs-load-more" data-umami-event-page="{{ page_obj.next_page_number }}"
         hx-get="{% url 'log_list' %}?page={{ page_obj.next_page_number }}"
         hx-target="this"
         hx-swap="outerHTML">
