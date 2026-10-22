@@ -80,36 +80,50 @@
             <!-- Left Cell (7 Cols) -->
             <div class="lg:col-span-7 min-h-[78vh] p-5 sm:p-8 md:p-12 lg:p-16 flex flex-col justify-between kinetic-block bg-[#050506]">
                 <div>
-                    <!-- Top Status Tag -->
-                    <div class="inline-flex items-center gap-2 font-mono text-[11px] text-zinc-400 uppercase tracking-wider mb-4 sm:mb-6 md:mb-8">
-                        <span class="w-1.5 h-1.5 bg-emerald-500 animate-pulse"></span>
-                        <span>SANTIAGO, CL</span>
-                        <span class="text-zinc-600 hidden sm:inline">//</span>
-                        <span class="text-emerald-400 hidden sm:inline font-semibold">{% translate "ONLINE" %}</span>
+                    <!-- Top Status Tag & Operator Eyebrow -->
+                    <div class="flex items-center justify-between gap-3 mb-4 sm:mb-6 md:mb-8 font-mono text-[11px] text-zinc-400 uppercase tracking-wider">
+                        <div class="inline-flex items-center gap-2">
+                            <span class="w-1.5 h-1.5 bg-emerald-500 animate-pulse"></span>
+                            <span>SANTIAGO, CL</span>
+                            <span class="text-zinc-600 hidden sm:inline">//</span>
+                            <span class="text-emerald-400 hidden sm:inline font-semibold">{% translate "ONLINE" %}</span>
+                        </div>
+                        <div class="flex items-center gap-2 text-zinc-500 font-mono text-[10px] tracking-widest">
+                            <span class="text-emerald-400 font-bold">OPERATOR</span>
+                            <span class="text-zinc-700">//</span>
+                            <span class="text-zinc-400">SEC-01</span>
+                        </div>
                     </div>
 
-                    <!-- Massive Variable Display Title in Overflow-Hidden Line Masks -->
-                    <h1 id="hero-title" class="hero-title font-display font-bold uppercase text-white select-none group cursor-pointer" aria-label="Josué Leiva.">
-                        <span class="reveal-text"><span class="reveal-text-inner" data-scramble="true">Josué</span></span>
-                        <span class="reveal-text"><span class="reveal-text-inner" data-scramble="true">Leiva.</span></span>
-                    </h1>
+                    <!-- Monumental Display Title & Profile Portrait Row (Optimized for Mobile, Tablet & Desktop) -->
+                    <div class="flex items-start justify-between gap-4 sm:gap-6 md:gap-8">
+                        <!-- Massive Variable Display Title in Overflow-Hidden Line Masks -->
+                        <h1 id="hero-title" class="hero-title font-display font-bold uppercase text-white select-none group cursor-pointer flex-1 min-w-0" aria-label="Josué Leiva.">
+                            <span class="reveal-text"><span class="reveal-text-inner" data-scramble="true">Josué</span></span>
+                            <span class="reveal-text"><span class="reveal-text-inner" data-scramble="true">Leiva.</span></span>
+                        </h1>
 
-                    <!-- Profile Dossier Frame & Lead Statement (Balanced for Mobile, Tablet & Desktop) -->
-                    <div class="mt-4 sm:mt-6 md:mt-8 flex flex-row items-center gap-3.5 sm:gap-6 max-w-2xl">
-                        <!-- Profile Portrait Frame with Hover Color Reveal & Moniker Tag -->
-                        <div class="profile-portrait-frame relative w-20 h-20 sm:w-28 sm:h-28 md:w-36 md:h-36 shrink-0 aspect-square overflow-hidden border border-white/15 bg-[#070709] group shadow-xl">
+                        <!-- Profile Portrait Frame with Hover Color Reveal, Corner Calibrations & Moniker Tag -->
+                        <div class="profile-portrait-frame relative shrink-0 aspect-square w-20 h-20 sm:w-28 sm:h-28 md:w-36 md:h-36 lg:w-40 lg:h-40 xl:w-44 xl:h-44 overflow-hidden border border-white/20 bg-[#070709] group shadow-2xl">
+                            <!-- HUD Corner Calibrations -->
+                            <div class="absolute top-1 left-1 w-2 h-2 border-t border-l border-emerald-400/80 z-10 pointer-events-none transition-opacity duration-300 group-hover:border-emerald-300"></div>
+                            <div class="absolute bottom-1 right-1 w-2 h-2 border-b border-r border-emerald-400/80 z-10 pointer-events-none transition-opacity duration-300 group-hover:border-emerald-300"></div>
+
                             <img src="{% static 'portfolio/images/profile.jpg' %}" alt="{% translate 'Josué Leiva' %}" class="w-full h-full object-cover object-center filter grayscale contrast-110 group-hover:grayscale-0 transition-all duration-500 scale-100 group-hover:scale-105" loading="eager">
-                            <div class="absolute bottom-0 right-0 bg-[#050506]/90 backdrop-blur-sm px-1.5 py-0.5 border-t border-l border-white/15 font-mono text-[8px] sm:text-[9px] text-emerald-400 font-bold uppercase tracking-wider">
-                                F0UR13R
+
+                            <!-- Corner Moniker / ID Badge -->
+                            <div class="absolute bottom-0 right-0 bg-[#050506]/90 backdrop-blur-sm px-1.5 py-0.5 border-t border-l border-white/15 font-mono text-[8px] sm:text-[9px] md:text-[10px] text-emerald-400 font-bold uppercase tracking-wider flex items-center gap-1 z-10">
+                                <span class="w-1 h-1 bg-emerald-400 rounded-full animate-pulse"></span>
+                                <span>F0UR13R</span>
                             </div>
                         </div>
+                    </div>
 
-                        <!-- Lead Engineering Statement -->
-                        <div class="reveal-text flex-1 min-w-0">
-                            <p id="hero-stance-scrub" class="reveal-text-inner text-sm sm:text-base md:text-xl lg:text-2xl text-zinc-300 font-light leading-snug">
-                                {% translate "Telematics Engineering student specializing in" %} <strong class="text-white font-medium">{% translate "backend architecture" %}</strong>, <strong class="text-white font-medium">{% translate "automation" %}</strong>, <strong class="text-white font-medium">{% translate "flows" %}</strong>{% if LANGUAGE_CODE == "es" %} e {% else %}, {% translate "and" %} {% endif %}<strong class="text-white font-medium">{% translate "human impact" %}</strong>.
-                            </p>
-                        </div>
+                    <!-- Lead Engineering Statement (Full Width, Free-Breathing Typographic Flow with Word Scrub) -->
+                    <div class="mt-6 sm:mt-8 md:mt-10 reveal-text max-w-2xl">
+                        <p id="hero-stance-scrub" class="reveal-text-inner text-base sm:text-lg md:text-xl lg:text-2xl text-zinc-300 font-light leading-snug sm:leading-relaxed">
+                            {% translate "Telematics Engineering student specializing in" %} <strong class="text-white font-medium">{% translate "backend architecture" %}</strong>, <strong class="text-white font-medium">{% translate "automation" %}</strong>, <strong class="text-white font-medium">{% translate "flows" %}</strong>{% if LANGUAGE_CODE == "es" %} e {% else %}, {% translate "and" %} {% endif %}<strong class="text-white font-medium">{% translate "human impact" %}</strong>.
+                        </p>
                     </div>
                 </div>
 

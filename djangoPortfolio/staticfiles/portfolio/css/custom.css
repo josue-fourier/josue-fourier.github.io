@@ -1265,5 +1265,9 @@ main#log-content-area.markdown-body {
     color: #059669 !important;
 }
 
+[data-theme="lofi"] .profile-portrait-frame .border-emerald-400\/80 {
+    border-color: rgba(5, 150, 105, 0.8) !important;
+}
+
 
 
