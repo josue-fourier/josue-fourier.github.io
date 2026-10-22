@@ -149,8 +149,8 @@ msgstr "Sistema: En Línea // Disponibilidad: Abierto"
 msgid "Systems Craftsmanship"
 msgstr "Artesanía de Sistemas y Criptografía"
 
-msgid "THE ENGINE OVER THE FACADE"
-msgstr "EL MOTOR SOBRE LA FACHADA"
+msgid "BACKEND AND SYSTEMS ENGINEERING"
+msgstr "INGENIERÍA DE BACKEND Y SISTEMAS"
 
 msgid "Technical Architecture"
 msgstr "Arquitectura Técnica"
@@ -163,9 +163,6 @@ msgstr "Estudiante de Ingeniería Telemática"
 
 msgid "Telematics Engineering student specializing in"
 msgstr "Estudiante de Ingeniería Civil Telemática especializándose en"
-
-msgid "The Engine Over the Facade"
-msgstr "El Motor Sobre la Fachada"
 
 msgid "Toggle Dark / Light Cryptographic Theme"
 msgstr "Alternar Tema Criptográfico Oscuro / Claro"

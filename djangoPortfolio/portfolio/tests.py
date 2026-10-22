@@ -1004,7 +1004,7 @@ class C2EngineeringPortfolioTests(TestCase):
         res = self.client.get("/en/")
         self.assertEqual(res.status_code, 200)
         content = res.content.decode("utf-8")
-        self.assertIn("THE ENGINE OVER THE FACADE", content)
+        self.assertIn("BACKEND AND SYSTEMS ENGINEERING", content)
         self.assertIn("Systems &amp; Low-Level", content)
         self.assertIn("Backend &amp; Data Architecture", content)
         self.assertIn("Hardened Infrastructure", content)
@@ -1015,7 +1015,7 @@ class C2EngineeringPortfolioTests(TestCase):
         res = self.client.get("/es/")
         self.assertEqual(res.status_code, 200)
         content = res.content.decode("utf-8")
-        self.assertIn("EL MOTOR SOBRE LA FACHADA", content)
+        self.assertIn("INGENIERÍA DE BACKEND Y SISTEMAS", content)
         self.assertIn("Sistemas y Bajo Nivel", content)
         self.assertIn("Arquitectura Backend y Datos", content)
         self.assertIn("Infraestructura Blindada", content)
@@ -1097,8 +1097,7 @@ class C2EngineeringPortfolioTests(TestCase):
         with open(mo_path, "rb") as f:
             t = gettext.GNUTranslations(f)
         critical_keys = [
-            "THE ENGINE OVER THE FACADE",
-            "The Engine Over the Facade",
+            "BACKEND AND SYSTEMS ENGINEERING",
             "C2 // LIFECYCLE",
             "Mission Lifecycle HUD",
             "Scroll to top",
