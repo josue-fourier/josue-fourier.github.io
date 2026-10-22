@@ -12,7 +12,7 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.contrib.sitemaps.views import sitemap
 from django.urls import include, path
-from django.views.generic import TemplateView
+from django.views.generic import RedirectView, TemplateView
 from portfolio import views as portfolio_views
 from portfolio.sitemaps import LogEntrySitemap, ProjectSitemap, StaticViewSitemap
 
@@ -23,6 +23,7 @@ sitemaps = {
 }
 
 urlpatterns = [
+    path("favicon.ico", RedirectView.as_view(url=settings.STATIC_URL + "portfolio/icons/favicon.ico", permanent=True)),
     path("health", portfolio_views.health_check, name="health_no_slash"),
     path("health/", portfolio_views.health_check, name="health"),
     path(
