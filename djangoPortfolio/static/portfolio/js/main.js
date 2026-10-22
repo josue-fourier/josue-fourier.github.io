@@ -756,6 +756,15 @@ if (typeof gsap !== 'undefined') {
             });
         });
 
+        const heroTitle = document.getElementById('hero-title');
+        if (heroTitle) {
+            heroTitle.addEventListener('mouseenter', () => {
+                heroTitle.querySelectorAll('[data-scramble="true"]').forEach(el => {
+                    scrambleDecodeText(el, true);
+                });
+            });
+        }
+
         if ('IntersectionObserver' in window) {
             const obs = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {

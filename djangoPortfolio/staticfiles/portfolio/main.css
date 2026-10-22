@@ -8,6 +8,7 @@
     --color-amber-500: oklch(76.9% 0.188 70.08);
     --color-emerald-400: oklch(76.5% 0.177 163.223);
     --color-emerald-500: oklch(69.6% 0.17 162.48);
+    --color-cyan-400: oklch(78.9% 0.154 211.53);
     --color-slate-100: oklch(96.8% 0.007 247.896);
     --color-slate-200: oklch(92.9% 0.013 255.508);
     --color-slate-400: oklch(70.4% 0.04 256.788);
@@ -22,7 +23,6 @@
     --color-zinc-500: oklch(55.2% 0.016 285.938);
     --color-zinc-600: oklch(44.2% 0.017 285.786);
     --color-zinc-700: oklch(37% 0.013 285.805);
-    --color-zinc-800: oklch(27.4% 0.006 286.033);
     --color-black: #000;
     --color-white: #fff;
     --spacing: 0.25rem;
@@ -59,6 +59,7 @@
     --radius-2xl: 1rem;
     --drop-shadow-sm: 0 1px 2px rgb(0 0 0 / 0.15);
     --ease-out: cubic-bezier(0, 0, 0.2, 1);
+    --animate-ping: ping 1s cubic-bezier(0, 0, 0.2, 1) infinite;
     --animate-pulse: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
     --blur-sm: 8px;
     --blur-md: 12px;
@@ -2052,6 +2053,20 @@
     }
   }
   @layer daisyui.l1.l2.l3 {
+    .navbar {
+      display: flex;
+      width: 100%;
+      align-items: center;
+      padding: 0.5rem;
+      min-height: 4rem;
+    }
+  }
+  @layer daisyui.l1.l2 {
+    :where(.navbar) {
+      position: relative;
+    }
+  }
+  @layer daisyui.l1.l2.l3 {
     .card {
       position: relative;
       display: flex;
@@ -2450,6 +2465,12 @@
   .m-0 {
     margin: 0px;
   }
+  .mx-1 {
+    margin-inline: var(--spacing);
+  }
+  .mx-3\.5 {
+    margin-inline: calc(var(--spacing) * 3.5);
+  }
   .mx-auto {
     margin-inline: auto;
   }
@@ -2842,6 +2863,9 @@
   .w-3\.5 {
     width: calc(var(--spacing) * 3.5);
   }
+  .w-4 {
+    width: calc(var(--spacing) * 4);
+  }
   .w-10 {
     width: calc(var(--spacing) * 10);
   }
@@ -2880,6 +2904,9 @@
   }
   .max-w-\[130px\] {
     max-width: 130px;
+  }
+  .max-w-\[200px\] {
+    max-width: 200px;
   }
   .max-w-\[1440px\] {
     max-width: 1440px;
@@ -2946,6 +2973,9 @@
         animation: skeleton 1.8s ease-in-out infinite;
       }
     }
+  }
+  .animate-ping {
+    animation: var(--animate-ping);
   }
   .animate-pulse {
     animation: var(--animate-pulse);
@@ -3260,6 +3290,9 @@
       background-color: color-mix(in oklab, var(--color-brand-primary) 20%, transparent);
     }
   }
+  .bg-emerald-400 {
+    background-color: var(--color-emerald-400);
+  }
   .bg-emerald-500 {
     background-color: var(--color-emerald-500);
   }
@@ -3531,6 +3564,9 @@
   .text-brand-primary {
     color: var(--color-brand-primary);
   }
+  .text-cyan-400 {
+    color: var(--color-cyan-400);
+  }
   .text-emerald-400 {
     color: var(--color-emerald-400);
   }
@@ -3598,6 +3634,9 @@
   }
   .opacity-50 {
     opacity: 50%;
+  }
+  .opacity-75 {
+    opacity: 75%;
   }
   .opacity-90 {
     opacity: 90%;
@@ -3743,6 +3782,10 @@
     }
     .group-hover\:-translate-y-0\.5:is(:where(.group):hover *) {
       --tw-translate-y: calc(var(--spacing) * -0.5);
+      translate: var(--tw-translate-x) var(--tw-translate-y);
+    }
+    .group-hover\:translate-y-0\.5:is(:where(.group):hover *) {
+      --tw-translate-y: calc(var(--spacing) * 0.5);
       translate: var(--tw-translate-x) var(--tw-translate-y);
     }
     .group-hover\:rotate-0:is(:where(.group):hover *) {
@@ -3933,6 +3976,9 @@
     .md\:col-start-8 {
       grid-column-start: 8;
     }
+    .md\:mx-3 {
+      margin-inline: calc(var(--spacing) * 3);
+    }
     .md\:mt-0 {
       margin-top: 0px;
     }
@@ -3968,6 +4014,9 @@
     }
     .md\:w-full {
       width: 100%;
+    }
+    .md\:max-w-\[320px\] {
+      max-width: 320px;
     }
     .md\:flex-1 {
       flex: 1;
@@ -4018,6 +4067,12 @@
     }
     .md\:gap-1\.5 {
       gap: calc(var(--spacing) * 1.5);
+    }
+    .md\:gap-3 {
+      gap: calc(var(--spacing) * 3);
+    }
+    .md\:gap-4 {
+      gap: calc(var(--spacing) * 4);
     }
     .md\:gap-8 {
       gap: calc(var(--spacing) * 8);
@@ -4202,6 +4257,12 @@
     }
   }
   @media (width >= 80rem) {
+    .xl\:flex {
+      display: flex;
+    }
+    .xl\:inline {
+      display: inline;
+    }
     .xl\:grid-cols-\[380px_1fr\] {
       grid-template-columns: 380px 1fr;
     }
@@ -4760,6 +4821,12 @@
   syntax: "*";
   inherits: false;
   initial-value: 0;
+}
+@keyframes ping {
+  75%, 100% {
+    transform: scale(2);
+    opacity: 0;
+  }
 }
 @keyframes pulse {
   50% {

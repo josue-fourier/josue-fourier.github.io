@@ -71,33 +71,113 @@
                 <div id="boot-loader-bar" class="fixed top-0 left-0 h-1 bg-brand-primary z-[10000] w-0 transition-all duration-500 ease-out"></div>
                 <div id="scroll-progress" class="fixed top-0 left-0 h-1 bg-brand-primary z-[9000] w-0 transition-all duration-100 ease-out"></div>
                 <div class="noise-overlay"></div>
-                <!-- Sticky Top Telemetry Bar -->
+                <!-- Sticky Top Telemetry Bar with Continuous Data Carousel -->
                 <header id="top-telemetry-bar" class="sticky top-0 z-50 w-full h-12 border-b border-white/[0.08] bg-[#050506]/90 backdrop-blur-md">
-                    <div class="max-w-[1440px] mx-auto h-full px-4 md:px-6 flex items-center justify-between font-mono text-[11px]">
-                        <!-- Left: Identity + Live Pulse + SCL Clock & Temp -->
-                        <div class="flex items-center gap-3">
+                    <div class="max-w-[1440px] mx-auto h-full px-4 md:px-6 flex items-center justify-between font-mono text-[11px] gap-2 md:gap-4 overflow-hidden">
+                        <!-- Left: Identity + Live Pulse -->
+                        <div class="flex items-center gap-2 md:gap-3 shrink-0">
                             <a href="/" class="font-bold tracking-wider text-white flex items-center gap-2 hover:text-emerald-400 transition-colors">
                                 <span class="w-1.5 h-1.5 bg-emerald-500 animate-pulse"></span>
-                                JOSUÉ LEIVA
+                                <span class="whitespace-nowrap">JOSUÉ LEIVA</span>
                             </a>
-                            <span class="text-zinc-600">//</span>
-                            <div class="flex items-center gap-2 text-zinc-400 tabular-nums">
-                                <span class="text-zinc-500 font-bold">SCL</span>
-                                <span id="santiago-clock" class="text-zinc-300">--:--:--</span>
-                                <span id="santiago-weather-temp" class="text-zinc-400">--°C</span>
+                            <span class="text-zinc-600 hidden sm:inline">//</span>
+                        </div>
+
+                        <!-- Center: News-style Continuous Telemetry Carousel Tape -->
+                        <div class="telemetry-ticker-viewport flex-1 overflow-hidden relative mx-1 md:mx-3 select-none min-w-0" aria-label="{% translate 'Live Continuous Telemetry Stream' %}">
+                            <div class="telemetry-ticker-track flex items-center whitespace-nowrap">
+                                <!-- Group 1 -->
+                                <div class="telemetry-ticker-group flex items-center shrink-0">
+                                    <span class="inline-flex items-center gap-1.5 text-zinc-300">
+                                        <span class="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse"></span>
+                                        <span class="text-zinc-500 font-bold">SCL:</span>
+                                        <span id="santiago-clock" class="santiago-clock-display text-zinc-200">--:--:--</span>
+                                        <span id="santiago-weather-temp" class="santiago-weather-display text-emerald-400 font-semibold">--°C</span>
+                                    </span>
+                                    <span class="text-zinc-700 mx-3.5">//</span>
+
+                                    {% if node_heartbeat %}
+                                    <span class="inline-flex items-center gap-1.5 text-zinc-300">
+                                        <span class="text-emerald-400 font-bold">NODE:</span>
+                                        <span class="text-zinc-200">{{ node_heartbeat.node_name|default:"RPi" }} [{{ node_heartbeat.status }}]</span>
+                                        <span class="text-zinc-500 text-[10px]">({% blocktranslate with t=node_heartbeat.timestamp|short_timesince %}{{ t }} ago{% endblocktranslate %})</span>
+                                    </span>
+                                    {% else %}
+                                    <span class="inline-flex items-center gap-1.5 text-zinc-400">
+                                        <span class="text-zinc-500 font-bold">NODE:</span>
+                                        <span>RPi DAEMON // {% translate "STANDBY" %}</span>
+                                    </span>
+                                    {% endif %}
+                                    <span class="text-zinc-700 mx-3.5">//</span>
+
+                                    {% if ntfy_message or current_status %}
+                                    <span class="inline-flex items-center gap-1.5 text-zinc-300">
+                                        <span class="text-cyan-400 font-bold">NTFY:</span>
+                                        <span class="text-zinc-200 max-w-[200px] md:max-w-[320px] truncate">"{% if ntfy_message %}{{ ntfy_message.message }}{% else %}{{ current_status.message }}{% endif %}"</span>
+                                        <span class="text-zinc-500 text-[10px]">({% if ntfy_message %}{% blocktranslate with t=ntfy_message.timestamp|short_timesince %}{{ t }} ago{% endblocktranslate %}{% else %}{% blocktranslate with t=current_status.timestamp|short_timesince %}{{ t }} ago{% endblocktranslate %}{% endif %})</span>
+                                    </span>
+                                    {% else %}
+                                    <span class="inline-flex items-center gap-1.5 text-zinc-400">
+                                        <span class="text-cyan-400 font-bold">NTFY:</span>
+                                        <span class="text-zinc-500">SYS_NOMINAL</span>
+                                    </span>
+                                    {% endif %}
+                                    <span class="text-zinc-700 mx-3.5">//</span>
+                                </div>
+
+                                <!-- Group 2 (Duplicate for Seamless Endless Loop) -->
+                                <div class="telemetry-ticker-group flex items-center shrink-0" aria-hidden="true">
+                                    <span class="inline-flex items-center gap-1.5 text-zinc-300">
+                                        <span class="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse"></span>
+                                        <span class="text-zinc-500 font-bold">SCL:</span>
+                                        <span class="santiago-clock-display text-zinc-200">--:--:--</span>
+                                        <span class="santiago-weather-display text-emerald-400 font-semibold">--°C</span>
+                                    </span>
+                                    <span class="text-zinc-700 mx-3.5">//</span>
+
+                                    {% if node_heartbeat %}
+                                    <span class="inline-flex items-center gap-1.5 text-zinc-300">
+                                        <span class="text-emerald-400 font-bold">NODE:</span>
+                                        <span class="text-zinc-200">{{ node_heartbeat.node_name|default:"RPi" }} [{{ node_heartbeat.status }}]</span>
+                                        <span class="text-zinc-500 text-[10px]">({% blocktranslate with t=node_heartbeat.timestamp|short_timesince %}{{ t }} ago{% endblocktranslate %})</span>
+                                    </span>
+                                    {% else %}
+                                    <span class="inline-flex items-center gap-1.5 text-zinc-400">
+                                        <span class="text-zinc-500 font-bold">NODE:</span>
+                                        <span>RPi DAEMON // {% translate "STANDBY" %}</span>
+                                    </span>
+                                    {% endif %}
+                                    <span class="text-zinc-700 mx-3.5">//</span>
+
+                                    {% if ntfy_message or current_status %}
+                                    <span class="inline-flex items-center gap-1.5 text-zinc-300">
+                                        <span class="text-cyan-400 font-bold">NTFY:</span>
+                                        <span class="text-zinc-200 max-w-[200px] md:max-w-[320px] truncate">"{% if ntfy_message %}{{ ntfy_message.message }}{% else %}{{ current_status.message }}{% endif %}"</span>
+                                        <span class="text-zinc-500 text-[10px]">({% if ntfy_message %}{% blocktranslate with t=ntfy_message.timestamp|short_timesince %}{{ t }} ago{% endblocktranslate %}{% else %}{% blocktranslate with t=current_status.timestamp|short_timesince %}{{ t }} ago{% endblocktranslate %}{% endif %})</span>
+                                    </span>
+                                    {% else %}
+                                    <span class="inline-flex items-center gap-1.5 text-zinc-400">
+                                        <span class="text-cyan-400 font-bold">NTFY:</span>
+                                        <span class="text-zinc-500">SYS_NOMINAL</span>
+                                    </span>
+                                    {% endif %}
+                                    <span class="text-zinc-700 mx-3.5">//</span>
+                                </div>
                             </div>
                         </div>
 
-                        <!-- Center: Clean Anchor Links (without brackets) -->
-                        <nav class="hidden md:flex items-center gap-6 text-zinc-400 tracking-wider" aria-label="Main Navigation">
-                            <a href="/#chapter-01" class="hover:text-white transition-colors">{% translate "INDEX" %}</a>
-                            <a href="/#chapter-02" class="hover:text-white transition-colors">{% translate "BENCHMARKS" %}</a>
-                            <a href="/#chapter-03" class="hover:text-white transition-colors">{% translate "SYSTEMS" %}</a>
-                            <a href="/#chapter-04" class="hover:text-white transition-colors">{% translate "LOGS" %}</a>
-                        </nav>
+                        <!-- Right: Clean Anchor Links + Locale Switcher + Theme Switcher + CV Link -->
+                        <div class="flex items-center gap-3 md:gap-4 shrink-0 text-zinc-400">
+                            <!-- Nav Links (large screens) -->
+                            <nav class="hidden xl:flex items-center gap-4 text-zinc-400 tracking-wider" aria-label="Main Navigation">
+                                <a href="/#chapter-01" class="hover:text-white transition-colors">{% translate "INDEX" %}</a>
+                                <a href="/#chapter-02" class="hover:text-white transition-colors">{% translate "BENCHMARKS" %}</a>
+                                <a href="/#chapter-03" class="hover:text-white transition-colors">{% translate "SYSTEMS" %}</a>
+                                <a href="/#chapter-04" class="hover:text-white transition-colors">{% translate "LOGS" %}</a>
+                            </nav>
+                            <span class="hidden xl:inline text-zinc-700">|</span>
 
-                        <!-- Right: Locale Switcher & CV Link -->
-                        <div class="flex items-center gap-4 text-zinc-400">
+                            <!-- Locale Switcher -->
                             {% get_current_language as CURRENT_LANG %}
                             <form action="{% url 'set_language' %}" method="post" class="inline-flex items-center gap-1 font-mono text-[11px] select-none">
                                 {% csrf_token %}
@@ -119,6 +199,7 @@
                                 {% endif %}
                             </form>
                             <span class="text-zinc-700">|</span>
+
                             <!-- Theme Switcher -->
                             <label id="theme-toggle-btn" class="cursor-pointer flex items-center gap-1.5 font-mono text-[11px] text-zinc-400 hover:text-white transition-colors select-none" title="{% translate 'Toggle Dark / Light Cryptographic Theme' %}" aria-label="Toggle Theme">
                                 <input type="checkbox" class="theme-controller hidden" value="dracula" />
@@ -132,10 +213,12 @@
                                 <span class="theme-text-label font-bold text-[10px] tracking-wider uppercase">LIGHT</span>
                             </label>
                             <span class="text-zinc-700">|</span>
+
+                            <!-- CV Link -->
                             {% if CURRENT_LANG == "es" %}
-                            <a href="/cv-es" target="_blank" class="hover:text-emerald-400 transition-colors tracking-wider">CV.PDF ↗</a>
+                            <a href="/cv-es" target="_blank" class="hover:text-emerald-400 transition-colors tracking-wider whitespace-nowrap">CV.PDF ↗</a>
                             {% else %}
-                            <a href="/cv-en" target="_blank" class="hover:text-emerald-400 transition-colors tracking-wider">CV.PDF ↗</a>
+                            <a href="/cv-en" target="_blank" class="hover:text-emerald-400 transition-colors tracking-wider whitespace-nowrap">CV.PDF ↗</a>
                             {% endif %}
                         </div>
                     </div>

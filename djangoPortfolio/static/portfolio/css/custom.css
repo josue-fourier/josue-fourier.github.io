@@ -1119,5 +1119,110 @@ main#log-content-area.markdown-body {
     background-color: #F1F5F9 !important;
 }
 
+/* ==========================================================================
+   Continuous Telemetry Marquee Carousel & Hero / Live Status Animations
+   ========================================================================== */
+
+/* 1. Continuous Telemetry News Ticker Carousel */
+.telemetry-ticker-viewport {
+    mask-image: linear-gradient(to right, transparent 0%, black 3%, black 97%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 3%, black 97%, transparent 100%);
+    contain: paint;
+}
+
+.telemetry-ticker-track {
+    display: inline-flex;
+    width: max-content;
+    will-change: transform;
+    animation: telemetryTickerLoop 36s linear infinite;
+}
+
+.telemetry-ticker-track:hover {
+    animation-play-state: paused;
+}
+
+@keyframes telemetryTickerLoop {
+    0% {
+        transform: translate3d(0, 0, 0);
+    }
+    100% {
+        transform: translate3d(-50%, 0, 0);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .telemetry-ticker-track {
+        animation: none;
+    }
+}
+
+/* 2. Hero Title Interactive Animations */
+.hero-title .reveal-text-inner {
+    display: inline-block;
+    transition: text-shadow 0.35s ease, transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), letter-spacing 0.35s ease;
+    will-change: transform, text-shadow;
+}
+
+.hero-title:hover .reveal-text-inner {
+    text-shadow: 0 0 25px rgba(16, 185, 129, 0.45), 0 0 50px rgba(6, 182, 212, 0.25);
+    letter-spacing: 0.015em;
+}
+
+[data-theme="lofi"] .hero-title:hover .reveal-text-inner {
+    text-shadow: 0 0 16px rgba(5, 150, 105, 0.35);
+}
+
+/* 3. Live Status Telemetry Radar Scanline & Highlights */
+.telemetry-radar-panel {
+    position: relative;
+    overflow: hidden;
+}
+
+.telemetry-radar-panel::after {
+    content: '';
+    position: absolute;
+    top: -100%;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(180deg, transparent 0%, rgba(16, 185, 129, 0.02) 60%, rgba(16, 185, 129, 0.08) 95%, rgba(16, 185, 129, 0.35) 100%);
+    pointer-events: none;
+    animation: telemetryScanline 8s ease-in-out infinite;
+}
+
+[data-theme="lofi"] .telemetry-radar-panel::after {
+    background: linear-gradient(180deg, transparent 0%, rgba(5, 150, 105, 0.01) 60%, rgba(5, 150, 105, 0.04) 95%, rgba(5, 150, 105, 0.2) 100%);
+}
+
+@keyframes telemetryScanline {
+    0% {
+        top: -100%;
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        top: 100%;
+        opacity: 0;
+    }
+}
+
+.telemetry-radar-panel .spec-matrix-row {
+    transition: background-color 0.25s ease, padding-left 0.25s ease, border-color 0.25s ease;
+}
+
+.telemetry-radar-panel .spec-matrix-row:hover {
+    background-color: rgba(255, 255, 255, 0.025);
+    padding-left: 0.75rem;
+}
+
+[data-theme="lofi"] .telemetry-radar-panel .spec-matrix-row:hover {
+    background-color: rgba(0, 0, 0, 0.025);
+}
+
 
 

@@ -1043,13 +1043,26 @@ class C2EngineeringPortfolioTests(TestCase):
         self.assertNotIn('<button type="button" id="mobile-c2-hud"', content)
 
     def test_top_telemetry_bar_locale_and_clock(self):
-        """Verify Top Telemetry Bar includes live clock and plain text weather temp."""
+        """Verify Top Telemetry Bar includes live clock and plain text weather temp in cyclic ticker."""
         res = self.client.get("/en/")
         self.assertEqual(res.status_code, 200)
         content = res.content.decode("utf-8")
         self.assertIn('id="santiago-clock"', content)
         self.assertIn('id="santiago-weather-temp"', content)
         self.assertIn("CV.PDF", content)
+        self.assertIn("telemetry-ticker-viewport", content)
+        self.assertIn("telemetry-ticker-track", content)
+
+    def test_hero_icons_and_live_status_animations(self):
+        """Verify Hero social/CV buttons contain SVG icons and Live Status has radar scanline."""
+        res = self.client.get("/en/")
+        self.assertEqual(res.status_code, 200)
+        content = res.content.decode("utf-8")
+        self.assertIn("GitHub", content)
+        self.assertIn("LinkedIn", content)
+        self.assertIn("Download CV", content)
+        self.assertIn("telemetry-radar-panel", content)
+        self.assertIn('class="w-4 h-4 text-zinc-300 group-hover:text-white', content)
 
     def test_swiss_brutalist_hairline_grid(self):
         """Verify Swiss Brutalist hairline grid container and deep carbon palette."""
