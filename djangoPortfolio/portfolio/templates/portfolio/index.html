@@ -709,14 +709,6 @@
 
     // --- Interactive Engineering Logs Console (SPA) ---
     function initLoggingConsole() {
-        if (typeof mermaid !== 'undefined') {
-            mermaid.initialize({
-                startOnLoad: false,
-                theme: document.documentElement.getAttribute('data-theme') === 'dracula' ? 'dark' : 'default',
-                fontFamily: 'JetBrains Mono'
-            });
-        }
-
         const navContainer = document.getElementById('log-nav');
         const contentArea = document.getElementById('log-content-area');
 
@@ -761,32 +753,13 @@
                 const skeleton = document.getElementById('log-skeleton');
                 if (skeleton) skeleton.classList.remove('htmx-request');
 
-                // Convert python-markdown code blocks into div.mermaid
-                evt.detail.target.querySelectorAll('code.language-mermaid').forEach(el => {
-                    const pre = el.parentElement;
-                    const div = document.createElement('div');
-                    div.className = 'mermaid';
-                    div.textContent = el.textContent;
-                    pre.replaceWith(div);
-                });
-
-                if (typeof mermaid !== 'undefined') {
-                    mermaid.init(undefined, evt.detail.target.querySelectorAll('.mermaid'));
-                }
+                // Lazy-load Mermaid only when this log actually contains a diagram
+                if (window.renderMermaid) window.renderMermaid(evt.detail.target);
             }
         });
 
-        // Initialize mermaid for initial target log if pre-rendered
-        if (contentArea && typeof mermaid !== 'undefined') {
-            contentArea.querySelectorAll('code.language-mermaid').forEach(el => {
-                const pre = el.parentElement;
-                const div = document.createElement('div');
-                div.className = 'mermaid';
-                div.textContent = el.textContent;
-                pre.replaceWith(div);
-            });
-            mermaid.init(undefined, contentArea.querySelectorAll('.mermaid'));
-        }
+        // Lazy-load Mermaid for the pre-rendered initial log only if it has diagrams
+        if (contentArea && window.renderMermaid) window.renderMermaid(contentArea);
 
         // Multi-image carousel event delegation
         document.addEventListener('click', (e) => {

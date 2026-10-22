@@ -12,7 +12,6 @@
 
 {% block extra_head %}
     <!-- Mermaid.js for rendering diagrams -->
-    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
 {% endblock %}
 
 {% block content %}
@@ -104,21 +103,9 @@
 {% endblock %}
 {% block extra_js %}
     <script>
-        // Initialize Mermaid (theme switcher logic is handled by base.html)
-        mermaid.initialize({ startOnLoad: false, theme: document.documentElement.getAttribute('data-theme') === 'dracula' ? 'dark' : 'default' });
-
+        // Mermaid is lazy-loaded only if the case study contains diagrams
         document.addEventListener("DOMContentLoaded", () => {
-            // Convert python-markdown code blocks into div.mermaid for mermaid.js
-            document.querySelectorAll('code.language-mermaid').forEach(el => {
-                const pre = el.parentElement;
-                const div = document.createElement('div');
-                div.className = 'mermaid';
-                div.textContent = el.textContent;
-                pre.replaceWith(div);
-            });
-
-            // Run mermaid
-            mermaid.run();
+            if (window.renderMermaid) window.renderMermaid(document);
         });
     </script>
 {% endblock %}

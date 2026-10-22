@@ -5,6 +5,47 @@
     var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     var finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
 
+    // ---- Lazy Mermaid loader: downloads the ~3MB library only when a diagram exists ----
+    (function mermaidLazy() {
+        var loading = null;
+        var src = (document.querySelector('meta[name="mermaid-src"]') || {}).content;
+        function load() {
+            if (window.mermaid) return Promise.resolve(window.mermaid);
+            if (loading) return loading;
+            loading = new Promise(function (resolve, reject) {
+                var s = document.createElement('script');
+                s.src = src; s.async = true;
+                s.onload = function () { resolve(window.mermaid); };
+                s.onerror = function () { loading = null; reject(new Error('mermaid failed to load')); };
+                document.head.appendChild(s);
+            });
+            return loading;
+        }
+        window.renderMermaid = function (container) {
+            container = container || document;
+            var blocks = container.querySelectorAll('code.language-mermaid');
+            var nodes = [];
+            blocks.forEach(function (el) {
+                var pre = el.parentElement;
+                var div = document.createElement('div');
+                div.className = 'mermaid';
+                div.textContent = el.textContent;
+                pre.replaceWith(div);
+                nodes.push(div);
+            });
+            if (!nodes.length) return Promise.resolve();
+            if (!src) return Promise.resolve();
+            return load().then(function (m) {
+                m.initialize({
+                    startOnLoad: false,
+                    theme: root.getAttribute('data-theme') === 'dracula' ? 'dark' : 'default',
+                    fontFamily: 'JetBrains Mono'
+                });
+                return m.run({ nodes: nodes });
+            }).catch(function (e) { console.warn(e); });
+        };
+    })();
+
     // Skip link should target whatever <main> this page has.
     var skip = document.querySelector('.skip-link');
     var main = document.querySelector('main');

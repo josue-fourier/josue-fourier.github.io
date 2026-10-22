@@ -21,6 +21,7 @@
         <title>Josué Leiva | Telematics Engineering</title>
         {% endblock %}
         <meta name="theme-color" content="#050506">
+        <meta name="mermaid-src" content="{% static 'portfolio/vendor/mermaid.min.js' %}">
         <meta name="color-scheme" content="dark light">
 
         <!-- Prevent Theme Flash & Default to Light Mode ('lofi' / CRYO_MANUAL) -->
@@ -51,24 +52,24 @@
         <link rel="stylesheet" href="{% static 'portfolio/css/custom.css' %}">
         <link rel="stylesheet" href="{% static 'portfolio/css/awwwards.css' %}">
 
-        <!-- Google Fonts -->
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+        <!-- Self-hosted fonts -->
+        <link rel="preload" href="{% static 'portfolio/fonts/inter-latin.woff2' %}" as="font" type="font/woff2" crossorigin>
+        <link rel="preload" href="{% static 'portfolio/fonts/space-grotesk-latin.woff2' %}" as="font" type="font/woff2" crossorigin>
+        <link rel="stylesheet" href="{% static 'portfolio/css/fonts.css' %}">
 
         <!-- Three.js, GSAP & Lenis for 3D Cryptographic Topology, Smooth Scrolling & Awwwards Choreographed Reveals -->
-        <script defer src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-        <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-        <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-        <script defer src="https://unpkg.com/@studio-freight/lenis@1.0.34/dist/lenis.min.js"></script>
+        <script defer src="{% static 'portfolio/vendor/three.min.js' %}"></script>
+        <script defer src="{% static 'portfolio/vendor/gsap.min.js' %}"></script>
+        <script defer src="{% static 'portfolio/vendor/ScrollTrigger.min.js' %}"></script>
+        <script defer src="{% static 'portfolio/vendor/lenis.min.js' %}"></script>
 
         <!-- HTMX -->
-        <script defer src="https://unpkg.com/htmx.org@1.9.10"></script>
-        <script defer src="https://unpkg.com/htmx.org/dist/ext/preload.js"></script>
+        <script defer src="{% static 'portfolio/vendor/htmx.min.js' %}"></script>
+        <script defer src="{% static 'portfolio/vendor/htmx-preload.js' %}"></script>
 
         <!-- Marked.js & Mermaid.js for Markdown & Diagram Rendering in Logs -->
-        <script defer src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+        <script defer src="{% static 'portfolio/vendor/marked.min.js' %}"></script>
+        <!-- Mermaid (~3MB) is lazy-loaded on demand by window.renderMermaid() in awwwards.js -->
 
         <!-- Analytics -->
         <script defer src="https://analytics.proyectosos.cl/script.js" data-website-id="31434b15-eee1-4168-8f9f-bd302c62124a"></script>
