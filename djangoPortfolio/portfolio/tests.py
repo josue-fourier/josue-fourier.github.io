@@ -9,12 +9,14 @@ Covers:
 """
 
 import io
+from io import StringIO
 import json
 import os
 import re
 import shutil
 import tempfile
 import unittest
+from unittest.mock import MagicMock, patch
 import uuid
 from pathlib import Path
 from PIL import Image as PILImage
@@ -23,6 +25,7 @@ from django.conf import settings
 from django.contrib.admin.sites import AdminSite
 from django.core.exceptions import ValidationError
 from django.core.files.uploadedfile import SimpleUploadedFile
+from django.core.management import CommandError, call_command
 from django.test import Client, TestCase, override_settings
 
 from portfolio.admin import (
@@ -1222,6 +1225,37 @@ class C2EngineeringPortfolioTests(TestCase):
         self.assertIn("opacity: 0.14;", css_code)
         self.assertIn('[data-theme="lofi"] #em-telemetry-canvas', css_code)
         self.assertIn("opacity: 0.06;", css_code)
+
+
+class RunTaskCommandTests(TestCase):
+    def test_run_task_list(self):
+        out = StringIO()
+        call_command("run_task", "--list", stdout=out)
+        output = out.getvalue()
+        self.assertIn("Available on-demand tasks:", output)
+        self.assertIn("hackerrank", output)
+        self.assertIn("ntfy", output)
+
+    def test_run_task_invalid(self):
+        with self.assertRaises(CommandError):
+            call_command("run_task", "non_existent_task")
+
+    @patch("portfolio.tasks.check_ntfy_status_updates.call_local")
+    def test_run_task_synchronous(self, mock_call):
+        mock_call.return_value = "OK"
+        out = StringIO()
+        call_command("run_task", "ntfy", stdout=out)
+        self.assertIn("Executing task [ntfy]", out.getvalue())
+        mock_call.assert_called_once()
+
+    @patch("portfolio.tasks.update_hackerrank_badges")
+    def test_run_task_enqueue(self, mock_task):
+        mock_task.return_value = MagicMock(id="task-123")
+        out = StringIO()
+        call_command("run_task", "hackerrank", "--enqueue", stdout=out)
+        self.assertIn("Enqueuing task [hackerrank]", out.getvalue())
+        self.assertIn("task ID: task-123", out.getvalue())
+
 
 
 
