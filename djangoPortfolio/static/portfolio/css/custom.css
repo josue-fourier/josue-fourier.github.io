@@ -93,8 +93,8 @@ body {
     font-family: var(--font-display, "Space Grotesk"), "PP Neue Montreal", "Inter", sans-serif;
     font-weight: 700;
     font-variation-settings: 'wght' 700;
-    font-size: clamp(4.5rem, 9.5vw, 9rem);
-    line-height: 0.86;
+    font-size: clamp(2.75rem, 8vw, 8.5rem);
+    line-height: 0.9;
     letter-spacing: -0.04em;
     color: var(--ink);
     -webkit-text-fill-color: currentColor;
@@ -1225,48 +1225,8 @@ main#log-content-area.markdown-body {
 }
 
 /* ==========================================================================
-   Fourier Harmonic Synthesizer Engine & Theme Harmony
+   Subtle 3D EM telemetry canvas opacity for high clarity & theme harmony
    ========================================================================== */
-#fourier-harmonic-panel {
-    transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-[data-theme="lofi"] #fourier-harmonic-panel {
-    background-color: #FFFFFF !important;
-    border-color: rgba(0, 0, 0, 0.1) !important;
-    box-shadow: 0 4px 20px -4px rgba(0, 0, 0, 0.05);
-}
-
-[data-theme="lofi"] #fourier-harmonic-panel .bg-black\/40 {
-    background-color: #F8FAFC !important;
-    border-color: rgba(0, 0, 0, 0.08) !important;
-}
-
-[data-theme="lofi"] #fourier-harmonic-panel .text-zinc-300 {
-    color: #1E293B !important;
-}
-
-[data-theme="lofi"] #fourier-harmonic-panel .text-zinc-400 {
-    color: #475569 !important;
-}
-
-[data-theme="lofi"] #fourier-harmonic-panel .text-zinc-500 {
-    color: #64748B !important;
-}
-
-[data-theme="lofi"] #fourier-harmonic-panel .text-zinc-600 {
-    color: #94A3B8 !important;
-}
-
-[data-theme="lofi"] #fourier-harmonic-panel .border-white\/\[0\.06\] {
-    border-color: rgba(0, 0, 0, 0.08) !important;
-}
-
-[data-theme="lofi"] #fourier-harmonic-panel .border-white\/\[0\.04\] {
-    border-color: rgba(0, 0, 0, 0.06) !important;
-}
-
-/* Subtle 3D EM telemetry canvas opacity for high clarity */
 #em-telemetry-canvas {
     opacity: 0.14;
     transition: opacity 0.4s ease;

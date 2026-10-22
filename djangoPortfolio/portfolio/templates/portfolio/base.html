@@ -73,18 +73,18 @@
                 <div class="noise-overlay"></div>
                 <!-- Sticky Top Telemetry Bar with Continuous Data Carousel -->
                 <header id="top-telemetry-bar" class="sticky top-0 z-50 w-full h-12 border-b border-white/[0.08] bg-[#050506]/90 backdrop-blur-md">
-                    <div class="max-w-[1440px] mx-auto h-full px-4 md:px-6 flex items-center justify-between font-mono text-[11px] gap-2 md:gap-4 overflow-hidden">
+                    <div class="max-w-[1440px] mx-auto h-full px-3 sm:px-4 md:px-6 flex items-center justify-between font-mono text-[11px] gap-2 sm:gap-3 md:gap-4 overflow-hidden">
                         <!-- Left: Identity + Live Pulse -->
-                        <div class="flex items-center gap-2 md:gap-3 shrink-0">
-                            <a href="/" class="font-bold tracking-wider text-white flex items-center gap-2 hover:text-emerald-400 transition-colors">
+                        <div class="flex items-center gap-1.5 sm:gap-2 md:gap-3 shrink-0">
+                            <a href="/" class="font-bold tracking-wider text-white flex items-center gap-1.5 sm:gap-2 hover:text-emerald-400 transition-colors">
                                 <span class="w-1.5 h-1.5 bg-emerald-500 animate-pulse"></span>
                                 <span class="whitespace-nowrap">JOSUÉ LEIVA</span>
                             </a>
-                            <span class="text-zinc-600 hidden sm:inline">//</span>
+                            <span class="text-zinc-600 hidden md:inline">//</span>
                         </div>
 
                         <!-- Center: News-style Continuous Telemetry Carousel Tape -->
-                        <div class="telemetry-ticker-viewport flex-1 overflow-hidden relative mx-1 md:mx-3 select-none min-w-0" aria-label="{% translate 'Live Continuous Telemetry Stream' %}">
+                        <div class="telemetry-ticker-viewport flex-1 overflow-hidden relative mx-1 sm:mx-2 md:mx-3 select-none min-w-0" aria-label="{% translate 'Live Continuous Telemetry Stream' %}">
                             <div class="telemetry-ticker-track flex items-center whitespace-nowrap">
                                 <!-- Group 1 -->
                                 <div class="telemetry-ticker-group flex items-center shrink-0">
@@ -94,7 +94,7 @@
                                         <span id="santiago-clock" class="santiago-clock-display text-zinc-200">--:--:--</span>
                                         <span id="santiago-weather-temp" class="santiago-weather-display text-emerald-400 font-semibold">--°C</span>
                                     </span>
-                                    <span class="text-zinc-700 mx-3.5">//</span>
+                                    <span class="text-zinc-700 mx-2.5 sm:mx-3.5">//</span>
 
                                     {% if node_heartbeat %}
                                     <span class="inline-flex items-center gap-1.5 text-zinc-300">
@@ -108,12 +108,12 @@
                                         <span>RPi DAEMON // {% translate "STANDBY" %}</span>
                                     </span>
                                     {% endif %}
-                                    <span class="text-zinc-700 mx-3.5">//</span>
+                                    <span class="text-zinc-700 mx-2.5 sm:mx-3.5">//</span>
 
                                     {% if ntfy_message or current_status %}
                                     <span class="inline-flex items-center gap-1.5 text-zinc-300">
                                         <span class="text-cyan-400 font-bold">NTFY:</span>
-                                        <span class="text-zinc-200 max-w-[200px] md:max-w-[320px] truncate">"{% if ntfy_message %}{{ ntfy_message.message }}{% else %}{{ current_status.message }}{% endif %}"</span>
+                                        <span class="text-zinc-200 max-w-[160px] sm:max-w-[240px] md:max-w-[320px] truncate">"{% if ntfy_message %}{{ ntfy_message.message }}{% else %}{{ current_status.message }}{% endif %}"</span>
                                         <span class="text-zinc-500 text-[10px]">({% if ntfy_message %}{% blocktranslate with t=ntfy_message.timestamp|short_timesince %}{{ t }} ago{% endblocktranslate %}{% else %}{% blocktranslate with t=current_status.timestamp|short_timesince %}{{ t }} ago{% endblocktranslate %}{% endif %})</span>
                                     </span>
                                     {% else %}
@@ -122,7 +122,7 @@
                                         <span class="text-zinc-500">SYS_NOMINAL</span>
                                     </span>
                                     {% endif %}
-                                    <span class="text-zinc-700 mx-3.5">//</span>
+                                    <span class="text-zinc-700 mx-2.5 sm:mx-3.5">//</span>
                                 </div>
 
                                 <!-- Group 2 (Duplicate for Seamless Endless Loop) -->
@@ -133,7 +133,7 @@
                                         <span class="santiago-clock-display text-zinc-200">--:--:--</span>
                                         <span class="santiago-weather-display text-emerald-400 font-semibold">--°C</span>
                                     </span>
-                                    <span class="text-zinc-700 mx-3.5">//</span>
+                                    <span class="text-zinc-700 mx-2.5 sm:mx-3.5">//</span>
 
                                     {% if node_heartbeat %}
                                     <span class="inline-flex items-center gap-1.5 text-zinc-300">
@@ -147,12 +147,12 @@
                                         <span>RPi DAEMON // {% translate "STANDBY" %}</span>
                                     </span>
                                     {% endif %}
-                                    <span class="text-zinc-700 mx-3.5">//</span>
+                                    <span class="text-zinc-700 mx-2.5 sm:mx-3.5">//</span>
 
                                     {% if ntfy_message or current_status %}
                                     <span class="inline-flex items-center gap-1.5 text-zinc-300">
                                         <span class="text-cyan-400 font-bold">NTFY:</span>
-                                        <span class="text-zinc-200 max-w-[200px] md:max-w-[320px] truncate">"{% if ntfy_message %}{{ ntfy_message.message }}{% else %}{{ current_status.message }}{% endif %}"</span>
+                                        <span class="text-zinc-200 max-w-[160px] sm:max-w-[240px] md:max-w-[320px] truncate">"{% if ntfy_message %}{{ ntfy_message.message }}{% else %}{{ current_status.message }}{% endif %}"</span>
                                         <span class="text-zinc-500 text-[10px]">({% if ntfy_message %}{% blocktranslate with t=ntfy_message.timestamp|short_timesince %}{{ t }} ago{% endblocktranslate %}{% else %}{% blocktranslate with t=current_status.timestamp|short_timesince %}{{ t }} ago{% endblocktranslate %}{% endif %})</span>
                                     </span>
                                     {% else %}
@@ -161,13 +161,13 @@
                                         <span class="text-zinc-500">SYS_NOMINAL</span>
                                     </span>
                                     {% endif %}
-                                    <span class="text-zinc-700 mx-3.5">//</span>
+                                    <span class="text-zinc-700 mx-2.5 sm:mx-3.5">//</span>
                                 </div>
                             </div>
                         </div>
 
                         <!-- Right: Clean Anchor Links + Locale Switcher + Theme Switcher + CV Link -->
-                        <div class="flex items-center gap-3 md:gap-4 shrink-0 text-zinc-400">
+                        <div class="flex items-center gap-2 sm:gap-3 md:gap-4 shrink-0 text-zinc-400 text-[10px] sm:text-[11px]">
                             <!-- Nav Links (large screens) -->
                             <nav class="hidden xl:flex items-center gap-4 text-zinc-400 tracking-wider" aria-label="Main Navigation">
                                 <a href="/#chapter-01" class="hover:text-white transition-colors">{% translate "INDEX" %}</a>
@@ -179,19 +179,19 @@
 
                             <!-- Locale Switcher -->
                             {% get_current_language as CURRENT_LANG %}
-                            <form action="{% url 'set_language' %}" method="post" class="inline-flex items-center gap-1 font-mono text-[11px] select-none">
+                            <form action="{% url 'set_language' %}" method="post" class="inline-flex items-center gap-1 font-mono text-[10px] sm:text-[11px] select-none">
                                 {% csrf_token %}
                                 <input name="next" type="hidden" value="{{ request.get_full_path }}">
                                 {% if CURRENT_LANG == 'es' %}
                                 <input name="language" type="hidden" value="en">
-                                <button type="submit" class="cursor-pointer flex items-center gap-1 tracking-wider hover:opacity-80 transition-opacity" title="Switch to English">
+                                <button type="submit" class="cursor-pointer flex items-center gap-0.5 sm:gap-1 tracking-wider hover:opacity-80 transition-opacity" title="Switch to English">
                                     <span class="text-zinc-500 hover:text-white transition-colors font-bold">EN</span>
                                     <span class="text-zinc-700">/</span>
                                     <span class="text-emerald-400 font-bold">ES</span>
                                 </button>
                                 {% else %}
                                 <input name="language" type="hidden" value="es">
-                                <button type="submit" class="cursor-pointer flex items-center gap-1 tracking-wider hover:opacity-80 transition-opacity" title="Cambiar a Español">
+                                <button type="submit" class="cursor-pointer flex items-center gap-0.5 sm:gap-1 tracking-wider hover:opacity-80 transition-opacity" title="Cambiar a Español">
                                     <span class="text-emerald-400 font-bold">EN</span>
                                     <span class="text-zinc-700">/</span>
                                     <span class="text-zinc-500 hover:text-white transition-colors font-bold">ES</span>
@@ -201,24 +201,24 @@
                             <span class="text-zinc-700">|</span>
 
                             <!-- Theme Switcher -->
-                            <label id="theme-toggle-btn" class="cursor-pointer flex items-center gap-1.5 font-mono text-[11px] text-zinc-400 hover:text-white transition-colors select-none" title="{% translate 'Toggle Dark / Light Cryptographic Theme' %}" aria-label="Toggle Theme">
+                            <label id="theme-toggle-btn" class="cursor-pointer flex items-center gap-1 font-mono text-[10px] sm:text-[11px] text-zinc-400 hover:text-white transition-colors select-none" title="{% translate 'Toggle Dark / Light Cryptographic Theme' %}" aria-label="Toggle Theme">
                                 <input type="checkbox" class="theme-controller hidden" value="dracula" />
                                 <svg class="theme-icon-sun w-3.5 h-3.5 text-amber-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                     <circle cx="12" cy="12" r="4"></circle>
                                     <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path>
                                 </svg>
                                 <svg class="theme-icon-moon w-3.5 h-3.5 text-emerald-400 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
+                                    <path d="M12 3a6 6 0 0 0 9 9 9 0 1 1-9-9Z"></path>
                                 </svg>
-                                <span class="theme-text-label font-bold text-[10px] tracking-wider uppercase">LIGHT</span>
+                                <span class="theme-text-label font-bold text-[10px] tracking-wider uppercase hidden sm:inline">LIGHT</span>
                             </label>
                             <span class="text-zinc-700">|</span>
 
                             <!-- CV Link -->
                             {% if CURRENT_LANG == "es" %}
-                            <a href="/cv-es" target="_blank" class="hover:text-emerald-400 transition-colors tracking-wider whitespace-nowrap">CV.PDF ↗</a>
+                            <a href="/cv-es" target="_blank" class="hover:text-emerald-400 transition-colors tracking-wider whitespace-nowrap"><span class="hidden sm:inline">CV.PDF ↗</span><span class="sm:hidden">CV ↗</span></a>
                             {% else %}
-                            <a href="/cv-en" target="_blank" class="hover:text-emerald-400 transition-colors tracking-wider whitespace-nowrap">CV.PDF ↗</a>
+                            <a href="/cv-en" target="_blank" class="hover:text-emerald-400 transition-colors tracking-wider whitespace-nowrap"><span class="hidden sm:inline">CV.PDF ↗</span><span class="sm:hidden">CV ↗</span></a>
                             {% endif %}
                         </div>
                     </div>

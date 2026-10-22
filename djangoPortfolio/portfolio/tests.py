@@ -1168,8 +1168,8 @@ class C2EngineeringPortfolioTests(TestCase):
         self.assertIn('--bg: #F8F9FA;', css_code)
         self.assertIn('--bg: #050506;', css_code)
 
-    def test_fourier_harmonic_synthesizer_and_kinetic_header_decode(self):
-        """Verify Fourier Synthesizer engine, F0UR13R moniker, and Dragonfly2 kinetic header decode."""
+    def test_kinetic_header_decode_and_responsive_top_layout(self):
+        """Verify Fourier Synthesizer removal, Dragonfly2 kinetic header decode, and responsive top navbar layout."""
         from django.utils import timezone
         HackerRankBadge.objects.create(
             badge_name="C++",
@@ -1182,14 +1182,15 @@ class C2EngineeringPortfolioTests(TestCase):
         self.assertEqual(res.status_code, 200)
         content = res.content.decode("utf-8")
 
-        # Check Fourier panel DOM elements and F0UR13R coordinate tag
-        self.assertIn('id="fourier-harmonic-panel"', content)
-        self.assertIn('id="fourier-waveform-canvas"', content)
-        self.assertIn('id="fourier-harmonic-count"', content)
-        self.assertIn('id="fourier-freq-readout"', content)
-        self.assertIn('id="fourier-approx-readout"', content)
-        self.assertIn('id="fourier-scrub-pct"', content)
-        self.assertIn("F0UR13R", content)
+        # Verify Fourier synthesizer panel is removed
+        self.assertNotIn('id="fourier-harmonic-panel"', content)
+        self.assertNotIn('id="fourier-waveform-canvas"', content)
+
+        # Check responsive top telemetry bar elements
+        self.assertIn('id="top-telemetry-bar"', content)
+        self.assertIn("telemetry-ticker-viewport", content)
+        self.assertIn("theme-text-label", content)
+        self.assertIn("hidden sm:inline", content)
 
         # Check kinetic scrub tags on all 4 chapter headers
         self.assertIn('data-kinetic-scrub="true" data-target-text="01 / ARCHITECTURAL DOSSIER"', content)
@@ -1197,7 +1198,7 @@ class C2EngineeringPortfolioTests(TestCase):
         self.assertIn('data-kinetic-scrub="true" data-target-text="03 // PRODUCTION SYSTEMS"', content)
         self.assertIn('data-kinetic-scrub="true" data-target-text="04 // ENGINEERING FIELD LOGS"', content)
 
-        # Check main.js for Fourier synthesizer and kinetic decode functions
+        # Check main.js and custom.css
         js_path = os.path.join(settings.BASE_DIR, "static", "portfolio", "js", "main.js")
         css_path = os.path.join(settings.BASE_DIR, "static", "portfolio", "css", "custom.css")
         with open(js_path, "r", encoding="utf-8") as f:
@@ -1205,15 +1206,13 @@ class C2EngineeringPortfolioTests(TestCase):
         with open(css_path, "r", encoding="utf-8") as f:
             css_code = f.read()
 
-        self.assertIn("function initFourierHarmonicSynthesizer()", js_code)
+        self.assertNotIn("initFourierHarmonicSynthesizer", js_code)
         self.assertIn("function initScrollScrubKineticDecode()", js_code)
-        self.assertIn("const harmonicSteps = [1, 3, 5, 7, 9, 11, 13];", js_code)
-        self.assertIn("window.initFourierHarmonicSynthesizer =", js_code)
         self.assertIn("window.initScrollScrubKineticDecode =", js_code)
 
-        # Check custom.css rules for synthesizer and background canvas opacity
-        self.assertIn("#fourier-harmonic-panel", css_code)
-        self.assertIn('[data-theme="lofi"] #fourier-harmonic-panel', css_code)
+        # Check custom.css responsive hero title and canvas opacity
+        self.assertIn("font-size: clamp(2.75rem, 8vw, 8.5rem);", css_code)
+        self.assertNotIn("#fourier-harmonic-panel", css_code)
         self.assertIn("#em-telemetry-canvas", css_code)
         self.assertIn("opacity: 0.14;", css_code)
         self.assertIn('[data-theme="lofi"] #em-telemetry-canvas', css_code)
