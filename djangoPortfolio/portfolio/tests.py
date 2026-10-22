@@ -1022,12 +1022,14 @@ class C2EngineeringPortfolioTests(TestCase):
         self.assertIn("Criptografía Aplicada y Telemática", content)
 
     def test_top_telemetry_bar_and_navigation(self):
-        """Verify top telemetry bar contains clean anchor links and identity branding."""
+        """Verify top telemetry bar contains clean anchor links, moniker branding, and no personal name in navbar."""
         res = self.client.get("/en/")
         self.assertEqual(res.status_code, 200)
         content = res.content.decode("utf-8")
         self.assertIn('id="top-telemetry-bar"', content)
-        self.assertIn("JOSUÉ LEIVA", content)
+        top_bar_html = content.split('id="top-telemetry-bar"')[1].split('</header>')[0]
+        self.assertNotIn("JOSUÉ LEIVA", top_bar_html)
+        self.assertIn("F0UR13R", top_bar_html)
         self.assertIn("INDEX", content)
         self.assertIn("BENCHMARKS", content)
         self.assertIn("LOGS", content)
@@ -1185,6 +1187,10 @@ class C2EngineeringPortfolioTests(TestCase):
         # Verify Fourier synthesizer panel is removed
         self.assertNotIn('id="fourier-harmonic-panel"', content)
         self.assertNotIn('id="fourier-waveform-canvas"', content)
+
+        # Verify profile picture is rendered in Hero
+        self.assertIn("profile.jpg", content)
+        self.assertIn("profile-portrait-frame", content)
 
         # Check responsive top telemetry bar elements
         self.assertIn('id="top-telemetry-bar"', content)

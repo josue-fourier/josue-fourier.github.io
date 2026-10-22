@@ -1236,5 +1236,34 @@ main#log-content-area.markdown-body {
     opacity: 0.06;
 }
 
+/* ==========================================================================
+   Hero Profile Portrait Frame
+   ========================================================================== */
+.profile-portrait-frame {
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.profile-portrait-frame:hover {
+    border-color: rgba(16, 185, 129, 0.5);
+    box-shadow: 0 0 25px -5px rgba(16, 185, 129, 0.25);
+}
+
+[data-theme="lofi"] .profile-portrait-frame {
+    border-color: rgba(0, 0, 0, 0.12) !important;
+    background-color: #FFFFFF !important;
+    box-shadow: 0 4px 20px -4px rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="lofi"] .profile-portrait-frame:hover {
+    border-color: rgba(5, 150, 105, 0.5) !important;
+    box-shadow: 0 0 25px -5px rgba(5, 150, 105, 0.2);
+}
+
+[data-theme="lofi"] .profile-portrait-frame .bg-\[\#050506\]\/90 {
+    background-color: rgba(255, 255, 255, 0.92) !important;
+    border-color: rgba(0, 0, 0, 0.1) !important;
+    color: #059669 !important;
+}
+
 
 
