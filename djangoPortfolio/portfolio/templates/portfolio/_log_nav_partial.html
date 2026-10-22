@@ -1,4 +1,4 @@
-{% load hud_tags %}
+{% load hud_tags i18n %}
 {% for log in page_obj %}
 <button class="log-item p-4 lg:p-5 text-left w-[72vw] sm:w-[260px] md:w-full flex-none snap-center md:snap-align-none flex flex-col justify-between gap-2 {% if forloop.first and not page_obj.has_previous %}active{% endif %} cursor-pointer"
         hx-get="{% url 'single_log' log.id %}"
@@ -31,7 +31,7 @@
         hx-target="this"
         hx-swap="outerHTML">
     <span class="font-mono text-xs uppercase tracking-widest font-bold flex items-center gap-2">
-        <span>Load more</span>
+        <span>{% translate "Load more" %}</span>
         <span>↓</span>
     </span>
 </button>

@@ -2,7 +2,7 @@
 {% load i18n %}
 {% load hud_tags %}
 <!DOCTYPE html>
-<html lang="en" data-theme="dracula" class="no-theme-transitions">
+<html lang="en" data-theme="lofi" class="no-theme-transitions">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,15 +14,15 @@
         <title>Josué Leiva | Telematics Engineering</title>
         {% endblock %}
 
-        <!-- Prevent Theme Flash & Default to Dark Mode ('dracula' / OBSIDIAN_CIPHER) -->
+        <!-- Prevent Theme Flash & Default to Light Mode ('lofi' / CRYO_MANUAL) -->
         <script>
             (function() {
                 try {
                     var savedTheme = localStorage.getItem('theme_v3');
-                    var activeTheme = (savedTheme === 'dracula' || savedTheme === 'lofi') ? savedTheme : 'dracula';
+                    var activeTheme = (savedTheme === 'dracula' || savedTheme === 'lofi') ? savedTheme : 'lofi';
                     document.documentElement.setAttribute('data-theme', activeTheme);
                 } catch (e) {
-                    document.documentElement.setAttribute('data-theme', 'dracula');
+                    document.documentElement.setAttribute('data-theme', 'lofi');
                 }
                 window.addEventListener('DOMContentLoaded', function() {
                     requestAnimationFrame(function() {
@@ -86,32 +86,54 @@
 
                         <!-- Center: Clean Anchor Links (without brackets) -->
                         <nav class="hidden md:flex items-center gap-6 text-zinc-400 tracking-wider" aria-label="Main Navigation">
-                            <a href="/#chapter-01" class="hover:text-white transition-colors">INDEX</a>
-                            <a href="/#chapter-02" class="hover:text-white transition-colors">CAPABILITIES</a>
-                            <a href="/#chapter-03" class="hover:text-white transition-colors">BENCHMARKS</a>
-                            <a href="/logging/" class="transition-colors {% if '/logging' in request.path %}text-emerald-400 font-bold{% else %}hover:text-white{% endif %}">LOGS</a>
-                            <a href="/#chapter-06" class="hover:text-white transition-colors">SYSTEMS</a>
+                            <a href="/#chapter-01" class="hover:text-white transition-colors">{% translate "INDEX" %}</a>
+                            <a href="/#chapter-02" class="hover:text-white transition-colors">{% translate "CAPABILITIES" %}</a>
+                            <a href="/#chapter-03" class="hover:text-white transition-colors">{% translate "BENCHMARKS" %}</a>
+                            <a href="/#chapter-06" class="hover:text-white transition-colors">{% translate "SYSTEMS" %}</a>
+                            <a href="/logging/" class="transition-colors {% if '/logging' in request.path %}text-emerald-400 font-bold{% else %}hover:text-white{% endif %}">{% translate "LOGS" %}</a>
                         </nav>
 
                         <!-- Right: Locale Switcher & CV Link -->
                         <div class="flex items-center gap-4 text-zinc-400">
                             {% get_current_language as CURRENT_LANG %}
-                            <form action="{% url 'set_language' %}" method="post" class="inline">
+                            <form action="{% url 'set_language' %}" method="post" class="inline-flex items-center gap-1 font-mono text-[11px] select-none">
                                 {% csrf_token %}
                                 <input name="next" type="hidden" value="{{ request.get_full_path }}">
-                                <input name="language" type="hidden" value="{% if CURRENT_LANG == 'es' %}en{% else %}es{% endif %}">
-                                <button type="submit" class="hover:text-white transition-colors font-bold tracking-wider uppercase cursor-pointer">
-                                    {% if CURRENT_LANG == 'es' %}EN{% else %}ES{% endif %}
+                                {% if CURRENT_LANG == 'es' %}
+                                <input name="language" type="hidden" value="en">
+                                <button type="submit" class="cursor-pointer flex items-center gap-1 tracking-wider hover:opacity-80 transition-opacity" title="Switch to English">
+                                    <span class="text-zinc-500 hover:text-white transition-colors font-bold">EN</span>
+                                    <span class="text-zinc-700">/</span>
+                                    <span class="text-emerald-400 font-bold">ES</span>
                                 </button>
+                                {% else %}
+                                <input name="language" type="hidden" value="es">
+                                <button type="submit" class="cursor-pointer flex items-center gap-1 tracking-wider hover:opacity-80 transition-opacity" title="Cambiar a Español">
+                                    <span class="text-emerald-400 font-bold">EN</span>
+                                    <span class="text-zinc-700">/</span>
+                                    <span class="text-zinc-500 hover:text-white transition-colors font-bold">ES</span>
+                                </button>
+                                {% endif %}
                             </form>
+                            <span class="text-zinc-700">|</span>
+                            <!-- Theme Switcher -->
+                            <label id="theme-toggle-btn" class="cursor-pointer flex items-center gap-1.5 font-mono text-[11px] text-zinc-400 hover:text-white transition-colors select-none" title="{% translate 'Toggle Dark / Light Cryptographic Theme' %}" aria-label="Toggle Theme">
+                                <input type="checkbox" class="theme-controller hidden" value="dracula" />
+                                <svg class="theme-icon-sun w-3.5 h-3.5 text-amber-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="12" cy="12" r="4"></circle>
+                                    <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path>
+                                </svg>
+                                <svg class="theme-icon-moon w-3.5 h-3.5 text-emerald-400 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
+                                </svg>
+                                <span class="theme-text-label font-bold text-[10px] tracking-wider uppercase">LIGHT</span>
+                            </label>
                             <span class="text-zinc-700">|</span>
                             {% if CURRENT_LANG == "es" %}
                             <a href="/cv-es" target="_blank" class="hover:text-emerald-400 transition-colors tracking-wider">CV.PDF ↗</a>
                             {% else %}
                             <a href="/cv-en" target="_blank" class="hover:text-emerald-400 transition-colors tracking-wider">CV.PDF ↗</a>
                             {% endif %}
-                            <!-- Hidden theme controller to preserve JS compatibility -->
-                            <input type="checkbox" class="theme-controller hidden" value="dracula" checked aria-hidden="true" />
                         </div>
                     </div>
                 </header>
@@ -124,17 +146,16 @@
                 <!-- Swiss Brutalist Exposed Grid Footer -->
                 <footer class="max-w-[1440px] mx-auto border-x border-b border-white/[0.08] bg-[#050506] py-6 px-6 md:px-10 flex flex-col md:flex-row justify-between items-center gap-4 text-zinc-500 font-mono text-[11px]">
                     <div class="flex items-center gap-2">
-                        <span class="text-emerald-500 font-bold">+</span>
                         <span>© {% now "Y" %} Josué Leiva. {% translate "All rights reserved." %}</span>
                     </div>
                     <div class="flex items-center gap-6">
                         <a href="https://github.com/josue-fourier" target="_blank" class="hover:text-emerald-400 transition-colors flex items-center gap-1.5" aria-label="GitHub">
                             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
-                            <span>GH//JOSUE-FOURIER</span>
+                            <span>GITHUB</span>
                         </a>
                         <a href="https://linkedin.com/in/josuenicolas" target="_blank" class="hover:text-emerald-400 transition-colors flex items-center gap-1.5" aria-label="LinkedIn">
                             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
-                            <span>LI//JOSUENICOLAS</span>
+                            <span>LINKEDIN</span>
                         </a>
                     </div>
                     <div class="flex items-center gap-2">

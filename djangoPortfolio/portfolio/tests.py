@@ -988,7 +988,6 @@ class C2EngineeringPortfolioTests(TestCase):
         self.assertIn("Hardened Ingestion Pipelines", content)
         self.assertIn("Relational Data Modeling", content)
         self.assertIn("Systems Craftsmanship", content)
-        self.assertIn("Low-level rigor engineered for human workflows", content)
 
     def test_5_core_identity_pillars_spanish(self):
         """Verify 5 Core Identity Pillars rendered translated in Spanish."""
@@ -1000,7 +999,6 @@ class C2EngineeringPortfolioTests(TestCase):
         self.assertIn("Pipelines de Ingesta Blindados", content)
         self.assertIn("Modelado de Datos Relacionales", content)
         self.assertIn("Artesanía de Sistemas y Criptografía", content)
-        self.assertIn("Rigor de bajo nivel diseñado para flujos humanos", content)
 
     def test_top_telemetry_bar_and_navigation(self):
         """Verify top telemetry bar contains clean anchor links and identity branding."""
@@ -1106,5 +1104,35 @@ class C2EngineeringPortfolioTests(TestCase):
         self.assertIn(".c2-snapping-enabled .c2-chapter-section:not(.c2-chapter-active):not(.c2-chapter-transitioning)", css_code)
         self.assertIn("visibility: visible !important;", css_code)
         self.assertIn("opacity: 1 !important;", css_code)
+
+    def test_theme_switcher_and_light_mode_default(self):
+        """Verify light theme ('lofi') is default across all pages, with toggle controller present."""
+        proj = Project.objects.create(name="Theme Test Project", description="Checking themes", active=True)
+        routes = ["/en/", "/es/", "/logging/", f"/project/{proj.id}/"]
+        for route in routes:
+            res = self.client.get(route)
+            self.assertEqual(res.status_code, 200)
+            content = res.content.decode("utf-8")
+            self.assertIn('data-theme="lofi"', content)
+            self.assertIn('id="theme-toggle-btn"', content)
+            self.assertIn('class="theme-controller hidden"', content)
+            self.assertIn("theme-icon-sun", content)
+            self.assertIn("theme-icon-moon", content)
+            self.assertIn("theme-text-label", content)
+
+        # Check main.js and custom.css rules
+        js_path = os.path.join(settings.BASE_DIR, "static", "portfolio", "js", "main.js")
+        css_path = os.path.join(settings.BASE_DIR, "static", "portfolio", "css", "custom.css")
+        with open(js_path, "r", encoding="utf-8") as f:
+            js_code = f.read()
+        with open(css_path, "r", encoding="utf-8") as f:
+            css_code = f.read()
+
+        self.assertIn("function updateThemeUI(theme)", js_code)
+        self.assertIn("(savedTheme === 'dracula' || savedTheme === 'lofi') ? savedTheme : 'lofi'", js_code)
+        self.assertIn('[data-theme="lofi"]', css_code)
+        self.assertIn('[data-theme="dracula"]', css_code)
+        self.assertIn('--bg: #F8F9FA;', css_code)
+        self.assertIn('--bg: #050506;', css_code)
 
 

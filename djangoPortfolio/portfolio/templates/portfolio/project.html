@@ -41,7 +41,7 @@
             <div class="lg:col-span-4 bg-[#08080B] p-8 md:p-10 flex flex-col justify-between gap-8 font-mono text-xs">
                 {% if project.stack.all %}
                 <div>
-                    <div class="pb-3 mb-4 border-b border-white/[0.08] text-zinc-500 text-[10px] uppercase tracking-widest">STACK</div>
+                    <div class="pb-3 mb-4 border-b border-white/[0.08] text-zinc-500 text-[10px] uppercase tracking-widest">{% translate "STACK" %}</div>
                     <div class="flex flex-wrap gap-2">
                         {% for tech in project.stack.all %}
                         <span class="px-2.5 py-1 border border-white/10 bg-white/[0.02] text-[10px] text-zinc-300 uppercase">#{{ tech.technology }}</span>
@@ -86,7 +86,7 @@
                 </button>
                 <!-- Slide Count Badge -->
                 <div class="absolute top-0 right-0 px-3 py-1.5 bg-[#050506]/90 border-b border-l border-white/[0.12] font-mono text-[10px] text-emerald-400 uppercase tracking-widest z-20 pointer-events-none">
-                    {{ project.images.count }} IMAGES
+                    {{ project.images.count }} {% translate "IMAGES" %}
                 </div>
                 {% endif %}
             </div>
@@ -97,7 +97,7 @@
             {% if project.html_content %}
                 {{ project.html_content|safe }}
             {% else %}
-                <p><em>No detailed case study available yet.</em></p>
+                <p><em>{% translate "No detailed case study available yet." %}</em></p>
             {% endif %}
         </main>
     </div>

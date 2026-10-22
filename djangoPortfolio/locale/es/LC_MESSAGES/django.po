@@ -206,3 +206,141 @@ msgstr "DESLIZA"
 msgid "Live Demo"
 msgstr "Ver Demo"
 
+msgid "Production Evidence"
+msgstr "Evidencia en Producción"
+
+msgid "DEPLOYED"
+msgstr "DESPLEGADO"
+
+msgid "Live Status"
+msgstr "Estado en Vivo"
+
+msgid "ONLINE"
+msgstr "EN LÍNEA"
+
+msgid "EDGE NODE OFFLINE"
+msgstr "NODO EDGE FUERA DE LÍNEA"
+
+msgid "No recent heartbeat"
+msgstr "Sin latido reciente"
+
+msgid "LATEST LOG"
+msgstr "ÚLTIMO REGISTRO"
+
+msgid "DOMAINS"
+msgstr "DOMINIOS"
+
+msgid "SKILLS"
+msgstr "HABILIDADES"
+
+msgid "Synced"
+msgstr "Sincronizado"
+
+msgid "PROJECTS"
+msgstr "PROYECTOS"
+
+msgid "in production"
+msgstr "en producción"
+
+msgid "No skills registered yet."
+msgstr "Aún no hay habilidades registradas."
+
+msgid "%(t)s ago"
+msgstr "hace %(t)s"
+
+msgid "LESS"
+msgstr "MENOS"
+
+msgid "MORE"
+msgstr "MÁS"
+
+msgid "INDEX"
+msgstr "ÍNDICE"
+
+msgid "CAPABILITIES"
+msgstr "CAPACIDADES"
+
+msgid "BENCHMARKS"
+msgstr "BENCHMARKS"
+
+msgid "LOGS"
+msgstr "REGISTROS"
+
+msgid "SYSTEMS"
+msgstr "SISTEMAS"
+
+msgid "SECTIONS"
+msgstr "SECCIONES"
+
+msgid "DOSSIER"
+msgstr "DOSIER"
+
+msgid "01 / ARCHITECTURAL DOSSIER"
+msgstr "01 / DOSIER ARQUITECTÓNICO"
+
+msgid "02 / CAPABILITY MATRIX"
+msgstr "02 / MATRIZ DE CAPACIDADES"
+
+msgid "GITHUB ACTIVITY // LIVE"
+msgstr "ACTIVIDAD EN GITHUB // EN VIVO"
+
+msgid "03 // BENCHMARKS"
+msgstr "03 // BENCHMARKS"
+
+msgid "SYNC: DAILY_0800_SCL // 5★ C++ RANK"
+msgstr "SINC: DIARIA_0800_SCL // RANGO C++ 5★"
+
+msgid "INGESTION CRON"
+msgstr "CRON DE INGESTA"
+
+msgid "ACTIVE DOMAINS"
+msgstr "DOMINIOS ACTIVOS"
+
+msgid "INDEPENDENT PRODUCTION SYSTEMS"
+msgstr "SISTEMAS INDEPENDIENTES EN PRODUCCIÓN"
+
+msgid "FILTER:"
+msgstr "FILTRAR:"
+
+msgid "DEPLOYED SYSTEM"
+msgstr "SISTEMA DESPLEGADO"
+
+msgid "INSPECT SYSTEM"
+msgstr "INSPECCIONAR SISTEMA"
+
+msgid "SYS_RENDER // ARCHITECTURE DOCUMENTED"
+msgstr "SYS_RENDER // ARQUITECTURA DOCUMENTADA"
+
+msgid "05 // ENGINEERING FIELD LOGS"
+msgstr "05 // REGISTROS DE INGENIERÍA"
+
+msgid "ARCHIVE // CHRONOLOGICAL"
+msgstr "ARCHIVO // CRONOLÓGICO"
+
+msgid "FEATURED DEEP DIVE"
+msgstr "ANÁLISIS DESTACADO"
+
+msgid "READ LOG"
+msgstr "LEER REGISTRO"
+
+msgid "Download CV"
+msgstr "Descargar CV"
+
+msgid "Inspect Architecture"
+msgstr "Inspeccionar Arquitectura"
+
+msgid "View All Logs"
+msgstr "Ver Todos los Registros"
+
+msgid "STACK"
+msgstr "STACK"
+
+msgid "IMAGES"
+msgstr "IMÁGENES"
+
+msgid "Load more"
+msgstr "Cargar más"
+
+msgid "No detailed case study available yet."
+msgstr "Aún no hay un estudio de caso detallado disponible."
+

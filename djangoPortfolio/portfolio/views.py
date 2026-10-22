@@ -13,6 +13,7 @@ from django.utils import timezone
 from django.views.generic import TemplateView
 
 from .models import (
+    CoreSkill,
     HackerRankBadge,
     Image,
     LogEntry,
@@ -43,6 +44,7 @@ class RootPage(TemplateView):
             .order_by("-project_count")
         )
         context["core_competencies"] = SkillCategory.objects.prefetch_related("skills").all()
+        context["total_skills"] = CoreSkill.objects.count()
 
         # Featured logs
         featured_logs = (

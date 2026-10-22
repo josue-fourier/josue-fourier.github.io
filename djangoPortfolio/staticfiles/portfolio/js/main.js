@@ -706,28 +706,67 @@ if (typeof gsap !== 'undefined') {
         });
     }
 
-    // 2e. Monospace Rapid Character-Decode Scramble (250ms)
+    // 2e. Monospace Rapid Character-Decode Scramble (Cryptographic Scramble on Hover & View)
     const CIPHER_CHARS = '0123456789ABCDEF#_//<>[]*~';
-    function scrambleDecodeText(el) {
-        if (!el || el.dataset.decoded === 'true' || prefersReducedMotion) return;
-        el.dataset.decoded = 'true';
-        const original = el.textContent;
+    function scrambleDecodeText(el, force = false) {
+        if (!el || prefersReducedMotion) return;
+        if (el.dataset.animating === 'true') return;
+
+        if (!el.dataset.originalText) {
+            el.dataset.originalText = el.textContent.trim();
+        }
+        const original = el.dataset.originalText;
+        if (!original) return;
+
+        el.dataset.animating = 'true';
         let iteration = 0;
         const totalChars = original.length;
-        const interval = setInterval(() => {
+
+        if (el._scrambleTimer) clearInterval(el._scrambleTimer);
+
+        el._scrambleTimer = setInterval(() => {
             el.textContent = original
                 .split('')
                 .map((ch, idx) => {
-                    if (ch === ' ' || ch === '/' || idx < iteration) return original[idx];
+                    if (ch === ' ' || ch === '/' || ch === '-' || ch === '|' || idx < iteration) {
+                        return original[idx];
+                    }
                     return CIPHER_CHARS[Math.floor(Math.random() * CIPHER_CHARS.length)];
                 })
                 .join('');
-            iteration += 2;
+
+            iteration += 1.5;
             if (iteration >= totalChars + 2) {
                 el.textContent = original;
-                clearInterval(interval);
+                el.dataset.animating = 'false';
+                clearInterval(el._scrambleTimer);
+                el._scrambleTimer = null;
             }
         }, 22);
+    }
+
+    function initCryptographicScramble() {
+        const scrambleEls = document.querySelectorAll('[data-scramble="true"]');
+        scrambleEls.forEach(el => {
+            if (!el.dataset.originalText) {
+                el.dataset.originalText = el.textContent.trim();
+            }
+            el.addEventListener('mouseenter', () => {
+                scrambleDecodeText(el, true);
+            });
+        });
+
+        if ('IntersectionObserver' in window) {
+            const obs = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        scrambleDecodeText(entry.target);
+                        obs.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.15 });
+            scrambleEls.forEach(el => obs.observe(el));
+        }
     }
 
     // 2f. Sticky Section Sub-Headers: Lock-in transient & Emerald LED pulse
@@ -802,23 +841,253 @@ if (typeof gsap !== 'undefined') {
         });
     }
 
-    // Run motion engine initializations
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', () => {
-            initMaskedTypographicReveals();
-            initCadGridLines();
-            initVelocityTransients();
-            initParallaxMedia();
-            initStickySectionHeaders();
-            initTelemetryCountersAndBars();
+    // 2h. Word-by-Word Scroll Scrub on Hero Stance (#hero-stance-scrub - Ownitt style)
+    function initHeroStanceScrub() {
+        const stance = document.getElementById('hero-stance-scrub');
+        if (!stance) return;
+
+        const fragment = document.createDocumentFragment();
+        const childNodes = Array.from(stance.childNodes);
+        const wordsList = [];
+
+        childNodes.forEach(node => {
+            if (node.nodeType === Node.TEXT_NODE) {
+                const tokens = node.textContent.split(/(\s+)/);
+                tokens.forEach(token => {
+                    if (!token) return;
+                    if (/^\s+$/.test(token)) {
+                        fragment.appendChild(document.createTextNode(token));
+                    } else {
+                        const span = document.createElement('span');
+                        span.className = 'stance-word';
+                        span.textContent = token;
+                        fragment.appendChild(span);
+                        wordsList.push(span);
+                    }
+                });
+            } else if (node.nodeType === Node.ELEMENT_NODE) {
+                const isStrong = node.tagName.toLowerCase() === 'strong';
+                const tokens = node.textContent.split(/(\s+)/);
+                tokens.forEach(token => {
+                    if (!token) return;
+                    if (/^\s+$/.test(token)) {
+                        fragment.appendChild(document.createTextNode(token));
+                    } else {
+                        const span = document.createElement('span');
+                        span.className = 'stance-word' + (isStrong ? ' highlight' : '');
+                        span.textContent = token;
+                        fragment.appendChild(span);
+                        wordsList.push(span);
+                    }
+                });
+            }
         });
-    } else {
+
+        stance.textContent = '';
+        stance.appendChild(fragment);
+
+        function updateScrub() {
+            if (prefersReducedMotion) {
+                wordsList.forEach(w => w.classList.add('active'));
+                return;
+            }
+
+            const scrollY = window.pageYOffset || document.documentElement.scrollTop;
+            const scrubProgress = Math.min(1, Math.max(0, scrollY / 240));
+            const activeCount = Math.floor(scrubProgress * wordsList.length);
+
+            const threshold = Math.max(3, activeCount);
+            wordsList.forEach((word, idx) => {
+                if (idx < threshold) {
+                    word.classList.add('active');
+                } else {
+                    word.classList.remove('active');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', updateScrub, { passive: true });
+        if (window.lenis) {
+            window.lenis.on('scroll', updateScrub);
+        }
+        updateScrub();
+    }
+
+    // 2i. Mechanical Numeric Reel Odometer (Trionn style slot reels)
+    function setMechanicalReel(el, valueStr) {
+        if (!el) return;
+        const chars = String(valueStr).split('');
+        let digits = el.querySelectorAll('.mech-reel-digit');
+
+        if (digits.length !== chars.length) {
+            el.innerHTML = '';
+            chars.forEach(ch => {
+                const digitContainer = document.createElement('span');
+                digitContainer.className = 'mech-reel-digit';
+
+                if (/\d/.test(ch)) {
+                    const strip = document.createElement('span');
+                    strip.className = 'mech-reel-strip';
+                    for (let i = 0; i <= 9; i++) {
+                        const numSpan = document.createElement('span');
+                        numSpan.className = 'mech-reel-char';
+                        numSpan.textContent = i;
+                        strip.appendChild(numSpan);
+                    }
+                    digitContainer.appendChild(strip);
+                } else {
+                    const charSpan = document.createElement('span');
+                    charSpan.className = 'mech-reel-char';
+                    charSpan.textContent = ch;
+                    digitContainer.appendChild(charSpan);
+                }
+                el.appendChild(digitContainer);
+            });
+            digits = el.querySelectorAll('.mech-reel-digit');
+        }
+
+        chars.forEach((ch, idx) => {
+            const digitContainer = digits[idx];
+            if (!digitContainer) return;
+            const strip = digitContainer.querySelector('.mech-reel-strip');
+            if (strip && /\d/.test(ch)) {
+                const digitVal = parseInt(ch, 10);
+                strip.style.transform = `translateY(-${digitVal * 10}%)`;
+            }
+        });
+    }
+    window.setMechanicalReel = setMechanicalReel;
+
+    function initMechanicalReels() {
+        const reels = document.querySelectorAll('.mech-reel');
+        reels.forEach(reel => {
+            if (reel.id === 'section-nav-pct') return;
+            const targetVal = reel.getAttribute('data-reel') || reel.textContent.trim();
+            if (targetVal) {
+                const initialZero = targetVal.replace(/\d/g, '0');
+                setMechanicalReel(reel, initialZero);
+
+                if ('IntersectionObserver' in window) {
+                    const obs = new IntersectionObserver((entries) => {
+                        entries.forEach(entry => {
+                            if (entry.isIntersecting) {
+                                setTimeout(() => {
+                                    setMechanicalReel(reel, targetVal);
+                                }, 120);
+                                obs.unobserve(entry.target);
+                            }
+                        });
+                    }, { threshold: 0.1 });
+                    obs.observe(reel);
+                } else {
+                    setMechanicalReel(reel, targetVal);
+                }
+            }
+        });
+    }
+
+    // 2j. Dual-Layer Character Split Hovers (Trionn clone)
+    function initCharSplitLinks() {
+        const links = document.querySelectorAll('#top-telemetry-bar nav a, .char-split-link');
+        links.forEach(link => {
+            if (link.querySelector('.char-split-track')) return;
+            const text = link.textContent.trim();
+            if (!text) return;
+
+            link.classList.add('char-split-link');
+            link.innerHTML = `
+                <span class="char-split-track">
+                    <span class="char-split-top">${text}</span>
+                    <span class="char-split-bottom">${text}</span>
+                </span>
+            `;
+        });
+    }
+
+    // 2k. Mobile Hero Segmented Switcher (< lg screens)
+    function initHeroMobileTabs() {
+        const tabCap = document.getElementById('hero-tab-capabilities');
+        const tabTelem = document.getElementById('hero-tab-telemetry');
+        const panelCap = document.getElementById('hero-panel-capabilities');
+        const panelTelem = document.getElementById('hero-panel-telemetry');
+
+        if (!tabCap || !tabTelem || !panelCap || !panelTelem) return;
+
+        function setTab(activeTab) {
+            if (activeTab === 'capabilities') {
+                panelCap.classList.remove('hidden');
+                panelCap.classList.add('block');
+                panelTelem.classList.add('hidden');
+                panelTelem.classList.remove('flex');
+
+                tabCap.classList.add('text-emerald-400', 'border-emerald-500', 'bg-white/[0.02]');
+                tabCap.classList.remove('text-zinc-500', 'border-transparent');
+
+                tabTelem.classList.remove('text-emerald-400', 'border-emerald-500', 'bg-white/[0.02]');
+                tabTelem.classList.add('text-zinc-500', 'border-transparent');
+            } else {
+                panelCap.classList.add('hidden');
+                panelCap.classList.remove('block');
+                panelTelem.classList.remove('hidden');
+                panelTelem.classList.add('flex');
+
+                tabTelem.classList.add('text-emerald-400', 'border-emerald-500', 'bg-white/[0.02]');
+                tabTelem.classList.remove('text-zinc-500', 'border-transparent');
+
+                tabCap.classList.remove('text-emerald-400', 'border-emerald-500', 'bg-white/[0.02]');
+                tabCap.classList.add('text-zinc-500', 'border-transparent');
+            }
+        }
+
+        tabCap.addEventListener('click', () => setTab('capabilities'));
+        tabTelem.addEventListener('click', () => setTab('telemetry'));
+    }
+
+    // 2l. Skills Progressive Disclosure (+N MORE / LESS)
+    function initSkillExpander() {
+        const expandBtns = document.querySelectorAll('.skill-expand-btn');
+        expandBtns.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                const parent = btn.closest('.cap-cell');
+                if (!parent) return;
+                const hiddenSkills = parent.querySelectorAll('.extra-skill');
+                const isExpanded = btn.getAttribute('data-expanded') === 'true';
+
+                if (isExpanded) {
+                    hiddenSkills.forEach(s => s.classList.add('hidden'));
+                    btn.setAttribute('data-expanded', 'false');
+                    const count = btn.getAttribute('data-count') || '';
+                    btn.textContent = `+${count} MORE`;
+                } else {
+                    hiddenSkills.forEach(s => s.classList.remove('hidden'));
+                    btn.setAttribute('data-expanded', 'true');
+                    btn.textContent = 'LESS';
+                }
+            });
+        });
+    }
+
+    // Run motion engine initializations
+    function runAllMotionInitializers() {
         initMaskedTypographicReveals();
         initCadGridLines();
         initVelocityTransients();
         initParallaxMedia();
         initStickySectionHeaders();
         initTelemetryCountersAndBars();
+        initCryptographicScramble();
+        initHeroStanceScrub();
+        initMechanicalReels();
+        initCharSplitLinks();
+        initHeroMobileTabs();
+        initSkillExpander();
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', runAllMotionInitializers);
+    } else {
+        runAllMotionInitializers();
     }
 }
 
@@ -837,184 +1106,6 @@ if (typeof gsap !== 'undefined') {
             cell.style.setProperty('--mouse-y', `${y}px`);
         }, { passive: true });
     });
-})();
-
-
-// --- 4. Live Telemetry Stream Terminal with Syntax Highlighting (`telemetry_pulse.py`) ---
-(function initTelemetryTerminal() {
-    const codeDisplay = document.getElementById('c-code-display');
-    const replayBtn = document.getElementById('c-replay-btn');
-    const keyReadout = document.getElementById('active-key-readout');
-    const compileStatus = document.getElementById('c-compile-status');
-    const widget = document.getElementById('c-telemetry-widget');
-
-    if (!codeDisplay || !widget) return;
-
-    // Structured frames showcasing actual production codebase logic
-    const TELEMETRY_STREAM_FRAMES = [
-        // Frame 0: Real Edge Telemetry Ingestion View (portfolio/views.py)
-        {
-            status: "RUNTIME: VIEWS // INGESTION",
-            readout: "ENDPOINT: POST /api/telemetry/heartbeat/",
-            tokens: [
-                { text: "@csrf_exempt\n", cls: "tok-kw" },
-                { text: "def", cls: "tok-kw" }, { text: " telemetry_heartbeat", cls: "tok-fn" }, { text: "(request):\n" },
-                { text: '    """Ingest hardware telemetry authenticated by edge token."""\n', cls: "tok-cmt" },
-                { text: "    token = request.headers." }, { text: "get", cls: "tok-fn" }, { text: "(" }, { text: '"X-Telemetry-Token"', cls: "tok-str" }, { text: ")\n" },
-                { text: "    if", cls: "tok-kw" }, { text: " token != config(" }, { text: '"TELEMETRY_TOKEN"', cls: "tok-str" }, { text: "):\n" },
-                { text: "        return", cls: "tok-kw" }, { text: " JsonResponse({" }, { text: '"error"', cls: "tok-str" }, { text: ": " }, { text: '"Unauthorized"', cls: "tok-str" }, { text: "}, status=" }, { text: "401", cls: "tok-num" }, { text: ")\n\n" },
-                { text: "    data = json." }, { text: "loads", cls: "tok-fn" }, { text: "(request.body." }, { text: "decode", cls: "tok-fn" }, { text: "(" }, { text: '"utf-8"', cls: "tok-str" }, { text: "))\n" },
-                { text: "    hb, _ = NodeHeartbeat.objects." }, { text: "update_or_create", cls: "tok-fn" }, { text: "(\n" },
-                { text: "        node_name=data." }, { text: "get", cls: "tok-fn" }, { text: "(" }, { text: '"node_name"', cls: "tok-str" }, { text: ", " }, { text: '"rpi-edge-scl"', cls: "tok-str" }, { text: "),\n" },
-                { text: "        defaults={" }, { text: '"status"', cls: "tok-str" }, { text: ": data[" }, { text: '"status"', cls: "tok-str" }, { text: "], " }, { text: '"timestamp"', cls: "tok-str" }, { text: ": timezone." }, { text: "now", cls: "tok-fn" }, { text: "()},\n" },
-                { text: "    )\n" },
-                { text: "    return", cls: "tok-kw" }, { text: " JsonResponse({" }, { text: '"success"', cls: "tok-str" }, { text: ": " }, { text: "True", cls: "tok-kw" }, { text: ", " }, { text: '"node"', cls: "tok-str" }, { text: ": hb.node_name})" }
-            ],
-            pauseAfter: 2200
-        },
-        // Frame 1: Real Background Task for HackerRank Sync (portfolio/tasks.py)
-        {
-            status: "RUNTIME: TASKS // DAILY_SYNC",
-            readout: "TASK: update_hackerrank_badges()",
-            tokens: [
-                { text: "@db_periodic_task", cls: "tok-kw" }, { text: "(" }, { text: "crontab", cls: "tok-fn" }, { text: "(minute=" }, { text: "'0'", cls: "tok-str" }, { text: ", hour=" }, { text: "'8'", cls: "tok-str" }, { text: "))\n" },
-                { text: "def", cls: "tok-kw" }, { text: " update_hackerrank_badges", cls: "tok-fn" }, { text: "():\n" },
-                { text: '    """Daily sync of verified algorithmic benchmarks at 08:00 SCL."""\n', cls: "tok-cmt" },
-                { text: "    res = requests." }, { text: "get", cls: "tok-fn" }, { text: "(HACKERRANK_URL, timeout=" }, { text: "20", cls: "tok-num" }, { text: ")\n" },
-                { text: "    res." }, { text: "raise_for_status", cls: "tok-fn" }, { text: "()\n\n" },
-                { text: "    with", cls: "tok-kw" }, { text: " transaction." }, { text: "atomic", cls: "tok-fn" }, { text: "():\n" },
-                { text: "        badges = " }, { text: "parse_and_save_badges", cls: "tok-fn" }, { text: "(\n" },
-                { text: "            res." }, { text: "json", cls: "tok-fn" }, { text: "()." }, { text: "get", cls: "tok-fn" }, { text: "(" }, { text: '"models"', cls: "tok-str" }, { text: ", []),\n" },
-                { text: "            snapshot_time=timezone." }, { text: "now", cls: "tok-fn" }, { text: "()\n" },
-                { text: "        )\n" },
-                { text: "    return", cls: "tok-kw" }, { text: " f" }, { text: '"Synced {len(badges)} verified badges"', cls: "tok-str" }
-            ],
-            pauseAfter: 2200
-        },
-        // Frame 2: Real Edge Node Ingestion Payload (JSON)
-        {
-            status: "STREAM: VERIFIED // HTTP 200",
-            readout: "PAYLOAD: telemetry_heartbeat",
-            tokens: [
-                { text: "{\n" },
-                { text: '  "node_name"', cls: "tok-str" }, { text: ': ' }, { text: '"rpi-edge-scl-01"', cls: "tok-str" }, { text: ",\n" },
-                { text: '  "hardware"', cls: "tok-str" }, { text: ': ' }, { text: '"Raspberry Pi 5 (8GB ARM64)"', cls: "tok-str" }, { text: ",\n" },
-                { text: '  "daemon"', cls: "tok-str" }, { text: ': ' }, { text: '"C++20 Native Telemetry Service"', cls: "tok-str" }, { text: ",\n" },
-                { text: '  "auth"', cls: "tok-str" }, { text: ': ' }, { text: '"X-Telemetry-Token [VALIDATED]"', cls: "tok-kw" }, { text: ",\n" },
-                { text: '  "cpu_temp"', cls: "tok-str" }, { text: ': ' }, { text: '"39.4°C"', cls: "tok-num" }, { text: ",\n" },
-                { text: '  "memory_used"', cls: "tok-str" }, { text: ': ' }, { text: '"142MB / 8GB"', cls: "tok-num" }, { text: ",\n" },
-                { text: '  "status"', cls: "tok-str" }, { text: ': ' }, { text: '"ONLINE // EDGE_HEALTHY"', cls: "tok-kw" }, { text: "\n" },
-                { text: "}" }
-            ],
-            pauseAfter: 2400
-        }
-    ];
-
-    let frameIndex = 0;
-    let tokenIndex = 0;
-    let charOffset = 0;
-    let typingTimer = null;
-    let isVisible = true;
-
-    function renderTokens(currentTokens, upToTokenIdx, upToCharOffset) {
-        codeDisplay.innerHTML = '';
-        for (let i = 0; i <= upToTokenIdx && i < currentTokens.length; i++) {
-            const tok = currentTokens[i];
-            const span = document.createElement('span');
-            if (tok.cls) span.className = tok.cls;
-
-            if (i < upToTokenIdx) {
-                span.textContent = tok.text;
-            } else {
-                span.textContent = tok.text.slice(0, upToCharOffset);
-            }
-            codeDisplay.appendChild(span);
-        }
-    }
-
-    function stepTyping() {
-        if (document.hidden || !isVisible) {
-            typingTimer = setTimeout(stepTyping, 300);
-            return;
-        }
-
-        const currentFrame = TELEMETRY_STREAM_FRAMES[frameIndex];
-        const tokens = currentFrame.tokens;
-
-        if (tokenIndex < tokens.length) {
-            const currentTok = tokens[tokenIndex];
-            charOffset++;
-            renderTokens(tokens, tokenIndex, charOffset);
-
-            let delay = 14 + Math.random() * 18;
-            const currentChar = currentTok.text[charOffset - 1];
-            if (currentChar === '\n') delay = 75;
-            else if (currentChar === ':' || currentChar === ',') delay = 50;
-
-            if (charOffset >= currentTok.text.length) {
-                tokenIndex++;
-                charOffset = 0;
-            }
-
-            typingTimer = setTimeout(stepTyping, delay);
-        } else {
-            // Frame completed
-            if (compileStatus) compileStatus.textContent = currentFrame.status;
-            if (keyReadout) keyReadout.textContent = currentFrame.readout;
-
-            typingTimer = setTimeout(() => {
-                if (prefersReducedMotion) return;
-                const flushSpan = document.createElement('span');
-                flushSpan.className = 'tok-cmt';
-                flushSpan.textContent = "\n\n# -- Synced next telemetry frame --";
-                codeDisplay.appendChild(flushSpan);
-                if (compileStatus) compileStatus.textContent = "SYNCING NEXT FRAME...";
-
-                typingTimer = setTimeout(() => {
-                    frameIndex = (frameIndex + 1) % TELEMETRY_STREAM_FRAMES.length;
-                    tokenIndex = 0;
-                    charOffset = 0;
-                    codeDisplay.innerHTML = '';
-                    const nextFrame = TELEMETRY_STREAM_FRAMES[frameIndex];
-                    if (compileStatus) compileStatus.textContent = nextFrame.status;
-                    if (keyReadout) keyReadout.textContent = nextFrame.readout;
-                    stepTyping();
-                }, 400);
-            }, currentFrame.pauseAfter);
-        }
-    }
-
-    function startSequence() {
-        clearTimeout(typingTimer);
-        frameIndex = 0;
-        tokenIndex = 0;
-        charOffset = 0;
-        codeDisplay.innerHTML = '';
-        const firstFrame = TELEMETRY_STREAM_FRAMES[0];
-        if (compileStatus) compileStatus.textContent = firstFrame.status;
-        if (keyReadout) keyReadout.textContent = firstFrame.readout;
-
-        if (prefersReducedMotion) {
-            renderTokens(firstFrame.tokens, firstFrame.tokens.length, 0);
-            return;
-        }
-        stepTyping();
-    }
-
-    if (replayBtn) {
-        replayBtn.addEventListener('click', startSequence);
-    }
-
-    if ('IntersectionObserver' in window) {
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                isVisible = entry.isIntersecting;
-            });
-        }, { threshold: 0.1 });
-        observer.observe(widget);
-    }
-
-    startSequence();
 })();
 
 
@@ -1069,13 +1160,23 @@ if (filterBtns.length > 0 && projectCards.length > 0) {
 }
 
 
-// --- 6. Theme Switcher Persistence (Default: Pure Obsidian Carbon 'dracula') ---
+// --- 6. Theme Switcher Persistence (Default: Pure Light Mode 'lofi') ---
 const themeControllers = document.querySelectorAll('.theme-controller');
 const htmlTag = document.documentElement;
 
+function updateThemeUI(theme) {
+    const isDark = (theme === 'dracula');
+    document.querySelectorAll('.theme-icon-sun').forEach(el => el.classList.toggle('hidden', isDark));
+    document.querySelectorAll('.theme-icon-moon').forEach(el => el.classList.toggle('hidden', !isDark));
+    document.querySelectorAll('.theme-text-label').forEach(el => {
+        el.textContent = isDark ? 'DARK' : 'LIGHT';
+    });
+}
+
 const savedTheme = localStorage.getItem('theme_v3');
-const initialTheme = (savedTheme === 'dracula' || savedTheme === 'lofi') ? savedTheme : 'dracula';
+const initialTheme = (savedTheme === 'dracula' || savedTheme === 'lofi') ? savedTheme : 'lofi';
 htmlTag.setAttribute('data-theme', initialTheme);
+updateThemeUI(initialTheme);
 
 if (themeControllers.length > 0) {
     themeControllers.forEach(tc => {
@@ -1084,6 +1185,7 @@ if (themeControllers.length > 0) {
             const newTheme = e.target.checked ? 'dracula' : 'lofi';
             htmlTag.setAttribute('data-theme', newTheme);
             localStorage.setItem('theme_v3', newTheme);
+            updateThemeUI(newTheme);
             themeControllers.forEach(other => {
                 other.checked = e.target.checked;
             });
@@ -1157,12 +1259,25 @@ function initSnappyChapterNavigation() {
         });
     }
 
+    if (navPctEl) {
+        if (typeof window.setMechanicalReel === 'function') {
+            window.setMechanicalReel(navPctEl, '00%');
+        } else {
+            navPctEl.textContent = '00%';
+        }
+    }
+
     window.addEventListener('scroll', () => {
         const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
         const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
         const pct = Math.max(0, Math.min(100, Math.round((scrollTop / Math.max(1, scrollHeight)) * 100)));
         if (navPctEl) {
-            navPctEl.textContent = String(pct).padStart(2, '0') + '%';
+            const formattedPct = String(pct).padStart(2, '0') + '%';
+            if (typeof window.setMechanicalReel === 'function') {
+                window.setMechanicalReel(navPctEl, formattedPct);
+            } else {
+                navPctEl.textContent = formattedPct;
+            }
         }
     }, { passive: true });
 

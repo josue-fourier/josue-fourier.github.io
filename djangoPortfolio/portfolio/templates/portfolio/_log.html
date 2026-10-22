@@ -1,3 +1,4 @@
+{% load i18n %}
 <header class="mb-8 border-b border-white/[0.08] pb-6">
     <div class="flex items-center gap-3 mb-4 font-mono text-[11px] uppercase tracking-widest">
         <span class="flex items-center gap-2 text-emerald-400 font-bold">
@@ -55,7 +56,7 @@
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
         </button>
         <div class="absolute top-0 right-0 px-3 py-1.5 bg-[#050506]/90 border-b border-l border-white/[0.12] font-mono text-[10px] text-emerald-400 uppercase tracking-widest z-20 pointer-events-none">
-            {{ log.images.count }} IMAGES
+            {{ log.images.count }} {% translate "IMAGES" %}
         </div>
     </div>
     {% endif %}

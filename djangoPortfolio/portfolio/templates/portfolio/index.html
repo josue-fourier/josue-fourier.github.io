@@ -11,7 +11,7 @@
     <nav id="section-nav-sidebar" class="fixed z-40 bottom-4 left-1/2 -translate-x-1/2 md:bottom-auto md:left-auto md:right-6 md:top-1/2 md:-translate-y-1/2 md:translate-x-0 bg-[#050506]/90 backdrop-blur-md border border-white/[0.12] md:border-white/[0.08] p-1.5 md:p-2.5 flex flex-row md:flex-col items-center md:items-stretch gap-1 md:gap-1.5 max-w-[calc(100vw-2rem)] select-none" aria-label="{% translate 'Section Navigation' %}">
         <!-- Desktop Header Strip -->
         <div class="hidden md:flex items-center justify-between pb-2 mb-1 px-2 border-b border-white/[0.06] font-mono text-[9px] text-zinc-500 uppercase tracking-widest gap-6">
-            <span>SECTIONS</span>
+            <span>{% translate "SECTIONS" %}</span>
             <span id="section-nav-pct" class="text-emerald-400 font-bold tabular-nums">00%</span>
         </div>
 
@@ -19,7 +19,7 @@
         <a href="#chapter-01" data-section-target="chapter-01" class="sec-nav-link flex items-center justify-between gap-3 px-3 py-1.5 md:py-2 border border-transparent hover:border-white/10 font-mono text-xs text-zinc-400 hover:text-white transition-all group active">
             <div class="flex items-center gap-2">
                 <span class="sec-nav-num text-zinc-500 group-hover:text-emerald-400 transition-colors font-bold text-[11px]">01</span>
-                <span class="hidden md:inline text-zinc-300 group-hover:text-white uppercase tracking-wider text-[10px]">DOSSIER</span>
+                <span class="hidden md:inline text-zinc-300 group-hover:text-white uppercase tracking-wider text-[10px]">{% translate "DOSSIER" %}</span>
             </div>
             <span class="sec-nav-pip w-1.5 h-1.5 bg-zinc-700"></span>
         </a>
@@ -28,7 +28,7 @@
         <a href="#chapter-02" data-section-target="chapter-02" class="sec-nav-link flex items-center justify-between gap-3 px-3 py-1.5 md:py-2 border border-transparent hover:border-white/10 font-mono text-xs text-zinc-400 hover:text-white transition-all group">
             <div class="flex items-center gap-2">
                 <span class="sec-nav-num text-zinc-500 group-hover:text-emerald-400 transition-colors font-bold text-[11px]">02</span>
-                <span class="hidden md:inline text-zinc-300 group-hover:text-white uppercase tracking-wider text-[10px]">CAPABILITIES</span>
+                <span class="hidden md:inline text-zinc-300 group-hover:text-white uppercase tracking-wider text-[10px]">{% translate "CAPABILITIES" %}</span>
             </div>
             <span class="sec-nav-pip w-1.5 h-1.5 bg-zinc-700"></span>
         </a>
@@ -38,7 +38,7 @@
         <a href="#chapter-03" data-section-target="chapter-03" class="sec-nav-link flex items-center justify-between gap-3 px-3 py-1.5 md:py-2 border border-transparent hover:border-white/10 font-mono text-xs text-zinc-400 hover:text-white transition-all group">
             <div class="flex items-center gap-2">
                 <span class="sec-nav-num text-zinc-500 group-hover:text-emerald-400 transition-colors font-bold text-[11px]">03</span>
-                <span class="hidden md:inline text-zinc-300 group-hover:text-white uppercase tracking-wider text-[10px]">BENCHMARKS</span>
+                <span class="hidden md:inline text-zinc-300 group-hover:text-white uppercase tracking-wider text-[10px]">{% translate "BENCHMARKS" %}</span>
             </div>
             <span class="sec-nav-pip w-1.5 h-1.5 bg-zinc-700"></span>
         </a>
@@ -48,7 +48,7 @@
         <a href="#chapter-06" data-section-target="chapter-06" class="sec-nav-link flex items-center justify-between gap-3 px-3 py-1.5 md:py-2 border border-transparent hover:border-white/10 font-mono text-xs text-zinc-400 hover:text-white transition-all group">
             <div class="flex items-center gap-2">
                 <span class="sec-nav-num text-zinc-500 group-hover:text-emerald-400 transition-colors font-bold text-[11px]">04</span>
-                <span class="hidden md:inline text-zinc-300 group-hover:text-white uppercase tracking-wider text-[10px]">SYSTEMS</span>
+                <span class="hidden md:inline text-zinc-300 group-hover:text-white uppercase tracking-wider text-[10px]">{% translate "SYSTEMS" %}</span>
             </div>
             <span class="sec-nav-pip w-1.5 h-1.5 bg-zinc-700"></span>
         </a>
@@ -57,14 +57,14 @@
         <a href="#chapter-04" data-section-target="chapter-04" class="sec-nav-link flex items-center justify-between gap-3 px-3 py-1.5 md:py-2 border border-transparent hover:border-white/10 font-mono text-xs text-zinc-400 hover:text-white transition-all group">
             <div class="flex items-center gap-2">
                 <span class="sec-nav-num text-zinc-500 group-hover:text-emerald-400 transition-colors font-bold text-[11px]">05</span>
-                <span class="hidden md:inline text-zinc-300 group-hover:text-white uppercase tracking-wider text-[10px]">LOGS</span>
+                <span class="hidden md:inline text-zinc-300 group-hover:text-white uppercase tracking-wider text-[10px]">{% translate "LOGS" %}</span>
             </div>
             <span class="sec-nav-pip w-1.5 h-1.5 bg-zinc-700"></span>
         </a>
     </nav>
 
     <!-- =======================================================================
-         SEC—01 // ARCHITECTURAL DOSSIER & LIVE TELEMETRY HERO
+         SEC—01 // ARCHITECTURAL DOSSIER & LIVE STATUS HERO
          ======================================================================= -->
     <section id="chapter-01" class="c2-chapter-section border-b border-white/[0.08] bg-[#050506]" data-chapter="01" data-chapter-title="DOSSIER">
         <!-- Sticky Section Sub-Header -->
@@ -73,35 +73,15 @@
                 <span class="sec-led w-1.5 h-1.5 bg-emerald-500 inline-block"></span>
                 <span class="text-emerald-500 font-bold">01</span>
                 <span class="text-zinc-700">/</span>
-                <span class="sec-decode-label text-zinc-300">{% translate "01 / ARCHITECTURAL DOSSIER" %}</span>
+                <span class="sec-decode-label text-zinc-300" data-scramble="true">{% translate "01 / ARCHITECTURAL DOSSIER" %}</span>
             </div>
             <div class="flex items-center gap-3 text-zinc-400">
-                <span class="hidden md:inline text-zinc-500">UTFSM // TELEMATICS ENGINEERING</span>
+                <span class="hidden md:inline text-zinc-500">UTFSM // {% translate "Telematics Engineering" %}</span>
                 <span class="hidden sm:inline text-zinc-700">|</span>
                 <span class="hidden sm:inline text-emerald-400 font-semibold">{% translate "THE ENGINE OVER THE FACADE" %}</span>
             </div>
             <div class="grid-line-h absolute bottom-0 left-0 right-0"></div>
         </div>
-
-        <!-- Telemetry Heartbeat & Personal Status Strip (When Available) -->
-        {% if node_heartbeat and node_heartbeat.is_recent or current_status %}
-        <div class="px-6 py-2.5 border-b border-white/[0.08] flex flex-wrap items-center gap-6 bg-[#08080B] font-mono text-xs">
-            {% if node_heartbeat and node_heartbeat.is_recent %}
-            <div class="inline-flex items-center gap-2 text-emerald-400">
-                <span class="w-1.5 h-1.5 bg-emerald-500 animate-pulse"></span>
-                <span class="font-bold">NODE:</span>
-                <span class="truncate max-w-[320px]">{{ node_heartbeat.status }}</span>
-            </div>
-            {% endif %}
-            {% if current_status %}
-            <div class="inline-flex items-center gap-2 text-zinc-300">
-                <span class="w-1.5 h-1.5 bg-emerald-500 animate-pulse"></span>
-                <span class="font-bold text-emerald-400">STATUS:</span>
-                <span class="truncate max-w-[380px]">{{ current_status.message }}</span>
-            </div>
-            {% endif %}
-        </div>
-        {% endif %}
 
         <!-- Main Hero Grid: 7 Cols Left (Monumental Typography & Stance) | 5 Cols Right (Precision Spec Matrix & Live Terminal) -->
         <div class="grid grid-cols-1 lg:grid-cols-12 divide-y lg:divide-y-0 lg:divide-x divide-white/[0.08]">
@@ -109,10 +89,12 @@
             <!-- Left Cell (7 Cols) -->
             <div class="lg:col-span-7 min-h-[78vh] p-8 md:p-16 flex flex-col justify-between kinetic-block bg-[#050506]">
                 <div>
-                    <!-- Top Coordinate Tag -->
-                    <div class="inline-flex items-center gap-2.5 font-mono text-[11px] text-zinc-500 uppercase tracking-[0.18em] mb-8">
-                        <span class="w-1.5 h-1.5 bg-emerald-500"></span>
-                        <span>SCL [-33.45, -70.66] // SYS_ONLINE</span>
+                    <!-- Top Status Tag -->
+                    <div class="inline-flex items-center gap-2 font-mono text-[11px] text-zinc-400 uppercase tracking-wider mb-8">
+                        <span class="w-1.5 h-1.5 bg-emerald-500 animate-pulse"></span>
+                        <span>SANTIAGO, CL</span>
+                        <span class="text-zinc-600 hidden sm:inline">//</span>
+                        <span class="text-emerald-400 hidden sm:inline font-semibold">{% translate "ONLINE" %}</span>
                     </div>
 
                     <!-- Massive Variable Display Title in Overflow-Hidden Line Masks -->
@@ -123,15 +105,8 @@
 
                     <!-- Lead Engineering Statement (with Spanish "flujos e impacto humano" grammar rule) -->
                     <div class="reveal-text mt-10">
-                        <p class="reveal-text-inner text-xl md:text-2xl text-zinc-300 max-w-2xl font-light leading-snug">
+                        <p id="hero-stance-scrub" class="reveal-text-inner text-xl md:text-2xl lg:text-3xl text-zinc-300 max-w-2xl font-light leading-snug">
                             {% translate "Telematics Engineering student specializing in" %} <strong class="text-white font-medium">{% translate "backend architecture" %}</strong>, <strong class="text-white font-medium">{% translate "automation" %}</strong>, <strong class="text-white font-medium">{% translate "flows" %}</strong>{% if LANGUAGE_CODE == "es" %} e {% else %}, {% translate "and" %} {% endif %}<strong class="text-white font-medium">{% translate "human impact" %}</strong>.
-                        </p>
-                    </div>
-
-                    <!-- Secondary Human-Centered Systems Stance -->
-                    <div class="reveal-text mt-6">
-                        <p class="reveal-text-inner font-mono text-xs text-zinc-500 leading-relaxed max-w-xl">
-                            {% translate "Low-level rigor engineered for human workflows: operational order, student autonomy, and malware-isolated community platforms." %}
                         </p>
                     </div>
                 </div>
@@ -161,67 +136,132 @@
                 </div>
             </div>
 
-            <!-- Right Cell (5 Cols: System Architecture Specification & Live Telemetry Stream) -->
+            <!-- Right Cell (5 Cols: 02 / CAPABILITY MATRIX & Live Status) -->
             <div class="lg:col-span-5 flex flex-col divide-y divide-white/[0.08] bg-[#08080B]">
-                <!-- Top Sub-Cell: System Architecture Specification -->
-                <div class="p-6 md:p-8 font-mono text-xs">
-                    <div class="flex items-center justify-between pb-3 mb-2 border-b border-white/[0.08] text-zinc-500 text-[10px] uppercase tracking-widest">
-                        <span>SYSTEM ARCHITECTURE SPECIFICATION</span>
-                        <span class="text-emerald-400">VERIFIED // PRODUCTION</span>
+                <!-- Mobile Segmented Tab Selector (< lg) -->
+                <div class="flex lg:hidden border-b border-white/[0.08] bg-[#050506] font-mono text-[11px] select-none">
+                    <button type="button" id="hero-tab-capabilities" class="hero-tab-btn flex-1 py-3 px-4 text-center font-bold tracking-wider uppercase transition-colors text-emerald-400 border-b-2 border-emerald-500 bg-white/[0.02]" data-tab="capabilities">
+                        {% translate "02 / CAPABILITIES" %}
+                    </button>
+                    <button type="button" id="hero-tab-telemetry" class="hero-tab-btn flex-1 py-3 px-4 text-center font-bold tracking-wider uppercase transition-colors text-zinc-500 hover:text-zinc-300 border-b-2 border-transparent" data-tab="telemetry">
+                        {% translate "LIVE STATUS" %}
+                    </button>
+                </div>
+
+                <!-- Top Sub-Cell: 02 / CAPABILITY MATRIX -->
+                <div id="hero-panel-capabilities" class="p-6 md:p-8 block lg:block">
+                    <div class="flex items-center justify-between pb-3 mb-2 border-b border-white/[0.08] font-mono text-zinc-500 text-xs md:text-sm uppercase tracking-widest">
+                        <span class="font-bold text-zinc-200" data-scramble="true">{% translate "02 / CAPABILITY MATRIX" %}</span>
+                        <span class="text-emerald-400 font-bold">{% translate "DEPLOYED" %}</span>
                     </div>
 
                     <div class="divide-y divide-white/[0.06]">
-                        <div class="spec-matrix-row flex items-center justify-between gap-4 py-3 px-2">
-                            <span class="spec-label text-zinc-500 uppercase tracking-wider">STANCE</span>
-                            <span class="text-emerald-400 font-bold text-right">{% translate "The Engine Over the Facade" %}</span>
+                        <div class="spec-matrix-row flex gap-4 py-4 px-2 group cursor-pointer">
+                            <span class="font-mono text-xs text-zinc-600 pt-0.5 group-hover:text-emerald-400 transition-colors">01</span>
+                            <div class="min-w-0">
+                                <div class="flex items-baseline justify-between gap-3">
+                                    <h3 class="font-display font-bold text-white text-base md:text-lg group-hover:text-emerald-400 transition-colors" data-scramble="true">{% translate "Edge Hardware Telemetry" %}</h3>
+                                    <span class="font-mono text-[10px] text-zinc-500 uppercase whitespace-nowrap">C++ · POSIX</span>
+                                </div>
+                                <p class="text-xs text-zinc-400 font-light leading-relaxed mt-1">{% translate "C++ runtime telemetry daemon & low-latency heartbeats on Raspberry Pi edge nodes with custom UDP packet protocol." %}</p>
+                            </div>
                         </div>
 
-                        <div class="spec-matrix-row flex items-center justify-between gap-4 py-3 px-2">
-                            <span class="spec-label text-zinc-500 uppercase tracking-wider">EDGE NODE</span>
-                            <span class="text-zinc-200 text-right">C++ Daemon / Raspberry Pi 5</span>
+                        <div class="spec-matrix-row flex gap-4 py-4 px-2 group cursor-pointer">
+                            <span class="font-mono text-xs text-zinc-600 pt-0.5 group-hover:text-emerald-400 transition-colors">02</span>
+                            <div class="min-w-0">
+                                <div class="flex items-baseline justify-between gap-3">
+                                    <h3 class="font-display font-bold text-white text-base md:text-lg group-hover:text-emerald-400 transition-colors" data-scramble="true">{% translate "Hardened Ingestion Pipelines" %}</h3>
+                                    <span class="font-mono text-[10px] text-zinc-500 uppercase whitespace-nowrap">Nginx · Docker · ClamAV</span>
+                                </div>
+                                <p class="text-xs text-zinc-400 font-light leading-relaxed mt-1">{% translate "Malware-isolated file ingestion via Nginx reverse proxy, isolated Docker containers, and ClamAV daemon scan workers." %}</p>
+                            </div>
                         </div>
 
-                        <div class="spec-matrix-row flex items-center justify-between gap-4 py-3 px-2">
-                            <span class="spec-label text-zinc-500 uppercase tracking-wider">INGESTION</span>
-                            <span class="text-zinc-200 text-right">Nginx · Docker · ClamAV</span>
+                        <div class="spec-matrix-row flex gap-4 py-4 px-2 group cursor-pointer">
+                            <span class="font-mono text-xs text-zinc-600 pt-0.5 group-hover:text-emerald-400 transition-colors">03</span>
+                            <div class="min-w-0">
+                                <div class="flex items-baseline justify-between gap-3">
+                                    <h3 class="font-display font-bold text-white text-base md:text-lg group-hover:text-emerald-400 transition-colors" data-scramble="true">{% translate "Relational Data Modeling" %}</h3>
+                                    <span class="font-mono text-[10px] text-zinc-500 uppercase whitespace-nowrap">PostgreSQL · Huey</span>
+                                </div>
+                                <p class="text-xs text-zinc-400 font-light leading-relaxed mt-1">{% translate "High-integrity PostgreSQL schemas, foreign keys, and Huey task queues orchestrating daily automated synchronization." %}</p>
+                            </div>
                         </div>
 
-                        <div class="spec-matrix-row flex items-center justify-between gap-4 py-3 px-2">
-                            <span class="spec-label text-zinc-500 uppercase tracking-wider">DATA & QUEUES</span>
-                            <span class="text-zinc-200 text-right">PostgreSQL · Huey Workers</span>
-                        </div>
-
-                        <div class="spec-matrix-row flex items-center justify-between gap-4 py-3 px-2">
-                            <span class="spec-label text-zinc-500 uppercase tracking-wider">CRYPTOGRAPHY</span>
-                            <span class="text-zinc-200 text-right">ElGamal Encryption · POSIX Sockets</span>
+                        <div class="spec-matrix-row flex gap-4 py-4 px-2 group cursor-pointer">
+                            <span class="font-mono text-xs text-zinc-600 pt-0.5 group-hover:text-emerald-400 transition-colors">04</span>
+                            <div class="min-w-0">
+                                <div class="flex items-baseline justify-between gap-3">
+                                    <h3 class="font-display font-bold text-white text-base md:text-lg group-hover:text-emerald-400 transition-colors" data-scramble="true">{% translate "Systems Craftsmanship" %}</h3>
+                                    <span class="font-mono text-[10px] text-zinc-500 uppercase whitespace-nowrap">ElGamal · Sockets</span>
+                                </div>
+                                <p class="text-xs text-zinc-400 font-light leading-relaxed mt-1">{% translate "Applied ElGamal asymmetric encryption, POSIX native C/C++ sockets, and zero-knowledge verification primitives." %}</p>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Bottom Sub-Cell: Live Production Telemetry Pipeline -->
-                <div class="p-6 md:p-8 bg-[#050506] flex flex-col justify-between flex-grow" id="c-telemetry-widget">
-                    <div>
-                        <div class="flex items-center justify-between pb-3 border-b border-white/[0.08] font-mono text-[10px]">
-                            <div class="flex items-center gap-2">
-                                <span class="w-1.5 h-1.5 bg-emerald-500 animate-pulse"></span>
-                                <span class="text-zinc-200 font-bold">telemetry_service.py</span>
-                            </div>
-                            <div class="flex items-center gap-3">
-                                <span id="c-compile-status" class="text-zinc-500">RUNTIME: ACTIVE</span>
-                                <button type="button" id="c-replay-btn" class="text-zinc-400 hover:text-emerald-400 transition-colors uppercase tracking-wider cursor-pointer">
-                                    [REPLAY]
-                                </button>
-                            </div>
-                        </div>
-
-                        <div class="py-4 overflow-x-auto min-h-[220px]">
-                            <pre class="m-0 font-mono text-[11px] leading-relaxed text-zinc-300 whitespace-pre"><code id="c-code-display"></code><span class="c-terminal-cursor" aria-hidden="true"></span></pre>
-                        </div>
+                <!-- Bottom Sub-Cell: Live Status (real data: edge heartbeat, status, latest log, benchmarks, projects) -->
+                <div id="hero-panel-telemetry" class="p-6 md:p-8 bg-[#050506] flex flex-col flex-grow font-mono text-xs hidden lg:flex">
+                    <div class="flex items-center justify-between pb-3 mb-2 border-b border-white/[0.08] text-zinc-500 text-xs md:text-sm uppercase tracking-widest">
+                        <span class="font-bold text-zinc-200" data-scramble="true">{% translate "Live Status" %}</span>
+                        {% if node_heartbeat %}
+                        <span class="inline-flex items-center gap-2 text-emerald-400"><span class="w-1.5 h-1.5 bg-emerald-500 animate-pulse"></span>{% translate "ONLINE" %}</span>
+                        {% else %}
+                        <span class="inline-flex items-center gap-2 text-zinc-500"><span class="w-1.5 h-1.5 bg-zinc-600"></span>{% translate "OFFLINE" %}</span>
+                        {% endif %}
                     </div>
 
-                    <div class="pt-3 border-t border-white/[0.06] flex items-center justify-between font-mono text-[10px] text-zinc-500">
-                        <span id="active-key-readout">ENDPOINT: POST /api/telemetry/heartbeat/</span>
-                        <span class="text-emerald-400 font-bold">AUTH: TOKEN VERIFIED</span>
+                    <div class="divide-y divide-white/[0.06]">
+                        <!-- Edge node heartbeat -->
+                        <div class="spec-matrix-row flex items-start justify-between gap-4 py-3 px-2">
+                            {% if node_heartbeat %}
+                            <span class="spec-label text-emerald-400 font-bold uppercase tracking-wider">NODE:</span>
+                            <span class="text-zinc-200 text-right break-words min-w-0">
+                                {{ node_heartbeat.status }}
+                                <span class="block text-[10px] text-zinc-500 mt-0.5">{% blocktranslate with t=node_heartbeat.timestamp|short_timesince %}{{ t }} ago{% endblocktranslate %}</span>
+                            </span>
+                            {% else %}
+                            <span class="spec-label text-zinc-500 uppercase tracking-wider">NODE</span>
+                            <span class="text-zinc-500 text-right">{% translate "No recent heartbeat" %}</span>
+                            {% endif %}
+                        </div>
+
+                        {% if current_status %}
+                        <div class="spec-matrix-row flex items-start justify-between gap-4 py-3 px-2">
+                            <span class="spec-label text-emerald-400 font-bold uppercase tracking-wider">STATUS:</span>
+                            <span class="text-zinc-200 text-right break-words min-w-0">
+                                {{ current_status.message }}
+                                <span class="block text-[10px] text-zinc-500 mt-0.5">{% blocktranslate with t=current_status.timestamp|short_timesince %}{{ t }} ago{% endblocktranslate %}</span>
+                            </span>
+                        </div>
+                        {% endif %}
+
+                        {% for log in latest_logs|slice:":1" %}{% if log.title %}
+                        <a href="/logging/?log_id={{ log.id }}" class="spec-matrix-row flex items-start justify-between gap-4 py-3 px-2 group/link">
+                            <span class="spec-label text-zinc-500 uppercase tracking-wider">{% translate "LATEST LOG" %}</span>
+                            <span class="text-zinc-200 group-hover/link:text-emerald-400 transition-colors text-right break-words min-w-0">
+                                {{ log.title }}
+                                <span class="block text-[10px] text-zinc-500 mt-0.5">{% blocktranslate with t=log.date|short_timesince %}{{ t }} ago{% endblocktranslate %}</span>
+                            </span>
+                        </a>
+                        {% endif %}{% endfor %}
+
+                        {% if hackerrank_badges %}
+                        <div class="spec-matrix-row flex items-start justify-between gap-4 py-3 px-2">
+                            <span class="spec-label text-zinc-500 uppercase tracking-wider">HACKERRANK</span>
+                            <span class="text-zinc-200 text-right">
+                                <span class="mech-reel font-bold text-emerald-400" data-reel="{{ hackerrank_badges|length }}">{{ hackerrank_badges|length }}</span> {% translate "DOMAINS" %}
+                                <span class="block text-[10px] text-zinc-500 mt-0.5">{% translate "Synced" %} {{ hackerrank_badges.0.timestamp|date:"Y-m-d" }}</span>
+                            </span>
+                        </div>
+                        {% endif %}
+
+                        <div class="spec-matrix-row flex items-start justify-between gap-4 py-3 px-2">
+                            <span class="spec-label text-zinc-500 uppercase tracking-wider">{% translate "PROJECTS" %}</span>
+                            <span class="text-zinc-200 text-right"><span class="mech-reel font-bold text-emerald-400" data-reel="{{ total_projects }}">{{ total_projects }}</span> {% translate "in production" %}</span>
+                        </div>
                     </div>
                 </div>
 
@@ -240,124 +280,68 @@
                 <span class="sec-led w-1.5 h-1.5 bg-emerald-500 inline-block"></span>
                 <span class="text-emerald-500 font-bold">02</span>
                 <span class="text-zinc-700">/</span>
-                <span class="sec-decode-label text-zinc-300">{% translate "02 / CAPABILITY MATRIX" %}</span>
+                <span class="sec-decode-label text-zinc-300" data-scramble="true">{% translate "02 // CAPABILITY MATRIX" %}</span>
             </div>
-            <span class="text-zinc-400">{% translate "STATUS: OPERATIONAL // PRODUCTION EVIDENCE" %}</span>
+            <span class="text-zinc-500 hidden sm:inline font-mono text-xs">{{ core_competencies|length }} {% translate "DOMAINS" %} · {{ total_skills }} {% translate "SKILLS" %}</span>
             <div class="grid-line-h absolute bottom-0 left-0 right-0"></div>
         </div>
 
-        <!-- 4-Column Interactive Modular Grid with Radial Cursor Spotlight -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 divide-y md:divide-y-0 md:divide-x divide-white/[0.08] kinetic-block">
-            <!-- Capability 01 -->
-            <div class="cap-cell p-10 md:p-12 flex flex-col justify-between group">
-                <div>
-                    <div class="flex items-start justify-between mb-8">
-                        <span class="font-mono text-4xl font-bold text-zinc-800 group-hover:text-emerald-500/40 transition-colors duration-500">01</span>
+        <!-- Core Skills Matrix: one cell per skill category, populated from the database -->
+        <div class="overflow-hidden">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 -mr-px -mb-px kinetic-block">
+                {% for category in core_competencies %}
+                <div class="cap-cell p-8 md:p-10 border-r border-b border-white/[0.08] flex flex-col gap-6 group">
+                    <div class="flex items-start justify-between">
+                        <span class="font-mono text-4xl font-bold text-zinc-800 group-hover:text-emerald-500/40 transition-colors duration-500">{{ forloop.counter|stringformat:"02d" }}</span>
                         <div class="flex items-center gap-2 font-mono text-[10px] text-zinc-500 uppercase tracking-wider">
-                            <span>C++ / POSIX</span>
+                            <span>{{ category.skills.all|length }} {% translate "SKILLS" %}</span>
                             <span class="w-1.5 h-1.5 bg-zinc-700 group-hover:bg-emerald-500 transition-colors"></span>
                         </div>
                     </div>
-                    <h3 class="font-display font-bold text-white text-xl mb-3 group-hover:text-emerald-400 transition-colors">
-                        {% translate "Edge Hardware Telemetry" %}
-                    </h3>
-                    <p class="text-xs text-zinc-400 leading-relaxed font-light">
-                        {% translate "C++ runtime telemetry daemon & low-latency heartbeats on Raspberry Pi edge nodes with custom UDP packet protocol." %}
-                    </p>
-                </div>
-            </div>
-
-            <!-- Capability 02 -->
-            <div class="cap-cell p-10 md:p-12 flex flex-col justify-between group">
-                <div>
-                    <div class="flex items-start justify-between mb-8">
-                        <span class="font-mono text-4xl font-bold text-zinc-800 group-hover:text-emerald-500/40 transition-colors duration-500">02</span>
-                        <div class="flex items-center gap-2 font-mono text-[10px] text-zinc-500 uppercase tracking-wider">
-                            <span>NGINX / DOCKER / CLAMAV</span>
-                            <span class="w-1.5 h-1.5 bg-zinc-700 group-hover:bg-emerald-500 transition-colors"></span>
-                        </div>
+                    <h3 class="font-display font-bold text-white text-xl md:text-2xl group-hover:text-emerald-400 transition-colors" data-scramble="true">{{ category.name }}</h3>
+                    <div class="flex flex-wrap gap-2">
+                        {% for skill in category.skills.all %}
+                        <span class="skill-pill px-2.5 py-1 font-mono text-[11px] text-zinc-300 bg-white/[0.03] border border-white/[0.08] group-hover:border-white/[0.16] transition-colors uppercase tracking-wide {% if forloop.counter > 4 %}hidden extra-skill{% endif %}">{{ skill.name }}</span>
+                        {% endfor %}
+                        {% if category.skills.all|length > 4 %}
+                        <button type="button" class="skill-expand-btn px-2.5 py-1 font-mono text-[10px] text-emerald-400 hover:text-white bg-emerald-500/10 hover:bg-emerald-500 border border-emerald-500/30 hover:border-emerald-500 uppercase tracking-wider cursor-pointer transition-colors" data-count="{{ category.skills.all|length|add:"-4" }}">
+                            +{{ category.skills.all|length|add:"-4" }} {% translate "MORE" %}
+                        </button>
+                        {% endif %}
                     </div>
-                    <h3 class="font-display font-bold text-white text-xl mb-3 group-hover:text-emerald-400 transition-colors">
-                        {% translate "Hardened Ingestion Pipelines" %}
-                    </h3>
-                    <p class="text-xs text-zinc-400 leading-relaxed font-light">
-                        {% translate "Malware-isolated file ingestion via Nginx reverse proxy, isolated Docker containers, and ClamAV daemon scan workers." %}
-                    </p>
                 </div>
-            </div>
-
-            <!-- Capability 03 -->
-            <div class="cap-cell p-10 md:p-12 flex flex-col justify-between group">
-                <div>
-                    <div class="flex items-start justify-between mb-8">
-                        <span class="font-mono text-4xl font-bold text-zinc-800 group-hover:text-emerald-500/40 transition-colors duration-500">03</span>
-                        <div class="flex items-center gap-2 font-mono text-[10px] text-zinc-500 uppercase tracking-wider">
-                            <span>POSTGRESQL / HUEY</span>
-                            <span class="w-1.5 h-1.5 bg-zinc-700 group-hover:bg-emerald-500 transition-colors"></span>
-                        </div>
-                    </div>
-                    <h3 class="font-display font-bold text-white text-xl mb-3 group-hover:text-emerald-400 transition-colors">
-                        {% translate "Relational Data Modeling" %}
-                    </h3>
-                    <p class="text-xs text-zinc-400 leading-relaxed font-light">
-                        {% translate "High-integrity PostgreSQL schemas, foreign keys, and Huey task queues orchestrating daily automated synchronization." %}
-                    </p>
-                </div>
-            </div>
-
-            <!-- Capability 04 -->
-            <div class="cap-cell p-10 md:p-12 flex flex-col justify-between group">
-                <div>
-                    <div class="flex items-start justify-between mb-8">
-                        <span class="font-mono text-4xl font-bold text-zinc-800 group-hover:text-emerald-500/40 transition-colors duration-500">04</span>
-                        <div class="flex items-center gap-2 font-mono text-[10px] text-zinc-500 uppercase tracking-wider">
-                            <span>ELGAMAL / CRYPTO</span>
-                            <span class="w-1.5 h-1.5 bg-zinc-700 group-hover:bg-emerald-500 transition-colors"></span>
-                        </div>
-                    </div>
-                    <h3 class="font-display font-bold text-white text-xl mb-3 group-hover:text-emerald-400 transition-colors">
-                        {% translate "Systems Craftsmanship" %}
-                    </h3>
-                    <p class="text-xs text-zinc-400 leading-relaxed font-light">
-                        {% translate "Applied ElGamal asymmetric encryption, POSIX native C/C++ sockets, and zero-knowledge verification primitives." %}
-                    </p>
-                </div>
+                {% empty %}
+                <div class="p-10 border-r border-b border-white/[0.08] font-mono text-xs text-zinc-500 uppercase tracking-widest">{% translate "No skills registered yet." %}</div>
+                {% endfor %}
             </div>
         </div>
-
-        <!-- Technical Domain Stacks Sub-Grid -->
-        {% if core_competencies %}
-        <div class="border-t border-white/[0.08] grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-white/[0.08] relative">
-            <div class="grid-line-h absolute top-0 left-0 right-0"></div>
-            {% for category in core_competencies %}
-            <div class="cap-cell p-6 md:p-8 transition-colors">
-                <div class="flex items-center justify-between font-mono text-[10px] text-zinc-500 mb-4 uppercase tracking-wider">
-                    <span>MOD // 0{{ forloop.counter }}</span>
-                    <span class="text-zinc-300 font-bold">{{ category.name }}</span>
-                </div>
-                <div class="flex flex-wrap gap-2">
-                    {% for skill in category.skills.all %}
-                    <span class="px-2.5 py-1 font-mono text-[11px] text-zinc-300 bg-white/[0.03] border border-white/[0.08] hover:border-emerald-500/40 transition-colors uppercase tracking-wide">
-                        {{ skill.name }}
-                    </span>
-                    {% endfor %}
-                </div>
-            </div>
-            {% endfor %}
-        </div>
-        {% endif %}
 
         <!-- GitHub Contribution Strip with Parallax Media Window -->
         <div class="p-6 md:px-10 border-t border-white/[0.08] flex flex-col md:flex-row items-center justify-between gap-6 bg-[#08080B] relative">
             <div class="grid-line-h absolute top-0 left-0 right-0"></div>
             <div class="font-mono text-xs text-zinc-400 flex items-center gap-3 shrink-0">
                 <span class="w-2 h-2 bg-emerald-500 animate-pulse"></span>
-                <span class="font-bold uppercase tracking-wider text-white">GITHUB ACTIVITY // LIVE</span>
+                <span class="font-bold uppercase tracking-wider text-white">{% translate "GITHUB ACTIVITY" %}</span>
                 <span class="text-zinc-600">//</span>
-                <span class="text-zinc-500">josue-fourier</span>
+                <a href="https://github.com/josue-fourier" target="_blank" rel="noopener noreferrer" class="text-zinc-400 hover:text-emerald-400 transition-colors">
+                    josue-fourier ↗
+                </a>
             </div>
-            <div class="w-full max-w-2xl overflow-hidden py-1 opacity-90 hover:opacity-100 transition-opacity">
-                <img src="https://ghchart.rshah.org/10b981/josue-fourier" alt="GitHub Activity Graph" loading="lazy" class="parallax-media w-full h-auto filter grayscale contrast-125" />
+            <div class="w-full max-w-2xl flex flex-col gap-2">
+                <div class="w-full overflow-hidden py-1 opacity-95 hover:opacity-100 transition-opacity">
+                    <img src="https://ghchart.rshah.org/10b981/josue-fourier" alt="GitHub Activity Graph" loading="lazy" class="parallax-media w-full h-auto gh-chart-heatmap" />
+                </div>
+                <div class="flex items-center justify-end gap-2 font-mono text-[10px] text-zinc-500 select-none">
+                    <span>{% translate "LESS" %}</span>
+                    <div class="flex items-center gap-1">
+                        <span class="w-2.5 h-2.5 bg-[#111116] border border-white/[0.12]" title="0 contributions"></span>
+                        <span class="w-2.5 h-2.5 bg-[#00a371]" title="Tier 1"></span>
+                        <span class="w-2.5 h-2.5 bg-[#12bc83]" title="Tier 2"></span>
+                        <span class="w-2.5 h-2.5 bg-[#45efb6]" title="Tier 3"></span>
+                        <span class="w-2.5 h-2.5 bg-[#6bf2c4]" title="Tier 4"></span>
+                    </div>
+                    <span>{% translate "MORE" %}</span>
+                </div>
             </div>
         </div>
     </section>
@@ -375,10 +359,10 @@
                 <span class="sec-led w-1.5 h-1.5 bg-emerald-500 inline-block"></span>
                 <span class="text-emerald-500 font-bold">03</span>
                 <span class="text-zinc-700">/</span>
-                <span class="sec-decode-label text-zinc-300">03 // BENCHMARKS</span>
+                <span class="sec-decode-label text-zinc-300" data-scramble="true">{% translate "03 // BENCHMARKS" %}</span>
             </div>
             <div class="flex items-center gap-4 text-zinc-400">
-                <span class="hidden md:inline">SYNC: DAILY_0800_SCL // 5★ C++ RANK</span>
+                <span class="hidden md:inline font-bold text-emerald-400">{% translate "5★ C++ RANK" %}</span>
                 <a href="https://www.hackerrank.com/profile/xmenmagnet" target="_blank" rel="noopener noreferrer" class="font-mono text-xs text-emerald-400 hover:text-white transition-colors">
                     {% translate "HACKERRANK_PROFILE" %} ↗
                 </a>
@@ -398,11 +382,11 @@
             </div>
             <div class="p-6 md:px-8 flex flex-col justify-center font-mono text-xs">
                 <div class="flex items-center justify-between text-zinc-500 mb-1">
-                    <span>INGESTION CRON</span>
+                    <span>{% translate "INGESTION CRON" %}</span>
                     <span class="text-emerald-400 font-bold">08:00 AM SCL</span>
                 </div>
                 <div class="flex items-center justify-between text-zinc-500">
-                    <span>ACTIVE DOMAINS</span>
+                    <span>{% translate "ACTIVE DOMAINS" %}</span>
                     <span class="text-white font-bold count-up-num" data-target="{{ hackerrank_badges|length }}">{{ hackerrank_badges|length }}</span>
                 </div>
             </div>
@@ -423,7 +407,7 @@
                             <span class="text-zinc-700">//</span>
                             <span class="text-emerald-400/90">{% translate "LVL" %} {{ badge.level|default:1 }}</span>
                         </div>
-                        <h3 class="font-display font-bold text-white text-lg leading-tight break-words group-hover:text-emerald-400 transition-colors">
+                        <h3 class="font-display font-bold text-white text-lg md:text-xl leading-tight break-words group-hover:text-emerald-400 transition-colors" data-scramble="true">
                             {{ badge.badge_name }}
                         </h3>
                     </div>
@@ -460,7 +444,7 @@
                 </div>
 
                 <!-- Col 9-10: Solved Challenges Telemetry -->
-                <div class="lg:col-span-2 flex lg:flex-col justify-between lg:justify-center font-mono text-xs border-t lg:border-t-0 lg:border-l border-white/[0.06] pt-3 lg:pt-0 lg:pl-6">
+                <div class="hidden sm:flex lg:col-span-2 flex-row lg:flex-col justify-between lg:justify-center font-mono text-xs border-t sm:border-t-0 sm:border-l border-white/[0.06] pt-3 sm:pt-0 sm:pl-6">
                     <span class="text-[10px] text-zinc-500 uppercase tracking-wider">{% translate "Solved Challenges" %}</span>
                     <span class="text-zinc-200 font-bold tabular-nums mt-0.5">
                         <span class="count-up-num" data-target="{{ badge.solved|default:0 }}">{{ badge.solved|default:0 }}</span>{% if badge.total_challenges %} / {{ badge.total_challenges }}{% endif %}
@@ -494,12 +478,12 @@
                 <span class="sec-led w-1.5 h-1.5 bg-emerald-500 inline-block"></span>
                 <span class="text-emerald-500 font-bold">04</span>
                 <span class="text-zinc-700">/</span>
-                <span class="sec-decode-label text-zinc-300">{% translate "INDEPENDENT PRODUCTION SYSTEMS" %}</span>
+                <span class="sec-decode-label text-zinc-300" data-scramble="true">{% translate "INDEPENDENT PRODUCTION SYSTEMS" %}</span>
             </div>
 
             <!-- Inline Stack Filter Buttons -->
             <div class="flex flex-wrap items-center gap-1.5">
-                <span class="text-zinc-600 text-[10px] hidden sm:inline mr-1">FILTER:</span>
+                <span class="text-zinc-600 text-[10px] hidden sm:inline mr-1">{% translate "FILTER:" %}</span>
                 {% for strength in technical_strengths %}
                 <button type="button" data-tech="{{ strength.technology }}" class="tech-filter-btn px-2.5 py-1 border border-white/10 text-zinc-400 font-mono text-[10px] uppercase tracking-wider cursor-pointer">
                     {{ strength.technology }} ({{ strength.project_count }})
@@ -516,17 +500,16 @@
                 <!-- Left Cell: Metadata, Oversized Index, Descriptions, Actions (5 Cols) -->
                 <div class="lg:col-span-5 p-8 md:p-12 flex flex-col justify-between">
                     <div>
-                        <div class="flex items-start justify-between mb-6">
-                            <span class="font-mono text-4xl md:text-5xl font-bold text-zinc-800 group-hover:text-emerald-500/35 transition-colors duration-500">
+                        <div class="flex items-start justify-between mb-4 md:mb-6">
+                            <span class="font-mono text-3xl md:text-5xl font-bold text-zinc-800 group-hover:text-emerald-500/35 transition-colors duration-500">
                                 0{{ forloop.counter }}
                             </span>
-                            <div class="font-mono text-[10px] text-right uppercase tracking-wider">
-                                <div class="text-zinc-500">SYS_ID // 0{{ forloop.counter }}</div>
-                                <div class="text-emerald-400 font-bold">DEPLOYED SYSTEM</div>
-                            </div>
+                            <span class="text-emerald-400 font-mono text-[10px] uppercase tracking-wider font-semibold">
+                                {% translate "PRODUCTION" %}
+                            </span>
                         </div>
 
-                        <h3 class="text-2xl md:text-3xl font-display font-bold text-white group-hover:text-emerald-400 transition-colors mb-4">
+                        <h3 class="text-2xl md:text-3xl font-display font-bold text-white group-hover:text-emerald-400 transition-colors mb-4" data-scramble="true">
                             {{ project.name }}
                         </h3>
 
@@ -535,10 +518,10 @@
                         </p>
 
                         <!-- Tech Stack Tags -->
-                        <div class="flex flex-wrap gap-1.5 mb-8">
+                        <div class="flex flex-wrap gap-1.5 mb-6 md:mb-8">
                             {% for item in project.stack.all %}
                             <span class="px-2.5 py-1 border border-white/10 bg-white/[0.02] font-mono text-[10px] text-zinc-300 uppercase">
-                                #{{ item.technology }}
+                                {{ item.technology }}
                             </span>
                             {% endfor %}
                         </div>
@@ -565,14 +548,14 @@
                     <a href="{% url 'project_detail' project.id %}" class="w-full aspect-video border border-white/10 overflow-hidden relative block group/img bg-[#050506]">
                         <img src="{{ project.preview_image.file.url }}" alt="{{ project.name }} preview" loading="lazy" class="parallax-media w-full h-full object-cover scale-[1.12] filter grayscale contrast-125 group-hover/img:grayscale-0 transition-all duration-700" />
                         <div class="absolute bottom-0 right-0 bg-[#050506]/90 backdrop-blur-sm border-t border-l border-white/15 px-3.5 py-2 font-mono text-[10px] text-zinc-300 group-hover/img:bg-emerald-500 group-hover/img:text-black group-hover/img:border-emerald-500 transition-colors uppercase tracking-widest font-bold">
-                            INSPECT SYSTEM ↗
+                            {% translate "INSPECT SYSTEM" %} ↗
                         </div>
                     </a>
                     {% else %}
                     <a href="{% url 'project_detail' project.id %}" class="w-full aspect-video border border-white/10 bg-[#0A0A0D] flex flex-col items-center justify-center font-mono text-xs text-zinc-500 hover:border-emerald-500/40 transition-colors uppercase tracking-widest relative group/img">
-                        <span>SYS_RENDER // ARCHITECTURE DOCUMENTED</span>
+                        <span>{% translate "ARCHITECTURE DOCUMENTED" %}</span>
                         <div class="absolute bottom-0 right-0 bg-[#050506]/90 border-t border-l border-white/15 px-3.5 py-2 font-mono text-[10px] text-zinc-300 group-hover/img:bg-emerald-500 group-hover/img:text-black transition-colors uppercase tracking-widest font-bold">
-                            INSPECT SYSTEM ↗
+                            {% translate "INSPECT SYSTEM" %} ↗
                         </div>
                     </a>
                     {% endif %}
@@ -593,9 +576,9 @@
                 <span class="sec-led w-1.5 h-1.5 bg-emerald-500 inline-block"></span>
                 <span class="text-emerald-500 font-bold">05</span>
                 <span class="text-zinc-700">/</span>
-                <span class="sec-decode-label text-zinc-300">{% translate "05 // ENGINEERING FIELD LOGS" %}</span>
+                <span class="sec-decode-label text-zinc-300" data-scramble="true">{% translate "05 // ENGINEERING FIELD LOGS" %}</span>
             </div>
-            <span class="text-zinc-400">{% translate "ARCHIVE // CHRONOLOGICAL" %}</span>
+            <span class="text-zinc-500 hidden sm:inline font-mono text-xs">{% translate "ARCHIVE" %}</span>
             <div class="grid-line-h absolute bottom-0 left-0 right-0"></div>
         </div>
 
@@ -607,11 +590,11 @@
             <div class="max-w-3xl">
                 <div class="flex items-center gap-3 font-mono text-[10px] text-emerald-400 mb-2 uppercase tracking-wider">
                     <span class="w-1.5 h-1.5 bg-emerald-500"></span>
-                    <span class="font-bold">FEATURED DEEP DIVE</span>
+                    <span class="font-bold">{% translate "FEATURED LOG" %}</span>
                     <span class="text-zinc-600">//</span>
                     <span class="text-zinc-400">{{ featured_log.date|short_timesince }}</span>
                 </div>
-                <h3 class="text-xl md:text-2xl font-display font-bold text-white group-hover:text-emerald-400 group-hover:translate-x-1.5 transition-all mb-2">
+                <h3 class="text-xl md:text-2xl font-display font-bold text-white group-hover:text-emerald-400 group-hover:translate-x-1.5 transition-all mb-2" data-scramble="true">
                     <a href="/logging/?log_id={{ featured_log.id }}">{{ featured_log.title }}</a>
                 </h3>
                 <p class="text-xs text-zinc-400 font-light leading-relaxed mb-4">
@@ -619,12 +602,12 @@
                 </p>
                 <div class="flex gap-2 flex-wrap">
                     {% for item in featured_log.stack.all %}
-                    <span class="px-2 py-0.5 border border-white/10 text-[10px] font-mono text-zinc-400 uppercase">#{{ item.technology }}</span>
+                    <span class="px-2 py-0.5 border border-white/10 text-[10px] font-mono text-zinc-400 uppercase">{{ item.technology }}</span>
                     {% endfor %}
                 </div>
             </div>
             <a href="/logging/?log_id={{ featured_log.id }}" class="btn-sweep btn-sweep-emerald px-5 py-2.5 border border-emerald-500/40 shrink-0 font-mono text-xs uppercase tracking-wider text-emerald-400 flex items-center gap-2 font-bold">
-                <span>READ LOG</span>
+                <span>{% translate "READ LOG" %}</span>
                 <span>→</span>
             </a>
         </div>
@@ -644,7 +627,7 @@
                     </span>
 
                     <!-- Log Title -->
-                    <h4 class="font-display font-bold text-white text-base md:text-lg group-hover:text-emerald-400 group-hover:translate-x-2 transition-all duration-300 truncate">
+                    <h4 class="font-display font-bold text-white text-base md:text-lg group-hover:text-emerald-400 group-hover:translate-x-2 transition-all duration-300 truncate" data-scramble="true">
                         {{ log.title }}
                     </h4>
 
