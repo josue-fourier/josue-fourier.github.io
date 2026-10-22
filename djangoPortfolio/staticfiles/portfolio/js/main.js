@@ -798,9 +798,9 @@ if (typeof gsap !== 'undefined') {
         });
     }
 
-    // 2g. Live Telemetry Progress Bars & Numeric Count-up (SEC-03 Benchmarks)
+    // 2g. Live Telemetry Progress Bars & Numeric Count-up (SEC-02 Benchmarks)
     function initTelemetryCountersAndBars() {
-        const benchmarkSection = document.getElementById('chapter-03');
+        const benchmarkSection = document.getElementById('chapter-02') || document.getElementById('chapter-03');
         if (!benchmarkSection) return;
 
         ScrollTrigger.create({

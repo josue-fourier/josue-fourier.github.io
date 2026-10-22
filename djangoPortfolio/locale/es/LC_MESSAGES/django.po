@@ -344,3 +344,19 @@ msgstr "Cargar más"
 msgid "No detailed case study available yet."
 msgstr "Aún no hay un estudio de caso detallado disponible."
 
+msgid "01 / CORE SKILLS"
+msgstr "01 / HABILIDADES PRINCIPALES"
+
+msgid "02 // BENCHMARKS"
+msgstr "02 // BENCHMARKS"
+
+msgid "03 // PRODUCTION SYSTEMS"
+msgstr "03 // SISTEMAS EN PRODUCCIÓN"
+
+msgid "04 // ENGINEERING FIELD LOGS"
+msgstr "04 // REGISTROS DE INGENIERÍA"
+
+msgid "COMPONENTS"
+msgstr "COMPONENTES"
+
+

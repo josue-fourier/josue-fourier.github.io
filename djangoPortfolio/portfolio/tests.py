@@ -956,13 +956,11 @@ class C2EngineeringPortfolioTests(TestCase):
         self.assertIn("max-w-[1440px]", content)
         self.assertIn('id="top-telemetry-bar"', content)
         self.assertIn('data-chapter="01"', content)
-        self.assertIn('data-chapter="02"', content)
+        self.assertIn('data-chapter="03"', content)
         self.assertIn('data-chapter="04"', content)
-        self.assertIn('data-chapter="05"', content)
-        self.assertIn('data-chapter="06"', content)
 
-    def test_r3_and_r4_chapter_03_rendered_when_badges_exist(self):
-        """When HackerRank badges exist, chapter 03 is rendered."""
+    def test_r3_and_r4_chapter_02_rendered_when_badges_exist(self):
+        """When HackerRank badges exist, chapter 02 (Benchmarks) is rendered."""
         from django.utils import timezone
         HackerRankBadge.objects.create(
             badge_name="C++",
@@ -974,9 +972,9 @@ class C2EngineeringPortfolioTests(TestCase):
         res = self.client.get("/")
         self.assertEqual(res.status_code, 200)
         content = res.content.decode("utf-8")
-        self.assertIn('id="chapter-03"', content)
-        self.assertIn('data-chapter="03"', content)
-        self.assertIn("03 // BENCHMARKS", content)
+        self.assertIn('id="chapter-02"', content)
+        self.assertIn('data-chapter="02"', content)
+        self.assertIn("02 // BENCHMARKS", content)
 
     def test_5_core_identity_pillars_english(self):
         """Verify 5 Core Identity Pillars rendered in English."""
@@ -1008,7 +1006,6 @@ class C2EngineeringPortfolioTests(TestCase):
         self.assertIn('id="top-telemetry-bar"', content)
         self.assertIn("JOSUÉ LEIVA", content)
         self.assertIn("INDEX", content)
-        self.assertIn("CAPABILITIES", content)
         self.assertIn("BENCHMARKS", content)
         self.assertIn("LOGS", content)
         self.assertIn("SYSTEMS", content)

@@ -1079,4 +1079,45 @@ main#log-content-area.markdown-body {
     animation: signalPulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
+/* ==========================================================================
+   Project Dossier Card Aesthetics & Light Mode Support
+   ========================================================================== */
+.project-card {
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+                border-color 0.35s ease,
+                box-shadow 0.35s ease;
+}
+
+.project-card:hover {
+    border-color: rgba(16, 185, 129, 0.4) !important;
+    box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.7),
+                0 0 24px -8px rgba(16, 185, 129, 0.15) !important;
+}
+
+[data-theme="lofi"] .project-card {
+    background-color: #FFFFFF !important;
+    border-color: rgba(0, 0, 0, 0.12) !important;
+    box-shadow: 0 8px 30px -6px rgba(0, 0, 0, 0.06) !important;
+}
+
+[data-theme="lofi"] .project-card:hover {
+    border-color: rgba(5, 150, 105, 0.45) !important;
+    box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.12),
+                0 0 20px -6px rgba(5, 150, 105, 0.15) !important;
+}
+
+[data-theme="lofi"] .project-card > div:first-child {
+    background-color: #F8FAFC !important;
+    border-color: rgba(0, 0, 0, 0.08) !important;
+}
+
+[data-theme="lofi"] .project-card .lg\:col-span-5 {
+    background-color: #FFFFFF !important;
+}
+
+[data-theme="lofi"] .project-card .lg\:col-span-7 {
+    background-color: #F1F5F9 !important;
+}
+
+
 
