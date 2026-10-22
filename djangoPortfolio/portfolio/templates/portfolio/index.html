@@ -64,7 +64,7 @@
                 <span class="sec-led w-1.5 h-1.5 bg-emerald-500 inline-block"></span>
                 <span class="text-emerald-500 font-bold">01</span>
                 <span class="text-zinc-700">/</span>
-                <span class="sec-decode-label text-zinc-300" data-scramble="true">{% translate "01 / ARCHITECTURAL DOSSIER" %}</span>
+                <span class="sec-decode-label text-zinc-300 font-bold tracking-wider" data-scramble="true" data-kinetic-scrub="true" data-target-text="{% translate '01 / ARCHITECTURAL DOSSIER' %}">{% translate "01 / ARCHITECTURAL DOSSIER" %}</span>
             </div>
             <div class="flex items-center gap-3 text-zinc-400">
                 <span class="hidden md:inline text-zinc-500">UTFSM // {% translate "Telematics Engineering" %}</span>
@@ -99,6 +99,49 @@
                         <p id="hero-stance-scrub" class="reveal-text-inner text-xl md:text-2xl lg:text-3xl text-zinc-300 max-w-2xl font-light leading-snug">
                             {% translate "Telematics Engineering student specializing in" %} <strong class="text-white font-medium">{% translate "backend architecture" %}</strong>, <strong class="text-white font-medium">{% translate "automation" %}</strong>, <strong class="text-white font-medium">{% translate "flows" %}</strong>{% if LANGUAGE_CODE == "es" %} e {% else %}, {% translate "and" %} {% endif %}<strong class="text-white font-medium">{% translate "human impact" %}</strong>.
                         </p>
+                    </div>
+
+                    <!-- Fourier Harmonic Synthesizer Engine (Concept A // F0ur13r Harmonic Synthesis) -->
+                    <div id="fourier-harmonic-panel" class="my-6 p-4 md:p-5 border border-white/[0.08] bg-[#050506]/90 backdrop-blur-sm relative group overflow-hidden select-none">
+                        <div class="flex items-center justify-between pb-2.5 mb-2.5 border-b border-white/[0.06] font-mono text-[10px] uppercase tracking-widest text-zinc-500">
+                            <div class="flex items-center gap-2">
+                                <span class="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse"></span>
+                                <span class="text-zinc-300 font-bold">FOURIER SYNTHESIZER</span>
+                                <span class="text-zinc-700">//</span>
+                                <span class="text-emerald-400 font-semibold font-mono">f(t) = ∑ Aₙ sin(2πnft)</span>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <span id="fourier-harmonic-count" class="text-emerald-400 font-bold tabular-nums">N = 1 HARMONIC</span>
+                                <span class="text-zinc-700 hidden sm:inline">|</span>
+                                <span class="text-zinc-400 hidden sm:inline font-mono">COORD: <strong class="text-zinc-200">F0UR13R</strong></span>
+                            </div>
+                        </div>
+
+                        <!-- High-DPI Waveform Canvas with Calibrated Hairline Grid -->
+                        <div class="relative w-full h-24 sm:h-28 overflow-hidden bg-black/40 border border-white/[0.04]">
+                            <canvas id="fourier-waveform-canvas" class="w-full h-full block cursor-crosshair"></canvas>
+                            <div class="absolute top-1 left-2 font-mono text-[9px] text-zinc-600 select-none pointer-events-none">+1.0 A</div>
+                            <div class="absolute bottom-1 left-2 font-mono text-[9px] text-zinc-600 select-none pointer-events-none">-1.0 A</div>
+                            <div class="absolute top-1 right-2 font-mono text-[9px] text-zinc-500 select-none pointer-events-none tabular-nums" id="fourier-freq-readout">440.00 Hz</div>
+                            <div class="absolute bottom-1 right-2 font-mono text-[9px] text-emerald-500/80 select-none pointer-events-none tabular-nums font-mono" id="fourier-approx-readout">SINE FUNDAMENTAL</div>
+                        </div>
+
+                        <!-- Bottom Telemetry Legend & Harmonic Breakdown Indicators -->
+                        <div class="mt-2.5 flex items-center justify-between font-mono text-[9px] uppercase tracking-wider text-zinc-500">
+                            <div class="flex items-center gap-3">
+                                <span class="inline-flex items-center gap-1.5">
+                                    <span class="w-2 h-0.5 bg-emerald-500 inline-block"></span>
+                                    <span class="text-zinc-300 font-bold">COMPOSITE WAVE</span>
+                                </span>
+                                <span class="hidden sm:inline-flex items-center gap-1.5">
+                                    <span class="w-2 h-0.5 bg-cyan-400/60 inline-block border-b border-dashed border-cyan-400"></span>
+                                    <span class="text-zinc-500">ODD HARMONICS</span>
+                                </span>
+                            </div>
+                            <span class="text-zinc-400">
+                                SCROLL SCRUB: <span id="fourier-scrub-pct" class="text-emerald-400 font-bold tabular-nums">00%</span>
+                            </span>
+                        </div>
                     </div>
                 </div>
 
@@ -318,7 +361,7 @@
                 <span class="sec-led w-1.5 h-1.5 bg-emerald-500 inline-block"></span>
                 <span class="text-emerald-500 font-bold">02</span>
                 <span class="text-zinc-700">/</span>
-                <span class="sec-decode-label text-zinc-300" data-scramble="true">{% translate "02 // BENCHMARKS" %}</span>
+                <span class="sec-decode-label text-zinc-300 font-bold tracking-wider" data-scramble="true" data-kinetic-scrub="true" data-target-text="{% translate '02 // BENCHMARKS' %}">{% translate "02 // BENCHMARKS" %}</span>
             </div>
             <div class="flex items-center gap-4 text-zinc-400">
                 <span class="hidden md:inline font-bold text-emerald-400">{% translate "5★ C++ RANK" %}</span>
@@ -436,7 +479,7 @@
                 <span class="sec-led w-1.5 h-1.5 bg-emerald-500 inline-block"></span>
                 <span class="text-emerald-500 font-bold">03</span>
                 <span class="text-zinc-700">/</span>
-                <span class="sec-decode-label text-zinc-300" data-scramble="true">{% translate "03 // PRODUCTION SYSTEMS" %}</span>
+                <span class="sec-decode-label text-zinc-300 font-bold tracking-wider" data-scramble="true" data-kinetic-scrub="true" data-target-text="{% translate '03 // PRODUCTION SYSTEMS' %}">{% translate "03 // PRODUCTION SYSTEMS" %}</span>
             </div>
 
             <!-- Inline Stack Filter Buttons -->
@@ -553,7 +596,7 @@
                 <span class="sec-led w-1.5 h-1.5 bg-emerald-500 inline-block"></span>
                 <span class="text-emerald-500 font-bold">04</span>
                 <span class="text-zinc-700">/</span>
-                <span class="sec-decode-label text-zinc-300" data-scramble="true">{% translate "04 // ENGINEERING FIELD LOGS" %}</span>
+                <span class="sec-decode-label text-zinc-300 font-bold tracking-wider" data-scramble="true" data-kinetic-scrub="true" data-target-text="{% translate '04 // ENGINEERING FIELD LOGS' %}">{% translate "04 // ENGINEERING FIELD LOGS" %}</span>
             </div>
             <div class="flex items-center gap-4 text-zinc-400 font-mono text-xs">
                 <span>{{ log_count|default:0 }} {% translate "LOGS" %}</span>

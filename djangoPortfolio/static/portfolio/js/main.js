@@ -769,7 +769,9 @@ if (typeof gsap !== 'undefined') {
             const obs = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
-                        scrambleDecodeText(entry.target);
+                        if (!entry.target.dataset.kineticScrub) {
+                            scrambleDecodeText(entry.target);
+                        }
                         obs.unobserve(entry.target);
                     }
                 });
@@ -792,7 +794,7 @@ if (typeof gsap !== 'undefined') {
                 end: "bottom 25%",
                 onEnter: () => {
                     header.classList.add('sec-pinned-active');
-                    if (label) scrambleDecodeText(label);
+                    if (label && !label.dataset.kineticScrub) scrambleDecodeText(label);
                 },
                 onEnterBack: () => {
                     header.classList.add('sec-pinned-active');
@@ -1077,6 +1079,283 @@ if (typeof gsap !== 'undefined') {
         });
     }
 
+    // 2m. Dragonfly2-Inspired Chapter Header Kinetic Decode on Scroll Scrub
+    function initScrollScrubKineticDecode() {
+        const scrubEls = document.querySelectorAll('[data-kinetic-scrub="true"]');
+        if (!scrubEls.length) return;
+
+        const CIPHER_GLYPHS = '0123456789ABCDEF#_//<>[]*~§$%&¥ΞΨΩΔλμ';
+
+        scrubEls.forEach(el => {
+            if (!el.dataset.targetText) {
+                el.dataset.targetText = el.textContent.trim();
+            }
+            // Allow manual hover scramble
+            el.addEventListener('mouseenter', () => {
+                if (typeof scrambleDecodeText === 'function') {
+                    scrambleDecodeText(el, true);
+                }
+            });
+        });
+
+        let ticking = false;
+
+        function updateKineticScrub() {
+            if (prefersReducedMotion) {
+                scrubEls.forEach(el => {
+                    const target = el.dataset.targetText || el.textContent.trim();
+                    if (el.textContent !== target) el.textContent = target;
+                });
+                return;
+            }
+
+            const vh = window.innerHeight;
+            const entryStart = vh * 0.88;
+            const entryEnd = Math.min(vh * 0.28, 140);
+
+            scrubEls.forEach(el => {
+                if (el.dataset.animating === 'true') return; // let hover animation finish
+
+                const section = el.closest('.c2-chapter-section') || el.closest('section') || el;
+                const rect = section.getBoundingClientRect();
+
+                let progress = 0;
+                if (rect.top <= entryEnd) {
+                    progress = 1.0;
+                } else if (rect.top >= entryStart) {
+                    progress = 0.0;
+                } else {
+                    progress = 1.0 - (rect.top - entryEnd) / (entryStart - entryEnd);
+                }
+                progress = Math.max(0, Math.min(1, progress));
+
+                const target = el.dataset.targetText || el.textContent.trim();
+                const totalLen = target.length;
+
+                if (progress >= 1.0) {
+                    if (el.textContent !== target) {
+                        el.textContent = target;
+                    }
+                    return;
+                }
+
+                const solvedCount = Math.floor(progress * totalLen);
+                let result = '';
+
+                for (let i = 0; i < totalLen; i++) {
+                    const char = target[i];
+                    if (char === ' ' || char === '/' || char === '-' || char === '|' || char === ':' || char === '#') {
+                        result += char;
+                    } else if (i < solvedCount) {
+                        result += char;
+                    } else if (i === solvedCount && progress > 0) {
+                        result += CIPHER_GLYPHS[Math.floor(Math.random() * CIPHER_GLYPHS.length)];
+                    } else {
+                        const code = target.charCodeAt(i);
+                        const glyphIdx = (code * 11 + i * 7 + Math.floor(progress * 13)) % CIPHER_GLYPHS.length;
+                        result += CIPHER_GLYPHS[glyphIdx];
+                    }
+                }
+
+                el.textContent = result;
+            });
+
+            ticking = false;
+        }
+
+        function onScroll() {
+            if (!ticking) {
+                requestAnimationFrame(updateKineticScrub);
+                ticking = true;
+            }
+        }
+
+        window.addEventListener('scroll', onScroll, { passive: true });
+        window.addEventListener('resize', onScroll, { passive: true });
+        updateKineticScrub();
+    }
+
+    // 2n. Scroll-Driven Fourier Harmonic Synthesizer Engine (Concept A // F0ur13r Harmonic Synthesis)
+    function initFourierHarmonicSynthesizer() {
+        const canvas = document.getElementById('fourier-waveform-canvas');
+        if (!canvas) return;
+
+        const ctx = canvas.getContext('2d');
+        if (!ctx) return;
+
+        const panel = document.getElementById('fourier-harmonic-panel');
+        const countEl = document.getElementById('fourier-harmonic-count');
+        const freqEl = document.getElementById('fourier-freq-readout');
+        const approxEl = document.getElementById('fourier-approx-readout');
+        const scrubPctEl = document.getElementById('fourier-scrub-pct');
+
+        let time = 0;
+        let baseFreq = 440;
+        let currentFreq = 440;
+        let targetFreq = 440;
+        let currentHarmonics = 1;
+        let width = 0;
+        let height = 0;
+
+        function resizeCanvas() {
+            const rect = canvas.getBoundingClientRect();
+            const dpr = Math.min(window.devicePixelRatio || 1, 2);
+            width = rect.width;
+            height = rect.height;
+            canvas.width = Math.round(width * dpr);
+            canvas.height = Math.round(height * dpr);
+            if (typeof ctx.resetTransform === 'function') {
+                ctx.resetTransform();
+            } else {
+                ctx.setTransform(1, 0, 0, 1, 0, 0);
+            }
+            ctx.scale(dpr, dpr);
+        }
+
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas, { passive: true });
+
+        // Interactive Frequency Modulation on Hover / Pointer Movement
+        if (panel) {
+            panel.addEventListener('mousemove', (e) => {
+                const rect = canvas.getBoundingClientRect();
+                const relX = Math.max(0, Math.min(1, (e.clientX - rect.left) / (rect.width || 1)));
+                targetFreq = 380 + relX * 140; // 380 Hz to 520 Hz
+            }, { passive: true });
+
+            panel.addEventListener('mouseleave', () => {
+                targetFreq = baseFreq;
+            });
+        }
+
+        // Scroll Scrub: Maps page progress into odd harmonic count (N = 1, 3, 5, 7, 9, 11, 13)
+        const harmonicSteps = [1, 3, 5, 7, 9, 11, 13];
+        function updateScrollState() {
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const totalProgress = Math.max(0, Math.min(1, scrollTop / Math.max(1, scrollHeight)));
+
+            const pctFormatted = Math.round(totalProgress * 100);
+            if (scrubPctEl) {
+                scrubPctEl.textContent = String(pctFormatted).padStart(2, '0') + '%';
+            }
+
+            const stepIdx = Math.min(harmonicSteps.length - 1, Math.floor(totalProgress * harmonicSteps.length));
+            currentHarmonics = harmonicSteps[stepIdx];
+
+            if (countEl) {
+                countEl.textContent = `N = ${currentHarmonics} HARMONIC${currentHarmonics > 1 ? 'S' : ''}`;
+            }
+
+            if (approxEl) {
+                if (currentHarmonics === 1) {
+                    approxEl.textContent = 'SINE FUNDAMENTAL';
+                } else if (currentHarmonics < 7) {
+                    approxEl.textContent = `ODD HARMONIC N=${currentHarmonics}`;
+                } else if (currentHarmonics < 13) {
+                    approxEl.textContent = `PARTIAL SQUARE (N=${currentHarmonics})`;
+                } else {
+                    approxEl.textContent = 'SQUARE WAVE (GIBBS)';
+                }
+            }
+        }
+
+        window.addEventListener('scroll', updateScrollState, { passive: true });
+        updateScrollState();
+
+        // Render Loop
+        function render() {
+            if (!width || !height) {
+                resizeCanvas();
+            }
+
+            // Smooth frequency interpolation
+            currentFreq += (targetFreq - currentFreq) * 0.08;
+            if (freqEl) {
+                freqEl.textContent = currentFreq.toFixed(2) + ' Hz';
+            }
+
+            const isLight = document.documentElement.getAttribute('data-theme') === 'lofi';
+
+            ctx.clearRect(0, 0, width, height);
+
+            const centerY = height / 2;
+            const amplitude = height * 0.36;
+
+            // 1. Background hairline calibration grid
+            ctx.lineWidth = 1;
+            ctx.strokeStyle = isLight ? 'rgba(0, 0, 0, 0.06)' : 'rgba(255, 255, 255, 0.06)';
+
+            ctx.beginPath();
+            ctx.moveTo(0, centerY);
+            ctx.lineTo(width, centerY);
+            ctx.moveTo(0, centerY - amplitude);
+            ctx.lineTo(width, centerY - amplitude);
+            ctx.moveTo(0, centerY + amplitude);
+            ctx.lineTo(width, centerY + amplitude);
+            ctx.stroke();
+
+            const stepX = width / 12;
+            ctx.beginPath();
+            for (let x = stepX; x < width; x += stepX) {
+                ctx.moveTo(x, 0);
+                ctx.lineTo(x, height);
+            }
+            ctx.stroke();
+
+            // 2. Odd harmonic constituent sub-waves
+            const numHarmonicsCount = Math.floor((currentHarmonics + 1) / 2);
+            const fundamentalAngularFreq = (2 * Math.PI * (currentFreq / 260));
+
+            if (numHarmonicsCount > 1) {
+                for (let k = 1; k <= numHarmonicsCount; k++) {
+                    const n = 2 * k - 1;
+                    const harmAmp = (amplitude * (4 / Math.PI)) / n;
+                    ctx.beginPath();
+                    ctx.lineWidth = 1;
+                    ctx.strokeStyle = isLight ? 'rgba(2, 132, 199, 0.22)' : 'rgba(6, 182, 212, 0.25)';
+                    for (let px = 0; px <= width; px += 2) {
+                        const t = (px / width) * 4 + time;
+                        const py = centerY - harmAmp * Math.sin(n * fundamentalAngularFreq * 0.12 * t);
+                        if (px === 0) ctx.moveTo(px, py);
+                        else ctx.lineTo(px, py);
+                    }
+                    ctx.stroke();
+                }
+            }
+
+            // 3. Composite Synthesized Fourier Waveform
+            ctx.beginPath();
+            ctx.lineWidth = 2.2;
+            ctx.strokeStyle = isLight ? '#059669' : '#10B981';
+
+            for (let px = 0; px <= width; px += 1.5) {
+                const t = (px / width) * 4 + time;
+                let sum = 0;
+                for (let k = 1; k <= numHarmonicsCount; k++) {
+                    const n = 2 * k - 1;
+                    sum += Math.sin(n * fundamentalAngularFreq * 0.12 * t) / n;
+                }
+                const y = centerY - (amplitude * (4 / Math.PI)) * sum;
+                if (px === 0) ctx.moveTo(px, y);
+                else ctx.lineTo(px, y);
+            }
+            ctx.stroke();
+
+            if (!prefersReducedMotion) {
+                time += 0.032;
+            }
+
+            requestAnimationFrame(render);
+        }
+
+        render();
+    }
+
+    // Expose for external orchestration & testing
+    window.initFourierHarmonicSynthesizer = initFourierHarmonicSynthesizer;
+    window.initScrollScrubKineticDecode = initScrollScrubKineticDecode;
+
     // Run motion engine initializations
     function runAllMotionInitializers() {
         initMaskedTypographicReveals();
@@ -1091,6 +1370,8 @@ if (typeof gsap !== 'undefined') {
         initCharSplitLinks();
         initHeroMobileTabs();
         initSkillExpander();
+        initScrollScrubKineticDecode();
+        initFourierHarmonicSynthesizer();
     }
 
     if (document.readyState === 'loading') {

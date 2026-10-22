@@ -1168,4 +1168,56 @@ class C2EngineeringPortfolioTests(TestCase):
         self.assertIn('--bg: #F8F9FA;', css_code)
         self.assertIn('--bg: #050506;', css_code)
 
+    def test_fourier_harmonic_synthesizer_and_kinetic_header_decode(self):
+        """Verify Fourier Synthesizer engine, F0UR13R moniker, and Dragonfly2 kinetic header decode."""
+        from django.utils import timezone
+        HackerRankBadge.objects.create(
+            badge_name="C++",
+            stars=5,
+            total_stars=5,
+            level=3,
+            timestamp=timezone.now(),
+        )
+        res = self.client.get("/en/")
+        self.assertEqual(res.status_code, 200)
+        content = res.content.decode("utf-8")
+
+        # Check Fourier panel DOM elements and F0UR13R coordinate tag
+        self.assertIn('id="fourier-harmonic-panel"', content)
+        self.assertIn('id="fourier-waveform-canvas"', content)
+        self.assertIn('id="fourier-harmonic-count"', content)
+        self.assertIn('id="fourier-freq-readout"', content)
+        self.assertIn('id="fourier-approx-readout"', content)
+        self.assertIn('id="fourier-scrub-pct"', content)
+        self.assertIn("F0UR13R", content)
+
+        # Check kinetic scrub tags on all 4 chapter headers
+        self.assertIn('data-kinetic-scrub="true" data-target-text="01 / ARCHITECTURAL DOSSIER"', content)
+        self.assertIn('data-kinetic-scrub="true" data-target-text="02 // BENCHMARKS"', content)
+        self.assertIn('data-kinetic-scrub="true" data-target-text="03 // PRODUCTION SYSTEMS"', content)
+        self.assertIn('data-kinetic-scrub="true" data-target-text="04 // ENGINEERING FIELD LOGS"', content)
+
+        # Check main.js for Fourier synthesizer and kinetic decode functions
+        js_path = os.path.join(settings.BASE_DIR, "static", "portfolio", "js", "main.js")
+        css_path = os.path.join(settings.BASE_DIR, "static", "portfolio", "css", "custom.css")
+        with open(js_path, "r", encoding="utf-8") as f:
+            js_code = f.read()
+        with open(css_path, "r", encoding="utf-8") as f:
+            css_code = f.read()
+
+        self.assertIn("function initFourierHarmonicSynthesizer()", js_code)
+        self.assertIn("function initScrollScrubKineticDecode()", js_code)
+        self.assertIn("const harmonicSteps = [1, 3, 5, 7, 9, 11, 13];", js_code)
+        self.assertIn("window.initFourierHarmonicSynthesizer =", js_code)
+        self.assertIn("window.initScrollScrubKineticDecode =", js_code)
+
+        # Check custom.css rules for synthesizer and background canvas opacity
+        self.assertIn("#fourier-harmonic-panel", css_code)
+        self.assertIn('[data-theme="lofi"] #fourier-harmonic-panel', css_code)
+        self.assertIn("#em-telemetry-canvas", css_code)
+        self.assertIn("opacity: 0.14;", css_code)
+        self.assertIn('[data-theme="lofi"] #em-telemetry-canvas', css_code)
+        self.assertIn("opacity: 0.06;", css_code)
+
+
 
