@@ -1,7 +1,17 @@
 from django.contrib import admin
 from django.utils.html import format_html
 
-from .models import CoreSkill, Image, LogEntry, Project, SkillCategory, TechnicalStrength
+from .models import (
+    CoreSkill,
+    HackerRankBadge,
+    Image,
+    LogEntry,
+    NodeHeartbeat,
+    Project,
+    SkillCategory,
+    Status,
+    TechnicalStrength,
+)
 
 
 class ProjectImageInline(admin.TabularInline):
@@ -86,3 +96,30 @@ class ImageAdmin(admin.ModelAdmin):
 admin.site.register(TechnicalStrength)
 admin.site.register(SkillCategory)
 admin.site.register(CoreSkill)
+
+
+@admin.register(HackerRankBadge)
+class HackerRankBadgeAdmin(admin.ModelAdmin):
+    list_display = ("badge_name", "category_name", "stars", "total_stars", "level", "solved", "timestamp")
+    list_filter = ("badge_name", "category_name", "timestamp")
+    search_fields = ("badge_name", "category_name", "badge_type")
+
+
+@admin.register(Status)
+class StatusAdmin(admin.ModelAdmin):
+    list_display = ("message", "source", "timestamp")
+    list_filter = ("source", "timestamp")
+    search_fields = ("message",)
+
+
+@admin.register(NodeHeartbeat)
+class NodeHeartbeatAdmin(admin.ModelAdmin):
+    list_display = ("node_name", "status_preview", "is_recent", "timestamp")
+    list_filter = ("node_name", "timestamp")
+    search_fields = ("node_name", "status")
+
+    def status_preview(self, obj):
+        return obj.status[:60] + "..." if len(obj.status) > 60 else obj.status
+
+    status_preview.short_description = "Status Payload"
+

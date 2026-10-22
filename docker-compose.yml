@@ -15,18 +15,20 @@ services:
       retries: 5
     volumes:
       - pgdata:/var/lib/postgresql/data
-
   web:
     build: .
+    image: djangoportfolio:latest
     restart: unless-stopped
-    command: sh -c "python manage.py collectstatic --noinput --clear && gunicorn djangoPortfolio.wsgi:application --bind 0.0.0.0:8000 --workers 3 --access-logfile - --error-logfile - --log-level info --capture-output"
+    command: sh -c "python manage.py collectstatic --noinput && gunicorn djangoPortfolio.wsgi:application --bind 0.0.0.0:8000 --workers 3 --access-logfile - --error-logfile - --log-level info --capture-output"
     #ports:
     #  - 7777:8000
     volumes:
       - static_volume:/app/staticfiles
       - media_volume:/app/media
+      - huey_volume:/app/huey_data
     environment:
       POSTGRES_HOST: db
+      HUEY_FILENAME: /app/huey_data/huey.sqlite3
     env_file:
       - .env
     depends_on:
@@ -39,6 +41,25 @@ services:
       timeout: 5s
       retries: 3
       start_period: 30s
+
+  huey:
+    build: .
+    image: djangoportfolio:latest
+    restart: unless-stopped
+    command: python manage.py run_huey
+    volumes:
+      - media_volume:/app/media
+      - huey_volume:/app/huey_data
+    environment:
+      POSTGRES_HOST: db
+      HUEY_FILENAME: /app/huey_data/huey.sqlite3
+    env_file:
+      - .env
+    depends_on:
+      db:
+        condition: service_healthy
+      web:
+        condition: service_started
 
   cloudflared:
     image: cloudflare/cloudflared:latest
@@ -61,7 +82,13 @@ services:
       - media_volume:/app/media
       - ./serve:/app/serve
 
+networks:
+  red_n8n:
+    external: True
+    name: n8n_default
+
 volumes:
   pgdata:
   static_volume:
   media_volume:
+  huey_volume:

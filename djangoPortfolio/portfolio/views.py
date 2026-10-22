@@ -7,9 +7,21 @@ from django.db.models import Count, F
 from django.http import Http404, HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, render
 from django.views.decorators.csrf import csrf_exempt
+import datetime
+from decouple import config
+from django.utils import timezone
 from django.views.generic import TemplateView
 
-from .models import Image, LogEntry, Project, SkillCategory, TechnicalStrength
+from .models import (
+    HackerRankBadge,
+    Image,
+    LogEntry,
+    NodeHeartbeat,
+    Project,
+    SkillCategory,
+    Status,
+    TechnicalStrength,
+)
 
 
 class RootPage(TemplateView):
@@ -56,7 +68,40 @@ class RootPage(TemplateView):
                 .order_by("-date")[:3]
             )
 
-        context["total_projects"] = Project.objects.count()
+        context["total_projects"] = Project.objects.filter(active=True).count()
+
+        # HackerRank Badges: latest available snapshot
+        latest_badge = HackerRankBadge.objects.order_by("-timestamp").first()
+        if latest_badge:
+            exact_matches = HackerRankBadge.objects.filter(timestamp=latest_badge.timestamp)
+            if exact_matches.count() > 1:
+                latest_badges = exact_matches.order_by("-stars", "-progress_to_next_star","badge_name")
+            else:
+                # If only 1 exact timestamp match, check for a subsecond cluster
+                # (e.g. badges saved sequentially within a tight window without explicit timestamp)
+                cluster = HackerRankBadge.objects.filter(
+                    timestamp__gte=latest_badge.timestamp - datetime.timedelta(milliseconds=600),
+                    timestamp__lte=latest_badge.timestamp,
+                )
+                cluster_names = list(cluster.values_list("badge_name", flat=True))
+                # Ensure no duplicate badge names exist in cluster (which indicates overlapping runs)
+                if len(cluster_names) > 1 and len(cluster_names) == len(set(cluster_names)):
+                    latest_badges = cluster.order_by("-stars", "badge_name")
+                else:
+                    # Genuinely a single-badge snapshot
+                    latest_badges = exact_matches.order_by("-stars", "badge_name")
+        else:
+            latest_badges = HackerRankBadge.objects.none()
+
+        context["hackerrank_badges"] = latest_badges
+        context["badges"] = latest_badges
+
+        # Telemetry: Current personal status
+        context["current_status"] = Status.objects.first()
+
+        # Telemetry: Node heartbeat (only shown if recent, within 20 mins)
+        latest_hb = NodeHeartbeat.objects.order_by("-timestamp").first()
+        context["node_heartbeat"] = latest_hb if (latest_hb and latest_hb.is_recent) else None
 
         return context
 
@@ -522,3 +567,71 @@ def log_images(request, log_id):
         return JsonResponse(image_to_dict(image), status=201)
 
     return HttpResponse(status=405)
+
+
+@csrf_exempt
+def telemetry_heartbeat(request):
+    """POST /api/telemetry/heartbeat/
+    Receives an arbitrary telemetry string from a remote node (e.g. Raspberry Pi)
+    Authentication: Header X-Telemetry-Token: <token> or Authorization: Bearer <token>
+    Payload: JSON {"status": "string"} or {"message": "string"} or raw text
+    """
+    if request.method != "POST":
+        return HttpResponse(status=405)
+
+    configured_token = config("TELEMETRY_TOKEN", default="").strip()
+    provided_token = (
+        request.headers.get("X-Telemetry-Token")
+        or request.headers.get("Authorization", "").replace("Bearer ", "")
+    ).strip()
+
+    if configured_token and provided_token != configured_token:
+        return JsonResponse({"error": "Unauthorized"}, status=401)
+    elif not configured_token and not provided_token:
+        return JsonResponse(
+            {"error": "TELEMETRY_TOKEN not configured or token missing"},
+            status=403,
+        )
+
+    status_text = ""
+    node_name = "raspberry-pi"
+
+    if request.content_type == "application/json" and request.body:
+        try:
+            data = json.loads(request.body.decode("utf-8"))
+            if isinstance(data, dict):
+                status_text = str(data.get("status") or data.get("message") or "")
+                node_name = str(data.get("node_name") or data.get("node") or "raspberry-pi")
+            elif isinstance(data, str):
+                status_text = data
+        except Exception:
+            status_text = request.body.decode("utf-8", errors="ignore")
+    else:
+        status_text = (
+            request.POST.get("status")
+            or request.POST.get("message")
+            or request.body.decode("utf-8", errors="ignore")
+        )
+
+    status_text = status_text.strip()
+    if not status_text:
+        return JsonResponse({"error": "Empty status payload"}, status=400)
+
+    hb, _ = NodeHeartbeat.objects.update_or_create(
+        node_name=node_name,
+        defaults={
+            "status": status_text,
+            "timestamp": timezone.now(),
+        },
+    )
+
+    return JsonResponse(
+        {
+            "success": True,
+            "node_name": hb.node_name,
+            "status": hb.status,
+            "timestamp": hb.timestamp.isoformat(),
+        },
+        status=200,
+    )
+

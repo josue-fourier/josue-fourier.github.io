@@ -1,4 +1,48 @@
+# Git
+.git/
+.gitignore
+.gitmodules
+.github/
+
+# Python & Virtual Environments
+venv/
+.venv/
+env/
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.pytest_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+
+# Local database files & runtime queues
+*.sqlite3
+*.db
+db.sqlite3
+huey.sqlite3
+
+# Node.js
 node_modules/
-.hugo_build.lock
-package-lock.json
 package.json
+package-lock.json
+.hugo_build.lock
+
+# Environment & local secrets (passed via docker-compose env_file at runtime)
+.env
+.env.*
+!.env.example
+
+# Collected static & media (managed via volumes)
+staticfiles/
+media/
+.agents/
+
+# OS / Editor artifacts
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+*.swo

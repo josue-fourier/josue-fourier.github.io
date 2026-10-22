@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "django.contrib.sitemaps",
     "django.contrib.sites",
+    "huey.contrib.djhuey",
     "portfolio",
 ]
 
@@ -109,9 +110,9 @@ def _resolve_db_host():
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": config("POSTGRES_DB"),
-        "USER": config("POSTGRES_USER"),
-        "PASSWORD": config("POSTGRES_PASSWORD"),
+        "NAME": config("POSTGRES_DB", default="postgres"),
+        "USER": config("POSTGRES_USER", default="postgres"),
+        "PASSWORD": config("POSTGRES_PASSWORD", default=""),
         "HOST": _resolve_db_host(),
         "PORT": config("POSTGRES_PORT", default="5432")
     }
@@ -184,3 +185,37 @@ CSRF_TRUSTED_ORIGINS = [
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 USE_X_FORWARDED_HOST = True
 USE_X_FORWARDED_PORT = True
+
+import os
+import sys
+import time
+
+if hasattr(time, "tzset"):
+    os.environ["TZ"] = TIME_ZONE
+    try:
+        time.tzset()
+    except Exception:
+        pass
+
+is_running_consumer = "run_huey" in sys.argv
+is_testing = "test" in sys.argv
+huey_immediate_default = False if is_running_consumer else is_testing
+
+HUEY_CLASS = config("HUEY_CLASS", default="huey.SqliteHuey")
+HUEY_FILENAME = config("HUEY_FILENAME", default=str(BASE_DIR / "huey.sqlite3"))
+try:
+    Path(HUEY_FILENAME).parent.mkdir(parents=True, exist_ok=True)
+except Exception:
+    pass
+
+HUEY = {
+    "name": "djangoPortfolio",
+    "huey_class": HUEY_CLASS,
+    "filename": HUEY_FILENAME,
+    "utc": False,
+    "immediate": False if is_running_consumer else config("HUEY_IMMEDIATE", default=huey_immediate_default, cast=bool),
+    "consumer": {
+        "workers": 1,
+        "worker_type": "thread",
+    },
+}

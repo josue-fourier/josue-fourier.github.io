@@ -1,9 +1,11 @@
-from pathlib import Path
+import math
 import uuid
+from pathlib import Path
 
 from django.db import models
 from django.db.models.signals import post_delete, pre_save
 from django.dispatch import receiver
+from django.utils import timezone
 
 
 class TechnicalStrength(models.Model):
@@ -126,8 +128,8 @@ class Image(models.Model):
     def clean(self):
         super().clean()
         if self.file:
-            from PIL import Image as PILImage
             from django.core.exceptions import ValidationError
+            from PIL import Image as PILImage
             try:
                 if hasattr(self.file, "seek"):
                     self.file.seek(0)
@@ -144,26 +146,154 @@ class Image(models.Model):
         if self.is_main_preview and self.project_id:
             Image.objects.filter(project_id=self.project_id, is_main_preview=True).exclude(pk=self.pk).update(is_main_preview=False)
 
-class HackerRankBadge(models.Model): 
+class HackerRankBadge(models.Model):
     # Endpoint https://www.hackerrank.com/rest/hackers/xmenmagnet/badges
     # The data of all the objects with the following shape, is an array named models.
-    badge_category = models.CharField(max_length=300)
-    badge_type = models.CharField(max_length=50)
-    category_name = models.CharField(max_length=300)
-    badge_name = models.CharField(max_length=300)
-    badge_short_name = models.CharField(max_length=50)
-    total_stars = models.PositiveIntegerField()
-    total_points = models.PositiveIntegerField()
-    url = models.URLField()
-    stars = models.PositiveIntegerField()
-    level = models.PositiveIntegerField()
-    current_points = models.PositiveIntegerField()
-    progress_to_next_star = models.FloatField()
-    upcoming_level = models.PositiveIntegerField()
-    solved = models.PositiveIntegerField()
-    total_challenges = models.PositiveIntegerField()
-    hacker_rank = models.PositiveIntegerField()
-    
+    badge_category = models.CharField(max_length=300, null=True, blank=True)
+    badge_type = models.CharField(max_length=100, null=True, blank=True)
+    category_name = models.CharField(max_length=300, null=True, blank=True)
+    badge_name = models.CharField(max_length=300, null=True, blank=True)
+    badge_short_name = models.CharField(max_length=100, null=True, blank=True)
+    total_stars = models.PositiveIntegerField(default=0, null=True, blank=True)
+    total_points = models.PositiveIntegerField(null=True, blank=True)
+    url = models.CharField(max_length=500, null=True, blank=True)
+    stars = models.PositiveIntegerField(default=0, null=True, blank=True)
+    level = models.PositiveIntegerField(default=1, null=True, blank=True)
+    current_points = models.FloatField(default=0.0, null=True, blank=True)
+    progress_to_next_star = models.FloatField(default=0.0, null=True, blank=True)
+    upcoming_level = models.PositiveIntegerField(null=True, blank=True)
+    solved = models.PositiveIntegerField(default=0, null=True, blank=True)
+    total_challenges = models.PositiveIntegerField(default=0, null=True, blank=True)
+    hacker_rank = models.BigIntegerField(null=True, blank=True)
+    timestamp = models.DateTimeField(default=timezone.now, db_index=True)
+
+    class Meta:
+        ordering = ["-stars", "badge_name"]
+        verbose_name = "HackerRank Badge"
+        verbose_name_plural = "HackerRank Badges"
+
+    def __str__(self):
+        return f"{self.badge_name or 'Badge'} ({self.stars or 0}/{self.total_stars or 0} stars)"
+
+    def save(self, *args, **kwargs):
+        if self.url and not (self.url.startswith("http://") or self.url.startswith("https://")):
+            if self.url.startswith("/"):
+                self.url = f"https://www.hackerrank.com{self.url}"
+            else:
+                self.url = f"https://www.hackerrank.com/{self.url}"
+        if self.url and len(self.url) > 500:
+            self.url = self.url[:500]
+        if not self.badge_name:
+            self.badge_name = "Unnamed Badge"
+        elif len(self.badge_name) > 300:
+            self.badge_name = self.badge_name[:300]
+        if self.category_name and len(self.category_name) > 300:
+            self.category_name = self.category_name[:300]
+        if self.badge_category and len(self.badge_category) > 300:
+            self.badge_category = self.badge_category[:300]
+        if self.badge_type and len(self.badge_type) > 100:
+            self.badge_type = self.badge_type[:100]
+        if self.badge_short_name and len(self.badge_short_name) > 100:
+            self.badge_short_name = self.badge_short_name[:100]
+
+        # Bounds and NaN protection for PostgreSQL integer & float fields
+        MAX_INT = 2147483647
+        MAX_BIGINT = 9223372036854775807
+        for field in ("total_stars", "total_points", "stars", "level", "upcoming_level", "solved", "total_challenges"):
+            val = getattr(self, field)
+            if val is not None:
+                if val < 0:
+                    setattr(self, field, 0 if field not in ("level", "upcoming_level") else 1)
+                elif val > MAX_INT:
+                    setattr(self, field, MAX_INT)
+
+        if self.hacker_rank is not None:
+            if self.hacker_rank < 0:
+                self.hacker_rank = 0
+            elif self.hacker_rank > MAX_BIGINT:
+                self.hacker_rank = MAX_BIGINT
+
+        if self.progress_to_next_star is not None:
+            if math.isnan(self.progress_to_next_star) or math.isinf(self.progress_to_next_star):
+                self.progress_to_next_star = 0.0
+            else:
+                self.progress_to_next_star = max(0.0, min(1.0, float(self.progress_to_next_star)))
+
+        if self.current_points is not None:
+            if math.isnan(self.current_points) or math.isinf(self.current_points) or self.current_points < 0.0:
+                self.current_points = 0.0
+
+        super().save(*args, **kwargs)
+
+    @property
+    def display_category(self):
+        if self.category_name:
+            return self.category_name
+        if self.badge_type:
+            return self.badge_type.replace("-", " ").title()
+        if self.badge_category:
+            return self.badge_category.replace("HackerBadge::", "")
+        return "Skill"
+
+    @property
+    def domain_url(self):
+        if not self.url:
+            return "https://www.hackerrank.com"
+        if self.url.startswith("http://") or self.url.startswith("https://"):
+            return self.url
+        if self.url.startswith("/"):
+            return f"https://www.hackerrank.com{self.url}"
+        return f"https://www.hackerrank.com/{self.url}"
+
+    @property
+    def progress_percentage(self):
+        if self.progress_to_next_star is None or math.isnan(self.progress_to_next_star) or math.isinf(self.progress_to_next_star):
+            return 0
+        return max(0, min(100, int(round(self.progress_to_next_star * 100))))
+
+    @property
+    def display_total_stars(self):
+        return max(self.total_stars or 0, self.stars or 0)
+
+    @property
+    def stars_list(self):
+        total = min(20, max(self.total_stars or 0, self.stars or 0))
+        earned = min(total, max(0, self.stars or 0))
+        return [{"filled": i < earned} for i in range(total)]
+
+
+class Status(models.Model):
+    message = models.CharField(max_length=280)
+    source = models.CharField(max_length=50, default="admin", help_text="Source: admin, ntfy, etc.")
+    timestamp = models.DateTimeField(default=timezone.now, db_index=True)
+
+    class Meta:
+        ordering = ["-timestamp"]
+        verbose_name = "Status"
+        verbose_name_plural = "Statuses"
+
+    def __str__(self):
+        return f"{self.message} ({self.timestamp:%Y-%m-%d %H:%M})"
+
+
+class NodeHeartbeat(models.Model):
+    node_name = models.CharField(max_length=100, default="raspberry-pi", unique=True)
+    status = models.TextField(help_text="Arbitrary telemetry string sent by node")
+    timestamp = models.DateTimeField(default=timezone.now, db_index=True)
+
+    class Meta:
+        ordering = ["-timestamp"]
+        verbose_name = "Node Heartbeat"
+        verbose_name_plural = "Node Heartbeats"
+
+    def __str__(self):
+        return f"{self.node_name}: {self.status[:50]} ({self.timestamp:%Y-%m-%d %H:%M})"
+
+    @property
+    def is_recent(self):
+        import datetime
+        return timezone.now() - self.timestamp < datetime.timedelta(minutes=20)
+
 
 
 @receiver(post_delete, sender=Image)
@@ -189,4 +319,3 @@ def delete_old_image_file_on_change(sender, instance, **kwargs):
         pass
     except Exception:
         pass
-

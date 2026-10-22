@@ -33,6 +33,7 @@ from portfolio.admin import (
     ProjectImageInline,
 )
 from portfolio.models import (
+    HackerRankBadge,
     Image,
     LogEntry,
     Project,
@@ -918,3 +919,192 @@ class Tier4RealWorldWorkloadScenariosTests(MediaIsolatedTestCase):
             img_api = self.client.get(f"/api/projects/{proj.id}/images/")
             self.assertEqual(img_api.status_code, 200)
             self.assertEqual(len(img_api.json()["images"]), proj.images.count())
+
+
+class C2EngineeringPortfolioTests(TestCase):
+    """Verifies C2 Command-and-Control engineering portfolio requirements (R1-R4, i18n, HUD)."""
+
+    def setUp(self):
+        self.client = Client()
+
+    def test_r1_logging_viewport_chain(self):
+        """logging.html contains log-content-area, log-scroll-container, and full viewport flex chain."""
+        res = self.client.get("/logging/")
+        self.assertEqual(res.status_code, 200)
+        content = res.content.decode("utf-8")
+        self.assertIn('id="log-scroll-container"', content)
+        self.assertIn('id="log-content-area"', content)
+        self.assertIn("100dvh", content)
+        self.assertIn("aura-bg", content)
+
+    def test_r1_project_viewport_content_area(self):
+        """project.html contains id='log-content-area' with markdown-body and min-h full viewport sizing."""
+        proj = Project.objects.create(name="C2 Sat Comm", description="Telemetry satellite system", active=True)
+        res = self.client.get(f"/project/{proj.id}/")
+        self.assertEqual(res.status_code, 200)
+        content = res.content.decode("utf-8")
+        self.assertIn('id="log-content-area"', content)
+        self.assertIn("markdown-body", content)
+        self.assertIn("min-h-[calc(100dvh-12rem)]", content)
+
+    def test_r3_and_r4_index_chapter_architecture(self):
+        """index.html contains Swiss Brutalist structural container and c2-chapter-section elements."""
+        res = self.client.get("/")
+        self.assertEqual(res.status_code, 200)
+        content = res.content.decode("utf-8")
+        self.assertIn("c2-chapter-section", content)
+        self.assertIn("max-w-[1440px]", content)
+        self.assertIn('id="top-telemetry-bar"', content)
+        self.assertIn('data-chapter="01"', content)
+        self.assertIn('data-chapter="02"', content)
+        self.assertIn('data-chapter="04"', content)
+        self.assertIn('data-chapter="05"', content)
+        self.assertIn('data-chapter="06"', content)
+
+    def test_r3_and_r4_chapter_03_rendered_when_badges_exist(self):
+        """When HackerRank badges exist, chapter 03 is rendered."""
+        from django.utils import timezone
+        HackerRankBadge.objects.create(
+            badge_name="C++",
+            stars=5,
+            total_stars=5,
+            level=3,
+            timestamp=timezone.now(),
+        )
+        res = self.client.get("/")
+        self.assertEqual(res.status_code, 200)
+        content = res.content.decode("utf-8")
+        self.assertIn('id="chapter-03"', content)
+        self.assertIn('data-chapter="03"', content)
+        self.assertIn("03 // BENCHMARKS", content)
+
+    def test_5_core_identity_pillars_english(self):
+        """Verify 5 Core Identity Pillars rendered in English."""
+        res = self.client.get("/en/")
+        self.assertEqual(res.status_code, 200)
+        content = res.content.decode("utf-8")
+        self.assertIn("THE ENGINE OVER THE FACADE", content)
+        self.assertIn("Edge Hardware Telemetry", content)
+        self.assertIn("Hardened Ingestion Pipelines", content)
+        self.assertIn("Relational Data Modeling", content)
+        self.assertIn("Systems Craftsmanship", content)
+        self.assertIn("Low-level rigor engineered for human workflows", content)
+
+    def test_5_core_identity_pillars_spanish(self):
+        """Verify 5 Core Identity Pillars rendered translated in Spanish."""
+        res = self.client.get("/es/")
+        self.assertEqual(res.status_code, 200)
+        content = res.content.decode("utf-8")
+        self.assertIn("EL MOTOR SOBRE LA FACHADA", content)
+        self.assertIn("Telemetría de Hardware Edge", content)
+        self.assertIn("Pipelines de Ingesta Blindados", content)
+        self.assertIn("Modelado de Datos Relacionales", content)
+        self.assertIn("Artesanía de Sistemas y Criptografía", content)
+        self.assertIn("Rigor de bajo nivel diseñado para flujos humanos", content)
+
+    def test_top_telemetry_bar_and_navigation(self):
+        """Verify top telemetry bar contains clean anchor links and identity branding."""
+        res = self.client.get("/en/")
+        self.assertEqual(res.status_code, 200)
+        content = res.content.decode("utf-8")
+        self.assertIn('id="top-telemetry-bar"', content)
+        self.assertIn("JOSUÉ LEIVA", content)
+        self.assertIn("INDEX", content)
+        self.assertIn("CAPABILITIES", content)
+        self.assertIn("BENCHMARKS", content)
+        self.assertIn("LOGS", content)
+        self.assertIn("SYSTEMS", content)
+
+    def test_anti_slop_no_custom_cursor_or_floating_hud(self):
+        """Verify custom cursor and floating HUDs are removed in favor of native OS cursor."""
+        res = self.client.get("/en/")
+        self.assertEqual(res.status_code, 200)
+        content = res.content.decode("utf-8")
+        self.assertNotIn('<div id="cursor"', content)
+        self.assertNotIn('<aside id="c2-mission-hud"', content)
+        self.assertNotIn('<button type="button" id="mobile-c2-hud"', content)
+
+    def test_top_telemetry_bar_locale_and_clock(self):
+        """Verify Top Telemetry Bar includes live clock and plain text weather temp."""
+        res = self.client.get("/en/")
+        self.assertEqual(res.status_code, 200)
+        content = res.content.decode("utf-8")
+        self.assertIn('id="santiago-clock"', content)
+        self.assertIn('id="santiago-weather-temp"', content)
+        self.assertIn("CV.PDF", content)
+
+    def test_swiss_brutalist_hairline_grid(self):
+        """Verify Swiss Brutalist hairline grid container and deep carbon palette."""
+        res = self.client.get("/en/")
+        self.assertEqual(res.status_code, 200)
+        content = res.content.decode("utf-8")
+        self.assertIn("max-w-[1440px]", content)
+        self.assertIn("border-white/[0.08]", content)
+        self.assertIn("bg-[#070708]", content)
+
+    def test_threejs_packet_simulation_and_boundary_reflection(self):
+        """Verify main.js contains 110 spatial nodes, directional boundary clamping, and dynamic resize adaptation."""
+        js_path = os.path.join(settings.BASE_DIR, "static", "portfolio", "js", "main.js")
+        with open(js_path, "r", encoding="utf-8") as f:
+            js_code = f.read()
+        self.assertIn("const nodeCount = 110;", js_code)
+        self.assertIn("packetCount = 44;", js_code)
+        self.assertIn("-Math.abs(nodeVelocities[i].vx)", js_code)
+        self.assertIn("Math.abs(nodeVelocities[i].vx)", js_code)
+        self.assertIn("isMobile = newWidth < 768;", js_code)
+        self.assertIn("spreadX = isMobile ? 65 : 85;", js_code)
+
+    def test_po_and_mo_catalog_synchronization(self):
+        """Verify django.po contains all critical C2 translation keys matching django.mo."""
+        import gettext
+        mo_path = os.path.join(settings.BASE_DIR, "locale", "es", "LC_MESSAGES", "django.mo")
+        po_path = os.path.join(settings.BASE_DIR, "locale", "es", "LC_MESSAGES", "django.po")
+        with open(po_path, "r", encoding="utf-8") as f:
+            po_text = f.read()
+        with open(mo_path, "rb") as f:
+            t = gettext.GNUTranslations(f)
+        critical_keys = [
+            "THE ENGINE OVER THE FACADE",
+            "The Engine Over the Facade",
+            "C2 // LIFECYCLE",
+            "Mission Lifecycle HUD",
+            "Scroll to top",
+            "Edge Hardware Telemetry",
+            "Hardened Ingestion Pipelines",
+            "Relational Data Modeling",
+            "Systems Craftsmanship",
+            "HackerRank Badges",
+        ]
+        for key in critical_keys:
+            self.assertIn(f'msgid "{key}"', po_text)
+            self.assertIn(key, t._catalog)
+
+    def test_calmed_threejs_and_snappy_scroll_engine(self):
+        """Verify calmed Three.js network configuration, clean chapter navigation, and visible sections."""
+        js_path = os.path.join(settings.BASE_DIR, "static", "portfolio", "js", "main.js")
+        css_path = os.path.join(settings.BASE_DIR, "static", "portfolio", "css", "custom.css")
+        with open(js_path, "r", encoding="utf-8") as f:
+            js_code = f.read()
+        with open(css_path, "r", encoding="utf-8") as f:
+            css_code = f.read()
+
+        # Three.js calming assertions
+        self.assertIn("connectionThresholdSq = isMobile ? 55 : 75;", js_code)
+        self.assertIn("speed: 0.003 + Math.random() * 0.0045,", js_code)
+        self.assertIn("outerLattice.rotation.y += 0.0008;", js_code)
+
+        # Chapter navigation assertions
+        self.assertIn("function initSnappyChapterNavigation()", js_code)
+        self.assertIn("document.body.classList.add('c2-snapping-enabled');", js_code)
+        self.assertIn("function goToChapter(targetIndex)", js_code)
+        self.assertIn("function handleWheel(e)", js_code)
+
+        # CSS section transitions and guaranteed visibility
+        self.assertIn(".c2-snapping-enabled .c2-chapter-section", css_code)
+        self.assertIn(".c2-snapping-enabled .c2-chapter-section.c2-chapter-active", css_code)
+        self.assertIn(".c2-snapping-enabled .c2-chapter-section.c2-chapter-transitioning", css_code)
+        self.assertIn(".c2-snapping-enabled .c2-chapter-section:not(.c2-chapter-active):not(.c2-chapter-transitioning)", css_code)
+        self.assertIn("visibility: visible !important;", css_code)
+        self.assertIn("opacity: 1 !important;", css_code)
+
+
