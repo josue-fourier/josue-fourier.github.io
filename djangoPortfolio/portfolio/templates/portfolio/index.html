@@ -5,7 +5,7 @@
 
 {% block content %}
 {% get_current_language as LANGUAGE_CODE %}
-<main class="relative z-10 w-full max-w-[1440px] mx-auto border-x border-white/[0.08] bg-[#070708]">
+<main id="main-content" tabindex="-1" class="relative z-10 w-full max-w-[1440px] mx-auto border-x border-white/[0.08] bg-[#070708]">
 
     <!-- Hovering Section Navigation: Right Sidebar (Desktop) & Bottom Dock (Mobile) -->
     <nav id="section-nav-sidebar" class="fixed z-40 bottom-4 left-1/2 -translate-x-1/2 md:bottom-auto md:left-auto md:right-6 md:top-1/2 md:-translate-y-1/2 md:translate-x-0 bg-[#050506]/90 backdrop-blur-md border border-white/[0.12] md:border-white/[0.08] p-1.5 md:p-2.5 flex flex-row md:flex-col items-center md:items-stretch gap-1 md:gap-1.5 max-w-[calc(100vw-2rem)] select-none" aria-label="{% translate 'Section Navigation' %}">

@@ -11,8 +11,17 @@
         <meta property="og:title" content="Josué Leiva | Telematics Engineering">
         <meta property="og:description" content="System-focused Telematics Engineering student specializing in backend architecture, distributed systems, and real-time telemetry.">
         <meta property="og:type" content="website">
+        <meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'portfolio/images/profile.jpg' %}">
+        <meta name="description" content="Josué Leiva (F0ur13r) — Telematics Engineering student building backend architecture, automation and real-time telemetry systems. Portfolio, field logs and verified benchmarks.">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Josué Leiva | Telematics Engineering">
+        <meta name="twitter:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'portfolio/images/profile.jpg' %}">
+        <link rel="canonical" href="{{ request.scheme }}://{{ request.get_host }}{{ request.path }}">
+        <script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","name":"Josué Leiva","alternateName":"F0ur13r","jobTitle":"Telematics Engineering Student","url":"{{ request.scheme }}://{{ request.get_host }}/","sameAs":["https://github.com/josue-fourier","https://linkedin.com/in/josuenicolas","https://www.hackerrank.com/profile/xmenmagnet"]}</script>
         <title>Josué Leiva | Telematics Engineering</title>
         {% endblock %}
+        <meta name="theme-color" content="#050506">
+        <meta name="color-scheme" content="dark light">
 
         <!-- Prevent Theme Flash & Default to Light Mode ('lofi' / CRYO_MANUAL) -->
         <script>
@@ -24,6 +33,11 @@
                 } catch (e) {
                     document.documentElement.setAttribute('data-theme', 'lofi');
                 }
+                try {
+                    if (!sessionStorage.getItem('boot_seen') && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                        document.documentElement.classList.add('js-preload');
+                    }
+                } catch (e) {}
                 window.addEventListener('DOMContentLoaded', function() {
                     requestAnimationFrame(function() {
                         document.documentElement.classList.remove('no-theme-transitions');
@@ -35,6 +49,7 @@
         <!-- Static CSS -->
         <link rel="stylesheet" href="{% static 'portfolio/main.css' %}">
         <link rel="stylesheet" href="{% static 'portfolio/css/custom.css' %}">
+        <link rel="stylesheet" href="{% static 'portfolio/css/awwwards.css' %}">
 
         <!-- Google Fonts -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -52,7 +67,7 @@
         <script defer src="https://unpkg.com/htmx.org/dist/ext/preload.js"></script>
 
         <!-- Marked.js & Mermaid.js for Markdown & Diagram Rendering in Logs -->
-        <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+        <script defer src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
 
         <!-- Analytics -->
@@ -61,6 +76,17 @@
         {% block extra_head %}{% endblock %}
     </head>
     <body class="antialiased">
+        <a href="#main-content" class="skip-link">{% translate "Skip to content" %}</a>
+        <!-- Cinematic Boot Preloader (JS-driven; CSS failsafe auto-dismisses) -->
+        <div id="preloader" aria-hidden="true">
+            <div class="preloader-inner">
+                <span class="preloader-tag">F0UR13R // BOOT SEQUENCE</span>
+                <span class="preloader-count"><span id="preloader-num">000</span><i>%</i></span>
+                <span class="preloader-bar"><span id="preloader-fill"></span></span>
+            </div>
+        </div>
+        <div id="cursor-dot" aria-hidden="true"></div>
+        <div id="cursor-ring" aria-hidden="true"><span id="cursor-label"></span></div>
         <div class="aura-bg">
             <canvas id="em-telemetry-canvas" aria-hidden="true"></canvas>
             <div class="aura-layer-1" aria-hidden="true"></div>
@@ -253,6 +279,7 @@
 
                 <!-- Main JS -->
                 <script src="{% static 'portfolio/js/main.js' %}"></script>
+                <script src="{% static 'portfolio/js/awwwards.js' %}"></script>
                 {% block extra_js %}{% endblock %}
             </div>
         </div>

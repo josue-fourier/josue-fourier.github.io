@@ -1,0 +1,69 @@
+/* ==========================================================================
+   Awwwards-grade layer: preloader curtain, custom cursor, magnetic hover,
+   accessibility affordances, cross-document view transitions.
+   ========================================================================== */
+@view-transition { navigation: auto; }
+
+/* ---- Accessibility ---- */
+.skip-link {
+    position: fixed; left: 12px; top: -60px; z-index: 20000;
+    padding: 10px 16px; background: #10B981; color: #021; font: 700 12px/1 "JetBrains Mono", monospace;
+    text-transform: uppercase; letter-spacing: .08em; transition: top .2s ease;
+}
+.skip-link:focus { top: 12px; }
+:focus-visible { outline: 2px solid #10B981; outline-offset: 3px; }
+[data-theme="lofi"] :focus-visible { outline-color: #059669; }
+main:focus { outline: none; }
+
+/* ---- Preloader ---- */
+#preloader {
+    position: fixed; inset: 0; z-index: 10001; display: flex; align-items: flex-end;
+    background: #050506; color: #e4e4e7; font-family: "JetBrains Mono", monospace;
+    transition: transform .9s cubic-bezier(.76, 0, .24, 1);
+    /* Failsafe: dismisses itself even if JS never runs */
+    animation: preloaderFailsafe .01s linear 5s forwards;
+}
+[data-theme="lofi"] #preloader { background: #f4f4f1; color: #18181b; }
+#preloader.is-done { transform: translateY(-100%); pointer-events: none; }
+html:not(.js-preload) #preloader { display: none; }
+@keyframes preloaderFailsafe { to { transform: translateY(-100%); visibility: hidden; } }
+.preloader-inner { width: 100%; padding: clamp(20px, 4vw, 56px); display: flex; flex-direction: column; gap: 14px; }
+.preloader-tag { font-size: 11px; letter-spacing: .25em; opacity: .6; }
+.preloader-count {
+    font-family: "Space Grotesk", sans-serif; font-weight: 700; line-height: .85; letter-spacing: -.05em;
+    font-size: clamp(5rem, 22vw, 18rem); font-variant-numeric: tabular-nums;
+}
+.preloader-count i { font-style: normal; font-size: .3em; color: #10B981; margin-left: .1em; }
+.preloader-bar { display: block; height: 2px; background: rgba(127,127,127,.25); }
+#preloader-fill { display: block; height: 100%; width: 0; background: #10B981; }
+
+/* ---- Custom cursor (fine pointers only; enabled by JS) ---- */
+#cursor-dot, #cursor-ring { display: none; }
+html.has-custom-cursor, html.has-custom-cursor a, html.has-custom-cursor button, html.has-custom-cursor [role="button"] { cursor: none; }
+html.has-custom-cursor #cursor-dot,
+html.has-custom-cursor #cursor-ring {
+    display: flex; position: fixed; top: 0; left: 0; z-index: 10002; pointer-events: none;
+    align-items: center; justify-content: center; will-change: transform; mix-blend-mode: difference;
+}
+#cursor-dot { width: 6px; height: 6px; margin: -3px 0 0 -3px; background: #fff; border-radius: 50%; }
+#cursor-ring {
+    width: 38px; height: 38px; margin: -19px 0 0 -19px; border: 1px solid #fff; border-radius: 50%;
+    transition: width .25s ease, height .25s ease, margin .25s ease, background .25s ease, opacity .2s ease;
+    font: 700 9px/1 "JetBrains Mono", monospace; color: #000; letter-spacing: .1em;
+}
+#cursor-ring.is-link { width: 64px; height: 64px; margin: -32px 0 0 -32px; background: rgba(255,255,255,.18); }
+#cursor-ring.is-view { width: 92px; height: 92px; margin: -46px 0 0 -46px; background: #fff; }
+#cursor-ring.is-down { width: 26px; height: 26px; margin: -13px 0 0 -13px; }
+#cursor-ring.is-hidden, #cursor-dot.is-hidden { opacity: 0; }
+
+/* ---- Magnetic elements ---- */
+[data-magnetic] { transition: transform .35s cubic-bezier(.22, 1, .36, 1); will-change: transform; }
+
+/* ---- Hero scroll parallax hook ---- */
+#hero-title { will-change: transform; }
+
+@media (prefers-reduced-motion: reduce) {
+    #preloader { display: none !important; }
+    [data-magnetic] { transition: none; }
+    html { scroll-behavior: auto; }
+}
