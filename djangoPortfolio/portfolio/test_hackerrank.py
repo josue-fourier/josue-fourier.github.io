@@ -472,6 +472,21 @@ class HackerRankViewAndTemplateTests(TestCase):
         self.assertIn("badge-domain-link", content)
         self.assertIn("HACKERRANK_PROFILE", content)
 
+    def test_exact_earned_stars_rendered_without_empty_placeholders(self):
+        """Rendering of stars must match exactly the registered stars, with zero empty placeholders."""
+        snap_time = timezone.now()
+        HackerRankBadge.objects.create(
+            badge_name="Exact Stars Test",
+            stars=3,
+            total_stars=5,
+            timestamp=snap_time,
+        )
+        response = self.client.get("/")
+        content = response.content.decode("utf-8")
+        # Assert exactly 3 star blocks rendered, and 0 empty blocks
+        self.assertEqual(content.count("w-2.5 h-2.5 bg-emerald-500 inline-block star-filled"), 3)
+        self.assertEqual(content.count("star-empty"), 0)
+
     def test_single_badge_snapshot_does_not_merge_past_runs(self):
         """A single-badge snapshot must only render that 1 badge without merging older runs."""
         old_time = timezone.now() - datetime.timedelta(hours=2)

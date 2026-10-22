@@ -346,13 +346,11 @@
                 <div class="lg:col-span-5 flex flex-col gap-2">
                     <div class="flex items-center justify-between font-mono text-xs">
                         <div class="flex items-center gap-2">
-                            <!-- Geometric Square Blocks (■ ■ ■ ■ ■) -->
+                            <!-- Geometric Square Blocks (Exact earned stars registered) -->
                             <span class="inline-flex items-center gap-1" aria-hidden="true">
-                                {% for is_filled in badge.stars_list %}
-                                {% if is_filled %}
+                                {% for star in badge.stars_list %}
+                                {% if star.filled %}
                                 <span class="w-2.5 h-2.5 bg-emerald-500 inline-block star-filled"></span>
-                                {% else %}
-                                <span class="w-2.5 h-2.5 bg-zinc-800 border border-white/10 inline-block star-empty"></span>
                                 {% endif %}
                                 {% endfor %}
                             </span>
