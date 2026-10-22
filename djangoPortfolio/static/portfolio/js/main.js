@@ -569,7 +569,7 @@ const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)
 // --- 1. Smooth Scrolling & GSAP Kinetic Synchronization Engine ---
 const prefersReducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
 
-if (typeof Lenis !== 'undefined' && !window.location.pathname.includes('/logging')) {
+if (typeof Lenis !== 'undefined') {
     const lenis = new Lenis({
         duration: 1.2,
         lerp: 0.09,

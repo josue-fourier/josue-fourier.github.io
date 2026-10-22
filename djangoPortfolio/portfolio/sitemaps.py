@@ -7,13 +7,10 @@ class StaticViewSitemap(Sitemap):
     changefreq = 'daily'
 
     def items(self):
-        return ['root', 'log_list']
+        return ['root']
 
     def location(self, item):
-        if item == 'root':
-            return reverse('root')
-        elif item == 'log_list':
-            return '/logging/'
+        return reverse('root')
 
 class ProjectSitemap(Sitemap):
     priority = 0.8
@@ -36,4 +33,5 @@ class LogEntrySitemap(Sitemap):
         return obj.date
 
     def location(self, obj):
-        return f'/logging/?log_id={obj.id}'
+        return f'/#chapter-04?log_id={obj.id}'
+

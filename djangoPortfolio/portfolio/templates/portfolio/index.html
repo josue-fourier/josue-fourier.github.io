@@ -147,49 +147,34 @@
                     </div>
 
                     <div class="divide-y divide-white/[0.06]">
-                        <div class="spec-matrix-row flex gap-4 py-4 px-2 group cursor-pointer">
-                            <span class="font-mono text-xs text-zinc-600 pt-0.5 group-hover:text-emerald-400 transition-colors">01</span>
-                            <div class="min-w-0">
-                                <div class="flex items-baseline justify-between gap-3">
-                                    <h3 class="font-display font-bold text-white text-base md:text-lg group-hover:text-emerald-400 transition-colors" data-scramble="true">{% translate "Edge Hardware Telemetry" %}</h3>
-                                    <span class="font-mono text-[10px] text-zinc-500 uppercase whitespace-nowrap">C++ · POSIX</span>
+                        {% for category in core_competencies %}
+                        <div class="spec-matrix-row flex gap-3.5 py-3.5 px-2 group cursor-pointer">
+                            <span class="font-mono text-xs text-zinc-600 pt-0.5 group-hover:text-emerald-400 transition-colors font-bold shrink-0">
+                                {{ forloop.counter|stringformat:"02d" }}
+                            </span>
+                            <div class="min-w-0 flex-1">
+                                <div class="flex items-baseline justify-between gap-3 mb-1">
+                                    <h3 class="font-display font-bold text-white text-sm md:text-base group-hover:text-emerald-400 transition-colors truncate" data-scramble="true">
+                                        {{ category.name }}
+                                    </h3>
+                                    <span class="font-mono text-[10px] text-zinc-500 uppercase whitespace-nowrap shrink-0">
+                                        {{ category.skills.all|length }} {% translate "SKILLS" %}
+                                    </span>
                                 </div>
-                                <p class="text-xs text-zinc-400 font-light leading-relaxed mt-1">{% translate "C++ runtime telemetry daemon & low-latency heartbeats on Raspberry Pi edge nodes with custom UDP packet protocol." %}</p>
+                                <div class="flex flex-wrap gap-1.5 mt-2">
+                                    {% for skill in category.skills.all %}
+                                    <span class="px-2 py-0.5 font-mono text-[10px] text-zinc-300 bg-white/[0.02] border border-white/[0.08] group-hover:border-white/[0.16] transition-colors uppercase tracking-wider">
+                                        {{ skill.name }}
+                                    </span>
+                                    {% endfor %}
+                                </div>
                             </div>
                         </div>
-
-                        <div class="spec-matrix-row flex gap-4 py-4 px-2 group cursor-pointer">
-                            <span class="font-mono text-xs text-zinc-600 pt-0.5 group-hover:text-emerald-400 transition-colors">02</span>
-                            <div class="min-w-0">
-                                <div class="flex items-baseline justify-between gap-3">
-                                    <h3 class="font-display font-bold text-white text-base md:text-lg group-hover:text-emerald-400 transition-colors" data-scramble="true">{% translate "Hardened Ingestion Pipelines" %}</h3>
-                                    <span class="font-mono text-[10px] text-zinc-500 uppercase whitespace-nowrap">Nginx · Docker · ClamAV</span>
-                                </div>
-                                <p class="text-xs text-zinc-400 font-light leading-relaxed mt-1">{% translate "Malware-isolated file ingestion via Nginx reverse proxy, isolated Docker containers, and ClamAV daemon scan workers." %}</p>
-                            </div>
+                        {% empty %}
+                        <div class="py-6 px-2 font-mono text-xs text-zinc-500 uppercase tracking-widest">
+                            {% translate "No core skills registered yet." %}
                         </div>
-
-                        <div class="spec-matrix-row flex gap-4 py-4 px-2 group cursor-pointer">
-                            <span class="font-mono text-xs text-zinc-600 pt-0.5 group-hover:text-emerald-400 transition-colors">03</span>
-                            <div class="min-w-0">
-                                <div class="flex items-baseline justify-between gap-3">
-                                    <h3 class="font-display font-bold text-white text-base md:text-lg group-hover:text-emerald-400 transition-colors" data-scramble="true">{% translate "Relational Data Modeling" %}</h3>
-                                    <span class="font-mono text-[10px] text-zinc-500 uppercase whitespace-nowrap">PostgreSQL · Huey</span>
-                                </div>
-                                <p class="text-xs text-zinc-400 font-light leading-relaxed mt-1">{% translate "High-integrity PostgreSQL schemas, foreign keys, and Huey task queues orchestrating daily automated synchronization." %}</p>
-                            </div>
-                        </div>
-
-                        <div class="spec-matrix-row flex gap-4 py-4 px-2 group cursor-pointer">
-                            <span class="font-mono text-xs text-zinc-600 pt-0.5 group-hover:text-emerald-400 transition-colors">04</span>
-                            <div class="min-w-0">
-                                <div class="flex items-baseline justify-between gap-3">
-                                    <h3 class="font-display font-bold text-white text-base md:text-lg group-hover:text-emerald-400 transition-colors" data-scramble="true">{% translate "Systems Craftsmanship" %}</h3>
-                                    <span class="font-mono text-[10px] text-zinc-500 uppercase whitespace-nowrap">ElGamal · Sockets</span>
-                                </div>
-                                <p class="text-xs text-zinc-400 font-light leading-relaxed mt-1">{% translate "Applied ElGamal asymmetric encryption, POSIX native C/C++ sockets, and zero-knowledge verification primitives." %}</p>
-                            </div>
-                        </div>
+                        {% endfor %}
                     </div>
                 </div>
 

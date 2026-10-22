@@ -519,7 +519,7 @@ class Tier1FeatureF10LogImageBeforeMarkdownTests(MediaIsolatedTestCase):
 
     def test_log_image_positioned_before_markdown_on_logging_view(self):
         self._check_template_log_image_supported()
-        res = self.client.get(f"/logging/?log_id={self.log.id}")
+        res = self.client.get(f"/?log_id={self.log.id}")
         self.assertEqual(res.status_code, 200)
         html = res.content.decode("utf-8")
         img_idx = html.find(self.img1.file.url)
@@ -563,7 +563,7 @@ class Tier1FeatureF11ZeroImageCleanRenderingTests(MediaIsolatedTestCase):
         self.assertNotIn("carousel-item", res.content.decode("utf-8"))
 
     def test_zero_image_logging_view_direct_returns_200(self):
-        res = self.client.get(f"/logging/?log_id={self.empty_log.id}")
+        res = self.client.get(f"/?log_id={self.empty_log.id}")
         self.assertEqual(res.status_code, 200)
 
     def test_zero_image_htmx_log_partial_returns_200(self):
@@ -777,7 +777,7 @@ class Tier3PairwiseCombinationsTests(MediaIsolatedTestCase):
         img1 = Image.objects.create(log=log, file=make_test_image(), order=1)
         img2 = Image.objects.create(log=log, file=make_test_image(), order=2)
 
-        direct_res = self.client.get(f"/logging/?log_id={log.id}")
+        direct_res = self.client.get(f"/?log_id={log.id}")
         htmx_res = self.client.get(f"/api/logs/{log.id}")
         self.assertEqual(direct_res.status_code, 200)
         self.assertEqual(htmx_res.status_code, 200)
@@ -860,7 +860,7 @@ class Tier4RealWorldWorkloadScenariosTests(MediaIsolatedTestCase):
         self.assertEqual(res2.status_code, 201)
 
         # 3. Direct load and HTMX load
-        direct = self.client.get(f"/logging/?log_id={log.id}")
+        direct = self.client.get(f"/?log_id={log.id}")
         htmx = self.client.get(f"/api/logs/{log.id}")
         self.assertEqual(direct.status_code, 200)
         self.assertEqual(htmx.status_code, 200)
@@ -877,7 +877,7 @@ class Tier4RealWorldWorkloadScenariosTests(MediaIsolatedTestCase):
         self.assertEqual(self.client.get("/en/").status_code, 200)
         self.assertEqual(self.client.get("/es/").status_code, 200)
         self.assertEqual(self.client.get(f"/project/{empty_p.id}/").status_code, 200)
-        self.assertEqual(self.client.get(f"/logging/?log_id={empty_l.id}").status_code, 200)
+        self.assertEqual(self.client.get(f"/?log_id={empty_l.id}").status_code, 200)
         self.assertEqual(self.client.get(f"/api/logs/{empty_l.id}").status_code, 200)
 
     def test_scenario_4_preview_switching_and_cascade_cleanup(self):
@@ -928,13 +928,12 @@ class C2EngineeringPortfolioTests(TestCase):
         self.client = Client()
 
     def test_r1_logging_viewport_chain(self):
-        """logging.html contains log-content-area, log-scroll-container, and full viewport flex chain."""
-        res = self.client.get("/logging/")
+        """Index page logging console contains log-content-area, log-scroll-container, and full viewport flex chain."""
+        res = self.client.get("/")
         self.assertEqual(res.status_code, 200)
         content = res.content.decode("utf-8")
         self.assertIn('id="log-scroll-container"', content)
         self.assertIn('id="log-content-area"', content)
-        self.assertIn("100dvh", content)
         self.assertIn("aura-bg", content)
 
     def test_r1_project_viewport_content_area(self):
@@ -1006,10 +1005,10 @@ class C2EngineeringPortfolioTests(TestCase):
         self.assertEqual(res.status_code, 200)
         content = res.content.decode("utf-8")
         self.assertIn("THE ENGINE OVER THE FACADE", content)
-        self.assertIn("Edge Hardware Telemetry", content)
-        self.assertIn("Hardened Ingestion Pipelines", content)
-        self.assertIn("Relational Data Modeling", content)
-        self.assertIn("Systems Craftsmanship", content)
+        self.assertIn("Systems &amp; Low-Level", content)
+        self.assertIn("Backend &amp; Data Architecture", content)
+        self.assertIn("Hardened Infrastructure", content)
+        self.assertIn("Applied Cryptography &amp; Telematics", content)
 
     def test_5_core_identity_pillars_spanish(self):
         """Verify 5 Core Identity Pillars rendered translated in Spanish."""
@@ -1017,10 +1016,10 @@ class C2EngineeringPortfolioTests(TestCase):
         self.assertEqual(res.status_code, 200)
         content = res.content.decode("utf-8")
         self.assertIn("EL MOTOR SOBRE LA FACHADA", content)
-        self.assertIn("Telemetría de Hardware Edge", content)
-        self.assertIn("Pipelines de Ingesta Blindados", content)
-        self.assertIn("Modelado de Datos Relacionales", content)
-        self.assertIn("Artesanía de Sistemas y Criptografía", content)
+        self.assertIn("Sistemas y Bajo Nivel", content)
+        self.assertIn("Arquitectura Backend y Datos", content)
+        self.assertIn("Infraestructura Blindada", content)
+        self.assertIn("Criptografía Aplicada y Telemática", content)
 
     def test_top_telemetry_bar_and_navigation(self):
         """Verify top telemetry bar contains clean anchor links and identity branding."""
@@ -1129,7 +1128,7 @@ class C2EngineeringPortfolioTests(TestCase):
     def test_theme_switcher_and_light_mode_default(self):
         """Verify light theme ('lofi') is default across all pages, with toggle controller present."""
         proj = Project.objects.create(name="Theme Test Project", description="Checking themes", active=True)
-        routes = ["/en/", "/es/", "/logging/", f"/project/{proj.id}/"]
+        routes = ["/en/", "/es/", f"/project/{proj.id}/"]
         for route in routes:
             res = self.client.get(route)
             self.assertEqual(res.status_code, 200)

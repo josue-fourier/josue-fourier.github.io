@@ -155,43 +155,6 @@ class RootPage(TemplateView):
         return context
 
 
-class LoggingView(TemplateView):
-    template_name = "portfolio/logging.html"
-
-    @override
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-
-        log_list = (
-            LogEntry.objects.defer("content")
-            .select_related("project")
-            .prefetch_related("stack")
-            .order_by("-date")
-        )
-        paginator = Paginator(log_list, 10)
-        context["page_obj"] = paginator.get_page(1)
-        context["log_count"] = LogEntry.objects.count()
-
-        target_log_id = self.request.GET.get("log_id")
-        context["target_log_id"] = target_log_id
-
-        if target_log_id:
-            try:
-                import markdown
-
-                target_log = (
-                    LogEntry.objects.select_related("project")
-                    .prefetch_related("stack", "images")
-                    .get(id=target_log_id)
-                )
-                target_log.html_content = markdown.markdown(
-                    target_log.content, extensions=["fenced_code", "tables"]
-                )
-                context["target_log"] = target_log
-            except (LogEntry.DoesNotExist, ValueError, ValidationError):
-                pass
-
-        return context
 
 
 def single_log(request, log_id):

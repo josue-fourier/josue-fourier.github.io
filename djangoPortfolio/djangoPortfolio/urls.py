@@ -40,8 +40,6 @@ urlpatterns = [
     path(config("ADMIN_URL", default="brutally-amazing-portfolio/"), admin.site.urls),
     path("i18n/", include("django.conf.urls.i18n")),
     path("", portfolio_views.RootPage.as_view(), name="root_direct"),
-    path("logging/", portfolio_views.LoggingView.as_view(), name="logging_fallback"),
-    path("logging", portfolio_views.LoggingView.as_view(), name="logging_fallback_no_slash"),
     path("api/logs/<uuid:log_id>", portfolio_views.single_log, name="single_log"),
     path("api/logs/<uuid:log_id>/", portfolio_views.single_log, name="single_log_slash"),
     path("api/logs/list", portfolio_views.log_list, name="log_list"),
@@ -80,8 +78,6 @@ if settings.DEBUG:
 
 urlpatterns += i18n_patterns(
     path("", portfolio_views.RootPage.as_view(), name="root"),
-    path("logging/", portfolio_views.LoggingView.as_view(), name="logging"),
-    path("logging", portfolio_views.LoggingView.as_view(), name="logging_no_slash"),
     path("project/<int:project_id>/", portfolio_views.project_detail, name="project_detail"),
     path("project/<int:project_id>", portfolio_views.project_detail, name="project_detail_no_slash"),
 )
