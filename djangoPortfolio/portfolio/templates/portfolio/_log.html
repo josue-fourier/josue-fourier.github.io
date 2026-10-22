@@ -1,17 +1,19 @@
-<header class="mb-8 border-b border-black/5 dark:border-white/5 pb-6">
-    <div class="flex items-center gap-3 mb-4">
-        <span class="px-2 py-1 bg-brand-primary/10 text-[var(--brand-primary)] font-bold text-xs font-mono rounded border border-[var(--brand-primary)]">
+<header class="mb-8 border-b border-white/[0.08] pb-6">
+    <div class="flex items-center gap-3 mb-4 font-mono text-[11px] uppercase tracking-widest">
+        <span class="flex items-center gap-2 text-emerald-400 font-bold">
+            <span class="w-1.5 h-1.5 bg-emerald-500 inline-block"></span>
             {{ log.project.name|default:"System" }}
         </span>
-        <span class="text-xs font-mono text-slate-500 dark:text-slate-200 font-medium">{{ log.date|date:"Y-m-d" }}</span>
+        <span class="text-zinc-700">/</span>
+        <span class="text-zinc-500 tabular-nums">{{ log.date|date:"Y-m-d" }}</span>
     </div>
-    <h1 class="text-3xl lg:text-4xl font-bold text-slate-900 dark:text-slate-100 mb-4">{{ log.title }}</h1>
-    
+    <h1 class="font-display text-3xl lg:text-4xl font-bold text-white tracking-tight mb-4">{{ log.title }}</h1>
+
     {% if log.stack.all %}
     <div class="flex flex-wrap gap-2">
         {% for tech in log.stack.all %}
-        <span class="px-3 py-1 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-100 text-xs font-mono rounded-full border border-slate-200 dark:border-slate-700 shadow-sm font-medium">
-            {{ tech.technology }}
+        <span class="px-2.5 py-1 border border-white/10 bg-white/[0.02] font-mono text-[10px] text-zinc-300 uppercase">
+            #{{ tech.technology }}
         </span>
         {% endfor %}
     </div>
@@ -22,23 +24,23 @@
 <div id="log-images" class="mb-8 relative z-10" aria-label="Log Attached Images">
     {% if log.images.count == 1 %}
     <!-- Single Attached Image -->
-    <div class="rounded-xl overflow-hidden border border-slate-200/50 dark:border-slate-700/50 bg-slate-950/40">
+    <div class="overflow-hidden border border-white/10 bg-[#050506]">
         <img src="{{ log.images.first.file.url }}" alt="{{ log.images.first.alt_text|default:log.images.first.caption|default:log.title }}" class="w-full max-h-96 object-contain mx-auto" loading="lazy" />
         {% if log.images.first.caption %}
-        <div class="p-2.5 bg-slate-950/80 backdrop-blur-sm text-[11px] font-mono text-slate-300 border-t border-white/10">
+        <div class="px-3 py-2 bg-[#08080B] font-mono text-[11px] text-zinc-400 border-t border-white/[0.08]">
             {{ log.images.first.caption }}
         </div>
         {% endif %}
     </div>
     {% else %}
     <!-- Multi-Image Carousel -->
-    <div class="glass-panel overflow-hidden relative group rounded-xl border border-slate-200/50 dark:border-slate-700/50">
-        <div id="log-carousel-{{ log.id }}" data-lenis-prevent class="carousel w-full aspect-video max-h-96 bg-slate-950/60 overflow-x-auto flex snap-x snap-mandatory scroll-smooth">
+    <div class="glass-panel overflow-hidden relative group">
+        <div id="log-carousel-{{ log.id }}" data-lenis-prevent class="carousel w-full aspect-video max-h-96 bg-[#050506] overflow-x-auto flex snap-x snap-mandatory scroll-smooth">
             {% for img in log.images.all %}
             <div class="carousel-item relative w-full h-full flex-none snap-center flex items-center justify-center">
                 <img src="{{ img.file.url }}" alt="{{ img.alt_text|default:img.caption|default:log.title }}" class="w-full h-full object-contain" loading="lazy" />
                 {% if img.caption %}
-                <div class="absolute bottom-0 inset-x-0 p-2.5 bg-slate-950/80 backdrop-blur-sm text-[11px] font-mono text-slate-300 border-t border-white/10">
+                <div class="absolute bottom-0 inset-x-0 px-3 py-2 bg-[#050506]/90 backdrop-blur-sm font-mono text-[11px] text-zinc-400 border-t border-white/[0.08]">
                     {{ img.caption }}
                 </div>
                 {% endif %}
@@ -46,13 +48,13 @@
             {% endfor %}
         </div>
         <!-- Prev/Next Controls -->
-        <button type="button" data-carousel-action="prev" data-carousel-target="log-carousel-{{ log.id }}" aria-label="Previous Image" class="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-slate-900/70 hover:bg-brand-primary text-white border border-white/20 flex items-center justify-center transition-all opacity-0 group-hover:opacity-100 cursor-pointer shadow-md z-20">
+        <button type="button" data-carousel-action="prev" data-carousel-target="log-carousel-{{ log.id }}" aria-label="Previous Image" class="carousel-ctl absolute left-0 top-1/2 -translate-y-1/2 w-10 h-12 flex items-center justify-center cursor-pointer z-20">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
         </button>
-        <button type="button" data-carousel-action="next" data-carousel-target="log-carousel-{{ log.id }}" aria-label="Next Image" class="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-slate-900/70 hover:bg-brand-primary text-white border border-white/20 flex items-center justify-center transition-all opacity-0 group-hover:opacity-100 cursor-pointer shadow-md z-20">
+        <button type="button" data-carousel-action="next" data-carousel-target="log-carousel-{{ log.id }}" aria-label="Next Image" class="carousel-ctl absolute right-0 top-1/2 -translate-y-1/2 w-10 h-12 flex items-center justify-center cursor-pointer z-20">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
         </button>
-        <div class="absolute top-2 right-2 px-2 py-0.5 rounded bg-slate-900/80 text-[10px] font-mono text-brand-primary border border-brand-primary/30 z-20 pointer-events-none">
+        <div class="absolute top-0 right-0 px-3 py-1.5 bg-[#050506]/90 border-b border-l border-white/[0.12] font-mono text-[10px] text-emerald-400 uppercase tracking-widest z-20 pointer-events-none">
             {{ log.images.count }} IMAGES
         </div>
     </div>

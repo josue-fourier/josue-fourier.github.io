@@ -16,52 +16,59 @@
 {% endblock %}
 
 {% block content %}
-    <div class="max-w-4xl mx-auto px-6 py-12 md:py-20 relative z-10">
-        <!-- Back button -->
-        <a href="/" class="inline-flex items-center gap-2 text-sm font-mono text-[var(--brand-primary)] hover:opacity-80 transition-opacity mb-10">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <line x1="19" y1="12" x2="5" y2="12"></line>
-                <polyline points="12 19 5 12 12 5"></polyline>
-            </svg>
-            RETURN_TO_SYSTEM
-        </a>
+    <div class="w-full max-w-[1440px] mx-auto border-x border-white/[0.08] bg-[#050506] relative z-10 min-h-[calc(100dvh-3rem)] flex flex-col">
+        <!-- Sticky Section Sub-Header -->
+        <div class="sticky top-12 z-30 bg-[#050506]/95 backdrop-blur-md px-6 py-3 border-b border-white/[0.08] flex items-center justify-between font-mono text-[11px] text-zinc-500 uppercase tracking-widest">
+            <div class="flex items-center gap-2.5">
+                <span class="w-1.5 h-1.5 bg-emerald-500 inline-block"></span>
+                <span class="text-emerald-500 font-bold">SYS</span>
+                <span class="text-zinc-700">/</span>
+                <span class="text-zinc-300">{% translate "Project Case Study" %}</span>
+            </div>
+            <a href="/#projects" class="btn-sweep px-3 py-1.5 border border-white/15 text-zinc-300 inline-flex items-center gap-2">
+                <span>←</span>
+                <span>{% translate "Return Home" %}</span>
+            </a>
+        </div>
 
-        <header class="mb-12 border-b border-black/10 dark:border-white/10 pb-8">
-            <h1 class="text-4xl md:text-5xl font-bold mb-6 text-slate-900 dark:text-white">{{ project.name }}</h1>
-            <p class="text-lg text-slate-600 dark:text-slate-200 mb-6">{{ project.description }}</p>
-            
-            <div class="flex flex-wrap items-center gap-4 mb-6">
-                {% if project.link %}
-                <div class="relative group mt-2">
-                    <div class="absolute -inset-1 bg-gradient-to-r from-brand-primary to-blue-500 rounded-lg blur opacity-25 group-hover:opacity-75 transition duration-500 group-hover:duration-200"></div>
-                    <a href="{{ project.link }}" target="_blank" class="relative px-6 py-3 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg flex items-center justify-center text-brand-primary font-mono text-sm font-bold tracking-widest hover:-translate-y-0.5 hover:shadow-lg transition-all duration-300">
-                        [ VIEW_LIVE_PROJECT ]
-                    </a>
+        <!-- Title Block -->
+        <header class="grid grid-cols-1 lg:grid-cols-12 divide-y lg:divide-y-0 lg:divide-x divide-white/[0.08] border-b border-white/[0.08]">
+            <div class="lg:col-span-8 p-8 md:p-14">
+                <h1 class="font-display font-bold text-white tracking-[-0.03em] leading-[0.95] text-4xl md:text-6xl mb-6">{{ project.name }}</h1>
+                <p class="text-lg md:text-xl text-zinc-300 font-light leading-snug max-w-2xl">{{ project.description }}</p>
+            </div>
+
+            <div class="lg:col-span-4 bg-[#08080B] p-8 md:p-10 flex flex-col justify-between gap-8 font-mono text-xs">
+                {% if project.stack.all %}
+                <div>
+                    <div class="pb-3 mb-4 border-b border-white/[0.08] text-zinc-500 text-[10px] uppercase tracking-widest">STACK</div>
+                    <div class="flex flex-wrap gap-2">
+                        {% for tech in project.stack.all %}
+                        <span class="px-2.5 py-1 border border-white/10 bg-white/[0.02] text-[10px] text-zinc-300 uppercase">#{{ tech.technology }}</span>
+                        {% endfor %}
+                    </div>
                 </div>
                 {% endif %}
-            </div>
 
-            {% if project.stack.all %}
-            <div class="flex flex-wrap gap-2 mt-6">
-                {% for tech in project.stack.all %}
-                <span class="px-3 py-1 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-100 text-xs font-mono rounded-full border border-slate-200 dark:border-slate-700 shadow-sm font-medium">
-                    {{ tech.technology }}
-                </span>
-                {% endfor %}
+                {% if project.link %}
+                <a href="{{ project.link }}" target="_blank" rel="noopener noreferrer" class="btn-sweep btn-sweep-emerald px-5 py-3 border border-emerald-500/50 text-emerald-400 uppercase tracking-wider font-bold inline-flex items-center justify-between gap-2">
+                    <span>{% translate "Live Demo" %}</span>
+                    <span>↗</span>
+                </a>
+                {% endif %}
             </div>
-            {% endif %}
         </header>
 
         {% if project.images.all %}
-        <section id="project-gallery" class="mb-10 relative z-10" aria-label="Project Gallery">
-            <div class="glass-panel overflow-hidden relative group rounded-2xl border border-slate-200/50 dark:border-slate-700/50">
+        <section id="project-gallery" class="relative z-10 border-b border-white/[0.08]" aria-label="Project Gallery">
+            <div class="glass-panel overflow-hidden relative group">
                 <!-- Scroll Snap Carousel Container -->
-                <div id="project-carousel-{{ project.id }}" data-lenis-prevent class="carousel w-full aspect-video max-h-[500px] bg-slate-950/60 overflow-x-auto flex snap-x snap-mandatory scroll-smooth">
+                <div id="project-carousel-{{ project.id }}" data-lenis-prevent class="carousel w-full aspect-video max-h-[560px] bg-[#050506] overflow-x-auto flex snap-x snap-mandatory scroll-smooth">
                     {% for img in project.images.all %}
                     <div id="proj-img-{{ forloop.counter }}" class="carousel-item relative w-full h-full flex-none snap-center flex items-center justify-center">
                         <img src="{{ img.file.url }}" alt="{{ img.alt_text|default:img.caption|default:project.name }}" class="w-full h-full object-contain" loading="lazy" />
                         {% if img.caption %}
-                        <div class="absolute bottom-0 inset-x-0 p-3 bg-slate-950/80 backdrop-blur-sm text-xs font-mono text-slate-300 border-t border-white/10">
+                        <div class="absolute bottom-0 inset-x-0 px-4 py-2.5 bg-[#050506]/90 backdrop-blur-sm text-xs font-mono text-zinc-400 border-t border-white/[0.08]">
                             {{ img.caption }}
                         </div>
                         {% endif %}
@@ -71,14 +78,14 @@
 
                 {% if project.images.count > 1 %}
                 <!-- Prev/Next Controls -->
-                <button type="button" data-carousel-action="prev" data-carousel-target="project-carousel-{{ project.id }}" aria-label="Previous Image" class="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-slate-900/70 hover:bg-brand-primary text-white border border-white/20 flex items-center justify-center transition-all opacity-0 group-hover:opacity-100 cursor-pointer shadow-lg z-20">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                <button type="button" data-carousel-action="prev" data-carousel-target="project-carousel-{{ project.id }}" aria-label="Previous Image" class="carousel-ctl absolute left-0 top-1/2 -translate-y-1/2 w-12 h-14 flex items-center justify-center cursor-pointer z-20">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
                 </button>
-                <button type="button" data-carousel-action="next" data-carousel-target="project-carousel-{{ project.id }}" aria-label="Next Image" class="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-slate-900/70 hover:bg-brand-primary text-white border border-white/20 flex items-center justify-center transition-all opacity-0 group-hover:opacity-100 cursor-pointer shadow-lg z-20">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                <button type="button" data-carousel-action="next" data-carousel-target="project-carousel-{{ project.id }}" aria-label="Next Image" class="carousel-ctl absolute right-0 top-1/2 -translate-y-1/2 w-12 h-14 flex items-center justify-center cursor-pointer z-20">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
                 </button>
                 <!-- Slide Count Badge -->
-                <div class="absolute top-3 right-3 px-2.5 py-1 rounded-full bg-slate-900/80 backdrop-blur-sm text-[10px] font-mono text-brand-primary border border-brand-primary/30 z-20 pointer-events-none">
+                <div class="absolute top-0 right-0 px-3 py-1.5 bg-[#050506]/90 border-b border-l border-white/[0.12] font-mono text-[10px] text-emerald-400 uppercase tracking-widest z-20 pointer-events-none">
                     {{ project.images.count }} IMAGES
                 </div>
                 {% endif %}
@@ -86,7 +93,7 @@
         </section>
         {% endif %}
 
-        <main class="markdown-body relative z-10 glass-panel p-8">
+        <main id="log-content-area" class="markdown-body reading-pane relative z-10 glass-panel p-8 md:p-14 min-h-[calc(100dvh-12rem)] flex-1">
             {% if project.html_content %}
                 {{ project.html_content|safe }}
             {% else %}
@@ -95,7 +102,6 @@
         </main>
     </div>
 {% endblock %}
-
 {% block extra_js %}
     <script>
         // Initialize Mermaid (theme switcher logic is handled by base.html)

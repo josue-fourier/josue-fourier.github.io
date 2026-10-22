@@ -1,125 +1,87 @@
 /* 1. Import Tailwind v4 Core */
-
 @import "tailwindcss";
 
-
-
 /* 2. Tell Tailwind where to look for class names in your Django templates */
-
 @source "./djangoPortfolio/**/templates/**/*.html";
 
-
-
-/* 3. Import and configure the daisyUI plugin */
-
+/* 3. Import and configure the daisyUI plugin (Dark Mode 'dracula' by default) */
 @plugin "daisyui" {
-
-    themes: lofi --default, dracula;
-
+    themes: dracula --default, lofi;
 }
 
-
-
-/* 4. Define your custom theme variables */
-
+/* 4. Define custom theme variables */
 @theme {
-
     /* Overriding default Tailwind font families */
-
     --font-sans: "Inter", sans-serif;
-
     --font-mono: "JetBrains Mono", monospace;
 
-
-
     /* Custom font utilities (creates class="font-display" and class="font-info") */
-
     --font-display: "Space Grotesk", sans-serif;
-
-    /* Or keep "Archivo Black" if you prefer! */
-
     --font-info: "Miranda Sans", sans-serif;
 
-
-
-    /* Custom color utilities (creates class="text-brand-primary", class="bg-brand-dark", etc.) */
-
-    --color-brand-dark: #f8fafc;
-
-    --color-brand-primary: #0d9488;
-
-    /* Teal for telematics/tech vibe (darker for light mode readability) */
-
-    --color-brand-accent: #2563eb;
-
+    /* Custom color utilities (Cyber-Cryptographic Emerald / Cyan Palette — Zero Orange) */
+    --color-brand-dark: #05070A;
+    --color-brand-primary: #10B981;
+    --color-brand-accent: #06B6D4;
 }
 
-
-
 /* 5. Custom Variants */
-
 @custom-variant dark (&:where([data-theme="dracula"], :root:has(.theme-controller[value="dracula"]:checked)), &:where([data-theme="dracula"] *, :root:has(.theme-controller[value="dracula"]:checked) *));
 
+/* 6. Light Mode (Clean Cryo-Slate Technical Manual) Overrides */
+[data-theme=lofi] {
+  color-scheme: light;
+  --color-brand-primary: #059669;
+  --color-base-100: #F8FAFC;
+  --color-base-200: #F1F5F9;
+  --color-base-300: #E2E8F0;
+  --color-base-content: #090D16;
+  --color-primary: #059669;
+  --color-primary-content: #FFFFFF;
+}
 
-
-/* 6. Dracula Theme Overrides */
-
+/* 7. Dracula / Obsidian Cryptographic Dark Mode (Default) */
 :root:has(input.theme-controller[value=dracula]:checked), [data-theme=dracula] {
-
   color-scheme: dark;
 
-  /* Premium 'Slate' Theme - Softer, less dark, highly legible */
-  --color-base-100: #1e293b; /* slate-800 */
-  --color-base-200: #334155; /* slate-700 */
-  --color-base-300: #475569; /* slate-600 */
-  --color-base-content: #f1f5f9; /* slate-100 */
-  
-  /* Keep brand teal for primary */
-  --color-primary: oklch(65% 0.12 180); /* Muted, professional teal */
-  --color-primary-content: oklch(98% 0 0);
-  
-  /* Neutral accents for professional look */
-  --color-secondary: oklch(35% 0.01 250); 
-  --color-secondary-content: oklch(95% 0 0);
+  --color-brand-primary: #10B981;
+  --color-base-100: #0B0F17;
+  --color-base-200: #111824;
+  --color-base-300: #1B2432;
+  --color-base-content: #F1F5F9;
 
-  --color-accent: oklch(85% 0.14 150);
+  --color-primary: #10B981;
+  --color-primary-content: #05070A;
 
-  --color-accent-content: oklch(20% 0.02 280);
+  --color-secondary: #06B6D4;
+  --color-secondary-content: #05070A;
 
-  --color-neutral: oklch(35% 0.02 280);
+  --color-accent: #10B981;
+  --color-accent-content: #05070A;
 
-  --color-neutral-content: oklch(95% 0 0);
+  --color-neutral: #111824;
+  --color-neutral-content: #F1F5F9;
 
-  --color-info: oklch(80% 0.1 230);
+  --color-info: #06B6D4;
+  --color-info-content: #05070A;
 
-  --color-info-content: oklch(15% 0.02 280);
-
-  --color-success: oklch(78% 0.15 150);
-
-  --color-success-content: oklch(15% 0.02 280);
+  --color-success: #10B981;
+  --color-success-content: #05070A;
 
   --color-warning: oklch(85% 0.15 80);
-
   --color-warning-content: oklch(15% 0.02 280);
 
   --color-error: oklch(65% 0.2 25);
-
   --color-error-content: oklch(98% 0 0);
 
-  --radius-selector: 1rem;
-
-  --radius-field: 0.5rem;
-
-  --radius-box: 1rem;
+  --radius-selector: 0.375rem;
+  --radius-field: 0.375rem;
+  --radius-box: 0.375rem;
 
   --size-selector: 0.25rem;
-
   --size-field: 0.25rem;
 
   --border: 1px;
-
   --depth: 0;
-
   --noise: 0;
-
 }

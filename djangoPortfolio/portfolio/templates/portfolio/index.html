@@ -4,286 +4,744 @@
 {% load static %}
 
 {% block content %}
-        <main class="relative z-10 w-full min-h-screen px-6 py-12 md:px-12 md:py-24 max-w-[1600px] mx-auto">
+{% get_current_language as LANGUAGE_CODE %}
+<main class="relative z-10 w-full max-w-[1440px] mx-auto border-x border-white/[0.08] bg-[#070708]">
 
-            <header class="min-h-[85vh] flex flex-col justify-center section-gsap">
-                <div class="overflow-hidden mb-4">
-                    <p class="text-brand-primary font-mono text-sm tracking-widest uppercase inline-flex items-center gap-3 gsap-reveal">
-                        <span class="relative flex h-2 w-2">
-                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-primary opacity-75"></span>
-                            <span class="relative inline-flex rounded-full h-2 w-2 bg-brand-primary"></span>
-                        </span>
-                        {% translate "System: Online // Availability: Open" %}
+    <!-- Hovering Section Navigation: Right Sidebar (Desktop) & Bottom Dock (Mobile) -->
+    <nav id="section-nav-sidebar" class="fixed z-40 bottom-4 left-1/2 -translate-x-1/2 md:bottom-auto md:left-auto md:right-6 md:top-1/2 md:-translate-y-1/2 md:translate-x-0 bg-[#050506]/90 backdrop-blur-md border border-white/[0.12] md:border-white/[0.08] p-1.5 md:p-2.5 flex flex-row md:flex-col items-center md:items-stretch gap-1 md:gap-1.5 max-w-[calc(100vw-2rem)] select-none" aria-label="{% translate 'Section Navigation' %}">
+        <!-- Desktop Header Strip -->
+        <div class="hidden md:flex items-center justify-between pb-2 mb-1 px-2 border-b border-white/[0.06] font-mono text-[9px] text-zinc-500 uppercase tracking-widest gap-6">
+            <span>SECTIONS</span>
+            <span id="section-nav-pct" class="text-emerald-400 font-bold tabular-nums">00%</span>
+        </div>
+
+        <!-- Section 01: Dossier -->
+        <a href="#chapter-01" data-section-target="chapter-01" class="sec-nav-link flex items-center justify-between gap-3 px-3 py-1.5 md:py-2 border border-transparent hover:border-white/10 font-mono text-xs text-zinc-400 hover:text-white transition-all group active">
+            <div class="flex items-center gap-2">
+                <span class="sec-nav-num text-zinc-500 group-hover:text-emerald-400 transition-colors font-bold text-[11px]">01</span>
+                <span class="hidden md:inline text-zinc-300 group-hover:text-white uppercase tracking-wider text-[10px]">DOSSIER</span>
+            </div>
+            <span class="sec-nav-pip w-1.5 h-1.5 bg-zinc-700"></span>
+        </a>
+
+        <!-- Section 02: Architecture / Capabilities -->
+        <a href="#chapter-02" data-section-target="chapter-02" class="sec-nav-link flex items-center justify-between gap-3 px-3 py-1.5 md:py-2 border border-transparent hover:border-white/10 font-mono text-xs text-zinc-400 hover:text-white transition-all group">
+            <div class="flex items-center gap-2">
+                <span class="sec-nav-num text-zinc-500 group-hover:text-emerald-400 transition-colors font-bold text-[11px]">02</span>
+                <span class="hidden md:inline text-zinc-300 group-hover:text-white uppercase tracking-wider text-[10px]">CAPABILITIES</span>
+            </div>
+            <span class="sec-nav-pip w-1.5 h-1.5 bg-zinc-700"></span>
+        </a>
+
+        <!-- Section 03: Benchmarks (if hackerrank badges exist) -->
+        {% if hackerrank_badges %}
+        <a href="#chapter-03" data-section-target="chapter-03" class="sec-nav-link flex items-center justify-between gap-3 px-3 py-1.5 md:py-2 border border-transparent hover:border-white/10 font-mono text-xs text-zinc-400 hover:text-white transition-all group">
+            <div class="flex items-center gap-2">
+                <span class="sec-nav-num text-zinc-500 group-hover:text-emerald-400 transition-colors font-bold text-[11px]">03</span>
+                <span class="hidden md:inline text-zinc-300 group-hover:text-white uppercase tracking-wider text-[10px]">BENCHMARKS</span>
+            </div>
+            <span class="sec-nav-pip w-1.5 h-1.5 bg-zinc-700"></span>
+        </a>
+        {% endif %}
+
+        <!-- Section 04: Production Systems -->
+        <a href="#chapter-06" data-section-target="chapter-06" class="sec-nav-link flex items-center justify-between gap-3 px-3 py-1.5 md:py-2 border border-transparent hover:border-white/10 font-mono text-xs text-zinc-400 hover:text-white transition-all group">
+            <div class="flex items-center gap-2">
+                <span class="sec-nav-num text-zinc-500 group-hover:text-emerald-400 transition-colors font-bold text-[11px]">04</span>
+                <span class="hidden md:inline text-zinc-300 group-hover:text-white uppercase tracking-wider text-[10px]">SYSTEMS</span>
+            </div>
+            <span class="sec-nav-pip w-1.5 h-1.5 bg-zinc-700"></span>
+        </a>
+
+        <!-- Section 05: Field Logs -->
+        <a href="#chapter-04" data-section-target="chapter-04" class="sec-nav-link flex items-center justify-between gap-3 px-3 py-1.5 md:py-2 border border-transparent hover:border-white/10 font-mono text-xs text-zinc-400 hover:text-white transition-all group">
+            <div class="flex items-center gap-2">
+                <span class="sec-nav-num text-zinc-500 group-hover:text-emerald-400 transition-colors font-bold text-[11px]">05</span>
+                <span class="hidden md:inline text-zinc-300 group-hover:text-white uppercase tracking-wider text-[10px]">LOGS</span>
+            </div>
+            <span class="sec-nav-pip w-1.5 h-1.5 bg-zinc-700"></span>
+        </a>
+    </nav>
+
+    <!-- =======================================================================
+         SEC—01 // ARCHITECTURAL DOSSIER & LIVE TELEMETRY HERO
+         ======================================================================= -->
+    <section id="chapter-01" class="c2-chapter-section border-b border-white/[0.08] bg-[#050506]" data-chapter="01" data-chapter-title="DOSSIER">
+        <!-- Sticky Section Sub-Header -->
+        <div class="sec-sticky-header sticky top-12 z-30 bg-[#050506]/95 backdrop-blur-md px-6 py-3 border-b border-white/[0.08] flex items-center justify-between font-mono text-[11px] text-zinc-500 uppercase tracking-widest relative">
+            <div class="flex items-center gap-2.5">
+                <span class="sec-led w-1.5 h-1.5 bg-emerald-500 inline-block"></span>
+                <span class="text-emerald-500 font-bold">01</span>
+                <span class="text-zinc-700">/</span>
+                <span class="sec-decode-label text-zinc-300">{% translate "01 / ARCHITECTURAL DOSSIER" %}</span>
+            </div>
+            <div class="flex items-center gap-3 text-zinc-400">
+                <span class="hidden md:inline text-zinc-500">UTFSM // TELEMATICS ENGINEERING</span>
+                <span class="hidden sm:inline text-zinc-700">|</span>
+                <span class="hidden sm:inline text-emerald-400 font-semibold">{% translate "THE ENGINE OVER THE FACADE" %}</span>
+            </div>
+            <div class="grid-line-h absolute bottom-0 left-0 right-0"></div>
+        </div>
+
+        <!-- Telemetry Heartbeat & Personal Status Strip (When Available) -->
+        {% if node_heartbeat and node_heartbeat.is_recent or current_status %}
+        <div class="px-6 py-2.5 border-b border-white/[0.08] flex flex-wrap items-center gap-6 bg-[#08080B] font-mono text-xs">
+            {% if node_heartbeat and node_heartbeat.is_recent %}
+            <div class="inline-flex items-center gap-2 text-emerald-400">
+                <span class="w-1.5 h-1.5 bg-emerald-500 animate-pulse"></span>
+                <span class="font-bold">NODE:</span>
+                <span class="truncate max-w-[320px]">{{ node_heartbeat.status }}</span>
+            </div>
+            {% endif %}
+            {% if current_status %}
+            <div class="inline-flex items-center gap-2 text-zinc-300">
+                <span class="w-1.5 h-1.5 bg-emerald-500 animate-pulse"></span>
+                <span class="font-bold text-emerald-400">STATUS:</span>
+                <span class="truncate max-w-[380px]">{{ current_status.message }}</span>
+            </div>
+            {% endif %}
+        </div>
+        {% endif %}
+
+        <!-- Main Hero Grid: 7 Cols Left (Monumental Typography & Stance) | 5 Cols Right (Precision Spec Matrix & Live Terminal) -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 divide-y lg:divide-y-0 lg:divide-x divide-white/[0.08]">
+            
+            <!-- Left Cell (7 Cols) -->
+            <div class="lg:col-span-7 min-h-[78vh] p-8 md:p-16 flex flex-col justify-between kinetic-block bg-[#050506]">
+                <div>
+                    <!-- Top Coordinate Tag -->
+                    <div class="inline-flex items-center gap-2.5 font-mono text-[11px] text-zinc-500 uppercase tracking-[0.18em] mb-8">
+                        <span class="w-1.5 h-1.5 bg-emerald-500"></span>
+                        <span>SCL [-33.45, -70.66] // SYS_ONLINE</span>
+                    </div>
+
+                    <!-- Massive Variable Display Title in Overflow-Hidden Line Masks -->
+                    <h1 id="hero-title" class="hero-title font-display font-bold uppercase text-white select-none" aria-label="Josué Leiva.">
+                        <span class="reveal-text"><span class="reveal-text-inner">Josué</span></span>
+                        <span class="reveal-text"><span class="reveal-text-inner">Leiva.</span></span>
+                    </h1>
+
+                    <!-- Lead Engineering Statement (with Spanish "flujos e impacto humano" grammar rule) -->
+                    <div class="reveal-text mt-10">
+                        <p class="reveal-text-inner text-xl md:text-2xl text-zinc-300 max-w-2xl font-light leading-snug">
+                            {% translate "Telematics Engineering student specializing in" %} <strong class="text-white font-medium">{% translate "backend architecture" %}</strong>, <strong class="text-white font-medium">{% translate "automation" %}</strong>, <strong class="text-white font-medium">{% translate "flows" %}</strong>{% if LANGUAGE_CODE == "es" %} e {% else %}, {% translate "and" %} {% endif %}<strong class="text-white font-medium">{% translate "human impact" %}</strong>.
+                        </p>
+                    </div>
+
+                    <!-- Secondary Human-Centered Systems Stance -->
+                    <div class="reveal-text mt-6">
+                        <p class="reveal-text-inner font-mono text-xs text-zinc-500 leading-relaxed max-w-xl">
+                            {% translate "Low-level rigor engineered for human workflows: operational order, student autonomy, and malware-isolated community platforms." %}
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Action Button Row with Bottom-to-Top Fill Sweep -->
+                <div class="flex flex-wrap gap-3 mt-12 pt-8 border-t border-white/[0.08] relative">
+                    <div class="grid-line-h absolute top-0 left-0 right-0"></div>
+                    <a href="https://github.com/josue-fourier" target="_blank" rel="noopener noreferrer" class="btn-sweep px-6 py-3.5 border border-white/15 text-zinc-200 font-mono text-xs uppercase tracking-wider flex items-center gap-2.5">
+                        <span>GitHub</span>
+                        <span class="text-[10px]">↗</span>
+                    </a>
+                    <a href="https://linkedin.com/in/josuenicolas" target="_blank" rel="noopener noreferrer" class="btn-sweep px-6 py-3.5 border border-white/15 text-zinc-200 font-mono text-xs uppercase tracking-wider flex items-center gap-2.5">
+                        <span>LinkedIn</span>
+                        <span class="text-[10px]">↗</span>
+                    </a>
+                    {% if LANGUAGE_CODE == "es" %}
+                    <a href="/cv-es" target="_blank" class="btn-sweep btn-sweep-emerald px-6 py-3.5 border border-emerald-500/50 text-emerald-400 font-mono text-xs uppercase tracking-wider flex items-center gap-2.5">
+                        <span>{% translate "Download CV" %}</span>
+                        <span class="text-[10px]">↓</span>
+                    </a>
+                    {% else %}
+                    <a href="/cv-en" target="_blank" class="btn-sweep btn-sweep-emerald px-6 py-3.5 border border-emerald-500/50 text-emerald-400 font-mono text-xs uppercase tracking-wider flex items-center gap-2.5">
+                        <span>{% translate "Download CV" %}</span>
+                        <span class="text-[10px]">↓</span>
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Right Cell (5 Cols: System Architecture Specification & Live Telemetry Stream) -->
+            <div class="lg:col-span-5 flex flex-col divide-y divide-white/[0.08] bg-[#08080B]">
+                <!-- Top Sub-Cell: System Architecture Specification -->
+                <div class="p-6 md:p-8 font-mono text-xs">
+                    <div class="flex items-center justify-between pb-3 mb-2 border-b border-white/[0.08] text-zinc-500 text-[10px] uppercase tracking-widest">
+                        <span>SYSTEM ARCHITECTURE SPECIFICATION</span>
+                        <span class="text-emerald-400">VERIFIED // PRODUCTION</span>
+                    </div>
+
+                    <div class="divide-y divide-white/[0.06]">
+                        <div class="spec-matrix-row flex items-center justify-between gap-4 py-3 px-2">
+                            <span class="spec-label text-zinc-500 uppercase tracking-wider">STANCE</span>
+                            <span class="text-emerald-400 font-bold text-right">{% translate "The Engine Over the Facade" %}</span>
+                        </div>
+
+                        <div class="spec-matrix-row flex items-center justify-between gap-4 py-3 px-2">
+                            <span class="spec-label text-zinc-500 uppercase tracking-wider">EDGE NODE</span>
+                            <span class="text-zinc-200 text-right">C++ Daemon / Raspberry Pi 5</span>
+                        </div>
+
+                        <div class="spec-matrix-row flex items-center justify-between gap-4 py-3 px-2">
+                            <span class="spec-label text-zinc-500 uppercase tracking-wider">INGESTION</span>
+                            <span class="text-zinc-200 text-right">Nginx · Docker · ClamAV</span>
+                        </div>
+
+                        <div class="spec-matrix-row flex items-center justify-between gap-4 py-3 px-2">
+                            <span class="spec-label text-zinc-500 uppercase tracking-wider">DATA & QUEUES</span>
+                            <span class="text-zinc-200 text-right">PostgreSQL · Huey Workers</span>
+                        </div>
+
+                        <div class="spec-matrix-row flex items-center justify-between gap-4 py-3 px-2">
+                            <span class="spec-label text-zinc-500 uppercase tracking-wider">CRYPTOGRAPHY</span>
+                            <span class="text-zinc-200 text-right">ElGamal Encryption · POSIX Sockets</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bottom Sub-Cell: Live Production Telemetry Pipeline -->
+                <div class="p-6 md:p-8 bg-[#050506] flex flex-col justify-between flex-grow" id="c-telemetry-widget">
+                    <div>
+                        <div class="flex items-center justify-between pb-3 border-b border-white/[0.08] font-mono text-[10px]">
+                            <div class="flex items-center gap-2">
+                                <span class="w-1.5 h-1.5 bg-emerald-500 animate-pulse"></span>
+                                <span class="text-zinc-200 font-bold">telemetry_service.py</span>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <span id="c-compile-status" class="text-zinc-500">RUNTIME: ACTIVE</span>
+                                <button type="button" id="c-replay-btn" class="text-zinc-400 hover:text-emerald-400 transition-colors uppercase tracking-wider cursor-pointer">
+                                    [REPLAY]
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="py-4 overflow-x-auto min-h-[220px]">
+                            <pre class="m-0 font-mono text-[11px] leading-relaxed text-zinc-300 whitespace-pre"><code id="c-code-display"></code><span class="c-terminal-cursor" aria-hidden="true"></span></pre>
+                        </div>
+                    </div>
+
+                    <div class="pt-3 border-t border-white/[0.06] flex items-center justify-between font-mono text-[10px] text-zinc-500">
+                        <span id="active-key-readout">ENDPOINT: POST /api/telemetry/heartbeat/</span>
+                        <span class="text-emerald-400 font-bold">AUTH: TOKEN VERIFIED</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+
+    <!-- =======================================================================
+         SEC—02 // CAPABILITY MATRIX & GITHUB TELEMETRY
+         ======================================================================= -->
+    <section id="chapter-02" class="c2-chapter-section border-b border-white/[0.08] bg-[#050506]" data-chapter="02" data-chapter-title="ARCHITECTURE">
+        <!-- Sticky Section Sub-Header -->
+        <div class="sec-sticky-header sticky top-12 z-30 bg-[#050506]/95 backdrop-blur-md px-6 py-3 border-b border-white/[0.08] flex items-center justify-between font-mono text-[11px] text-zinc-500 uppercase tracking-widest relative">
+            <div class="flex items-center gap-2.5">
+                <span class="sec-led w-1.5 h-1.5 bg-emerald-500 inline-block"></span>
+                <span class="text-emerald-500 font-bold">02</span>
+                <span class="text-zinc-700">/</span>
+                <span class="sec-decode-label text-zinc-300">{% translate "02 / CAPABILITY MATRIX" %}</span>
+            </div>
+            <span class="text-zinc-400">{% translate "STATUS: OPERATIONAL // PRODUCTION EVIDENCE" %}</span>
+            <div class="grid-line-h absolute bottom-0 left-0 right-0"></div>
+        </div>
+
+        <!-- 4-Column Interactive Modular Grid with Radial Cursor Spotlight -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 divide-y md:divide-y-0 md:divide-x divide-white/[0.08] kinetic-block">
+            <!-- Capability 01 -->
+            <div class="cap-cell p-10 md:p-12 flex flex-col justify-between group">
+                <div>
+                    <div class="flex items-start justify-between mb-8">
+                        <span class="font-mono text-4xl font-bold text-zinc-800 group-hover:text-emerald-500/40 transition-colors duration-500">01</span>
+                        <div class="flex items-center gap-2 font-mono text-[10px] text-zinc-500 uppercase tracking-wider">
+                            <span>C++ / POSIX</span>
+                            <span class="w-1.5 h-1.5 bg-zinc-700 group-hover:bg-emerald-500 transition-colors"></span>
+                        </div>
+                    </div>
+                    <h3 class="font-display font-bold text-white text-xl mb-3 group-hover:text-emerald-400 transition-colors">
+                        {% translate "Edge Hardware Telemetry" %}
+                    </h3>
+                    <p class="text-xs text-zinc-400 leading-relaxed font-light">
+                        {% translate "C++ runtime telemetry daemon & low-latency heartbeats on Raspberry Pi edge nodes with custom UDP packet protocol." %}
+                    </p>
+                </div>
+            </div>
+
+            <!-- Capability 02 -->
+            <div class="cap-cell p-10 md:p-12 flex flex-col justify-between group">
+                <div>
+                    <div class="flex items-start justify-between mb-8">
+                        <span class="font-mono text-4xl font-bold text-zinc-800 group-hover:text-emerald-500/40 transition-colors duration-500">02</span>
+                        <div class="flex items-center gap-2 font-mono text-[10px] text-zinc-500 uppercase tracking-wider">
+                            <span>NGINX / DOCKER / CLAMAV</span>
+                            <span class="w-1.5 h-1.5 bg-zinc-700 group-hover:bg-emerald-500 transition-colors"></span>
+                        </div>
+                    </div>
+                    <h3 class="font-display font-bold text-white text-xl mb-3 group-hover:text-emerald-400 transition-colors">
+                        {% translate "Hardened Ingestion Pipelines" %}
+                    </h3>
+                    <p class="text-xs text-zinc-400 leading-relaxed font-light">
+                        {% translate "Malware-isolated file ingestion via Nginx reverse proxy, isolated Docker containers, and ClamAV daemon scan workers." %}
+                    </p>
+                </div>
+            </div>
+
+            <!-- Capability 03 -->
+            <div class="cap-cell p-10 md:p-12 flex flex-col justify-between group">
+                <div>
+                    <div class="flex items-start justify-between mb-8">
+                        <span class="font-mono text-4xl font-bold text-zinc-800 group-hover:text-emerald-500/40 transition-colors duration-500">03</span>
+                        <div class="flex items-center gap-2 font-mono text-[10px] text-zinc-500 uppercase tracking-wider">
+                            <span>POSTGRESQL / HUEY</span>
+                            <span class="w-1.5 h-1.5 bg-zinc-700 group-hover:bg-emerald-500 transition-colors"></span>
+                        </div>
+                    </div>
+                    <h3 class="font-display font-bold text-white text-xl mb-3 group-hover:text-emerald-400 transition-colors">
+                        {% translate "Relational Data Modeling" %}
+                    </h3>
+                    <p class="text-xs text-zinc-400 leading-relaxed font-light">
+                        {% translate "High-integrity PostgreSQL schemas, foreign keys, and Huey task queues orchestrating daily automated synchronization." %}
+                    </p>
+                </div>
+            </div>
+
+            <!-- Capability 04 -->
+            <div class="cap-cell p-10 md:p-12 flex flex-col justify-between group">
+                <div>
+                    <div class="flex items-start justify-between mb-8">
+                        <span class="font-mono text-4xl font-bold text-zinc-800 group-hover:text-emerald-500/40 transition-colors duration-500">04</span>
+                        <div class="flex items-center gap-2 font-mono text-[10px] text-zinc-500 uppercase tracking-wider">
+                            <span>ELGAMAL / CRYPTO</span>
+                            <span class="w-1.5 h-1.5 bg-zinc-700 group-hover:bg-emerald-500 transition-colors"></span>
+                        </div>
+                    </div>
+                    <h3 class="font-display font-bold text-white text-xl mb-3 group-hover:text-emerald-400 transition-colors">
+                        {% translate "Systems Craftsmanship" %}
+                    </h3>
+                    <p class="text-xs text-zinc-400 leading-relaxed font-light">
+                        {% translate "Applied ElGamal asymmetric encryption, POSIX native C/C++ sockets, and zero-knowledge verification primitives." %}
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Technical Domain Stacks Sub-Grid -->
+        {% if core_competencies %}
+        <div class="border-t border-white/[0.08] grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-white/[0.08] relative">
+            <div class="grid-line-h absolute top-0 left-0 right-0"></div>
+            {% for category in core_competencies %}
+            <div class="cap-cell p-6 md:p-8 transition-colors">
+                <div class="flex items-center justify-between font-mono text-[10px] text-zinc-500 mb-4 uppercase tracking-wider">
+                    <span>MOD // 0{{ forloop.counter }}</span>
+                    <span class="text-zinc-300 font-bold">{{ category.name }}</span>
+                </div>
+                <div class="flex flex-wrap gap-2">
+                    {% for skill in category.skills.all %}
+                    <span class="px-2.5 py-1 font-mono text-[11px] text-zinc-300 bg-white/[0.03] border border-white/[0.08] hover:border-emerald-500/40 transition-colors uppercase tracking-wide">
+                        {{ skill.name }}
+                    </span>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <!-- GitHub Contribution Strip with Parallax Media Window -->
+        <div class="p-6 md:px-10 border-t border-white/[0.08] flex flex-col md:flex-row items-center justify-between gap-6 bg-[#08080B] relative">
+            <div class="grid-line-h absolute top-0 left-0 right-0"></div>
+            <div class="font-mono text-xs text-zinc-400 flex items-center gap-3 shrink-0">
+                <span class="w-2 h-2 bg-emerald-500 animate-pulse"></span>
+                <span class="font-bold uppercase tracking-wider text-white">GITHUB ACTIVITY // LIVE</span>
+                <span class="text-zinc-600">//</span>
+                <span class="text-zinc-500">josue-fourier</span>
+            </div>
+            <div class="w-full max-w-2xl overflow-hidden py-1 opacity-90 hover:opacity-100 transition-opacity">
+                <img src="https://ghchart.rshah.org/10b981/josue-fourier" alt="GitHub Activity Graph" loading="lazy" class="parallax-media w-full h-auto filter grayscale contrast-125" />
+            </div>
+        </div>
+    </section>
+
+
+    <!-- =======================================================================
+         SEC—03 // VERIFIED ALGORITHMIC BENCHMARKS (HACKERRANK TELEMETRY LEDGER)
+         ======================================================================= -->
+    {% if hackerrank_badges %}
+    <section id="chapter-03" class="c2-chapter-section border-b border-white/[0.08] bg-[#050506]" data-chapter="03" data-chapter-title="BENCHMARKS">
+        <span id="hackerrank-badges" class="absolute -top-20"></span>
+        <!-- Sticky Section Sub-Header -->
+        <div class="sec-sticky-header sticky top-12 z-30 bg-[#050506]/95 backdrop-blur-md px-6 py-3 border-b border-white/[0.08] flex items-center justify-between font-mono text-[11px] text-zinc-500 uppercase tracking-widest relative">
+            <div class="flex items-center gap-2.5">
+                <span class="sec-led w-1.5 h-1.5 bg-emerald-500 inline-block"></span>
+                <span class="text-emerald-500 font-bold">03</span>
+                <span class="text-zinc-700">/</span>
+                <span class="sec-decode-label text-zinc-300">03 // BENCHMARKS</span>
+            </div>
+            <div class="flex items-center gap-4 text-zinc-400">
+                <span class="hidden md:inline">SYNC: DAILY_0800_SCL // 5★ C++ RANK</span>
+                <a href="https://www.hackerrank.com/profile/xmenmagnet" target="_blank" rel="noopener noreferrer" class="font-mono text-xs text-emerald-400 hover:text-white transition-colors">
+                    {% translate "HACKERRANK_PROFILE" %} ↗
+                </a>
+            </div>
+            <div class="grid-line-h absolute bottom-0 left-0 right-0"></div>
+        </div>
+
+        <!-- Section Summary Header & Telemetry Metadata Grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 divide-y sm:divide-y-0 sm:divide-x divide-white/[0.08] border-b border-white/[0.08] bg-[#08080B]">
+            <div class="p-6 md:px-8 sm:col-span-2 lg:col-span-2">
+                <h2 class="reveal-text text-2xl md:text-3xl font-display font-bold text-white mb-2">
+                    <span class="reveal-text-inner">{% translate "HackerRank Badges" %}</span>
+                </h2>
+                <p class="font-mono text-xs text-zinc-500">
+                    {% translate "Automated daily verification of algorithmic problem solving, applied cryptography, and 5-Star C++ ranking." %}
+                </p>
+            </div>
+            <div class="p-6 md:px-8 flex flex-col justify-center font-mono text-xs">
+                <div class="flex items-center justify-between text-zinc-500 mb-1">
+                    <span>INGESTION CRON</span>
+                    <span class="text-emerald-400 font-bold">08:00 AM SCL</span>
+                </div>
+                <div class="flex items-center justify-between text-zinc-500">
+                    <span>ACTIVE DOMAINS</span>
+                    <span class="text-white font-bold count-up-num" data-target="{{ hackerrank_badges|length }}">{{ hackerrank_badges|length }}</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Full-Width Horizontal Telemetry Ledger Rows -->
+        <div class="divide-y divide-white/[0.08] kinetic-block">
+            {% for badge in hackerrank_badges %}
+            <div class="glass-panel px-6 md:px-8 py-5 grid grid-cols-1 lg:grid-cols-12 items-center gap-6 group">
+                <!-- Col 1-4: Domain Name, Category & Level -->
+                <div class="lg:col-span-4 flex items-center gap-4 min-w-0">
+                    <span class="font-mono text-xs text-zinc-600 group-hover:text-emerald-400 transition-colors shrink-0">
+                        0{{ forloop.counter }}
+                    </span>
+                    <div class="min-w-0">
+                        <div class="flex items-center gap-2 font-mono text-[10px] text-zinc-500 uppercase tracking-wider mb-1">
+                            <span class="truncate">{{ badge.display_category }}</span>
+                            <span class="text-zinc-700">//</span>
+                            <span class="text-emerald-400/90">{% translate "LVL" %} {{ badge.level|default:1 }}</span>
+                        </div>
+                        <h3 class="font-display font-bold text-white text-lg leading-tight break-words group-hover:text-emerald-400 transition-colors">
+                            {{ badge.badge_name }}
+                        </h3>
+                    </div>
+                </div>
+
+                <!-- Col 5-8: Geometric Rating Blocks & Live Animated Progress Track -->
+                <div class="lg:col-span-5 flex flex-col gap-2">
+                    <div class="flex items-center justify-between font-mono text-xs">
+                        <div class="flex items-center gap-2">
+                            <!-- Geometric Square Blocks (■ ■ ■ ■ ■) -->
+                            <span class="inline-flex items-center gap-1" aria-hidden="true">
+                                {% for is_filled in badge.stars_list %}
+                                {% if is_filled %}
+                                <span class="w-2.5 h-2.5 bg-emerald-500 inline-block star-filled"></span>
+                                {% else %}
+                                <span class="w-2.5 h-2.5 bg-zinc-800 border border-white/10 inline-block star-empty"></span>
+                                {% endif %}
+                                {% endfor %}
+                            </span>
+                            <span class="text-emerald-400 font-bold star-filled ml-1">
+                                {{ badge.stars|default:0 }} / {{ badge.display_total_stars }}
+                            </span>
+                        </div>
+                        <div class="flex items-center gap-2 text-[11px] text-zinc-400">
+                            <span class="text-zinc-600 hidden sm:inline">{% translate "Next Star Progress" %}:</span>
+                            <span class="font-bold text-zinc-200"><span class="count-up-num" data-target="{{ badge.progress_percentage }}">{{ badge.progress_percentage }}</span>%</span>
+                        </div>
+                    </div>
+
+                    <!-- 2px Hairline Animated Progress Track -->
+                    <div class="w-full bg-white/[0.08] h-[2px] overflow-hidden">
+                        <div class="benchmark-progress-bar bg-emerald-500 h-full" data-progress="{{ badge.progress_percentage }}" style="width: {{ badge.progress_percentage }}%;"></div>
+                    </div>
+                </div>
+
+                <!-- Col 9-10: Solved Challenges Telemetry -->
+                <div class="lg:col-span-2 flex lg:flex-col justify-between lg:justify-center font-mono text-xs border-t lg:border-t-0 lg:border-l border-white/[0.06] pt-3 lg:pt-0 lg:pl-6">
+                    <span class="text-[10px] text-zinc-500 uppercase tracking-wider">{% translate "Solved Challenges" %}</span>
+                    <span class="text-zinc-200 font-bold tabular-nums mt-0.5">
+                        <span class="count-up-num" data-target="{{ badge.solved|default:0 }}">{{ badge.solved|default:0 }}</span>{% if badge.total_challenges %} / {{ badge.total_challenges }}{% endif %}
+                    </span>
+                </div>
+
+                <!-- Col 11-12: Right-Aligned Domain Verification Action -->
+                <div class="lg:col-span-1 flex items-center justify-end">
+                    <a href="{{ badge.domain_url }}" target="_blank" rel="noopener noreferrer" class="badge-domain-link font-mono text-[11px] text-emerald-400 hover:text-white transition-colors uppercase tracking-wider inline-flex items-center gap-1 font-bold whitespace-nowrap">
+                        <span>{% translate "View Domain" %}</span>
+                        <span class="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform">↗</span>
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+    {% endif %}
+
+
+    <!-- =======================================================================
+         SEC—04 // PRODUCTION SYSTEMS & INLINE STACK FILTER
+         ======================================================================= -->
+    <section id="chapter-06" class="c2-chapter-section border-b border-white/[0.08] bg-[#050506]" data-chapter="06" data-chapter-title="PRODUCTION">
+        <span id="projects" class="absolute -top-20"></span>
+        <div id="chapter-05" data-chapter="05" class="hidden" aria-hidden="true"></div>
+
+        <!-- Sticky Section Sub-Header with Integrated Tech Filter -->
+        <div class="sec-sticky-header sticky top-12 z-30 bg-[#050506]/95 backdrop-blur-md px-6 py-3 border-b border-white/[0.08] flex flex-col md:flex-row md:items-center justify-between gap-3 font-mono text-[11px] text-zinc-500 uppercase tracking-widest relative">
+            <div class="flex items-center gap-2.5">
+                <span class="sec-led w-1.5 h-1.5 bg-emerald-500 inline-block"></span>
+                <span class="text-emerald-500 font-bold">04</span>
+                <span class="text-zinc-700">/</span>
+                <span class="sec-decode-label text-zinc-300">{% translate "INDEPENDENT PRODUCTION SYSTEMS" %}</span>
+            </div>
+
+            <!-- Inline Stack Filter Buttons -->
+            <div class="flex flex-wrap items-center gap-1.5">
+                <span class="text-zinc-600 text-[10px] hidden sm:inline mr-1">FILTER:</span>
+                {% for strength in technical_strengths %}
+                <button type="button" data-tech="{{ strength.technology }}" class="tech-filter-btn px-2.5 py-1 border border-white/10 text-zinc-400 font-mono text-[10px] uppercase tracking-wider cursor-pointer">
+                    {{ strength.technology }} ({{ strength.project_count }})
+                </button>
+                {% endfor %}
+            </div>
+            <div class="grid-line-h absolute bottom-0 left-0 right-0"></div>
+        </div>
+
+        <!-- Project Split Rows (5 cols Left Specs | 7 cols Right 16:9 Parallax Viewport) -->
+        <div class="divide-y divide-white/[0.08]">
+            {% for project in projects %}
+            <article class="project-card filter-transition kinetic-block grid grid-cols-1 lg:grid-cols-12 divide-y lg:divide-y-0 lg:divide-x divide-white/[0.08] group bg-[#050506]" data-techs="{% for item in project.stack.all %}{{ item.technology }},{% endfor %}">
+                <!-- Left Cell: Metadata, Oversized Index, Descriptions, Actions (5 Cols) -->
+                <div class="lg:col-span-5 p-8 md:p-12 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-start justify-between mb-6">
+                            <span class="font-mono text-4xl md:text-5xl font-bold text-zinc-800 group-hover:text-emerald-500/35 transition-colors duration-500">
+                                0{{ forloop.counter }}
+                            </span>
+                            <div class="font-mono text-[10px] text-right uppercase tracking-wider">
+                                <div class="text-zinc-500">SYS_ID // 0{{ forloop.counter }}</div>
+                                <div class="text-emerald-400 font-bold">DEPLOYED SYSTEM</div>
+                            </div>
+                        </div>
+
+                        <h3 class="text-2xl md:text-3xl font-display font-bold text-white group-hover:text-emerald-400 transition-colors mb-4">
+                            {{ project.name }}
+                        </h3>
+
+                        <p class="text-sm text-zinc-400 leading-relaxed font-light mb-6">
+                            {{ project.description }}
+                        </p>
+
+                        <!-- Tech Stack Tags -->
+                        <div class="flex flex-wrap gap-1.5 mb-8">
+                            {% for item in project.stack.all %}
+                            <span class="px-2.5 py-1 border border-white/10 bg-white/[0.02] font-mono text-[10px] text-zinc-300 uppercase">
+                                #{{ item.technology }}
+                            </span>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <!-- Direct Navigation Action -->
+                    <div class="flex items-center justify-between pt-5 border-t border-white/[0.08] font-mono text-xs">
+                        <a href="{% url 'project_detail' project.id %}" class="btn-sweep btn-sweep-emerald px-4 py-2 border border-emerald-500/40 text-emerald-400 uppercase tracking-wider inline-flex items-center gap-2 font-bold">
+                            <span>{% translate "Inspect Architecture" %}</span>
+                            <span>→</span>
+                        </a>
+                        {% if project.link %}
+                        <a href="{{ project.link }}" target="_blank" rel="noopener noreferrer" class="text-zinc-400 hover:text-white transition-colors uppercase tracking-wider text-[11px] inline-flex items-center gap-1">
+                            <span>{% translate "Live Demo" %}</span>
+                            <span>↗</span>
+                        </a>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- Right Cell: Framed 16:9 Parallax Viewport (7 Cols) -->
+                <div class="lg:col-span-7 p-6 md:p-12 bg-[#08080B] flex items-center justify-center">
+                    {% if project.preview_image %}
+                    <a href="{% url 'project_detail' project.id %}" class="w-full aspect-video border border-white/10 overflow-hidden relative block group/img bg-[#050506]">
+                        <img src="{{ project.preview_image.file.url }}" alt="{{ project.name }} preview" loading="lazy" class="parallax-media w-full h-full object-cover scale-[1.12] filter grayscale contrast-125 group-hover/img:grayscale-0 transition-all duration-700" />
+                        <div class="absolute bottom-0 right-0 bg-[#050506]/90 backdrop-blur-sm border-t border-l border-white/15 px-3.5 py-2 font-mono text-[10px] text-zinc-300 group-hover/img:bg-emerald-500 group-hover/img:text-black group-hover/img:border-emerald-500 transition-colors uppercase tracking-widest font-bold">
+                            INSPECT SYSTEM ↗
+                        </div>
+                    </a>
+                    {% else %}
+                    <a href="{% url 'project_detail' project.id %}" class="w-full aspect-video border border-white/10 bg-[#0A0A0D] flex flex-col items-center justify-center font-mono text-xs text-zinc-500 hover:border-emerald-500/40 transition-colors uppercase tracking-widest relative group/img">
+                        <span>SYS_RENDER // ARCHITECTURE DOCUMENTED</span>
+                        <div class="absolute bottom-0 right-0 bg-[#050506]/90 border-t border-l border-white/15 px-3.5 py-2 font-mono text-[10px] text-zinc-300 group-hover/img:bg-emerald-500 group-hover/img:text-black transition-colors uppercase tracking-widest font-bold">
+                            INSPECT SYSTEM ↗
+                        </div>
+                    </a>
+                    {% endif %}
+                </div>
+            </article>
+            {% endfor %}
+        </div>
+    </section>
+
+
+    <!-- =======================================================================
+         SEC—05 // CHRONOLOGICAL ENGINEERING FIELD LOGS
+         ======================================================================= -->
+    <section id="chapter-04" class="c2-chapter-section bg-[#050506]" data-chapter="04" data-chapter-title="FIELD LOGS">
+        <!-- Sticky Section Sub-Header -->
+        <div class="sec-sticky-header sticky top-12 z-30 bg-[#050506]/95 backdrop-blur-md px-6 py-3 border-b border-white/[0.08] flex items-center justify-between font-mono text-[11px] text-zinc-500 uppercase tracking-widest relative">
+            <div class="flex items-center gap-2.5">
+                <span class="sec-led w-1.5 h-1.5 bg-emerald-500 inline-block"></span>
+                <span class="text-emerald-500 font-bold">05</span>
+                <span class="text-zinc-700">/</span>
+                <span class="sec-decode-label text-zinc-300">{% translate "05 // ENGINEERING FIELD LOGS" %}</span>
+            </div>
+            <span class="text-zinc-400">{% translate "ARCHIVE // CHRONOLOGICAL" %}</span>
+            <div class="grid-line-h absolute bottom-0 left-0 right-0"></div>
+        </div>
+
+        <!-- Featured Field Log (If Present and Has Title) -->
+        {% if featured_logs %}
+        {% for featured_log in featured_logs %}
+        {% if featured_log.title %}
+        <div class="log-ledger-row p-6 md:p-10 border-b border-white/[0.08] bg-[#08080B] flex flex-col md:flex-row justify-between items-start md:items-center gap-6 group">
+            <div class="max-w-3xl">
+                <div class="flex items-center gap-3 font-mono text-[10px] text-emerald-400 mb-2 uppercase tracking-wider">
+                    <span class="w-1.5 h-1.5 bg-emerald-500"></span>
+                    <span class="font-bold">FEATURED DEEP DIVE</span>
+                    <span class="text-zinc-600">//</span>
+                    <span class="text-zinc-400">{{ featured_log.date|short_timesince }}</span>
+                </div>
+                <h3 class="text-xl md:text-2xl font-display font-bold text-white group-hover:text-emerald-400 group-hover:translate-x-1.5 transition-all mb-2">
+                    <a href="/logging/?log_id={{ featured_log.id }}">{{ featured_log.title }}</a>
+                </h3>
+                <p class="text-xs text-zinc-400 font-light leading-relaxed mb-4">
+                    {{ featured_log.content|striptags|truncatechars:140 }}
+                </p>
+                <div class="flex gap-2 flex-wrap">
+                    {% for item in featured_log.stack.all %}
+                    <span class="px-2 py-0.5 border border-white/10 text-[10px] font-mono text-zinc-400 uppercase">#{{ item.technology }}</span>
+                    {% endfor %}
+                </div>
+            </div>
+            <a href="/logging/?log_id={{ featured_log.id }}" class="btn-sweep btn-sweep-emerald px-5 py-2.5 border border-emerald-500/40 shrink-0 font-mono text-xs uppercase tracking-wider text-emerald-400 flex items-center gap-2 font-bold">
+                <span>READ LOG</span>
+                <span>→</span>
+            </a>
+        </div>
+        {% endif %}
+        {% endfor %}
+        {% endif %}
+
+        <!-- Chronological Ledger Index Rows (Only render logs with non-empty title) -->
+        <div class="divide-y divide-white/[0.08] kinetic-block">
+            {% for log in latest_logs %}
+            {% if log.title %}
+            <a href="/logging/?log_id={{ log.id }}" class="log-ledger-row py-6 px-6 md:px-10 flex items-center justify-between group">
+                <div class="flex items-center gap-4 md:gap-8 flex-grow min-w-0">
+                    <!-- Date / Age -->
+                    <span class="font-mono text-[11px] text-zinc-500 w-24 shrink-0 tabular-nums">
+                        {{ log.date|short_timesince }}
+                    </span>
+
+                    <!-- Log Title -->
+                    <h4 class="font-display font-bold text-white text-base md:text-lg group-hover:text-emerald-400 group-hover:translate-x-2 transition-all duration-300 truncate">
+                        {{ log.title }}
+                    </h4>
+
+                    <!-- Summary snippet (Desktop only) -->
+                    <p class="hidden lg:block text-xs text-zinc-500 font-light truncate max-w-md ml-auto pr-6">
+                        {{ log.content|striptags|truncatechars:85 }}
                     </p>
                 </div>
 
-                <h1 class="hero-title font-display font-bold uppercase z-10 mix-blend-screen gsap-reveal">
-                    Josué<br>Leiva.
-                </h1>
+                <!-- Right Arrow -->
+                <span class="font-mono text-zinc-500 group-hover:text-emerald-400 group-hover:translate-x-1 transition-all duration-300 pl-4 shrink-0">
+                    →
+                </span>
+            </a>
+            {% endif %}
+            {% endfor %}
+        </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-12 gap-8 mt-12 w-full items-end">
-                    <!-- Left Side: Github Activity -->
-                    <div class="md:col-span-7 md:col-start-1 gsap-reveal mt-12 md:mt-0">
-                        <div class="w-full bg-white/50 dark:bg-slate-900/50 p-6 md:p-8 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm backdrop-blur-sm">
-                            <div class="flex justify-between items-center mb-6">
-                                <p class="font-mono text-xs text-slate-500 dark:text-slate-300 uppercase tracking-widest flex items-center gap-2">
-                                    <span class="w-2 h-2 rounded-full bg-brand-primary animate-pulse"></span>
-                                    {% translate "Github_Activity // Live" %}
-                                </p>
-                                <span class="text-xs font-mono text-slate-400 dark:text-slate-300">josue-fourier</span>
-                            </div>
-                            <div class="w-full overflow-hidden opacity-90 hover:opacity-100 transition-opacity duration-300">
-                                <img src="https://ghchart.rshah.org/14b8a6/josue-fourier" alt="Josue's GitHub Activity Graph" loading="lazy" class="w-full h-auto gh-chart drop-shadow-sm" />
-                            </div>
-                        </div>
-                    </div>
+        <!-- Archive Footer Link Bar -->
+        <div class="py-5 px-6 md:px-10 flex items-center justify-between bg-[#08080B] border-t border-white/[0.08] font-mono text-xs text-zinc-500">
+            <span>{% translate "Engineering Logs" %}</span>
+            <a href="/logging/" class="text-emerald-400 hover:text-white transition-colors uppercase tracking-wider font-bold inline-flex items-center gap-1.5">
+                <span>{% translate "View All Logs" %}</span>
+                <span>→</span>
+            </a>
+        </div>
+    </section>
 
-                    <!-- Right Side: Bio & Links -->
-                    <div class="md:col-span-5 md:col-start-8 gsap-reveal">
-                        <p class="text-xl text-slate-600 dark:text-slate-300 font-light leading-relaxed mb-10">
-                            {% translate "Telematics Engineering student specializing in" %} <strong class="text-slate-900 dark:text-slate-100 font-medium">{% translate "backend architecture" %}</strong>, <strong class="text-slate-900 dark:text-slate-100 font-medium">{% translate "automation" %}</strong>, <strong class="text-slate-900 dark:text-slate-100 font-medium">{% translate "flows" %}</strong>, {% translate "and" %} <strong class="text-slate-900 dark:text-slate-100 font-medium">{% translate "human impact" %}</strong>.
-                        </p>
+</main>
+{% endblock %}
 
-                        <div class="flex flex-wrap gap-6 items-center">
-                            <div class="magnetic-wrap">
-                                <a href="https://github.com/josue-fourier" target="_blank" data-umami-event="GitHub Click" class="btn-magnetic font-mono text-sm interactive-element">
-                                    [ GitHub ]
-                                </a>
-                            </div>
-                            <div class="magnetic-wrap">
-                                <a href="https://linkedin.com/in/josuenicolas" data-umami-event="LinkedIn Click" target="_blank" class="btn-magnetic font-mono text-sm interactive-element">
-                                    [ LinkedIn ]
-                                </a>
-                            </div>
-                            <div class="magnetic-wrap">
+{% block extra_js %}
+<script>
+    // --- Santiago Real-time Telemetry Clock ---
+    function initSantiagoClock() {
+        const clockEl = document.getElementById('santiago-clock');
+        if (!clockEl) return;
 
-                                {% get_current_language as LANGUAGE_CODE %}
-                                <!-- Cambiar el inicio del link, para cambiar la redirección según el idioma, sin repetir el link completo-->
-                                {% if LANGUAGE_CODE == "es" %}
-                                <a href="/cv-es" target="_blank" data-umami-event="CV Download ES" class="btn-magnetic font-mono text-sm interactive-element">
-                                {% else %}
-                                <a href="/cv-en" target="_blank" data-umami-event="CV Download EN" class="btn-magnetic font-mono text-sm interactive-element">
-                                {% endif %}
-                                    [ {% translate "Download_CV.pdf" %} ]
-                                </a>
+        const formatter = new Intl.DateTimeFormat('es-CL', {
+            timeZone: 'America/Santiago',
+            hour12: false,
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit'
+        });
 
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </header>
+        function updateClock() {
+            try {
+                clockEl.textContent = formatter.format(new Date());
+            } catch (e) {
+                const now = new Date();
+                clockEl.textContent = now.toTimeString().split(' ')[0];
+            }
+        }
+        updateClock();
+        setInterval(updateClock, 1000);
+    }
 
-            <section class="py-12 section-gsap relative">
-                <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8 gsap-reveal relative z-10">
-                    <div class="w-full">
-                        <h2 class="text-3xl md:text-4xl font-display font-medium text-slate-900 dark:text-slate-100 mb-2">{% translate "Core Competencies" %}</h2>
-                        <div class="h-px w-full bg-gradient-to-r from-brand-primary/50 to-transparent mt-4 mb-2"></div>
-                    </div>
-                </div>
+    // --- Santiago Live Weather (Open-Meteo API, Plain Text, No Emojis) ---
+    async function initSantiagoWeather() {
+        const tempEl = document.getElementById('santiago-weather-temp');
+        if (!tempEl) return;
 
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 gsap-stagger-container relative z-10 mb-10">
-                    {% for category in core_competencies %}
-                        <div class="glass-panel p-5 border border-slate-200/50 dark:border-slate-700/50 bg-white/40 dark:bg-slate-800/40 backdrop-blur-md rounded-xl shadow-lg gsap-stagger-item hover:-translate-y-1 transition-all duration-300 overflow-hidden relative group interactive-element">
-                            <!-- Animated border glow -->
-                            <div class="absolute inset-0 bg-gradient-to-br from-brand-primary/10 via-transparent to-brand-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
-                            
-                            <h3 class="font-mono text-slate-800 dark:text-slate-200 text-xs font-bold tracking-widest uppercase mb-4 relative z-10 flex items-center gap-2">
-                                <span class="w-2 h-2 rounded-full bg-brand-primary shadow-[0_0_8px_rgba(13,148,136,0.8)] group-hover:animate-pulse"></span>
-                                {{ category.name }}
-                            </h3>
-                            <div class="flex flex-wrap gap-2 relative z-10">
-                                {% for skill in category.skills.all %}
-                                    <span class="px-2.5 py-1 text-[10px] font-mono uppercase tracking-wider rounded border border-brand-primary/30 bg-brand-primary/5 text-slate-700 dark:text-slate-300 group-hover:border-brand-primary/60 group-hover:bg-brand-primary/10 transition-colors duration-300">
-                                        {{ skill.name }}
-                                    </span>
-                                {% endfor %}
-                            </div>
-                        </div>
-                    {% endfor %}
-                </div>
-            </section>
+        const cacheKey = 'scl_weather_cache';
+        const cacheTimeKey = 'scl_weather_cache_time';
+        const cachedData = localStorage.getItem(cacheKey);
+        const cachedTime = localStorage.getItem(cacheTimeKey);
+        const now = Date.now();
 
-            <section class="py-12 section-gsap">
-                <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 gsap-reveal">
-                    <div>
-                        <h2 class="text-3xl md:text-4xl font-display font-medium text-slate-900 dark:text-slate-100 mb-2">{% translate "Engineering Logs" %}</h2>
-                        <p class="text-brand-primary font-mono text-xs font-medium">{% translate "SYSTEM_TELEMETRY // LATEST_REPORTS" %}</p>
-                    </div>
-                    <div class="magnetic-wrap hidden md:block">
-                        <a href="/logging/" preload="mouseover" class="btn-magnetic font-mono text-sm interactive-element">
-                            [ VIEW_ALL_LOGS ]
-                        </a>
-                    </div>
-                </div>
-                {% if featured_logs %}
-                    {% for featured_log in featured_logs %}
-                    <div class="mb-6">
-                        <a href="/logging/?log_id={{ featured_log.id }}" preload="mouseover" class="block group tilt-element interactive-element gsap-reveal">
-                            <article class="glass-panel w-full p-8 relative overflow-hidden flex flex-col md:flex-row gap-6 border-2 border-brand-primary/30 dark:border-brand-primary/50 bg-brand-primary/5 dark:bg-brand-primary/10">
-                                <!-- Hover Blur Aura -->
-                                <div class="absolute -top-32 -right-32 w-64 h-64 bg-brand-primary/20 rounded-full blur-[80px] group-hover:bg-brand-primary/50 transition-colors duration-700"></div>
-                                
-                                <div class="flex-grow relative z-10">
-                                    <div class="flex items-center gap-3 mb-4">
-                                        <span class="px-2 py-1 bg-brand-primary text-white font-mono text-[10px] font-bold tracking-widest uppercase rounded">
-                                            Featured Deep Dive
-                                        </span>
-                                        <span class="inline-block px-2 py-0.5 rounded bg-brand-primary/10 text-brand-primary font-mono text-[10px] font-bold tracking-widest border border-brand-primary/20">
-                                            {{ featured_log.date|short_timesince }}
-                                        </span>
-                                    </div>
-                                    <h3 class="text-2xl md:text-3xl font-display font-bold text-slate-900 dark:text-slate-100 group-hover:text-brand-primary transition-colors duration-300 leading-tight mb-2">
-                                        {{ featured_log.title }}
-                                    </h3>
-                                    <p class="text-slate-600 dark:text-slate-400 font-light text-sm mb-4 leading-relaxed">
-                                        {{ featured_log.content|striptags|truncatechars:60 }}
-                                    </p>
-                                    <div class="flex gap-2 flex-wrap">
-                                        {% for item in featured_log.stack.all %}
-                                            <span class="text-xs font-mono text-slate-500 uppercase px-2 py-1 bg-white/50 dark:bg-slate-800/50 rounded border border-slate-200 dark:border-slate-700">#{{ item.technology }}</span>
-                                        {% endfor %}
-                                    </div>
-                                </div>
-                                <div class="relative z-10 flex items-center justify-end md:justify-center md:px-6">
-                                    <!-- Arrow Icon -->
-                                    <div class="w-12 h-12 rounded-full border-2 border-brand-primary flex items-center justify-center group-hover:bg-brand-primary group-hover:text-white text-brand-primary transition-all duration-300 -rotate-45 group-hover:rotate-0 flex-shrink-0">
-                                        <svg width="16" height="16" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M1 7H13M13 7L7 1M13 7L7 13" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-                                        </svg>
-                                    </div>
-                                </div>
-                            </article>
-                        </a>
-                    </div>
-                    {% endfor %}
-                {% endif %}
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    {% for log in latest_logs %}
-                        <a href="/logging/?log_id={{ log.id }}" preload="mouseover" class="block group tilt-element interactive-element gsap-reveal">
-                            <article class="glass-panel h-full p-5 relative overflow-hidden flex flex-col min-h-[160px]">
-                                <!-- Hover Blur Aura -->
-                                <div class="absolute -top-16 -right-16 w-32 h-32 bg-brand-primary/20 rounded-full blur-[40px] group-hover:bg-brand-primary/40 transition-colors duration-700"></div>
+        if (cachedData && cachedTime && (now - parseInt(cachedTime, 10) < 60 * 60 * 1000)) {
+            renderWeather(JSON.parse(cachedData));
+            return;
+        }
 
-                                <div class="relative z-10 flex justify-between items-start mb-3">
-                                    <span class="inline-block px-2 py-0.5 rounded bg-brand-primary/10 text-brand-primary font-mono text-[9px] font-bold tracking-widest border border-brand-primary/20">
-                                        {{ log.date|short_timesince }}
-                                    </span>
-                                    <span class="text-[9px] font-mono text-slate-400 dark:text-slate-300 uppercase tracking-wider text-right max-w-[50%] truncate">
-                                        {{ log.project.name }}
-                                    </span>
-                                </div>
+        try {
+            const res = await fetch('https://api.open-meteo.com/v1/forecast?latitude=-33.45&longitude=-70.66&current_weather=true');
+            if (!res.ok) return;
+            const data = await res.json();
+            if (data && data.current_weather) {
+                localStorage.setItem(cacheKey, JSON.stringify(data.current_weather));
+                localStorage.setItem(cacheTimeKey, String(now));
+                renderWeather(data.current_weather);
+            }
+        } catch (e) {
+            // Silently fail without breaking anything
+        }
 
-                                <div class="relative z-10 flex-grow">
-                                    <h3 class="text-lg font-display font-bold text-slate-900 dark:text-slate-100 group-hover:text-brand-primary transition-colors duration-300 leading-tight mb-2">
-                                        {{ log.title }}
-                                    </h3>
-                                    <p class="text-slate-600 dark:text-slate-400 font-light text-xs mb-3 leading-relaxed">
-                                        {{ log.content|striptags|truncatechars:60 }}
-                                    </p>
-                                </div>
+        function renderWeather(current) {
+            if (!current) return;
+            const temp = Math.round(current.temperature);
+            tempEl.textContent = `${temp}°C`;
+        }
+    }
 
-                                <div class="relative z-10 mt-auto flex justify-between items-end">
-                                    <div class="flex gap-1.5 flex-wrap max-w-[70%]">
-                                        {% for item in log.stack.all|slice:":3" %}
-                                            <span class="text-[9px] font-mono text-slate-500 dark:text-slate-300 uppercase">#{{ item.technology }}</span>
-                                        {% endfor %}
-                                    </div>
-                                    <!-- Arrow Icon -->
-                                    <div class="w-7 h-7 rounded-full border border-slate-300 dark:border-slate-700 flex items-center justify-center group-hover:bg-brand-primary group-hover:border-brand-primary group-hover:text-white text-slate-500 dark:text-slate-300 transition-all duration-300 -rotate-45 group-hover:rotate-0 flex-shrink-0">
-                                        <svg width="10" height="10" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M1 7H13M13 7L7 1M13 7L7 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                        </svg>
-                                    </div>
-                                </div>
-                            </article>
-                        </a>
-                    {% endfor %}
-                </div>
-                <div class="mt-8 md:hidden text-center magnetic-wrap">
-                    <a href="/logging/" preload="mouseover" class="mt-4 btn-magnetic font-mono text-sm interactive-element w-full">
-                        [ VIEW_ALL_LOGS ]
-                    </a>
-                </div>
-            </section>
-
-            <section class="py-16 section-gsap">
-                <div class="flex items-center gap-6 mb-12 gsap-reveal">
-                    <h2 class="text-4xl md:text-5xl font-display font-medium text-slate-900 dark:text-slate-100">{% translate "Technical Architecture" %}</h2>
-                    <div class="h-px flex-grow bg-gradient-to-r from-slate-300 to-transparent"></div>
-                </div>
-
-                <div class="flex flex-wrap gap-3 gsap-stagger-container">
-                    {% for strength in technical_strengths %}
-                        <button data-tech="{{ strength.technology }}" class="tech-filter-btn gsap-stagger-item px-5 py-3 rounded-full border border-slate-200 dark:border-slate-700 bg-white/80 dark:bg-slate-800/80 text-slate-700 dark:text-slate-200 font-mono text-sm hover:border-brand-primary hover:text-brand-primary hover:bg-white dark:hover:bg-slate-800 transition-all duration-300 cursor-pointer interactive-element will-change-transform">
-                            {{ strength.technology }} ({{ strength.project_count }} / {{ total_projects }})
-                        </button>
-                    {% endfor %}
-                </div>
-            </section>
-
-
-            <section id="projects" class="py-16 section-gsap">
-                <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16 gsap-reveal">
-                    <div>
-                        <h2 class="text-4xl md:text-5xl font-display font-medium text-slate-900 dark:text-slate-100 mb-4">{% translate "Independent Systems" %}</h2>
-                        <p class="text-brand-primary font-mono text-sm font-medium">{% translate "NOT_COURSE_PROJECTS // ACTIVE_WORK" %}</p>
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <!-- DJANGO INTEGRATION: Projects Loop -->
-                    {% for project in projects %}
-                        <div class="project-card filter-transition block group tilt-element gsap-reveal" data-techs="{% for item in project.stack.all %}{{ item.technology }},{% endfor %}">
-                            <article class="glass-panel h-full p-8 md:p-10 relative overflow-hidden flex flex-col justify-between">
-                                <!-- Full Card Link -->
-                                <a href="{% url 'project_detail' project.id %}" preload="mouseover" class="absolute inset-0 z-0 interactive-element"></a>
-                                
-                                <!-- Hover Blur Aura -->
-                                <div class="absolute -top-32 -right-32 w-64 h-64 bg-brand-primary/20 rounded-full blur-[80px] group-hover:bg-brand-primary/40 transition-colors duration-700 pointer-events-none"></div>
-
-                                {% if project.preview_image %}
-                                <div class="relative z-10 mb-6 overflow-hidden rounded-xl aspect-video border border-slate-200/50 dark:border-slate-700/50 bg-slate-900/10 dark:bg-slate-900/40 pointer-events-none">
-                                    <img src="{{ project.preview_image.file.url }}" alt="{{ project.name }} preview" loading="lazy" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
-                                </div>
-                                {% endif %}
-
-                                <div class="relative z-10 mb-8 pointer-events-none">
-                                    <div class="flex justify-between items-start mb-6">
-                                        <h3 class="text-3xl font-display font-bold text-slate-900 dark:text-slate-100 group-hover:text-brand-primary transition-colors duration-300">
-                                            {{ project.name }}
-                                        </h3>
-                                <!-- Arrow Icon -->
-                                        <div class="w-10 h-10 rounded-full border border-slate-300 dark:border-slate-700 flex items-center justify-center group-hover:bg-brand-primary group-hover:border-brand-primary group-hover:text-white text-slate-500 dark:text-slate-300 transition-all duration-300 -rotate-45 group-hover:rotate-0">
-                                            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M1 7H13M13 7L7 1M13 7L7 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                            </svg>
-                                        </div>
-                                    </div>
-                                    <p class="text-slate-600 dark:text-slate-300 leading-relaxed font-light">
-                                        {{ project.description }}
-                                    </p>
-                                </div>
-
-                                <div class="relative z-20 mt-auto flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-t border-slate-200/50 dark:border-slate-700/50 pt-6 pointer-events-none">
-                                    <p class="inline-block px-3 py-1 rounded border border-slate-200 dark:border-slate-700 bg-white/60 dark:bg-slate-800/60 font-mono text-xs text-brand-primary font-medium">
-                                        STACK:
-                                        {% for item in project.stack.all %}{{item.technology}}{% if forloop.last %}.{% else %}, {% endif %}{% endfor %}
-                                    </p>
-                                    
-                                    {% if project.link %}
-                                    <a href="{{ project.link }}" target="_blank" class="pointer-events-auto px-4 py-2 bg-brand-primary/10 text-brand-primary font-mono text-[10px] font-bold rounded-full border border-brand-primary/30 hover:bg-brand-primary hover:text-white hover:shadow-[0_0_15px_rgba(13,148,136,0.5)] transition-all interactive-element flex items-center gap-2 uppercase tracking-widest w-fit">
-                                        <span class="w-1.5 h-1.5 rounded-full bg-brand-primary animate-pulse group-hover:bg-white transition-colors"></span>
-                                        VIEW_LIVE
-                                    </a>
-                                    {% endif %}
-                                </div>
-                            </article>
-                        </div>
-                    {% endfor %}
-                </div>
-            </section>
-
-        </main>
-    </div>
-</div>
+    document.addEventListener('DOMContentLoaded', () => {
+        initSantiagoClock();
+        initSantiagoWeather();
+    });
+</script>
 {% endblock %}

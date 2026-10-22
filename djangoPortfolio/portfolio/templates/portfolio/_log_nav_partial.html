@@ -1,38 +1,38 @@
 {% load hud_tags %}
 {% for log in page_obj %}
-<button class="log-item bg-white/60 dark:bg-slate-700/40 backdrop-blur-xl border border-slate-200/50 dark:border-slate-600/50 shadow-sm p-4 lg:p-5 text-left w-[85vw] lg:w-full flex-none snap-center lg:snap-align-none flex flex-col gap-2 {% if forloop.first and not page_obj.has_previous %}active{% endif %} hover:bg-slate-50/50 dark:hover:bg-slate-600/50 hover:-translate-y-1 hover:shadow-lg active:scale-[0.98] transition-all duration-300"
+<button class="log-item p-4 lg:p-5 text-left w-[72vw] sm:w-[260px] md:w-full flex-none snap-center md:snap-align-none flex flex-col justify-between gap-2 {% if forloop.first and not page_obj.has_previous %}active{% endif %} cursor-pointer"
         hx-get="{% url 'single_log' log.id %}"
         hx-target="#log-content-area"
         hx-swap="innerHTML transition:true"
         hx-indicator="#log-skeleton">
-        
-    <div class="flex flex-wrap justify-between items-start w-full mb-1 gap-1">
-        <span class="text-[11px] font-mono text-[var(--brand-primary)] font-bold tracking-wide whitespace-nowrap">[- {{ log.date|short_timesince }} ]</span>
-        <span class="text-[10px] font-mono text-slate-500 dark:text-slate-200 bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded ml-auto">{{ log.project.name|default:"System" }}</span>
+
+    <div class="flex flex-wrap justify-between items-center w-full gap-1 font-mono text-[10px] uppercase tracking-wider">
+        <span class="text-emerald-400 font-bold whitespace-nowrap">{{ log.date|short_timesince }}</span>
+        <span class="text-zinc-500 truncate max-w-[130px]">{{ log.project.name|default:"System" }}</span>
     </div>
-    
-    <h3 class="text-sm text-slate-900 dark:text-slate-200 line-clamp-2 log-title">{{ log.title }}</h3>
-    
-    <div class="flex justify-between items-center w-full mt-2">
-        <div class="flex gap-2">
+
+    <h3 class="font-display font-bold text-sm text-white line-clamp-2 log-title leading-snug">{{ log.title }}</h3>
+
+    <div class="flex justify-between items-center w-full font-mono text-[10px]">
+        <div class="flex gap-1.5 overflow-hidden">
             {% for tech in log.stack.all|slice:":2" %}
-                <span class="text-[9px] font-mono text-slate-500 dark:text-slate-200 border border-slate-200 dark:border-slate-700 bg-white/50 dark:bg-slate-800/50 px-1 rounded shadow-sm">{{ tech.technology }}</span>
+                <span class="px-1.5 py-0.5 border border-white/10 text-zinc-400 uppercase whitespace-nowrap">#{{ tech.technology }}</span>
             {% endfor %}
         </div>
-        <span class="text-[9px] font-mono text-slate-400 dark:text-slate-200 ml-auto whitespace-nowrap">{{ log.date|date:"Y-m-d" }}</span>
+        <span class="text-zinc-600 ml-auto whitespace-nowrap tabular-nums">{{ log.date|date:"Y-m-d" }}</span>
     </div>
 </button>
 {% endfor %}
 
 <!-- Manual Load More Button -->
 {% if page_obj.has_next %}
-<button class="log-item bg-white/60 dark:bg-slate-700/40 backdrop-blur-xl border border-slate-200/50 dark:border-slate-600/50 shadow-sm p-4 rounded-lg text-center w-[85vw] lg:w-full flex-none snap-center lg:snap-align-none flex items-center justify-center min-h-[100px] cursor-pointer hover:bg-[var(--brand-primary)]/10 dark:hover:bg-[var(--brand-primary)]/20 group hover:-translate-y-1 hover:shadow-lg active:scale-[0.98] transition-all duration-300"
+<button class="log-item btn-sweep btn-sweep-emerald p-4 text-center w-[55vw] sm:w-[200px] md:w-full flex-none snap-center md:snap-align-none flex items-center justify-center min-h-[76px] md:min-h-[84px] cursor-pointer text-emerald-400"
         hx-get="{% url 'log_list' %}?page={{ page_obj.next_page_number }}"
         hx-target="this"
         hx-swap="outerHTML">
-    <div class="flex items-center gap-3">
-        <div class="w-2 h-2 rounded-full bg-[var(--brand-primary)] group-hover:animate-ping"></div>
-        <span class="text-xs font-mono text-[var(--brand-primary)] font-bold tracking-widest">[ LOAD_MORE ]</span>
-    </div>
+    <span class="font-mono text-xs uppercase tracking-widest font-bold flex items-center gap-2">
+        <span>Load more</span>
+        <span>↓</span>
+    </span>
 </button>
 {% endif %}
