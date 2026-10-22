@@ -359,4 +359,8 @@ msgstr "04 // REGISTROS DE INGENIERÍA"
 msgid "COMPONENTS"
 msgstr "COMPONENTES"
 
+msgid "LIVE CONSOLE"
+msgstr "CONSOLA EN VIVO"
+
+
 

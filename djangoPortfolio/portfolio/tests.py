@@ -959,6 +959,30 @@ class C2EngineeringPortfolioTests(TestCase):
         self.assertIn('data-chapter="03"', content)
         self.assertIn('data-chapter="04"', content)
 
+    def test_spa_logging_console_integrated_in_index(self):
+        """index.html Chapter 04 integrates the interactive logging console with log-split and HTMX reader."""
+        log = LogEntry.objects.create(title="Field Log Alpha", content="Analyzing telemetry packet integrity.")
+        res = self.client.get("/")
+        self.assertEqual(res.status_code, 200)
+        content = res.content.decode("utf-8")
+        self.assertIn('id="log-split"', content)
+        self.assertIn('id="log-nav"', content)
+        self.assertIn('id="log-scroll-container"', content)
+        self.assertIn('id="log-content-area"', content)
+        self.assertIn("Field Log Alpha", content)
+        self.assertIn(f"hx-get=\"/api/logs/{log.id}\"", content)
+
+    def test_spa_logging_console_target_log_query_param(self):
+        """Passing ?log_id=<id> to root loads that specific log in the reading pane."""
+        log1 = LogEntry.objects.create(title="Log 1", content="First entry")
+        log2 = LogEntry.objects.create(title="Log 2 Specific Target", content="Targeted deep dive log content.")
+        res = self.client.get(f"/?log_id={log2.id}")
+        self.assertEqual(res.status_code, 200)
+        content = res.content.decode("utf-8")
+        self.assertIn("Log 2 Specific Target", content)
+        self.assertIn("Targeted deep dive log content.", content)
+
+
     def test_r3_and_r4_chapter_02_rendered_when_badges_exist(self):
         """When HackerRank badges exist, chapter 02 (Benchmarks) is rendered."""
         from django.utils import timezone

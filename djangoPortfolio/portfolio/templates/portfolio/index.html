@@ -230,7 +230,7 @@
                         {% endif %}
 
                         {% for log in latest_logs|slice:":1" %}{% if log.title %}
-                        <a href="/logging/?log_id={{ log.id }}" class="spec-matrix-row flex items-start justify-between gap-4 py-3 px-2 group/link">
+                        <a href="#chapter-04" data-target-log-id="{{ log.id }}" class="hero-log-jump-link spec-matrix-row flex items-start justify-between gap-4 py-3 px-2 group/link cursor-pointer">
                             <span class="spec-label text-zinc-500 uppercase tracking-wider">{% translate "LATEST LOG" %}</span>
                             <span class="text-zinc-200 group-hover/link:text-emerald-400 transition-colors text-right break-words min-w-0">
                                 {{ log.title }}
@@ -531,7 +531,7 @@
 
 
     <!-- =======================================================================
-         SEC—04 // CHRONOLOGICAL ENGINEERING FIELD LOGS
+         SEC—04 // INTERACTIVE ENGINEERING FIELD LOGS CONSOLE (SPA)
          ======================================================================= -->
     <section id="chapter-04" class="c2-chapter-section bg-[#050506]" data-chapter="04" data-chapter-title="FIELD LOGS">
         <!-- Sticky Section Sub-Header -->
@@ -542,81 +542,59 @@
                 <span class="text-zinc-700">/</span>
                 <span class="sec-decode-label text-zinc-300" data-scramble="true">{% translate "04 // ENGINEERING FIELD LOGS" %}</span>
             </div>
-            <span class="text-zinc-500 hidden sm:inline font-mono text-xs">{% translate "ARCHIVE" %}</span>
+            <div class="flex items-center gap-4 text-zinc-400 font-mono text-xs">
+                <span>{{ log_count|default:0 }} {% translate "LOGS" %}</span>
+                <span class="text-zinc-700 hidden sm:inline">|</span>
+                <span class="text-emerald-400 font-semibold hidden sm:inline">{% translate "LIVE CONSOLE" %}</span>
+            </div>
             <div class="grid-line-h absolute bottom-0 left-0 right-0"></div>
         </div>
 
-        <!-- Featured Field Log (If Present and Has Title) -->
-        {% if featured_logs %}
-        {% for featured_log in featured_logs %}
-        {% if featured_log.title %}
-        <div class="log-ledger-row p-6 md:p-10 border-b border-white/[0.08] bg-[#08080B] flex flex-col md:flex-row justify-between items-start md:items-center gap-6 group">
-            <div class="max-w-3xl">
-                <div class="flex items-center gap-3 font-mono text-[10px] text-emerald-400 mb-2 uppercase tracking-wider">
-                    <span class="w-1.5 h-1.5 bg-emerald-500"></span>
-                    <span class="font-bold">{% translate "FEATURED LOG" %}</span>
-                    <span class="text-zinc-600">//</span>
-                    <span class="text-zinc-400">{{ featured_log.date|short_timesince }}</span>
-                </div>
-                <h3 class="text-xl md:text-2xl font-display font-bold text-white group-hover:text-emerald-400 group-hover:translate-x-1.5 transition-all mb-2" data-scramble="true">
-                    <a href="/logging/?log_id={{ featured_log.id }}">{{ featured_log.title }}</a>
-                </h3>
-                <p class="text-xs text-zinc-400 font-light leading-relaxed mb-4">
-                    {{ featured_log.content|striptags|truncatechars:140 }}
-                </p>
-                <div class="flex gap-2 flex-wrap">
-                    {% for item in featured_log.stack.all %}
-                    <span class="px-2 py-0.5 border border-white/10 text-[10px] font-mono text-zinc-400 uppercase">{{ item.technology }}</span>
-                    {% endfor %}
-                </div>
-            </div>
-            <a href="/logging/?log_id={{ featured_log.id }}" class="btn-sweep btn-sweep-emerald px-5 py-2.5 border border-emerald-500/40 shrink-0 font-mono text-xs uppercase tracking-wider text-emerald-400 flex items-center gap-2 font-bold">
-                <span>{% translate "READ LOG" %}</span>
-                <span>→</span>
-            </a>
-        </div>
-        {% endif %}
-        {% endfor %}
-        {% endif %}
+        <!-- Full-Featured Split Console: Left Ledger (or mobile horizontal strip) | Right Reading Pane -->
+        <div id="log-split" class="relative z-10 flex flex-col md:grid md:grid-rows-1 md:grid-cols-[280px_1fr] lg:grid-cols-[340px_1fr] xl:grid-cols-[380px_1fr] w-full bg-[#050506] md:h-[750px] lg:h-[820px] md:overflow-hidden border-b border-white/[0.08]">
 
-        <!-- Chronological Ledger Index Rows (Only render logs with non-empty title) -->
-        <div class="divide-y divide-white/[0.08] kinetic-block">
-            {% for log in latest_logs %}
-            {% if log.title %}
-            <a href="/logging/?log_id={{ log.id }}" class="log-ledger-row py-6 px-6 md:px-10 flex items-center justify-between group">
-                <div class="flex items-center gap-4 md:gap-8 flex-grow min-w-0">
-                    <!-- Date / Age -->
-                    <span class="font-mono text-[11px] text-zinc-500 w-24 shrink-0 tabular-nums">
-                        {{ log.date|short_timesince }}
-                    </span>
-
-                    <!-- Log Title -->
-                    <h4 class="font-display font-bold text-white text-base md:text-lg group-hover:text-emerald-400 group-hover:translate-x-2 transition-all duration-300 truncate" data-scramble="true">
-                        {{ log.title }}
-                    </h4>
-
-                    <!-- Summary snippet (Desktop only) -->
-                    <p class="hidden lg:block text-xs text-zinc-500 font-light truncate max-w-md ml-auto pr-6">
-                        {{ log.content|striptags|truncatechars:85 }}
-                    </p>
+            <!-- Log Selector (Top horizontal strip on mobile, left ledger on desktop) -->
+            <aside class="w-full md:h-full flex flex-col shrink-0 border-b md:border-b-0 md:border-r border-white/[0.08] bg-[#08080B] md:min-h-0">
+                <div class="sticky-ledger-head px-4 py-3 border-b border-white/[0.08] flex items-center justify-between shrink-0 font-mono text-[11px] uppercase tracking-widest">
+                    <div class="flex items-center gap-2.5">
+                        <span class="w-1.5 h-1.5 bg-emerald-500 inline-block"></span>
+                        <span class="text-emerald-500 font-bold">{{ log_count|default:0 }}</span>
+                        <span class="text-zinc-700">/</span>
+                        <span class="text-zinc-300">{% translate "Engineering Logs" %}</span>
+                    </div>
+                    <span class="md:hidden text-zinc-500">{% translate "SWIPE" %} ↔</span>
                 </div>
 
-                <!-- Right Arrow -->
-                <span class="font-mono text-zinc-500 group-hover:text-emerald-400 group-hover:translate-x-1 transition-all duration-300 pl-4 shrink-0">
-                    →
-                </span>
-            </a>
-            {% endif %}
-            {% endfor %}
-        </div>
+                <div id="log-nav" data-lenis-prevent class="flex md:flex-col overflow-x-auto md:overflow-y-auto md:overflow-x-hidden snap-x snap-mandatory md:snap-none md:flex-1 md:min-h-0 md:divide-y md:divide-white/[0.08]">
+                    {% include 'portfolio/_log_nav_partial.html' %}
+                </div>
+            </aside>
 
-        <!-- Archive Footer Link Bar -->
-        <div class="py-5 px-6 md:px-10 flex items-center justify-between bg-[#08080B] border-t border-white/[0.08] font-mono text-xs text-zinc-500">
-            <span>{% translate "Engineering Logs" %}</span>
-            <a href="/logging/" class="text-emerald-400 hover:text-white transition-colors uppercase tracking-wider font-bold inline-flex items-center gap-1.5">
-                <span>{% translate "View All Logs" %}</span>
-                <span>→</span>
-            </a>
+            <!-- Log Reading Area -->
+            <section id="log-scroll-container" class="relative flex-1 flex flex-col md:h-full min-h-0 md:overflow-hidden">
+                <div class="glass-panel reading-pane z-10 flex-1 flex flex-col md:h-full min-h-0 md:overflow-hidden">
+                    <div id="log-content-area" data-lenis-prevent class="flex-1 md:h-full min-h-0 p-6 sm:p-8 lg:p-12 md:overflow-y-auto max-h-[75vh] md:max-h-none">
+                        {% if target_log %}
+                            {% include 'portfolio/_log.html' with log=target_log %}
+                        {% else %}
+                            <div class="flex items-center justify-center py-20 md:h-full font-mono text-xs uppercase tracking-widest text-zinc-500">
+                                {% translate "Select a log from the ledger" %}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- HTMX Skeleton Loader Overlay -->
+                <div id="log-skeleton" class="htmx-indicator absolute inset-0 z-20 bg-[#050506] p-6 lg:p-12 overflow-hidden flex flex-col pointer-events-none hud-skeleton">
+                    <div class="w-1/3 h-8 bg-white/[0.06] animate-pulse mb-4"></div>
+                    <div class="w-1/4 h-4 bg-white/[0.06] animate-pulse mb-10"></div>
+                    <div class="w-full h-4 bg-white/[0.06] animate-pulse mb-4"></div>
+                    <div class="w-[90%] h-4 bg-white/[0.06] animate-pulse mb-4"></div>
+                    <div class="w-[95%] h-4 bg-white/[0.06] animate-pulse mb-4"></div>
+                    <div class="w-[80%] h-4 bg-white/[0.06] animate-pulse mb-10"></div>
+                    <div class="w-full h-40 bg-white/[0.06] animate-pulse"></div>
+                </div>
+            </section>
         </div>
     </section>
 
@@ -686,9 +664,121 @@
         }
     }
 
+    // --- Interactive Engineering Logs Console (SPA) ---
+    function initLoggingConsole() {
+        if (typeof mermaid !== 'undefined') {
+            mermaid.initialize({
+                startOnLoad: false,
+                theme: document.documentElement.getAttribute('data-theme') === 'dracula' ? 'dark' : 'default',
+                fontFamily: 'JetBrains Mono'
+            });
+        }
+
+        const navContainer = document.getElementById('log-nav');
+        const contentArea = document.getElementById('log-content-area');
+
+        // Handle Active Ledger Item Clicks
+        if (navContainer) {
+            navContainer.addEventListener('click', (e) => {
+                const btn = e.target.closest('.log-item');
+                if (!btn) return;
+
+                document.querySelectorAll('#log-nav .log-item').forEach(el => el.classList.remove('active'));
+                btn.classList.add('active');
+
+                if (btn.getAttribute('hx-target') === '#log-content-area') {
+                    if (contentArea) contentArea.scrollTop = 0;
+                }
+            });
+        }
+
+        // Handle Jump Links from Hero Status to Chapter 04
+        document.querySelectorAll('.hero-log-jump-link').forEach(link => {
+            link.addEventListener('click', (e) => {
+                const logId = link.getAttribute('data-target-log-id');
+                if (!logId) return;
+                const items = Array.from(document.querySelectorAll('#log-nav .log-item'));
+                const targetBtn = items.find(item => {
+                    const hxGet = item.getAttribute('hx-get');
+                    return hxGet && hxGet.includes(logId);
+                });
+                if (targetBtn) {
+                    if (typeof htmx !== 'undefined') htmx.trigger(targetBtn, 'click');
+                    document.querySelectorAll('#log-nav .log-item').forEach(el => el.classList.remove('active'));
+                    targetBtn.classList.add('active');
+                    targetBtn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+                }
+            });
+        });
+
+        // After HTMX swaps new log content into reading area
+        document.body.addEventListener('htmx:afterSettle', function(evt) {
+            const targetId = evt.detail.target.id;
+            if (targetId === 'log-content-area') {
+                const skeleton = document.getElementById('log-skeleton');
+                if (skeleton) skeleton.classList.remove('htmx-request');
+
+                // Convert python-markdown code blocks into div.mermaid
+                evt.detail.target.querySelectorAll('code.language-mermaid').forEach(el => {
+                    const pre = el.parentElement;
+                    const div = document.createElement('div');
+                    div.className = 'mermaid';
+                    div.textContent = el.textContent;
+                    pre.replaceWith(div);
+                });
+
+                if (typeof mermaid !== 'undefined') {
+                    mermaid.init(undefined, evt.detail.target.querySelectorAll('.mermaid'));
+                }
+            }
+        });
+
+        // Initialize mermaid for initial target log if pre-rendered
+        if (contentArea && typeof mermaid !== 'undefined') {
+            contentArea.querySelectorAll('code.language-mermaid').forEach(el => {
+                const pre = el.parentElement;
+                const div = document.createElement('div');
+                div.className = 'mermaid';
+                div.textContent = el.textContent;
+                pre.replaceWith(div);
+            });
+            mermaid.init(undefined, contentArea.querySelectorAll('.mermaid'));
+        }
+
+        // Multi-image carousel event delegation
+        document.addEventListener('click', (e) => {
+            const btn = e.target.closest('[data-carousel-action]');
+            if (!btn) return;
+            const targetId = btn.getAttribute('data-carousel-target');
+            const action = btn.getAttribute('data-carousel-action');
+            const container = document.getElementById(targetId);
+            if (!container) return;
+            const shift = container.clientWidth * 0.85;
+            container.scrollBy({ left: action === 'next' ? shift : -shift, behavior: 'smooth' });
+        });
+
+        // Handle target_log_id query parameter if present on page load
+        const urlParams = new URLSearchParams(window.location.search);
+        const targetLogId = urlParams.get('log_id');
+        if (targetLogId) {
+            const items = Array.from(document.querySelectorAll('#log-nav .log-item'));
+            const targetBtn = items.find(item => {
+                const hxGet = item.getAttribute('hx-get');
+                return hxGet && hxGet.includes(targetLogId);
+            });
+            if (targetBtn) {
+                if (typeof htmx !== 'undefined') htmx.trigger(targetBtn, 'click');
+                document.querySelectorAll('#log-nav .log-item').forEach(el => el.classList.remove('active'));
+                targetBtn.classList.add('active');
+                targetBtn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+            }
+        }
+    }
+
     document.addEventListener('DOMContentLoaded', () => {
         initSantiagoClock();
         initSantiagoWeather();
+        initLoggingConsole();
     });
 </script>
 {% endblock %}

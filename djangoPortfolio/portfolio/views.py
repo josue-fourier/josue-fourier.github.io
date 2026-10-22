@@ -105,6 +105,53 @@ class RootPage(TemplateView):
         latest_hb = NodeHeartbeat.objects.order_by("-timestamp").first()
         context["node_heartbeat"] = latest_hb if (latest_hb and latest_hb.is_recent) else None
 
+        # Interactive Logging Console for SPA (Chapter 04)
+        log_list = (
+            LogEntry.objects.defer("content")
+            .select_related("project")
+            .prefetch_related("stack")
+            .order_by("-date")
+        )
+        paginator = Paginator(log_list, 10)
+        context["page_obj"] = paginator.get_page(1)
+        context["log_count"] = LogEntry.objects.count()
+
+        target_log_id = self.request.GET.get("log_id")
+        context["target_log_id"] = target_log_id
+
+        target_log = None
+        if target_log_id:
+            try:
+                import markdown
+
+                target_log = (
+                    LogEntry.objects.select_related("project")
+                    .prefetch_related("stack", "images")
+                    .get(id=target_log_id)
+                )
+                target_log.html_content = markdown.markdown(
+                    target_log.content, extensions=["fenced_code", "tables"]
+                )
+            except (LogEntry.DoesNotExist, ValueError, ValidationError):
+                pass
+
+        if not target_log and log_list.exists():
+            import markdown
+
+            first_log = (
+                LogEntry.objects.select_related("project")
+                .prefetch_related("stack", "images")
+                .order_by("-date")
+                .first()
+            )
+            if first_log:
+                first_log.html_content = markdown.markdown(
+                    first_log.content, extensions=["fenced_code", "tables"]
+                )
+                target_log = first_log
+
+        context["target_log"] = target_log
+
         return context
 
 

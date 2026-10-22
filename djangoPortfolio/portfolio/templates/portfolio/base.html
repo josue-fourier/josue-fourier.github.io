@@ -51,6 +51,10 @@
         <script defer src="https://unpkg.com/htmx.org@1.9.10"></script>
         <script defer src="https://unpkg.com/htmx.org/dist/ext/preload.js"></script>
 
+        <!-- Marked.js & Mermaid.js for Markdown & Diagram Rendering in Logs -->
+        <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+
         <!-- Analytics -->
         <script defer src="https://analytics.proyectosos.cl/script.js" data-website-id="31434b15-eee1-4168-8f9f-bd302c62124a"></script>
 
@@ -89,7 +93,7 @@
                             <a href="/#chapter-01" class="hover:text-white transition-colors">{% translate "INDEX" %}</a>
                             <a href="/#chapter-02" class="hover:text-white transition-colors">{% translate "BENCHMARKS" %}</a>
                             <a href="/#chapter-03" class="hover:text-white transition-colors">{% translate "SYSTEMS" %}</a>
-                            <a href="/logging/" class="transition-colors {% if '/logging' in request.path %}text-emerald-400 font-bold{% else %}hover:text-white{% endif %}">{% translate "LOGS" %}</a>
+                            <a href="/#chapter-04" class="hover:text-white transition-colors">{% translate "LOGS" %}</a>
                         </nav>
 
                         <!-- Right: Locale Switcher & CV Link -->
