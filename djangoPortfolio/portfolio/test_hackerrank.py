@@ -470,7 +470,7 @@ class HackerRankViewAndTemplateTests(TestCase):
         self.assertIn("break-words", content)
         self.assertIn("star-filled", content)
         self.assertIn("badge-domain-link", content)
-        self.assertIn("HACKERRANK_PROFILE", content)
+        self.assertIn("HACKERRANK PROFILE", content)
 
     def test_exact_earned_stars_rendered_without_empty_placeholders(self):
         """Rendering of stars must match exactly the registered stars, with zero empty placeholders."""

@@ -1198,7 +1198,7 @@ class C2EngineeringPortfolioTests(TestCase):
         self.assertIn("hidden sm:inline", content)
 
         # Check kinetic scrub tags on all 4 chapter headers
-        self.assertIn('data-kinetic-scrub="true" data-target-text="01 / ARCHITECTURAL DOSSIER"', content)
+        self.assertIn('data-kinetic-scrub="true" data-target-text="01 / ABOUT"', content)
         self.assertIn('data-kinetic-scrub="true" data-target-text="02 // BENCHMARKS"', content)
         self.assertIn('data-kinetic-scrub="true" data-target-text="03 // PRODUCTION SYSTEMS"', content)
         self.assertIn('data-kinetic-scrub="true" data-target-text="04 // ENGINEERING FIELD LOGS"', content)

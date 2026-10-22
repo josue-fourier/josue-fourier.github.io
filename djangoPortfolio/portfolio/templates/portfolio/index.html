@@ -15,11 +15,11 @@
             <span id="section-nav-pct" class="text-emerald-400 font-bold tabular-nums">00%</span>
         </div>
 
-        <!-- Section 01: Dossier & Skills -->
+        <!-- Section 01: About & Skills -->
         <a href="#chapter-01" data-section-target="chapter-01" class="sec-nav-link flex items-center justify-between gap-3 px-3 py-1.5 md:py-2 border border-transparent hover:border-white/10 font-mono text-xs text-zinc-400 hover:text-white transition-all group active">
             <div class="flex items-center gap-2">
                 <span class="sec-nav-num text-zinc-500 group-hover:text-emerald-400 transition-colors font-bold text-[11px]">01</span>
-                <span class="hidden md:inline text-zinc-300 group-hover:text-white uppercase tracking-wider text-[10px]">{% translate "DOSSIER" %}</span>
+                <span class="hidden md:inline text-zinc-300 group-hover:text-white uppercase tracking-wider text-[10px]">{% translate "ABOUT" %}</span>
             </div>
             <span class="sec-nav-pip w-1.5 h-1.5 bg-zinc-700"></span>
         </a>
@@ -55,16 +55,16 @@
     </nav>
 
     <!-- =======================================================================
-         SEC—01 // ARCHITECTURAL DOSSIER & LIVE STATUS HERO
+         SEC—01 // ABOUT & LIVE STATUS HERO
          ======================================================================= -->
-    <section id="chapter-01" class="c2-chapter-section border-b border-white/[0.08] bg-[#050506]" data-chapter="01" data-chapter-title="DOSSIER">
+    <section id="chapter-01" class="c2-chapter-section border-b border-white/[0.08] bg-[#050506]" data-chapter="01" data-chapter-title="ABOUT">
         <!-- Sticky Section Sub-Header -->
         <div class="sec-sticky-header sticky top-12 z-30 bg-[#050506]/95 backdrop-blur-md px-4 sm:px-6 py-2.5 sm:py-3 border-b border-white/[0.08] flex items-center justify-between font-mono text-[11px] text-zinc-500 uppercase tracking-widest relative">
             <div class="flex items-center gap-2.5">
                 <span class="sec-led w-1.5 h-1.5 bg-emerald-500 inline-block"></span>
                 <span class="text-emerald-500 font-bold">01</span>
                 <span class="text-zinc-700">/</span>
-                <span class="sec-decode-label text-zinc-300 font-bold tracking-wider" data-scramble="true" data-kinetic-scrub="true" data-target-text="{% translate '01 / ARCHITECTURAL DOSSIER' %}">{% translate "01 / ARCHITECTURAL DOSSIER" %}</span>
+                <span class="sec-decode-label text-zinc-300 font-bold tracking-wider" data-scramble="true" data-kinetic-scrub="true" data-target-text="{% translate '01 / ABOUT' %}">{% translate "01 / ABOUT" %}</span>
             </div>
             <div class="flex items-center gap-3 text-zinc-400">
                 <span class="hidden md:inline text-zinc-500">UTFSM // {% translate "Telematics Engineering" %}</span>
@@ -89,9 +89,9 @@
                             <span class="text-emerald-400 hidden sm:inline font-semibold">{% translate "ONLINE" %}</span>
                         </div>
                         <div class="flex items-center gap-2 text-zinc-500 font-mono text-[10px] tracking-widest">
-                            <span class="text-emerald-400 font-bold">OPERATOR</span>
+                            <span class="text-emerald-400 font-bold">PORTFOLIO</span>
                             <span class="text-zinc-700">//</span>
-                            <span class="text-zinc-400">SEC-01</span>
+                            <span class="text-zinc-400">01</span>
                         </div>
                     </div>
 
@@ -190,7 +190,7 @@
                 <div id="hero-panel-capabilities" class="p-4 sm:p-6 md:p-8 block lg:block">
                     <div class="flex items-center justify-between pb-3 mb-2 border-b border-white/[0.08] font-mono text-zinc-500 text-xs md:text-sm uppercase tracking-widest">
                         <span class="font-bold text-zinc-200" data-scramble="true">{% translate "01 / CORE SKILLS" %}</span>
-                        <span class="text-emerald-400 font-bold">{% translate "DEPLOYED" %}</span>
+                        <span class="text-emerald-400 font-bold">{% translate "TECH STACK" %}</span>
                     </div>
 
                     <div class="divide-y divide-white/[0.06]">
@@ -352,7 +352,7 @@
             <div class="flex items-center gap-4 text-zinc-400">
                 <span class="hidden md:inline font-bold text-emerald-400">{% translate "5★ C++ RANK" %}</span>
                 <a href="https://www.hackerrank.com/profile/xmenmagnet" target="_blank" rel="noopener noreferrer" data-umami-event="social-click" data-umami-event-network="hackerrank" data-umami-event-location="benchmarks" class="font-mono text-xs text-emerald-400 hover:text-white transition-colors">
-                    {% translate "HACKERRANK_PROFILE" %} ↗
+                    {% translate "HACKERRANK PROFILE" %} ↗
                 </a>
             </div>
             <div class="grid-line-h absolute bottom-0 left-0 right-0"></div>
@@ -535,7 +535,7 @@
                         <!-- Direct Navigation Action -->
                         <div class="flex items-center justify-between pt-4 border-t border-white/[0.08] font-mono text-xs">
                             <a href="{% url 'project_detail' project.id %}" data-umami-event="project-open" data-umami-event-project="{{ project.name }}" data-umami-event-source="card-button" class="btn-sweep btn-sweep-emerald px-4 py-2 border border-emerald-500/40 text-emerald-400 uppercase tracking-wider inline-flex items-center gap-2 font-bold text-[11px]">
-                                <span>{% translate "Inspect Architecture" %}</span>
+                                <span>{% translate "View Case Study" %}</span>
                                 <span>→</span>
                             </a>
                             {% if project.link %}
@@ -553,14 +553,14 @@
                         <a href="{% url 'project_detail' project.id %}" data-umami-event="project-open" data-umami-event-project="{{ project.name }}" data-umami-event-source="card-image" class="w-full aspect-video border border-white/10 overflow-hidden relative block group/img bg-[#050506]">
                             <img src="{{ project.preview_image.file.url }}" alt="{{ project.name }} preview" loading="lazy" class="parallax-media w-full h-full object-cover scale-[1.08] filter grayscale contrast-125 group-hover/img:grayscale-0 transition-all duration-700" />
                             <div class="absolute bottom-0 right-0 bg-[#050506]/90 backdrop-blur-sm border-t border-l border-white/15 px-3 py-1.5 font-mono text-[10px] text-zinc-300 group-hover/img:bg-emerald-500 group-hover/img:text-black group-hover/img:border-emerald-500 transition-colors uppercase tracking-widest font-bold">
-                                {% translate "INSPECT SYSTEM" %} ↗
+                                {% translate "VIEW PROJECT" %} ↗
                             </div>
                         </a>
                         {% else %}
                         <a href="{% url 'project_detail' project.id %}" data-umami-event="project-open" data-umami-event-project="{{ project.name }}" data-umami-event-source="card-image" class="w-full aspect-video border border-white/10 bg-[#0A0A0D] flex flex-col items-center justify-center font-mono text-xs text-zinc-500 hover:border-emerald-500/40 transition-colors uppercase tracking-widest relative group/img">
                             <span>{% translate "ARCHITECTURE DOCUMENTED" %}</span>
                             <div class="absolute bottom-0 right-0 bg-[#050506]/90 border-t border-l border-white/15 px-3 py-1.5 font-mono text-[10px] text-zinc-300 group-hover/img:bg-emerald-500 group-hover/img:text-black transition-colors uppercase tracking-widest font-bold">
-                                {% translate "INSPECT SYSTEM" %} ↗
+                                {% translate "VIEW PROJECT" %} ↗
                             </div>
                         </a>
                         {% endif %}
