@@ -34,6 +34,9 @@ services:
     depends_on:
       db:
         condition: service_healthy
+    networks:
+      - default
+      - red_n8n
     healthcheck:
       test: ["CMD-SHELL", "curl -f http://localhost:8000/health"]
 
@@ -60,6 +63,9 @@ services:
         condition: service_healthy
       web:
         condition: service_started
+    networks:
+      - default
+      - red_n8n
 
   cloudflared:
     image: cloudflare/cloudflared:latest

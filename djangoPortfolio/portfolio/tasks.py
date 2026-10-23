@@ -189,6 +189,7 @@ def check_ntfy_status_updates():
     ntfy_url = config("NTFY_URL", default="").strip()
     ntfy_topic = config("NTFY_TOPIC", default="").strip()
     if not ntfy_url or not ntfy_topic:
+        logger.info("NTFY polling skipped: NTFY_URL or NTFY_TOPIC not configured.")
         return None
 
     ntfy_token = config("NTFY_TOKEN", default="").strip()
@@ -202,7 +203,7 @@ def check_ntfy_status_updates():
         r = requests.get(poll_url, headers=headers, timeout=10)
         r.raise_for_status()
     except Exception as e:
-        logger.debug("ntfy poll skipped/failed: %s", e)
+        logger.warning("ntfy poll skipped/failed: %s", e)
         return None
 
     created_status = None

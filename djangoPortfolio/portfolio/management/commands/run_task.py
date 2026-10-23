@@ -76,6 +76,17 @@ class Command(BaseCommand):
                 self.stdout.write(f"Executing task [{key}] ({name}) synchronously...")
                 try:
                     result = task_wrapper.call_local()
+                    if key == "ntfy":
+                        from decouple import config
+                        ntfy_url = config("NTFY_URL", default="").strip()
+                        ntfy_topic = config("NTFY_TOPIC", default="").strip()
+                        if not ntfy_url or not ntfy_topic:
+                            self.stdout.write(self.style.WARNING("  ⚠️  Notice: NTFY_URL or NTFY_TOPIC is not configured in .env!"))
+                        elif result:
+                            msg = getattr(result, "message", str(result))
+                            self.stdout.write(self.style.SUCCESS(f"  ✓ Ingested new status: '{msg}'"))
+                        else:
+                            self.stdout.write("  ℹ  Polled NTFY. No new messages found (or message matches current status).")
                     self.stdout.write(self.style.SUCCESS(f"✓ Finished [{key}]. Result: {result}"))
                 except Exception as e:
                     self.stderr.write(self.style.ERROR(f"✗ Error executing [{key}]: {e}"))
