@@ -24,7 +24,7 @@
                 <span class="text-zinc-700">/</span>
                 <span class="text-zinc-300">{% translate "Project Case Study" %}</span>
             </div>
-            <a href="/#projects" class="btn-sweep px-3 py-1.5 border border-white/15 text-zinc-300 inline-flex items-center gap-2">
+            <a href="/#projects" class="btn-sweep btn-sweep-white px-3.5 py-1.5 border border-white/25 bg-white/[0.05] hover:bg-white text-zinc-100 hover:text-black inline-flex items-center gap-2 font-mono text-[11px] shadow-sm transition-all font-semibold">
                 <span>←</span>
                 <span>{% translate "Return Home" %}</span>
             </a>
@@ -50,7 +50,7 @@
                 {% endif %}
 
                 {% if project.link %}
-                <a href="{{ project.link }}" target="_blank" rel="noopener noreferrer" class="btn-sweep btn-sweep-emerald px-5 py-3 border border-emerald-500/50 text-emerald-400 uppercase tracking-wider font-bold inline-flex items-center justify-between gap-2">
+                <a href="{{ project.link }}" target="_blank" rel="noopener noreferrer" class="btn-sweep btn-sweep-emerald px-5 py-3 border border-emerald-500/80 bg-emerald-500/15 hover:bg-emerald-400 text-emerald-300 hover:text-black uppercase tracking-wider font-bold inline-flex items-center justify-between gap-2 shadow-[0_4px_16px_rgba(16,185,129,0.25)] hover:shadow-[0_0_25px_rgba(16,185,129,0.55)] transition-all">
                     <span>{% translate "Live Demo" %}</span>
                     <span>↗</span>
                 </a>
