@@ -195,12 +195,25 @@ def check_ntfy_status_updates():
     ntfy_token = config("NTFY_TOKEN", default="").strip()
     poll_url = f"{ntfy_url.rstrip('/')}/{ntfy_topic}/json?poll=1&since=10m"
 
+    raw_verify = config("NTFY_VERIFY_SSL", default="true").strip()
+    if raw_verify.lower() in ("false", "0", "no"):
+        ntfy_verify_ssl = False
+        try:
+            import urllib3
+            urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+        except Exception:
+            pass
+    elif raw_verify.lower() in ("true", "1", "yes"):
+        ntfy_verify_ssl = True
+    else:
+        ntfy_verify_ssl = raw_verify
+
     headers = {"User-Agent": "PortfolioStatusSubscriber/1.0"}
     if ntfy_token:
         headers["Authorization"] = f"Bearer {ntfy_token}"
 
     try:
-        r = requests.get(poll_url, headers=headers, timeout=10)
+        r = requests.get(poll_url, headers=headers, timeout=10, verify=ntfy_verify_ssl)
         r.raise_for_status()
     except Exception as e:
         logger.warning("ntfy poll skipped/failed: %s", e)

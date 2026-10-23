@@ -170,3 +170,24 @@ class NtfyTaskTests(TestCase):
         dup_result = check_ntfy_status_updates.call_local()
         self.assertIsNone(dup_result)
         self.assertEqual(Status.objects.count(), 1)
+
+    @patch("portfolio.tasks.requests.get")
+    @patch("portfolio.tasks.config")
+    def test_ntfy_task_ssl_verify_disabled(self, mock_config, mock_get):
+        mock_config.side_effect = lambda key, default="": {
+            "NTFY_URL": "https://ntfy",
+            "NTFY_TOPIC": "my-status",
+            "NTFY_TOKEN": "",
+            "NTFY_VERIFY_SSL": "false",
+        }.get(key, default)
+
+        mock_resp = MagicMock()
+        mock_resp.text = json.dumps({"event": "message", "message": "SSL disabled test"})
+        mock_resp.raise_for_status.return_value = None
+        mock_get.return_value = mock_resp
+
+        result = check_ntfy_status_updates.call_local()
+        self.assertIsNotNone(result)
+        self.assertEqual(result.message, "SSL disabled test")
+        self.assertFalse(mock_get.call_args[1]["verify"])
+
