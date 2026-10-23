@@ -181,7 +181,7 @@ def update_hackerrank_badges(url: str = HACKERRANK_BADGES_URL) -> List[HackerRan
         return []
 
 
-@db_periodic_task(crontab(minute="*/2"))
+@db_periodic_task(crontab(minute="*/1"))
 def check_ntfy_status_updates():
     """Polls ntfy container/server for new messages on NTFY_TOPIC.
     If NTFY_URL or NTFY_TOPIC is not configured, this task does nothing.
