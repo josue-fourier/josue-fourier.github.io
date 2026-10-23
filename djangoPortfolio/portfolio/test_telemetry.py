@@ -191,3 +191,124 @@ class NtfyTaskTests(TestCase):
         self.assertEqual(result.message, "SSL disabled test")
         self.assertFalse(mock_get.call_args[1]["verify"])
 
+    @patch("portfolio.tasks.requests.post")
+    @patch("portfolio.tasks.requests.get")
+    @patch("portfolio.tasks.config")
+    def test_ntfy_task_acknowledges_message_with_white_check_mark(self, mock_config, mock_get, mock_post):
+        mock_config.side_effect = lambda key, default="": {
+            "NTFY_URL": "https://ntfy",
+            "NTFY_TOPIC": "portfolio",
+            "NTFY_TOKEN": "my-secret-token",
+            "NTFY_VERIFY_SSL": "false",
+        }.get(key, default)
+
+        mock_get_resp = MagicMock()
+        mock_get_resp.text = json.dumps({
+            "id": "msg123xyz",
+            "event": "message",
+            "message": "Working on portfolio",
+            "tags": [],
+        })
+        mock_get_resp.raise_for_status.return_value = None
+        mock_get.return_value = mock_get_resp
+
+        mock_post_resp = MagicMock()
+        mock_post_resp.raise_for_status.return_value = None
+        mock_post.return_value = mock_post_resp
+
+        result = check_ntfy_status_updates.call_local()
+        self.assertIsNotNone(result)
+        self.assertEqual(result.message, "Working on portfolio")
+
+        mock_post.assert_called_once()
+        args, kwargs = mock_post.call_args
+        self.assertEqual(args[0], "https://ntfy/portfolio/msg123xyz")
+        self.assertEqual(kwargs["data"], b"Working on portfolio")
+        self.assertIn("white_check_mark", kwargs["headers"]["Tags"])
+        self.assertEqual(kwargs["headers"]["Authorization"], "Bearer my-secret-token")
+        self.assertEqual(kwargs["headers"]["Title"], "Status Synced")
+        self.assertFalse(kwargs["verify"])
+
+    @patch("portfolio.tasks.requests.post")
+    @patch("portfolio.tasks.requests.get")
+    @patch("portfolio.tasks.config")
+    def test_ntfy_task_skips_ack_if_already_tagged(self, mock_config, mock_get, mock_post):
+        mock_config.side_effect = lambda key, default="": {
+            "NTFY_URL": "https://ntfy",
+            "NTFY_TOPIC": "portfolio",
+        }.get(key, default)
+
+        mock_get_resp = MagicMock()
+        mock_get_resp.text = json.dumps({
+            "id": "msg123xyz",
+            "event": "message",
+            "message": "Already processed",
+            "tags": ["white_check_mark"],
+        })
+        mock_get_resp.raise_for_status.return_value = None
+        mock_get.return_value = mock_get_resp
+
+        check_ntfy_status_updates.call_local()
+        mock_post.assert_not_called()
+
+    @patch("portfolio.tasks.requests.post")
+    @patch("portfolio.tasks.requests.get")
+    @patch("portfolio.tasks.config")
+    def test_ntfy_task_preserves_existing_tags_and_title(self, mock_config, mock_get, mock_post):
+        mock_config.side_effect = lambda key, default="": {
+            "NTFY_URL": "https://ntfy",
+            "NTFY_TOPIC": "portfolio",
+        }.get(key, default)
+
+        mock_get_resp = MagicMock()
+        mock_get_resp.text = json.dumps({
+            "id": "msg999",
+            "event": "message",
+            "message": "Refactoring code",
+            "title": "Dev Sprint",
+            "priority": 4,
+            "tags": ["laptop", "wrench"],
+        })
+        mock_get_resp.raise_for_status.return_value = None
+        mock_get.return_value = mock_get_resp
+
+        mock_post_resp = MagicMock()
+        mock_post_resp.raise_for_status.return_value = None
+        mock_post.return_value = mock_post_resp
+
+        result = check_ntfy_status_updates.call_local()
+        self.assertIsNotNone(result)
+
+        mock_post.assert_called_once()
+        _, kwargs = mock_post.call_args
+        self.assertEqual(kwargs["headers"]["Tags"], "laptop,wrench,white_check_mark")
+        self.assertEqual(kwargs["headers"]["Title"], "Dev Sprint")
+        self.assertEqual(kwargs["headers"]["Priority"], "4")
+
+    @patch("portfolio.tasks.requests.post")
+    @patch("portfolio.tasks.requests.get")
+    @patch("portfolio.tasks.config")
+    def test_ntfy_task_handles_ack_failure_gracefully(self, mock_config, mock_get, mock_post):
+        mock_config.side_effect = lambda key, default="": {
+            "NTFY_URL": "https://ntfy",
+            "NTFY_TOPIC": "portfolio",
+        }.get(key, default)
+
+        mock_get_resp = MagicMock()
+        mock_get_resp.text = json.dumps({
+            "id": "msg_fail",
+            "event": "message",
+            "message": "Status with network error on ACK",
+        })
+        mock_get_resp.raise_for_status.return_value = None
+        mock_get.return_value = mock_get_resp
+
+        mock_post.side_effect = Exception("Connection reset during ACK")
+
+        # Ingestion should still succeed despite ACK failure
+        result = check_ntfy_status_updates.call_local()
+        self.assertIsNotNone(result)
+        self.assertEqual(result.message, "Status with network error on ACK")
+        self.assertEqual(Status.objects.filter(message="Status with network error on ACK").count(), 1)
+
+

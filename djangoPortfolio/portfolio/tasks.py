@@ -226,6 +226,8 @@ def check_ntfy_status_updates():
 
     created_status = None
     latest_msg = None
+    latest_id = None
+    latest_item = None
 
     for line in r.text.strip().splitlines():
         line = line.strip()
@@ -235,6 +237,8 @@ def check_ntfy_status_updates():
             item = json.loads(line)
             if item.get("event") == "message" and item.get("message"):
                 latest_msg = item["message"].strip()
+                latest_id = item.get("id")
+                latest_item = item
         except Exception:
             continue
 
@@ -246,6 +250,39 @@ def check_ntfy_status_updates():
                 source="ntfy",
             )
             logger.info("New Status received from ntfy: %s", latest_msg)
+
+        # Acknowledge the message on ntfy in-place with a checkmark reaction
+        if latest_id and latest_item:
+            tags = list(latest_item.get("tags") or [])
+            if "white_check_mark" not in tags:
+                try:
+                    update_url = f"{ntfy_url.rstrip('/')}/{ntfy_topic}/{latest_id}"
+                    update_headers = {"User-Agent": "PortfolioStatusSubscriber/1.0"}
+                    if ntfy_token:
+                        update_headers["Authorization"] = f"Bearer {ntfy_token}"
+
+                    tags.append("white_check_mark")
+                    update_headers["Tags"] = ",".join(tags)
+
+                    if latest_item.get("title"):
+                        update_headers["Title"] = latest_item["title"]
+                    else:
+                        update_headers["Title"] = "Status Synced"
+
+                    if latest_item.get("priority"):
+                        update_headers["Priority"] = str(latest_item["priority"])
+
+                    resp = requests.post(
+                        update_url,
+                        data=latest_msg.encode("utf-8"),
+                        headers=update_headers,
+                        timeout=10,
+                        verify=ntfy_verify_ssl,
+                    )
+                    resp.raise_for_status()
+                    logger.info("ntfy message %s updated with white_check_mark reaction.", latest_id)
+                except Exception as ack_err:
+                    logger.warning("Failed to update ntfy message %s with reaction: %s", latest_id, ack_err)
 
     return created_status
 
