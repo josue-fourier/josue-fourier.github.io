@@ -104,6 +104,18 @@ class TelemetryEndpointTests(TestCase):
         self.assertEqual(NodeHeartbeat.objects.filter(node_name="rpi").count(), 1)
         self.assertEqual(NodeHeartbeat.objects.get(node_name="rpi").status, "RUNNING OK")
 
+    @patch("portfolio.views.config")
+    def test_telemetry_heartbeat_unconfigured_token_rejects_any_token(self, mock_config):
+        mock_config.side_effect = lambda key, default="": default
+        res = self.client.post(
+            "/api/telemetry/heartbeat/",
+            data=json.dumps({"status": "SPOOF"}),
+            content_type="application/json",
+            HTTP_X_TELEMETRY_TOKEN="anything",
+        )
+        self.assertEqual(res.status_code, 403)
+        self.assertFalse(NodeHeartbeat.objects.exists())
+
 
 class TelemetryIndexViewTests(TestCase):
     def setUp(self):

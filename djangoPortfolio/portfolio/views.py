@@ -1,3 +1,4 @@
+import hmac
 import json
 from typing import override
 
@@ -252,6 +253,28 @@ def image_to_dict(image):
     }
 
 
+def _has_valid_token(request, env_key, header):
+    """Fails closed: no configured token means nobody is authorized."""
+    configured_token = config(env_key, default="").strip()
+    auth = request.headers.get("Authorization", "")
+    provided_token = (
+        request.headers.get(header)
+        or (auth[len("Bearer "):] if auth.startswith("Bearer ") else "")
+    ).strip()
+    return bool(configured_token) and hmac.compare_digest(provided_token, configured_token)
+
+
+def _image_write_forbidden(request):
+    """Image API writes need IMAGE_API_TOKEN or a logged-in staff user. GET stays public."""
+    if request.method in ("GET", "HEAD", "OPTIONS"):
+        return None
+    if request.user.is_authenticated and request.user.is_staff:
+        return None
+    if _has_valid_token(request, "IMAGE_API_TOKEN", "X-API-Token"):
+        return None
+    return JsonResponse({"error": "Unauthorized"}, status=401)
+
+
 def _parse_payload(request):
     """Helper to parse JSON body or POST form data."""
     if request.content_type == "application/json" and request.body:
@@ -271,6 +294,8 @@ def image_upload(request):
     """
     if request.method != "POST":
         return HttpResponse(status=405)
+    if denied := _image_write_forbidden(request):
+        return denied
 
     uploaded_file = request.FILES.get("file")
     if not uploaded_file:
@@ -341,6 +366,8 @@ def image_detail(request, image_id):
     PATCH /api/images/<uuid:image_id>/
     DELETE /api/images/<uuid:image_id>/
     """
+    if denied := _image_write_forbidden(request):
+        return denied
     try:
         image = Image.objects.get(id=image_id)
     except (Image.DoesNotExist, ValueError, ValidationError):
@@ -413,6 +440,8 @@ def project_images(request, project_id):
     """GET /api/projects/<int:project_id>/images/
     POST /api/projects/<int:project_id>/images/
     """
+    if denied := _image_write_forbidden(request):
+        return denied
     try:
         project = Project.objects.get(id=project_id)
     except (Project.DoesNotExist, ValueError, ValidationError):
@@ -505,6 +534,8 @@ def log_images(request, log_id):
     """GET /api/logs/<uuid:log_id>/images/
     POST /api/logs/<uuid:log_id>/images/
     """
+    if denied := _image_write_forbidden(request):
+        return denied
     try:
         log = LogEntry.objects.get(id=log_id)
     except (LogEntry.DoesNotExist, ValueError, ValidationError):
@@ -591,19 +622,10 @@ def telemetry_heartbeat(request):
     if request.method != "POST":
         return HttpResponse(status=405)
 
-    configured_token = config("TELEMETRY_TOKEN", default="").strip()
-    provided_token = (
-        request.headers.get("X-Telemetry-Token")
-        or request.headers.get("Authorization", "").replace("Bearer ", "")
-    ).strip()
-
-    if configured_token and provided_token != configured_token:
+    if not config("TELEMETRY_TOKEN", default="").strip():
+        return JsonResponse({"error": "TELEMETRY_TOKEN not configured"}, status=403)
+    if not _has_valid_token(request, "TELEMETRY_TOKEN", "X-Telemetry-Token"):
         return JsonResponse({"error": "Unauthorized"}, status=401)
-    elif not configured_token and not provided_token:
-        return JsonResponse(
-            {"error": "TELEMETRY_TOKEN not configured or token missing"},
-            status=403,
-        )
 
     status_text = ""
     node_name = "raspberry-pi"

@@ -63,6 +63,9 @@ class MockRequest:
     pass
 
 
+TEST_IMAGE_TOKEN = "test-image-token"
+
+
 # ---------------------------------------------------------------------------
 # Base Test Case providing isolated media directory
 # ---------------------------------------------------------------------------
@@ -73,16 +76,19 @@ class MediaIsolatedTestCase(TestCase):
         cls.temp_media = tempfile.mkdtemp(prefix="portfolio_test_media_")
         cls.override = override_settings(MEDIA_ROOT=cls.temp_media)
         cls.override.enable()
+        cls.env_patch = patch.dict(os.environ, {"IMAGE_API_TOKEN": TEST_IMAGE_TOKEN})
+        cls.env_patch.start()
 
     @classmethod
     def tearDownClass(cls):
+        cls.env_patch.stop()
         cls.override.disable()
         shutil.rmtree(cls.temp_media, ignore_errors=True)
         super().tearDownClass()
 
     def setUp(self):
         super().setUp()
-        self.client = Client()
+        self.client = Client(HTTP_AUTHORIZATION=f"Bearer {TEST_IMAGE_TOKEN}")
 
 
 # ===========================================================================
@@ -654,6 +660,49 @@ class Tier1FeatureF15StrictLocalVerificationIsolationTests(MediaIsolatedTestCase
 
     def test_media_root_is_local(self):
         self.assertTrue(os.path.isabs(str(settings.MEDIA_ROOT)))
+
+
+class ImageAPIAuthTests(MediaIsolatedTestCase):
+    """Image API writes require IMAGE_API_TOKEN or a staff session; reads stay public."""
+
+    def setUp(self):
+        super().setUp()
+        self.anon = Client()
+        self.project = Project.objects.create(name="Auth", description="d")
+        self.log = LogEntry.objects.create(title="Auth log", content="c")
+        self.img = Image.objects.create(file=make_test_image())
+
+    def test_anonymous_writes_rejected(self):
+        self.assertEqual(self.anon.post("/api/images/upload/", {"file": make_test_image()}).status_code, 401)
+        self.assertEqual(self.anon.patch(f"/api/images/{self.img.id}/", data=json.dumps({"caption": "x"}), content_type="application/json").status_code, 401)
+        self.assertEqual(self.anon.delete(f"/api/images/{self.img.id}/").status_code, 401)
+        self.assertEqual(self.anon.post(f"/api/projects/{self.project.id}/images/", {"file": make_test_image()}).status_code, 401)
+        self.assertEqual(self.anon.post(f"/api/logs/{self.log.id}/images/", {"file": make_test_image()}).status_code, 401)
+        self.assertTrue(Image.objects.filter(id=self.img.id).exists())
+        self.assertEqual(Image.objects.count(), 1)
+
+    def test_wrong_token_rejected(self):
+        res = self.anon.delete(f"/api/images/{self.img.id}/", HTTP_AUTHORIZATION="Bearer nope")
+        self.assertEqual(res.status_code, 401)
+
+    def test_x_api_token_header_accepted(self):
+        res = self.anon.delete(f"/api/images/{self.img.id}/", HTTP_X_API_TOKEN=TEST_IMAGE_TOKEN)
+        self.assertEqual(res.status_code, 204)
+
+    def test_unconfigured_token_fails_closed(self):
+        with patch.dict(os.environ, {"IMAGE_API_TOKEN": ""}):
+            res = self.client.delete(f"/api/images/{self.img.id}/")
+        self.assertEqual(res.status_code, 401)
+
+    def test_staff_session_allowed(self):
+        from django.contrib.auth.models import User
+        staff = User.objects.create_user("staff", password="pw", is_staff=True)
+        self.anon.force_login(staff)
+        self.assertEqual(self.anon.delete(f"/api/images/{self.img.id}/").status_code, 204)
+
+    def test_reads_stay_public(self):
+        self.assertEqual(self.anon.get(f"/api/images/{self.img.id}/").status_code, 200)
+        self.assertEqual(self.anon.get(f"/api/projects/{self.project.id}/images/").status_code, 200)
 
 
 # ===========================================================================
