@@ -430,15 +430,12 @@ class HackerRankViewAndTemplateTests(TestCase):
 
         # Assert template rendered key badge details
         content = response.content.decode("utf-8")
-        self.assertIn('id="hackerrank-badges"', content)
-        self.assertIn("HackerRank Badges", content)
+        self.assertIn('id="hackerrank"', content)
         self.assertIn("Problem Solving", content)
         self.assertIn("C++", content)
-        self.assertIn("Language Proficiency", content)
-        self.assertIn("5 / 5", content)
-        self.assertIn("2 / 6", content)
-        self.assertIn("Next Star Progress", content)
-        self.assertIn("Solved Challenges", content)
+        self.assertIn("5/5 ★", content)
+        self.assertIn("2/6 ★", content)
+        self.assertIn("21 solved", content)
         self.assertIn("https://www.hackerrank.com/domains/cpp", content)
         self.assertIn("https://www.hackerrank.com/domains/algorithms", content)
 
@@ -461,16 +458,9 @@ class HackerRankViewAndTemplateTests(TestCase):
         response = self.client.get("/")
         content = response.content.decode("utf-8")
 
-        # Responsive grid classes: 1 col on mobile (<640px), 2 cols on tablet (sm:), 3 cols on desktop (lg:)
-        self.assertIn("grid-cols-1", content)
-        self.assertIn("sm:grid-cols-2", content)
-        self.assertIn("lg:grid-cols-3", content)
-        self.assertIn("glass-panel", content)
-        self.assertIn("truncate", content)
-        self.assertIn("break-words", content)
-        self.assertIn("star-filled", content)
-        self.assertIn("badge-domain-link", content)
-        self.assertIn("HACKERRANK PROFILE", content)
+        # Compact responsive grid: 2 cols on mobile, 3 on tablet (sm:), 5 on desktop (lg:)
+        self.assertIn("grid-cols-2 sm:grid-cols-3 lg:grid-cols-5", content)
+        self.assertIn("https://www.hackerrank.com/profile/xmenmagnet", content)
 
     def test_exact_earned_stars_rendered_without_empty_placeholders(self):
         """Rendering of stars must match exactly the registered stars, with zero empty placeholders."""
@@ -483,8 +473,8 @@ class HackerRankViewAndTemplateTests(TestCase):
         )
         response = self.client.get("/")
         content = response.content.decode("utf-8")
-        # Assert exactly 3 star blocks rendered, and 0 empty blocks
-        self.assertEqual(content.count("w-2.5 h-2.5 bg-emerald-500 inline-block star-filled"), 3)
+        # Compact format shows the exact earned stars, with no empty placeholders
+        self.assertIn("3/5 ★", content)
         self.assertEqual(content.count("star-empty"), 0)
 
     def test_single_badge_snapshot_does_not_merge_past_runs(self):
@@ -824,9 +814,8 @@ class HackerRankHardenedEdgeCaseTests(TestCase):
         response = self.client.get("/es/")
         self.assertEqual(response.status_code, 200)
         content = response.content.decode("utf-8")
-        self.assertIn("Insignias de HackerRank", content)
-        self.assertIn("Desafíos Resueltos", content)
-        self.assertIn("Ver Dominio", content)
+        self.assertIn("resueltos", content)
+        self.assertIn("Perfil", content)
 
     def test_timezone_santiago_enforced(self):
         """America/Santiago timezone must be active in os.environ for Huey scheduler compatibility."""

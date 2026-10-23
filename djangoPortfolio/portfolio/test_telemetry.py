@@ -126,7 +126,7 @@ class TelemetryIndexViewTests(TestCase):
         res = self.client.get("/")
         self.assertEqual(res.status_code, 200)
         self.assertIn("Building telemetry pipelines", res.content.decode("utf-8"))
-        self.assertIn("STATUS:", res.content.decode("utf-8"))
+        self.assertIn("Latest note", res.content.decode("utf-8"))
 
     def test_hero_renders_recent_heartbeat(self):
         NodeHeartbeat.objects.create(
@@ -137,7 +137,7 @@ class TelemetryIndexViewTests(TestCase):
         res = self.client.get("/")
         content = res.content.decode("utf-8")
         self.assertIn("PI-4 // 41°C // ONLINE", content)
-        self.assertIn("NODE:", content)
+        self.assertIn("Node pi-live", content)
 
     def test_hero_hides_stale_heartbeat(self):
         stale_time = timezone.now() - datetime.timedelta(minutes=45)

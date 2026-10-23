@@ -7,587 +7,199 @@
 {% get_current_language as LANGUAGE_CODE %}
 <main id="main-content" tabindex="-1" class="relative z-10 w-full max-w-[1440px] mx-auto border-x border-white/[0.08] bg-[#070708]">
 
-    <!-- Hovering Section Navigation: Right Sidebar (Desktop) & Bottom Dock (Mobile) -->
-    <nav id="section-nav-sidebar" class="fixed z-40 bottom-4 left-1/2 -translate-x-1/2 md:bottom-auto md:left-auto md:right-6 md:top-1/2 md:-translate-y-1/2 md:translate-x-0 bg-[#050506]/90 backdrop-blur-md border border-white/[0.12] md:border-white/[0.08] p-1.5 md:p-2.5 flex flex-row md:flex-col items-center md:items-stretch gap-1 md:gap-1.5 max-w-[calc(100vw-2rem)] select-none" aria-label="{% translate 'Section Navigation' %}">
-        <!-- Desktop Header Strip -->
-        <div class="hidden md:flex items-center justify-between pb-2 mb-1 px-2 border-b border-white/[0.06] font-mono text-[9px] text-zinc-500 uppercase tracking-widest gap-6">
-            <span>{% translate "SECTIONS" %}</span>
-            <span id="section-nav-pct" class="text-emerald-400 font-bold tabular-nums">00%</span>
-        </div>
-
-        <!-- Section 01: About & Skills -->
-        <a href="#chapter-01" data-section-target="chapter-01" class="sec-nav-link flex items-center justify-between gap-3 px-3 py-1.5 md:py-2 border border-transparent hover:border-white/10 font-mono text-xs text-zinc-400 hover:text-white transition-all group active">
-            <div class="flex items-center gap-2">
-                <span class="sec-nav-num text-zinc-500 group-hover:text-emerald-400 transition-colors font-bold text-[11px]">01</span>
-                <span class="hidden md:inline text-zinc-300 group-hover:text-white uppercase tracking-wider text-[10px]">{% translate "ABOUT" %}</span>
-            </div>
-            <span class="sec-nav-pip w-1.5 h-1.5 bg-zinc-700"></span>
-        </a>
-
-        <!-- Section 02: Benchmarks (if hackerrank badges exist) -->
-        {% if hackerrank_badges %}
-        <a href="#chapter-02" data-section-target="chapter-02" class="sec-nav-link flex items-center justify-between gap-3 px-3 py-1.5 md:py-2 border border-transparent hover:border-white/10 font-mono text-xs text-zinc-400 hover:text-white transition-all group">
-            <div class="flex items-center gap-2">
-                <span class="sec-nav-num text-zinc-500 group-hover:text-emerald-400 transition-colors font-bold text-[11px]">02</span>
-                <span class="hidden md:inline text-zinc-300 group-hover:text-white uppercase tracking-wider text-[10px]">{% translate "BENCHMARKS" %}</span>
-            </div>
-            <span class="sec-nav-pip w-1.5 h-1.5 bg-zinc-700"></span>
-        </a>
-        {% endif %}
-
-        <!-- Section 03: Production Systems -->
-        <a href="#chapter-03" data-section-target="chapter-03" class="sec-nav-link flex items-center justify-between gap-3 px-3 py-1.5 md:py-2 border border-transparent hover:border-white/10 font-mono text-xs text-zinc-400 hover:text-white transition-all group">
-            <div class="flex items-center gap-2">
-                <span class="sec-nav-num text-zinc-500 group-hover:text-emerald-400 transition-colors font-bold text-[11px]">03</span>
-                <span class="hidden md:inline text-zinc-300 group-hover:text-white uppercase tracking-wider text-[10px]">{% translate "SYSTEMS" %}</span>
-            </div>
-            <span class="sec-nav-pip w-1.5 h-1.5 bg-zinc-700"></span>
-        </a>
-
-        <!-- Section 04: Field Logs -->
-        <a href="#chapter-04" data-section-target="chapter-04" class="sec-nav-link flex items-center justify-between gap-3 px-3 py-1.5 md:py-2 border border-transparent hover:border-white/10 font-mono text-xs text-zinc-400 hover:text-white transition-all group">
-            <div class="flex items-center gap-2">
-                <span class="sec-nav-num text-zinc-500 group-hover:text-emerald-400 transition-colors font-bold text-[11px]">04</span>
-                <span class="hidden md:inline text-zinc-300 group-hover:text-white uppercase tracking-wider text-[10px]">{% translate "LOGS" %}</span>
-            </div>
-            <span class="sec-nav-pip w-1.5 h-1.5 bg-zinc-700"></span>
-        </a>
-    </nav>
-
-    <!-- =======================================================================
-         SEC—01 // ABOUT & LIVE STATUS HERO
-         ======================================================================= -->
-    <section id="chapter-01" class="c2-chapter-section border-b border-white/[0.08] bg-[#050506]" data-chapter="01" data-chapter-title="ABOUT">
-        <!-- Sticky Section Sub-Header -->
-        <div class="sec-sticky-header sticky top-12 z-30 bg-[#050506]/95 backdrop-blur-md px-4 sm:px-6 py-2.5 sm:py-3 border-b border-white/[0.08] flex items-center justify-between font-mono text-[11px] text-zinc-500 uppercase tracking-widest relative">
-            <div class="flex items-center gap-2.5">
-                <span class="sec-led w-1.5 h-1.5 bg-emerald-500 inline-block"></span>
-                <span class="text-emerald-500 font-bold">01</span>
-                <span class="text-zinc-700">/</span>
-                <span class="sec-decode-label text-zinc-300 font-bold tracking-wider" data-scramble="true" data-kinetic-scrub="true" data-target-text="{% translate '01 / ABOUT' %}">{% translate "01 / ABOUT" %}</span>
-            </div>
-            <div class="flex items-center gap-3 text-zinc-400">
-                <span class="hidden md:inline text-zinc-500">UTFSM // {% translate "Telematics Engineering" %}</span>
-                <span class="hidden sm:inline text-zinc-700">|</span>
-                <span class="hidden sm:inline text-emerald-400 font-semibold">{% translate "BACKEND AND SYSTEMS ENGINEERING" %}</span>
-            </div>
-            <div class="grid-line-h absolute bottom-0 left-0 right-0"></div>
-        </div>
-
-        <!-- Main Hero Grid: 7 Cols Left (Monumental Typography & Stance) | 5 Cols Right (Precision Spec Matrix & Live Terminal) -->
+    <!-- ===================== HERO ===================== -->
+    <section id="about" class="c2-chapter-section border-b border-white/[0.08] bg-[#050506]" data-chapter="01" data-chapter-title="ABOUT">
         <div class="grid grid-cols-1 lg:grid-cols-12 divide-y lg:divide-y-0 lg:divide-x divide-white/[0.08]">
-            
-            <!-- Left Cell (7 Cols) -->
-            <div class="lg:col-span-7 lg:min-h-[78vh] p-5 sm:p-8 md:p-12 lg:p-16 flex flex-col justify-between kinetic-block bg-[#050506]">
-                <div>
-                    <!-- Top Status Tag & Operator Eyebrow -->
-                    <div class="flex items-center justify-between gap-3 mb-4 sm:mb-6 md:mb-8 font-mono text-[11px] text-zinc-400 uppercase tracking-wider">
-                        <div class="inline-flex items-center gap-2">
-                            <span class="w-1.5 h-1.5 bg-emerald-500 animate-pulse"></span>
-                            <span>SANTIAGO, CL</span>
-                            <span class="text-zinc-600 hidden sm:inline">//</span>
-                            <span class="text-emerald-400 hidden sm:inline font-semibold">{% translate "ONLINE" %}</span>
-                        </div>
-                        <div class="flex items-center gap-2 text-zinc-500 font-mono text-[10px] tracking-widest">
-                            <span class="text-emerald-400 font-bold">PORTFOLIO</span>
-                            <span class="text-zinc-700">//</span>
-                            <span class="text-zinc-400">01</span>
-                        </div>
-                    </div>
-
-                    <!-- Monumental Display Title & Profile Portrait Row (Optimized for Mobile, Tablet & Desktop) -->
-                    <div class="flex items-start justify-between gap-4 sm:gap-6 md:gap-8">
-                        <!-- Massive Variable Display Title in Overflow-Hidden Line Masks -->
-                        <h1 id="hero-title" class="hero-title font-display font-bold uppercase text-white select-none group cursor-pointer flex-1 min-w-0" aria-label="Josué Leiva.">
-                            <span class="reveal-text"><span class="reveal-text-inner" data-scramble="true">Josué</span></span>
-                            <span class="reveal-text"><span class="reveal-text-inner" data-scramble="true">Leiva.</span></span>
-                        </h1>
-
-                        <!-- Profile Portrait Frame with Hover Color Reveal, Corner Calibrations & Moniker Tag -->
-                        <div class="profile-portrait-frame relative shrink-0 aspect-square w-24 h-24 sm:w-32 sm:h-32 md:w-44 md:h-44 lg:w-40 lg:h-40 xl:w-48 xl:h-48 border border-white/20 bg-[#070709] group shadow-2xl">
-                            <!-- Rotating Aura Ring & Glare -->
-                            <span class="portrait-aura" aria-hidden="true"></span>
-                                                        <span class="portrait-glare" aria-hidden="true"></span>
-                            <!-- HUD Corner Calibrations -->
-                            <div class="absolute top-1 left-1 w-2 h-2 border-t border-l border-emerald-400/80 z-10 pointer-events-none transition-opacity duration-300 group-hover:border-emerald-300"></div>
-                            <div class="absolute bottom-1 right-1 w-2 h-2 border-b border-r border-emerald-400/80 z-10 pointer-events-none transition-opacity duration-300 group-hover:border-emerald-300"></div>
-
-                            <img src="{% static 'portfolio/images/profile.jpg' %}" alt="{% translate 'Josué Leiva' %}" class="portrait-img relative w-full h-full object-cover object-center filter grayscale contrast-110 group-hover:grayscale-0 transition-all duration-500" loading="eager">
-
-                            <!-- Corner Moniker / ID Badge -->
-                            <div class="absolute bottom-0 right-0 bg-[#050506]/90 backdrop-blur-sm px-1.5 py-0.5 border-t border-l border-white/15 font-mono text-[8px] sm:text-[9px] md:text-[10px] text-emerald-400 font-bold uppercase tracking-wider flex items-center gap-1 z-10">
-                                <span class="w-1 h-1 bg-emerald-400 rounded-full animate-pulse"></span>
-                                <span>F0UR13R</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Lead Engineering Statement (Full Width, Free-Breathing Typographic Flow with Word Scrub) -->
-                    <div class="mt-6 sm:mt-8 md:mt-10 reveal-text max-w-2xl">
-                        <p id="hero-stance-scrub" class="reveal-text-inner text-base sm:text-lg md:text-xl lg:text-2xl text-zinc-300 font-light leading-snug sm:leading-relaxed">
-                            {% translate "Telematics Engineering student specializing in" %} <strong class="text-white font-medium">{% translate "backend architecture" %}</strong>, <strong class="text-white font-medium">{% translate "automation" %}</strong>, <strong class="text-white font-medium">{% translate "flows" %}</strong>{% if LANGUAGE_CODE == "es" %} e {% else %}, {% translate "and" %} {% endif %}<strong class="text-white font-medium">{% translate "human impact" %}</strong>.
-                        </p>
-                    </div>
-                </div>
-
-                <!-- Action Button Row with Bottom-to-Top Fill Sweep & Crisp Vector Icons -->
-                <div class="flex flex-wrap gap-2.5 sm:gap-3 mt-6 sm:mt-8 md:mt-10 pt-5 sm:pt-6 border-t border-white/[0.08] relative">
-                    <div class="grid-line-h absolute top-0 left-0 right-0"></div>
-                    <a href="https://github.com/josue-fourier" target="_blank" rel="noopener noreferrer" data-umami-event="social-click" data-umami-event-network="github" data-umami-event-location="hero" class="btn-sweep btn-sweep-white px-4 sm:px-5 py-2.5 sm:py-3 border border-white/25 bg-white/[0.06] hover:bg-white text-zinc-100 hover:text-black font-mono text-[11px] sm:text-xs uppercase tracking-wider flex items-center gap-2 sm:gap-2.5 group shadow-[0_4px_14px_rgba(0,0,0,0.5)] hover:shadow-[0_0_22px_rgba(255,255,255,0.35)] transition-all duration-300 font-semibold">
-                        <svg class="w-4 h-4 text-zinc-300 group-hover:text-white transition-colors shrink-0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                            <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"></path>
-                        </svg>
-                        <span>GitHub</span>
-                        <span class="text-[10px] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform">↗</span>
-                    </a>
-                    <a href="https://linkedin.com/in/josuenicolas" target="_blank" rel="noopener noreferrer" data-umami-event="social-click" data-umami-event-network="linkedin" data-umami-event-location="hero" class="btn-sweep btn-sweep-sky px-4 sm:px-5 py-2.5 sm:py-3 border border-[#0A66C2]/60 bg-[#0A66C2]/15 hover:bg-[#0A66C2] text-[#70B5F9] hover:text-white font-mono text-[11px] sm:text-xs uppercase tracking-wider flex items-center gap-2 sm:gap-2.5 group shadow-[0_4px_14px_rgba(10,102,194,0.25)] hover:shadow-[0_0_24px_rgba(10,102,194,0.55)] transition-all duration-300 font-semibold">
-                        <svg class="w-4 h-4 text-[#70B5F9] group-hover:text-white transition-colors shrink-0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                            <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"></path>
-                        </svg>
-                        <span>LinkedIn</span>
-                        <span class="text-[10px] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform">↗</span>
-                    </a>
-                    {% if LANGUAGE_CODE == "es" %}
-                    <a href="/cv-es" target="_blank" data-umami-event="cv-download" data-umami-event-lang="es" class="btn-sweep btn-sweep-emerald px-4 sm:px-5 py-2.5 sm:py-3 border border-emerald-500/80 bg-emerald-500/15 hover:bg-emerald-400 text-emerald-300 hover:text-black font-mono text-[11px] sm:text-xs uppercase tracking-wider flex items-center gap-2 sm:gap-2.5 group shadow-[0_4px_18px_rgba(16,185,129,0.3)] hover:shadow-[0_0_30px_rgba(16,185,129,0.6)] transition-all duration-300 font-bold">
-                        <svg class="w-4 h-4 text-emerald-400 group-hover:text-black transition-colors shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                            <polyline points="14 2 14 8 20 8"></polyline>
-                            <path d="M9 13v6"></path>
-                            <path d="M9 15.5h2a1.5 1.5 0 0 0 0-3H9"></path>
-                        </svg>
-                        <span>{% translate "Download CV" %}</span>
-                        <span class="text-[10px] group-hover:translate-y-0.5 transition-transform">↓</span>
-                    </a>
-                    {% else %}
-                    <a href="/cv-en" target="_blank" data-umami-event="cv-download" data-umami-event-lang="en" class="btn-sweep btn-sweep-emerald px-4 sm:px-5 py-2.5 sm:py-3 border border-emerald-500/80 bg-emerald-500/15 hover:bg-emerald-400 text-emerald-300 hover:text-black font-mono text-[11px] sm:text-xs uppercase tracking-wider flex items-center gap-2 sm:gap-2.5 group shadow-[0_4px_18px_rgba(16,185,129,0.3)] hover:shadow-[0_0_30px_rgba(16,185,129,0.6)] transition-all duration-300 font-bold">
-                        <svg class="w-4 h-4 text-emerald-400 group-hover:text-black transition-colors shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                            <polyline points="14 2 14 8 20 8"></polyline>
-                            <path d="M9 13v6"></path>
-                            <path d="M9 15.5h2a1.5 1.5 0 0 0 0-3H9"></path>
-                        </svg>
-                        <span>{% translate "Download CV" %}</span>
-                        <span class="text-[10px] group-hover:translate-y-0.5 transition-transform">↓</span>
-                    </a>
-                    {% endif %}
-                </div>
-            </div>
-
-            <!-- Right Cell (5 Cols: 01 / CORE SKILLS & Live Status) -->
-            <div class="hero-right-cell lg:col-span-5 flex flex-col md:grid md:grid-cols-2 lg:flex lg:flex-col divide-y md:divide-y-0 md:divide-x lg:divide-x-0 lg:divide-y divide-white/[0.08] bg-[#08080B]">
-                <!-- Mobile Segmented Tab Selector (< lg) -->
-                <div class="flex md:hidden border-b border-white/[0.08] bg-[#050506] font-mono text-[10px] sm:text-[11px] select-none">
-                    <button type="button" id="hero-tab-capabilities" data-umami-event="hero-tab" data-umami-event-tab="core-skills" class="hero-tab-btn flex-1 py-2.5 sm:py-3 px-3 sm:px-4 text-center font-bold tracking-wider uppercase transition-colors text-emerald-400 border-b-2 border-emerald-500 bg-white/[0.02]" data-tab="capabilities">
-                        {% translate "01 / CORE SKILLS" %}
-                    </button>
-                    <button type="button" id="hero-tab-telemetry" data-umami-event="hero-tab" data-umami-event-tab="live-status" class="hero-tab-btn flex-1 py-2.5 sm:py-3 px-3 sm:px-4 text-center font-bold tracking-wider uppercase transition-colors text-zinc-500 hover:text-zinc-300 border-b-2 border-transparent" data-tab="telemetry">
-                        {% translate "LIVE STATUS" %}
-                    </button>
-                </div>
-
-                <!-- Top Sub-Cell: 01 / CORE SKILLS -->
-                <div id="hero-panel-capabilities" class="p-4 sm:p-6 md:p-8 block lg:block">
-                    <div class="flex items-center justify-between pb-3 mb-2 border-b border-white/[0.08] font-mono text-zinc-500 text-xs md:text-sm uppercase tracking-widest">
-                        <span class="font-bold text-zinc-200" data-scramble="true">{% translate "01 / CORE SKILLS" %}</span>
-                        <span class="text-emerald-400 font-bold">{% translate "TECH STACK" %}</span>
-                    </div>
-
-                    <div class="divide-y divide-white/[0.06]">
-                        {% for category in core_competencies %}
-                        <div class="spec-matrix-row flex gap-3.5 py-3.5 px-2 group cursor-pointer">
-                            <span class="font-mono text-xs text-zinc-600 pt-0.5 group-hover:text-emerald-400 transition-colors font-bold shrink-0">
-                                {{ forloop.counter|stringformat:"02d" }}
-                            </span>
-                            <div class="min-w-0 flex-1">
-                                <div class="flex items-baseline justify-between gap-3 mb-1">
-                                    <h3 class="font-display font-bold text-white text-sm md:text-base group-hover:text-emerald-400 transition-colors truncate" data-scramble="true">
-                                        {{ category.name }}
-                                    </h3>
-                                    <span class="font-mono text-[10px] text-zinc-500 uppercase whitespace-nowrap shrink-0">
-                                        {{ category.skills.all|length }} {% translate "SKILLS" %}
-                                    </span>
-                                </div>
-                                <div class="flex flex-wrap gap-1.5 mt-2">
-                                    {% for skill in category.skills.all %}
-                                    <span class="px-2 py-0.5 font-mono text-[10px] text-zinc-300 bg-white/[0.02] border border-white/[0.08] group-hover:border-white/[0.16] transition-colors uppercase tracking-wider">
-                                        {{ skill.name }}
-                                    </span>
-                                    {% endfor %}
-                                </div>
-                            </div>
-                        </div>
-                        {% empty %}
-                        <div class="py-6 px-2 font-mono text-xs text-zinc-500 uppercase tracking-widest">
-                            {% translate "No core skills registered yet." %}
-                        </div>
-                        {% endfor %}
-                    </div>
-                </div>
-
-                <!-- Bottom Sub-Cell: Live Status (real data: edge heartbeat, status, latest log, benchmarks, projects) -->
-                <div id="hero-panel-telemetry" class="p-6 md:p-8 bg-[#050506] flex flex-col flex-grow font-mono text-xs hidden lg:flex telemetry-radar-panel">
-                    <div class="flex items-center justify-between pb-3 mb-2 border-b border-white/[0.08] text-zinc-500 text-xs md:text-sm uppercase tracking-widest relative">
-                        <div class="flex items-center gap-2">
-                            <span class="w-1.5 h-1.5 bg-emerald-500 inline-block"></span>
-                            <span class="font-bold text-zinc-200" data-scramble="true">{% translate "Live Status" %}</span>
-                        </div>
-                        {% if node_heartbeat %}
-                        <span class="inline-flex items-center gap-2 text-emerald-400 font-semibold tracking-wider">
-                            <span class="relative flex h-2 w-2">
-                                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                                <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-                            </span>
-                            {% translate "ONLINE" %}
-                        </span>
-                        {% else %}
-                        <span class="inline-flex items-center gap-2 text-zinc-500 tracking-wider">
-                            <span class="w-1.5 h-1.5 bg-zinc-600 rounded-full"></span>
-                            {% translate "OFFLINE" %}
-                        </span>
-                        {% endif %}
-                    </div>
-
-                    <div class="divide-y divide-white/[0.06]">
-                        <!-- Edge node heartbeat -->
-                        <div class="spec-matrix-row flex items-start justify-between gap-4 py-3 px-2">
-                            {% if node_heartbeat %}
-                            <span class="spec-label text-emerald-400 font-bold uppercase tracking-wider">NODE:</span>
-                            <span class="text-zinc-200 text-right break-words min-w-0">
-                                {{ node_heartbeat.status }}
-                                <span class="block text-[10px] text-zinc-500 mt-0.5">{% blocktranslate with t=node_heartbeat.timestamp|short_timesince %}{{ t }} ago{% endblocktranslate %}</span>
-                            </span>
-                            {% else %}
-                            <span class="spec-label text-zinc-500 uppercase tracking-wider">NODE</span>
-                            <span class="text-zinc-500 text-right">{% translate "No recent heartbeat" %}</span>
-                            {% endif %}
-                        </div>
-
-                        {% if current_status %}
-                        <div class="spec-matrix-row flex items-start justify-between gap-4 py-3 px-2">
-                            <span class="spec-label text-emerald-400 font-bold uppercase tracking-wider">STATUS:</span>
-                            <span class="text-zinc-200 text-right break-words min-w-0">
-                                {{ current_status.message }}
-                                <span class="block text-[10px] text-zinc-500 mt-0.5">{% blocktranslate with t=current_status.timestamp|short_timesince %}{{ t }} ago{% endblocktranslate %}</span>
-                            </span>
-                        </div>
-                        {% endif %}
-
-                        {% for log in latest_logs|slice:":1" %}{% if log.title %}
-                        <a href="#chapter-04" data-umami-event="hero-latest-log-click" data-umami-event-log-id="{{ log.id }}" data-target-log-id="{{ log.id }}" class="hero-log-jump-link spec-matrix-row flex items-start justify-between gap-4 py-3 px-2 group/link cursor-pointer">
-                            <span class="spec-label text-zinc-500 uppercase tracking-wider">{% translate "LATEST LOG" %}</span>
-                            <span class="text-zinc-200 group-hover/link:text-emerald-400 transition-colors text-right break-words min-w-0">
-                                {{ log.title }}
-                                <span class="block text-[10px] text-zinc-500 mt-0.5">{% blocktranslate with t=log.date|short_timesince %}{{ t }} ago{% endblocktranslate %}</span>
-                            </span>
-                        </a>
-                        {% endif %}{% endfor %}
-
-                        {% if hackerrank_badges %}
-                        <div class="spec-matrix-row flex items-start justify-between gap-4 py-3 px-2">
-                            <span class="spec-label text-zinc-500 uppercase tracking-wider">HACKERRANK</span>
-                            <span class="text-zinc-200 text-right">
-                                <span class="mech-reel font-bold text-emerald-400" data-reel="{{ hackerrank_badges|length }}">{{ hackerrank_badges|length }}</span> {% translate "DOMAINS" %}
-                                <span class="block text-[10px] text-zinc-500 mt-0.5">{% translate "Synced" %} {{ hackerrank_badges.0.timestamp|date:"Y-m-d" }}</span>
-                            </span>
-                        </div>
-                        {% endif %}
-
-                        <div class="spec-matrix-row flex items-start justify-between gap-4 py-3 px-2">
-                            <span class="spec-label text-zinc-500 uppercase tracking-wider">{% translate "PROJECTS" %}</span>
-                            <span class="text-zinc-200 text-right"><span class="mech-reel font-bold text-emerald-400" data-reel="{{ total_projects }}">{{ total_projects }}</span> {% translate "in production" %}</span>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-
-        <!-- GitHub Contribution Strip with Parallax Media Window -->
-        <div class="p-6 md:px-10 border-t border-white/[0.08] flex flex-col md:flex-row items-center justify-between gap-6 bg-[#08080B] relative">
-            <div class="grid-line-h absolute top-0 left-0 right-0"></div>
-            <div class="font-mono text-xs text-zinc-400 flex items-center gap-3 shrink-0">
-                <span class="w-2 h-2 bg-emerald-500 animate-pulse"></span>
-                <span class="font-bold uppercase tracking-wider text-white">{% translate "GITHUB ACTIVITY" %}</span>
-                <span class="text-zinc-600">//</span>
-                <a href="https://github.com/josue-fourier" target="_blank" rel="noopener noreferrer" data-umami-event="social-click" data-umami-event-network="github" data-umami-event-location="footer" class="text-zinc-400 hover:text-emerald-400 transition-colors">
-                    josue-fourier ↗
-                </a>
-            </div>
-            <div class="w-full max-w-2xl flex flex-col gap-2">
-                <div class="w-full overflow-hidden py-1 opacity-95 hover:opacity-100 transition-opacity">
-                    <img src="https://ghchart.rshah.org/10b981/josue-fourier" alt="GitHub Activity Graph" loading="lazy" class="parallax-media w-full h-auto gh-chart-heatmap" />
-                </div>
-                <div class="flex items-center justify-end gap-2 font-mono text-[10px] text-zinc-500 select-none">
-                    <span>{% translate "LESS" %}</span>
-                    <div class="flex items-center gap-1">
-                        <span class="w-2.5 h-2.5 bg-[#111116] border border-white/[0.12]" title="0 contributions"></span>
-                        <span class="w-2.5 h-2.5 bg-[#00a371]" title="Tier 1"></span>
-                        <span class="w-2.5 h-2.5 bg-[#12bc83]" title="Tier 2"></span>
-                        <span class="w-2.5 h-2.5 bg-[#45efb6]" title="Tier 3"></span>
-                        <span class="w-2.5 h-2.5 bg-[#6bf2c4]" title="Tier 4"></span>
-                    </div>
-                    <span>{% translate "MORE" %}</span>
-                </div>
-            </div>
-        </div>
-    </section>
-
-
-    <!-- =======================================================================
-         SEC—02 // VERIFIED ALGORITHMIC BENCHMARKS (HACKERRANK TELEMETRY LEDGER)
-         ======================================================================= -->
-    {% if hackerrank_badges %}
-    <section id="chapter-02" class="c2-chapter-section border-b border-white/[0.08] bg-[#050506]" data-chapter="02" data-chapter-title="BENCHMARKS">
-        <span id="hackerrank-badges" class="absolute -top-20"></span>
-        <span id="chapter-03" class="absolute -top-20"></span>
-        <!-- Sticky Section Sub-Header -->
-        <div class="sec-sticky-header sticky top-12 z-30 bg-[#050506]/95 backdrop-blur-md px-4 sm:px-6 py-2.5 sm:py-3 border-b border-white/[0.08] flex items-center justify-between font-mono text-[11px] text-zinc-500 uppercase tracking-widest relative">
-            <div class="flex items-center gap-2.5">
-                <span class="sec-led w-1.5 h-1.5 bg-emerald-500 inline-block"></span>
-                <span class="text-emerald-500 font-bold">02</span>
-                <span class="text-zinc-700">/</span>
-                <span class="sec-decode-label text-zinc-300 font-bold tracking-wider" data-scramble="true" data-kinetic-scrub="true" data-target-text="{% translate '02 // BENCHMARKS' %}">{% translate "02 // BENCHMARKS" %}</span>
-            </div>
-            <div class="flex items-center gap-4 text-zinc-400">
-                <span class="hidden md:inline font-bold text-emerald-400">{% translate "5★ C++ RANK" %}</span>
-                <a href="https://www.hackerrank.com/profile/xmenmagnet" target="_blank" rel="noopener noreferrer" data-umami-event="social-click" data-umami-event-network="hackerrank" data-umami-event-location="benchmarks" class="font-mono text-xs text-emerald-400 hover:text-white transition-colors">
-                    {% translate "HACKERRANK PROFILE" %} ↗
-                </a>
-            </div>
-            <div class="grid-line-h absolute bottom-0 left-0 right-0"></div>
-        </div>
-
-        <!-- Section Summary Header & Telemetry Metadata Grid -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 divide-y sm:divide-y-0 sm:divide-x divide-white/[0.08] border-b border-white/[0.08] bg-[#08080B]">
-            <div class="p-6 md:px-8 sm:col-span-2 lg:col-span-2">
-                <h2 class="reveal-text text-2xl md:text-3xl font-display font-bold text-white mb-2">
-                    <span class="reveal-text-inner">{% translate "HackerRank Badges" %}</span>
-                </h2>
-                <p class="font-mono text-xs text-zinc-500">
-                    {% translate "Automated daily verification of algorithmic problem solving, applied cryptography, and 5-Star C++ ranking." %}
+            <div class="lg:col-span-7 p-5 sm:p-8 md:p-12 lg:p-14 flex flex-col gap-6 sm:gap-8 bg-[#050506]">
+                <p class="font-mono text-[11px] text-zinc-400 uppercase tracking-wider flex items-center gap-2">
+                    <span class="w-1.5 h-1.5 bg-emerald-500"></span>
+                    <span>Santiago, Chile</span><span class="text-zinc-700">//</span><span>UTFSM</span>
                 </p>
-            </div>
-            <div class="p-6 md:px-8 flex flex-col justify-center font-mono text-xs">
-                <div class="flex items-center justify-between text-zinc-500 mb-1">
-                    <span>{% translate "INGESTION CRON" %}</span>
-                    <span class="text-emerald-400 font-bold">08:00 AM SCL</span>
-                </div>
-                <div class="flex items-center justify-between text-zinc-500">
-                    <span>{% translate "ACTIVE DOMAINS" %}</span>
-                    <span class="text-white font-bold count-up-num" data-target="{{ hackerrank_badges|length }}">{{ hackerrank_badges|length }}</span>
-                </div>
-            </div>
-        </div>
 
-        <!-- Full-Width Horizontal Telemetry Ledger Rows -->
-        <div class="divide-y divide-white/[0.08] kinetic-block">
-            {% for badge in hackerrank_badges %}
-            <div class="glass-panel px-6 md:px-8 py-5 grid grid-cols-1 lg:grid-cols-12 items-center gap-6 group">
-                <!-- Col 1-4: Domain Name, Category & Level -->
-                <div class="lg:col-span-4 flex items-center gap-4 min-w-0">
-                    <span class="font-mono text-xs text-zinc-600 group-hover:text-emerald-400 transition-colors shrink-0">
-                        0{{ forloop.counter }}
-                    </span>
-                    <div class="min-w-0">
-                        <div class="flex items-center gap-2 font-mono text-[10px] text-zinc-500 uppercase tracking-wider mb-1">
-                            <span class="truncate">{{ badge.display_category }}</span>
-                            <span class="text-zinc-700">//</span>
-                            <span class="text-emerald-400/90">{% translate "LVL" %} {{ badge.level|default:1 }}</span>
-                        </div>
-                        <h3 class="font-display font-bold text-white text-lg md:text-xl leading-tight break-words group-hover:text-emerald-400 transition-colors" data-scramble="true">
-                            {{ badge.badge_name }}
-                        </h3>
-                    </div>
-                </div>
+                <h1 id="hero-title" class="hero-title font-display font-bold uppercase text-white">Josué Leiva.</h1>
 
-                <!-- Col 5-8: Geometric Rating Blocks & Live Animated Progress Track -->
-                <div class="lg:col-span-5 flex flex-col gap-2">
-                    <div class="flex items-center justify-between font-mono text-xs">
-                        <div class="flex items-center gap-2">
-                            <!-- Geometric Square Blocks (Exact earned stars registered) -->
-                            <span class="inline-flex items-center gap-1" aria-hidden="true">
-                                {% for star in badge.stars_list %}
-                                {% if star.filled %}
-                                <span class="w-2.5 h-2.5 bg-emerald-500 inline-block star-filled"></span>
-                                {% endif %}
-                                {% endfor %}
-                            </span>
-                            <span class="text-emerald-400 font-bold star-filled ml-1">
-                                {{ badge.stars|default:0 }} / {{ badge.display_total_stars }}
-                            </span>
-                        </div>
-                        <div class="flex items-center gap-2 text-[11px] text-zinc-400">
-                            <span class="text-zinc-600 hidden sm:inline">{% translate "Next Star Progress" %}:</span>
-                            <span class="font-bold text-zinc-200"><span class="count-up-num" data-target="{{ badge.progress_percentage }}">{{ badge.progress_percentage }}</span>%</span>
-                        </div>
-                    </div>
+                <p class="text-lg sm:text-xl lg:text-2xl text-zinc-300 font-light leading-snug max-w-2xl">
+                    {% translate "Telematics Engineering student. I build edge runtimes for IoT gateways, and the networks and servers they run on." %}
+                </p>
 
-                    <!-- 2px Hairline Animated Progress Track -->
-                    <div class="w-full bg-white/[0.08] h-[2px] overflow-hidden">
-                        <div class="benchmark-progress-bar bg-emerald-500 h-full" data-progress="{{ badge.progress_percentage }}" style="width: {{ badge.progress_percentage }}%;"></div>
-                    </div>
-                </div>
+                <p class="max-w-2xl border-l-2 border-emerald-500 pl-4 text-sm sm:text-base text-zinc-300 leading-relaxed">
+                    <strong class="text-white font-semibold">{% translate "Open to:" %}</strong>
+                    {% translate "a 320-hour industrial internship, December 2026 to March 2027, in telecom, data centers or IoT. Open to working abroad." %}
+                </p>
 
-                <!-- Col 9-10: Solved Challenges Telemetry -->
-                <div class="hidden sm:flex lg:col-span-2 flex-row lg:flex-col justify-between lg:justify-center font-mono text-xs border-t sm:border-t-0 sm:border-l border-white/[0.06] pt-3 sm:pt-0 sm:pl-6">
-                    <span class="text-[10px] text-zinc-500 uppercase tracking-wider">{% translate "Solved Challenges" %}</span>
-                    <span class="text-zinc-200 font-bold tabular-nums mt-0.5">
-                        <span class="count-up-num" data-target="{{ badge.solved|default:0 }}">{{ badge.solved|default:0 }}</span>{% if badge.total_challenges %} / {{ badge.total_challenges }}{% endif %}
-                    </span>
-                </div>
-
-                <!-- Col 11-12: Right-Aligned Domain Verification Action -->
-                <div class="lg:col-span-1 flex items-center justify-end">
-                    <a href="{{ badge.domain_url }}" target="_blank" rel="noopener noreferrer" data-umami-event="badge-domain-click" data-umami-event-badge="{{ badge.badge_name }}" class="badge-domain-link font-mono text-[11px] text-emerald-400 hover:text-white transition-colors uppercase tracking-wider inline-flex items-center gap-1 font-bold whitespace-nowrap">
-                        <span>{% translate "View Domain" %}</span>
-                        <span class="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform">↗</span>
-                    </a>
+                <div class="flex flex-wrap gap-2.5 sm:gap-3 pt-2">
+                    {% if LANGUAGE_CODE == "es" %}
+                    <a href="/cv-es" target="_blank" data-umami-event="cv-download" data-umami-event-lang="es" class="btn-sweep btn-sweep-emerald px-4 sm:px-5 py-2.5 sm:py-3 font-mono text-[11px] sm:text-xs uppercase tracking-wider flex items-center gap-2 transition-all duration-300 font-semibold border border-emerald-500/80 bg-emerald-500/15 hover:bg-emerald-400 text-emerald-300 hover:text-black font-bold">{% translate "Download CV" %} (ES) ↓</a>
+                    <a href="/cv-en" target="_blank" data-umami-event="cv-download" data-umami-event-lang="en" class="btn-sweep px-4 sm:px-5 py-2.5 sm:py-3 font-mono text-[11px] sm:text-xs uppercase tracking-wider flex items-center gap-2 transition-all duration-300 font-semibold border border-white/20 bg-white/[0.06] text-zinc-100 hover:text-black">CV (EN) ↓</a>
+                    {% else %}
+                    <a href="/cv-en" target="_blank" data-umami-event="cv-download" data-umami-event-lang="en" class="btn-sweep btn-sweep-emerald px-4 sm:px-5 py-2.5 sm:py-3 font-mono text-[11px] sm:text-xs uppercase tracking-wider flex items-center gap-2 transition-all duration-300 font-semibold border border-emerald-500/80 bg-emerald-500/15 hover:bg-emerald-400 text-emerald-300 hover:text-black font-bold">{% translate "Download CV" %} (EN) ↓</a>
+                    <a href="/cv-es" target="_blank" data-umami-event="cv-download" data-umami-event-lang="es" class="btn-sweep px-4 sm:px-5 py-2.5 sm:py-3 font-mono text-[11px] sm:text-xs uppercase tracking-wider flex items-center gap-2 transition-all duration-300 font-semibold border border-white/20 bg-white/[0.06] text-zinc-100 hover:text-black">CV (ES) ↓</a>
+                    {% endif %}
+                    <a href="#" class="js-email btn-sweep px-4 sm:px-5 py-2.5 sm:py-3 font-mono text-[11px] sm:text-xs uppercase tracking-wider flex items-center gap-2 transition-all duration-300 font-semibold border border-white/20 bg-white/[0.06] text-zinc-100 hover:text-black" data-u="josuenicolas" data-d="protonmail.com" data-umami-event="email-click">{% translate "Email" %}</a>
+                    <a href="https://github.com/josue-fourier" target="_blank" rel="noopener noreferrer" data-umami-event="social-click" data-umami-event-network="github" data-umami-event-location="hero" class="btn-sweep px-4 sm:px-5 py-2.5 sm:py-3 font-mono text-[11px] sm:text-xs uppercase tracking-wider flex items-center gap-2 transition-all duration-300 font-semibold border border-white/20 bg-white/[0.06] text-zinc-100 hover:text-black">GitHub ↗</a>
+                    <a href="https://linkedin.com/in/josuenicolas" target="_blank" rel="noopener noreferrer" data-umami-event="social-click" data-umami-event-network="linkedin" data-umami-event-location="hero" class="btn-sweep btn-sweep-sky px-4 sm:px-5 py-2.5 sm:py-3 font-mono text-[11px] sm:text-xs uppercase tracking-wider flex items-center gap-2 transition-all duration-300 font-semibold border border-[#0A66C2]/60 bg-[#0A66C2]/15 hover:bg-[#0A66C2] text-[#70B5F9] hover:text-white">LinkedIn ↗</a>
                 </div>
             </div>
-            {% endfor %}
+
+            <div class="lg:col-span-5 p-5 sm:p-8 md:p-10 bg-[#08080B] flex flex-col gap-6">
+                <div class="flex items-center gap-5">
+                    <div class="profile-portrait-frame relative shrink-0 w-24 h-24 sm:w-28 sm:h-28 border border-white/20 bg-[#070709]">
+                        <img src="{% static 'portfolio/images/profile.webp' %}" width="224" height="224" alt="{% translate 'Portrait of Josué Leiva' %}" class="portrait-img w-full h-full object-cover" fetchpriority="high">
+                    </div>
+                    <p class="font-mono text-xs text-zinc-300 leading-relaxed">{% translate "3rd-year Civil Telematics Engineering student at Universidad Técnica Federico Santa María." %}</p>
+                </div>
+                <dl class="divide-y divide-white/[0.08] font-mono text-xs border-t border-white/[0.08]">
+                    <div class="py-3 grid grid-cols-[7.5rem_1fr] gap-3"><dt class="text-zinc-400 uppercase tracking-wider">{% translate "Now" %}</dt><dd class="text-zinc-200">{% translate "Research assistant at LabOPT (UTFSM): edge runtime for Plazas Inteligentes" %}</dd></div>
+                    <div class="py-3 grid grid-cols-[7.5rem_1fr] gap-3"><dt class="text-zinc-400 uppercase tracking-wider">{% translate "Graduation" %}</dt><dd class="text-zinc-200">{% translate "Expected December 2029" %}</dd></div>
+                    <div class="py-3 grid grid-cols-[7.5rem_1fr] gap-3"><dt class="text-zinc-400 uppercase tracking-wider">{% translate "Awards" %}</dt><dd class="text-zinc-200">{% translate "Academic Merit Recognition (Reconocimiento al Mérito Académico), 2025 and 2026" %}</dd></div>
+                    <div class="py-3 grid grid-cols-[7.5rem_1fr] gap-3"><dt class="text-zinc-400 uppercase tracking-wider">{% translate "Languages" %}</dt><dd class="text-zinc-200">{% translate "Spanish (native), English C1 (Busuu certificate)" %}</dd></div>
+                    <div class="py-3 grid grid-cols-[7.5rem_1fr] gap-3"><dt class="text-zinc-400 uppercase tracking-wider">HackerRank</dt><dd class="text-zinc-200"><a href="#hackerrank" class="hover:text-emerald-400 underline decoration-white/20 underline-offset-4">C++ 5★</a></dd></div>
+                </dl>
+            </div>
         </div>
     </section>
-    {% endif %}
 
-
-    <!-- =======================================================================
-         SEC—03 // PRODUCTION SYSTEMS & INLINE STACK FILTER
-         ======================================================================= -->
-    <section id="chapter-03" class="c2-chapter-section border-b border-white/[0.08] bg-[#050506]" data-chapter="03" data-chapter-title="SYSTEMS">
-        <span id="projects" class="absolute -top-20"></span>
-        <span id="chapter-06" class="absolute -top-20"></span>
-        <div id="chapter-05" data-chapter="05" class="hidden" aria-hidden="true"></div>
-
-        <!-- Sticky Section Sub-Header with Integrated Tech Filter -->
-        <div class="sec-sticky-header sticky top-12 z-30 bg-[#050506]/95 backdrop-blur-md px-4 sm:px-6 py-2.5 sm:py-3 border-b border-white/[0.08] flex flex-col md:flex-row md:items-center justify-between gap-3 font-mono text-[11px] text-zinc-500 uppercase tracking-widest relative">
+    <!-- ===================== PROJECTS ===================== -->
+    <section id="projects" class="c2-chapter-section border-b border-white/[0.08] bg-[#050506]" data-chapter="02" data-chapter-title="PROJECTS">
+        <div class="sec-sticky-header sticky top-12 z-30 bg-[#050506]/95 backdrop-blur-md px-4 sm:px-6 py-2.5 sm:py-3 border-b border-white/[0.08] flex flex-wrap items-center justify-between gap-3 font-mono text-[11px] text-zinc-400 uppercase tracking-widest relative">
             <div class="flex items-center gap-2.5">
                 <span class="sec-led w-1.5 h-1.5 bg-emerald-500 inline-block"></span>
-                <span class="text-emerald-500 font-bold">03</span>
+                <span class="text-emerald-400 font-bold">01</span>
                 <span class="text-zinc-700">/</span>
-                <span class="sec-decode-label text-zinc-300 font-bold tracking-wider" data-scramble="true" data-kinetic-scrub="true" data-target-text="{% translate '03 // PRODUCTION SYSTEMS' %}">{% translate "03 // PRODUCTION SYSTEMS" %}</span>
+                <h2 class="sec-decode-label text-zinc-200 font-bold tracking-wider">{% translate "Projects" %}</h2>
             </div>
-
-            <!-- Inline Stack Filter Buttons -->
             <div class="flex flex-wrap items-center gap-1.5">
-                <span class="text-zinc-600 text-[10px] hidden sm:inline mr-1">{% translate "FILTER:" %}</span>
+                <span class="text-zinc-400 text-[10px] hidden sm:inline mr-1">{% translate "FILTER:" %}</span>
                 {% for strength in technical_strengths %}
-                <button type="button" data-umami-event="tech-filter" data-umami-event-tech="{{ strength.technology }}" data-tech="{{ strength.technology }}" class="tech-filter-btn px-2.5 py-1 border border-white/10 text-zinc-400 font-mono text-[10px] uppercase tracking-wider cursor-pointer">
-                    {{ strength.technology }} ({{ strength.project_count }})
-                </button>
+                <button type="button" data-umami-event="tech-filter" data-umami-event-tech="{{ strength.technology }}" data-tech="{{ strength.technology }}" class="tech-filter-btn px-2.5 py-1 border border-white/10 text-zinc-300 font-mono text-[10px] uppercase tracking-wider cursor-pointer">{{ strength.technology }} ({{ strength.project_count }})</button>
                 {% endfor %}
             </div>
             <div class="grid-line-h absolute bottom-0 left-0 right-0"></div>
         </div>
 
-        <!-- Distinct Dossier Project Cards Container (Well Divided Across Mobile, Tablet & Desktop) -->
-        <div class="p-4 sm:p-6 md:p-8 lg:p-10 flex flex-col gap-6 md:gap-8 lg:gap-10 bg-[#050506]">
+        <div class="p-4 sm:p-6 md:p-8 lg:p-10 flex flex-col gap-6 md:gap-8 bg-[#050506]">
             {% for project in projects %}
-            <article class="project-card filter-transition kinetic-block border border-white/[0.12] hover:border-emerald-500/40 bg-[#070709] transition-all duration-300 flex flex-col overflow-hidden shadow-2xl group" data-techs="{% for item in project.stack.all %}{{ item.technology }},{% endfor %}">
-                <!-- Top Dossier System Strip -->
-                <div class="px-5 py-3 border-b border-white/[0.08] bg-[#0A0A0E]/90 backdrop-blur-sm flex items-center justify-between font-mono text-[10px] md:text-[11px] text-zinc-400">
-                    <div class="flex items-center gap-2.5">
-                        <span class="w-1.5 h-1.5 bg-emerald-500 animate-pulse"></span>
-                        <span class="text-zinc-500 font-bold">PROJECT // 0{{ forloop.counter }}</span>
-                        <span class="text-zinc-700 hidden sm:inline">|</span>
-                        <span class="text-emerald-400 hidden sm:inline uppercase tracking-wider font-semibold">{% translate "DEPLOYED SYSTEM" %}</span>
-                    </div>
-                    <div class="flex items-center gap-3">
-                        <span class="text-zinc-500 font-mono text-[10px] uppercase tracking-wider">{{ project.stack.all|length }} {% translate "COMPONENTS" %}</span>
-                        {% if project.link %}
-                        <span class="px-1.5 py-0.5 bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 font-bold uppercase text-[9px]">LIVE</span>
-                        {% endif %}
-                    </div>
+            <article class="project-card filter-transition kinetic-block border border-white/[0.12] hover:border-emerald-500/40 bg-[#070709] transition-all duration-300 flex flex-col overflow-hidden group" data-techs="{% for item in project.stack.all %}{{ item.technology }},{% endfor %}">
+                <div class="px-5 py-3 border-b border-white/[0.08] bg-[#0A0A0E]/90 flex items-center justify-between font-mono text-[11px] text-zinc-400">
+                    <span class="text-zinc-400 font-bold">{% translate "Project" %} {{ forloop.counter|stringformat:"02d" }}</span>
+                    <span class="px-2 py-0.5 border uppercase tracking-wider font-semibold text-[10px] {% if project.status == 'production' %}border-emerald-500/40 text-emerald-400{% else %}border-white/20 text-zinc-300{% endif %}">{{ project.get_status_display }}</span>
                 </div>
 
-                <!-- Split Card Body: 5 cols Left Specs & Description | 7 cols Right Framed Viewport -->
                 <div class="grid grid-cols-1 lg:grid-cols-12 divide-y lg:divide-y-0 lg:divide-x divide-white/[0.08]">
-                    <!-- Left Cell: Metadata, Oversized Index, Descriptions, Actions (5 Cols) -->
-                    <div class="lg:col-span-5 p-6 md:p-8 lg:p-10 flex flex-col justify-between bg-[#07070A]">
+                    <div class="lg:col-span-5 p-6 md:p-8 flex flex-col justify-between gap-6 bg-[#07070A]">
                         <div>
-                            <div class="flex items-start justify-between mb-3 md:mb-4">
-                                <span class="font-mono text-2xl md:text-3xl font-bold text-zinc-700 group-hover:text-emerald-400 transition-colors">
-                                    0{{ forloop.counter }}
-                                </span>
-                            </div>
-
-                            <h3 class="text-xl md:text-2xl font-display font-bold text-white group-hover:text-emerald-400 transition-colors mb-3" data-scramble="true">
-                                {{ project.name }}
-                            </h3>
-
-                            <p class="text-xs md:text-sm text-zinc-400 leading-relaxed font-light mb-6">
-                                {{ project.description }}
-                            </p>
-
-                            <!-- Tech Stack Tags -->
-                            <div class="flex flex-wrap gap-1.5 mb-6">
+                            <h3 class="text-xl md:text-2xl font-display font-bold text-white group-hover:text-emerald-400 transition-colors mb-3">{{ project.name }}</h3>
+                            <p class="text-sm text-zinc-300 leading-relaxed mb-6">{{ project.description }}</p>
+                            <ul class="flex flex-wrap gap-1.5" aria-label="{% translate 'Stack' %}">
                                 {% for item in project.stack.all %}
-                                <span class="px-2.5 py-1 border border-white/10 bg-white/[0.02] font-mono text-[10px] text-zinc-300 uppercase">
-                                    {{ item.technology }}
-                                </span>
+                                <li class="px-2.5 py-1 border border-white/10 bg-white/[0.02] font-mono text-[10px] text-zinc-300 uppercase">{{ item.technology }}</li>
                                 {% endfor %}
-                            </div>
+                            </ul>
                         </div>
-
-                        <!-- Direct Navigation Action -->
-                        <div class="flex items-center justify-between pt-4 border-t border-white/[0.08] font-mono text-xs">
-                            <a href="{% url 'project_detail' project.id %}" data-umami-event="project-open" data-umami-event-project="{{ project.name }}" data-umami-event-source="card-button" class="btn-sweep btn-sweep-emerald px-5 py-2.5 border border-emerald-500/80 bg-emerald-500/15 hover:bg-emerald-400 text-emerald-300 hover:text-black uppercase tracking-wider inline-flex items-center gap-2.5 font-bold text-xs shadow-[0_4px_16px_rgba(16,185,129,0.25)] hover:shadow-[0_0_25px_rgba(16,185,129,0.55)] transition-all duration-300 group/btn">
-                                <span>{% translate "View Case Study" %}</span>
-                                <span class="group-hover/btn:translate-x-1 transition-transform">→</span>
-                            </a>
+                        <div class="flex flex-wrap items-center gap-3 pt-4 border-t border-white/[0.08] font-mono text-xs">
+                            <a href="{% url 'project_detail' project.id %}" data-umami-event="project-open" data-umami-event-project="{{ project.name }}" data-umami-event-source="card-button" class="btn-sweep btn-sweep-emerald px-5 py-2.5 border border-emerald-500/80 bg-emerald-500/15 hover:bg-emerald-400 text-emerald-300 hover:text-black uppercase tracking-wider inline-flex items-center gap-2.5 font-bold transition-all duration-300">{% translate "View Case Study" %} →</a>
                             {% if project.link %}
-                            <a href="{{ project.link }}" target="_blank" rel="noopener noreferrer" data-umami-event="project-external-link" data-umami-event-project="{{ project.name }}" class="px-3.5 py-2 border border-white/10 hover:border-white/30 bg-white/[0.02] hover:bg-white/[0.08] text-zinc-400 hover:text-white transition-all uppercase tracking-wider text-[11px] inline-flex items-center gap-1.5 group/demo">
-                                <span>{% translate "Live Demo" %}</span>
-                                <span class="group-hover/demo:translate-x-0.5 group-hover/demo:-translate-y-0.5 transition-transform">↗</span>
-                            </a>
+                            <a href="{{ project.link }}" target="_blank" rel="noopener noreferrer" data-umami-event="project-external-link" data-umami-event-project="{{ project.name }}" class="px-3.5 py-2 border border-white/10 hover:border-white/30 text-zinc-300 hover:text-white transition-all uppercase tracking-wider text-[11px]">{% translate "Visit site" %} ↗</a>
                             {% endif %}
                         </div>
                     </div>
 
-                    <!-- Right Cell: Framed 16:9 Parallax Viewport (7 Cols) -->
-                    <div class="lg:col-span-7 p-6 md:p-8 lg:p-10 bg-[#050507] flex items-center justify-center">
-                        {% if project.preview_image %}
-                        <a href="{% url 'project_detail' project.id %}" data-umami-event="project-open" data-umami-event-project="{{ project.name }}" data-umami-event-source="card-image" class="w-full aspect-video border border-white/10 overflow-hidden relative block group/img bg-[#050506]">
-                            <img src="{{ project.preview_image.file.url }}" alt="{{ project.name }} preview" loading="lazy" class="parallax-media w-full h-full object-cover scale-[1.08] filter grayscale contrast-125 group-hover/img:grayscale-0 transition-all duration-700" />
-                            <div class="absolute bottom-0 right-0 bg-[#050506]/90 backdrop-blur-sm border-t border-l border-white/15 px-3 py-1.5 font-mono text-[10px] text-zinc-300 group-hover/img:bg-emerald-500 group-hover/img:text-black group-hover/img:border-emerald-500 transition-colors uppercase tracking-widest font-bold">
-                                {% translate "VIEW PROJECT" %} ↗
-                            </div>
+                    <div class="lg:col-span-7 p-6 md:p-8 bg-[#050507] flex items-center justify-center">
+                        {% with img=project.preview_image %}
+                        {% if img %}
+                        <a href="{% url 'project_detail' project.id %}" data-umami-event="project-open" data-umami-event-project="{{ project.name }}" data-umami-event-source="card-image" class="w-full aspect-video border border-white/10 overflow-hidden block bg-[#050506]">
+                            <img src="{{ img.file.url }}" alt="{{ img.alt_text|default:project.name }}" loading="lazy" width="1280" height="720" class="w-full h-full object-cover">
                         </a>
                         {% else %}
-                        <a href="{% url 'project_detail' project.id %}" data-umami-event="project-open" data-umami-event-project="{{ project.name }}" data-umami-event-source="card-image" class="w-full aspect-video border border-white/10 bg-[#0A0A0D] flex flex-col items-center justify-center font-mono text-xs text-zinc-500 hover:border-emerald-500/40 transition-colors uppercase tracking-widest relative group/img">
-                            <span>{% translate "ARCHITECTURE DOCUMENTED" %}</span>
-                            <div class="absolute bottom-0 right-0 bg-[#050506]/90 border-t border-l border-white/15 px-3 py-1.5 font-mono text-[10px] text-zinc-300 group-hover/img:bg-emerald-500 group-hover/img:text-black transition-colors uppercase tracking-widest font-bold">
-                                {% translate "VIEW PROJECT" %} ↗
-                            </div>
-                        </a>
+                        <a href="{% url 'project_detail' project.id %}" class="w-full aspect-video border border-white/10 bg-[#0A0A0D] flex items-center justify-center font-mono text-xs text-zinc-400 uppercase tracking-widest hover:border-emerald-500/40 transition-colors">{% translate "Read the case study" %} →</a>
                         {% endif %}
+                        {% endwith %}
                     </div>
                 </div>
             </article>
+            {% empty %}
+            <p class="font-mono text-xs text-zinc-400">{% translate "No projects published yet." %}</p>
             {% endfor %}
         </div>
     </section>
 
-
-    <!-- =======================================================================
-         SEC—04 // INTERACTIVE ENGINEERING FIELD LOGS CONSOLE (SPA)
-         ======================================================================= -->
-    <section id="chapter-04" class="c2-chapter-section bg-[#050506]" data-chapter="04" data-chapter-title="FIELD LOGS">
-        <!-- Sticky Section Sub-Header -->
-        <div class="sec-sticky-header sticky top-12 z-30 bg-[#050506]/95 backdrop-blur-md px-4 sm:px-6 py-2.5 sm:py-3 border-b border-white/[0.08] flex items-center justify-between font-mono text-[11px] text-zinc-500 uppercase tracking-widest relative">
+    <!-- ===================== EXPERIENCE ===================== -->
+    <section id="experience" class="c2-chapter-section border-b border-white/[0.08] bg-[#050506]" data-chapter="03" data-chapter-title="EXPERIENCE">
+        <div class="sec-sticky-header sticky top-12 z-30 bg-[#050506]/95 backdrop-blur-md px-4 sm:px-6 py-2.5 sm:py-3 border-b border-white/[0.08] flex flex-wrap items-center justify-between gap-3 font-mono text-[11px] text-zinc-400 uppercase tracking-widest relative">
             <div class="flex items-center gap-2.5">
                 <span class="sec-led w-1.5 h-1.5 bg-emerald-500 inline-block"></span>
-                <span class="text-emerald-500 font-bold">04</span>
+                <span class="text-emerald-400 font-bold">02</span>
                 <span class="text-zinc-700">/</span>
-                <span class="sec-decode-label text-zinc-300 font-bold tracking-wider" data-scramble="true" data-kinetic-scrub="true" data-target-text="{% translate '04 // ENGINEERING FIELD LOGS' %}">{% translate "04 // ENGINEERING FIELD LOGS" %}</span>
-            </div>
-            <div class="flex items-center gap-4 text-zinc-400 font-mono text-xs">
-                <span>{{ log_count|default:0 }} {% translate "LOGS" %}</span>
-                <span class="text-zinc-700 hidden sm:inline">|</span>
-                <span class="text-emerald-400 font-semibold hidden sm:inline">{% translate "LIVE CONSOLE" %}</span>
+                <h2 class="sec-decode-label text-zinc-200 font-bold tracking-wider">{% translate "Experience" %}</h2>
             </div>
             <div class="grid-line-h absolute bottom-0 left-0 right-0"></div>
         </div>
+        <ol class="divide-y divide-white/[0.08]">
+            <li class="grid grid-cols-1 md:grid-cols-12 gap-2 md:gap-6 px-6 md:px-10 py-6">
+                <p class="md:col-span-3 font-mono text-xs text-zinc-400 uppercase tracking-wider">{% translate "Mar 2026 – Nov 2026" %}</p>
+                <div class="md:col-span-9">
+                    <h3 class="font-display font-bold text-white text-lg">{% translate "Research assistant, edge runtime developer" %} · LabOPT, UTFSM</h3>
+                    <p class="text-sm text-zinc-300 leading-relaxed mt-2 max-w-3xl">{% translate "Plazas Inteligentes, a team of three. I own the C++17 runtime and the hardware assembly of 3 Raspberry Pi 5 gateways, each with 3 sensors, an ADC and a still-image camera; a colleague owns the cloud side. Multithreaded pipeline with thread-safe queues, HTTP multipart uploads, Server-Sent Events remote control and automatic restarts. Not yet deployed in the field." %}</p>
+                    <p class="font-mono text-[11px] text-zinc-400 mt-3">C++17 · GStreamer · V4L2 · I2C · OpenSSL · spdlog · CMake</p>
+                </div>
+            </li>
+            <li class="grid grid-cols-1 md:grid-cols-12 gap-2 md:gap-6 px-6 md:px-10 py-6">
+                <p class="md:col-span-3 font-mono text-xs text-zinc-400 uppercase tracking-wider">2025 – 2026</p>
+                <div class="md:col-span-9">
+                    <h3 class="font-display font-bold text-white text-lg">{% translate "Teaching assistant" %} · UTFSM</h3>
+                    <p class="text-sm text-zinc-300 leading-relaxed mt-2">{% translate "Programming Seminar TEL20125 (2026-1). Calculus I MAT071 (2025-2)." %}</p>
+                </div>
+            </li>
+            <li class="grid grid-cols-1 md:grid-cols-12 gap-2 md:gap-6 px-6 md:px-10 py-6">
+                <p class="md:col-span-3 font-mono text-xs text-zinc-400 uppercase tracking-wider">{% translate "Feb 2022 – Oct 2024" %}</p>
+                <div class="md:col-span-9">
+                    <h3 class="font-display font-bold text-white text-lg">{% translate "Volunteer translator" %} · freeCodeCamp</h3>
+                </div>
+            </li>
+        </ol>
+    </section>
 
+    <!-- ===================== SKILLS ===================== -->
+    <section id="skills" class="c2-chapter-section border-b border-white/[0.08] bg-[#050506]" data-chapter="04" data-chapter-title="SKILLS">
+        <div class="sec-sticky-header sticky top-12 z-30 bg-[#050506]/95 backdrop-blur-md px-4 sm:px-6 py-2.5 sm:py-3 border-b border-white/[0.08] flex flex-wrap items-center justify-between gap-3 font-mono text-[11px] text-zinc-400 uppercase tracking-widest relative">
+            <div class="flex items-center gap-2.5">
+                <span class="sec-led w-1.5 h-1.5 bg-emerald-500 inline-block"></span>
+                <span class="text-emerald-400 font-bold">03</span>
+                <span class="text-zinc-700">/</span>
+                <h2 class="sec-decode-label text-zinc-200 font-bold tracking-wider">{% translate "Skills" %}</h2>
+            </div>
+            <div class="grid-line-h absolute bottom-0 left-0 right-0"></div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
+            {% for category in core_competencies %}
+            <div class="bg-[#050506] p-6 border-b border-r border-white/[0.08]">
+                <h3 class="font-display font-bold text-white text-base mb-3">{{ category.name }}</h3>
+                <ul class="flex flex-wrap gap-1.5">
+                    {% for skill in category.skills.all %}
+                    <li class="px-2 py-0.5 font-mono text-[11px] text-zinc-300 bg-white/[0.02] border border-white/[0.08]">{{ skill.name }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="p-6 md:px-10 border-t border-white/[0.08] flex flex-col md:flex-row items-center justify-between gap-6 bg-[#08080B]">
+            <a href="https://github.com/josue-fourier" target="_blank" rel="noopener noreferrer" data-umami-event="social-click" data-umami-event-network="github" data-umami-event-location="skills" class="font-mono text-xs text-zinc-300 hover:text-emerald-400 uppercase tracking-wider shrink-0">{% translate "GitHub activity" %} // josue-fourier ↗</a>
+            <img src="https://ghchart.rshah.org/10b981/josue-fourier" alt="{% translate 'GitHub contribution chart for josue-fourier over the last year' %}" loading="lazy" width="663" height="104" class="w-full max-w-2xl h-auto gh-chart-heatmap">
+        </div>
+    </section>
+
+    <!-- ===================== LOGS ===================== -->
+    <section id="logs" class="c2-chapter-section border-b border-white/[0.08] bg-[#050506]" data-chapter="05" data-chapter-title="LOGS">
+        <div class="sec-sticky-header sticky top-12 z-30 bg-[#050506]/95 backdrop-blur-md px-4 sm:px-6 py-2.5 sm:py-3 border-b border-white/[0.08] flex flex-wrap items-center justify-between gap-3 font-mono text-[11px] text-zinc-400 uppercase tracking-widest relative">
+            <div class="flex items-center gap-2.5">
+                <span class="sec-led w-1.5 h-1.5 bg-emerald-500 inline-block"></span>
+                <span class="text-emerald-400 font-bold">04</span>
+                <span class="text-zinc-700">/</span>
+                <h2 class="sec-decode-label text-zinc-200 font-bold tracking-wider">{% translate "Engineering logs" %}</h2>
+            </div>
+            <span class="text-zinc-400">{{ log_count|default:0 }} {% translate "LOGS" %}</span>
+            <div class="grid-line-h absolute bottom-0 left-0 right-0"></div>
+        </div>
         <!-- Full-Featured Split Console: Left Ledger (or mobile horizontal strip) | Right Reading Pane -->
         <div id="log-split" class="relative z-10 flex flex-col md:grid md:grid-rows-1 md:grid-cols-[280px_1fr] lg:grid-cols-[340px_1fr] xl:grid-cols-[380px_1fr] w-full bg-[#050506] md:h-[750px] lg:h-[820px] md:overflow-hidden border-b border-white/[0.08]">
 
@@ -636,73 +248,37 @@
         </div>
     </section>
 
+    <!-- ===================== HACKERRANK (compact, last) ===================== -->
+    {% if hackerrank_badges %}
+    <section id="hackerrank" class="c2-chapter-section bg-[#050506]" data-chapter="06" data-chapter-title="HACKERRANK">
+        <div class="sec-sticky-header sticky top-12 z-30 bg-[#050506]/95 backdrop-blur-md px-4 sm:px-6 py-2.5 sm:py-3 border-b border-white/[0.08] flex flex-wrap items-center justify-between gap-3 font-mono text-[11px] text-zinc-400 uppercase tracking-widest relative">
+            <div class="flex items-center gap-2.5">
+                <span class="sec-led w-1.5 h-1.5 bg-emerald-500 inline-block"></span>
+                <span class="text-emerald-400 font-bold">05</span>
+                <span class="text-zinc-700">/</span>
+                <h2 class="sec-decode-label text-zinc-200 font-bold tracking-wider">HackerRank</h2>
+            </div>
+            <a href="https://www.hackerrank.com/profile/xmenmagnet" target="_blank" rel="noopener noreferrer" data-umami-event="social-click" data-umami-event-network="hackerrank" class="text-emerald-400 hover:text-white">{% translate "Profile" %} ↗</a>
+            <div class="grid-line-h absolute bottom-0 left-0 right-0"></div>
+        </div>
+        <ul class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5">
+            {% for badge in hackerrank_badges %}
+            <li class="bg-[#050506] px-4 py-3 font-mono text-xs border-b border-r border-white/[0.08]">
+                <a href="{{ badge.domain_url }}" target="_blank" rel="noopener noreferrer" class="block hover:text-emerald-400" data-umami-event="badge-domain-click" data-umami-event-badge="{{ badge.badge_name }}">
+                    <span class="block text-zinc-200 font-bold">{{ badge.badge_name }}</span>
+                    <span class="block {% if badge.stars >= 5 %}text-emerald-400{% else %}text-zinc-400{% endif %}">{{ badge.stars|default:0 }}/{{ badge.display_total_stars }} ★ · {{ badge.solved|default:0 }} {% translate "solved" %}</span>
+                </a>
+            </li>
+            {% endfor %}
+        </ul>
+    </section>
+    {% endif %}
+
 </main>
 {% endblock %}
 
 {% block extra_js %}
 <script>
-    // --- Santiago Real-time Telemetry Clock ---
-    function initSantiagoClock() {
-        const clockEls = document.querySelectorAll('.santiago-clock-display, #santiago-clock');
-        if (!clockEls.length) return;
-
-        const formatter = new Intl.DateTimeFormat('es-CL', {
-            timeZone: 'America/Santiago',
-            hour12: false,
-            hour: '2-digit',
-            minute: '2-digit',
-            second: '2-digit'
-        });
-
-        function updateClock() {
-            let timeStr;
-            try {
-                timeStr = formatter.format(new Date());
-            } catch (e) {
-                timeStr = new Date().toTimeString().split(' ')[0];
-            }
-            clockEls.forEach(el => el.textContent = timeStr);
-        }
-        updateClock();
-        setInterval(updateClock, 1000);
-    }
-
-    // --- Santiago Live Weather (Open-Meteo API, Plain Text, No Emojis) ---
-    async function initSantiagoWeather() {
-        const tempEls = document.querySelectorAll('.santiago-weather-display, #santiago-weather-temp');
-        if (!tempEls.length) return;
-
-        const cacheKey = 'scl_weather_cache';
-        const cacheTimeKey = 'scl_weather_cache_time';
-        const cachedData = localStorage.getItem(cacheKey);
-        const cachedTime = localStorage.getItem(cacheTimeKey);
-        const now = Date.now();
-
-        if (cachedData && cachedTime && (now - parseInt(cachedTime, 10) < 60 * 60 * 1000)) {
-            renderWeather(JSON.parse(cachedData));
-            return;
-        }
-
-        try {
-            const res = await fetch('https://api.open-meteo.com/v1/forecast?latitude=-33.45&longitude=-70.66&current_weather=true');
-            if (!res.ok) return;
-            const data = await res.json();
-            if (data && data.current_weather) {
-                localStorage.setItem(cacheKey, JSON.stringify(data.current_weather));
-                localStorage.setItem(cacheTimeKey, String(now));
-                renderWeather(data.current_weather);
-            }
-        } catch (e) {
-            // Silently fail without breaking anything
-        }
-
-        function renderWeather(current) {
-            if (!current) return;
-            const temp = Math.round(current.temperature);
-            tempEls.forEach(el => el.textContent = `${temp}°C`);
-        }
-    }
-
     // --- Interactive Engineering Logs Console (SPA) ---
     function initLoggingConsole() {
         const navContainer = document.getElementById('log-nav');
@@ -788,8 +364,6 @@
     }
 
     document.addEventListener('DOMContentLoaded', () => {
-        initSantiagoClock();
-        initSantiagoWeather();
         initLoggingConsole();
     });
 </script>

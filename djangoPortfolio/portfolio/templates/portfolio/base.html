@@ -1,27 +1,31 @@
 {% load static %}
 {% load i18n %}
 {% load hud_tags %}
+{% get_current_language as CURRENT_LANG %}
 <!DOCTYPE html>
-<html lang="en" data-theme="lofi" class="no-theme-transitions">
+<html lang="{{ CURRENT_LANG }}" data-theme="lofi" class="no-theme-transitions">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
         {% block meta %}
-        <meta property="og:title" content="Josué Leiva | Telematics Engineering">
-        <meta property="og:description" content="System-focused Telematics Engineering student specializing in backend architecture, distributed systems, and real-time telemetry.">
+        <title>{% translate "Josué Leiva | Telematics Engineering" %}</title>
+        <meta name="description" content="{% translate 'Josué Leiva, Telematics Engineering student at UTFSM (Chile). Edge runtime developer at LabOPT (C++17, Raspberry Pi 5), networking and self-hosted infrastructure. Open to a 320-hour industrial internship, Dec 2026 to Mar 2027.' %}">
+        <meta property="og:title" content="{% translate 'Josué Leiva | Telematics Engineering' %}">
+        <meta property="og:description" content="{% translate 'Telematics Engineering student at UTFSM. Edge/IoT runtimes, networking and self-hosted infrastructure.' %}">
         <meta property="og:type" content="website">
         <meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'portfolio/images/og-card.png' %}">
         <meta property="og:image:width" content="1200">
         <meta property="og:image:height" content="630">
-        <meta name="description" content="Josué Leiva (F0ur13r) — Telematics Engineering student building backend architecture, automation and real-time telemetry systems. Portfolio, field logs and verified benchmarks.">
         <meta name="twitter:card" content="summary_large_image">
-        <meta name="twitter:title" content="Josué Leiva | Telematics Engineering">
+        <meta name="twitter:title" content="{% translate 'Josué Leiva | Telematics Engineering' %}">
         <meta name="twitter:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'portfolio/images/og-card.png' %}">
-        <link rel="canonical" href="{{ request.scheme }}://{{ request.get_host }}{{ request.path }}">
-        <script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","name":"Josué Leiva","alternateName":"F0ur13r","jobTitle":"Telematics Engineering Student","url":"{{ request.scheme }}://{{ request.get_host }}/","sameAs":["https://github.com/josue-fourier","https://linkedin.com/in/josuenicolas","https://www.hackerrank.com/profile/xmenmagnet"]}</script>
-        <title>Josué Leiva | Telematics Engineering</title>
+        <script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","name":"Josué Leiva Poblete","alternateName":"F0ur13r","jobTitle":"Telematics Engineering Student","affiliation":"Universidad Técnica Federico Santa María","url":"{{ request.scheme }}://{{ request.get_host }}/","sameAs":["https://github.com/josue-fourier","https://linkedin.com/in/josuenicolas","https://www.hackerrank.com/profile/xmenmagnet"]}</script>
         {% endblock %}
+        <link rel="canonical" href="{{ request.scheme }}://{{ request.get_host }}{{ request.path }}">
+        <link rel="alternate" hreflang="en" href="{% url_in_language 'en' %}">
+        <link rel="alternate" hreflang="es" href="{% url_in_language 'es' %}">
+        <link rel="alternate" hreflang="x-default" href="{% url_in_language 'en' %}">
         <meta name="theme-color" content="#050506">
         <link rel="icon" type="image/svg+xml" href="{% static 'portfolio/icons/favicon.svg' %}">
         <link rel="icon" type="image/png" sizes="32x32" href="{% static 'portfolio/icons/icon-32.png' %}">
@@ -40,11 +44,6 @@
                 } catch (e) {
                     document.documentElement.setAttribute('data-theme', 'lofi');
                 }
-                try {
-                    if (!sessionStorage.getItem('boot_seen') && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-                        document.documentElement.classList.add('js-preload');
-                    }
-                } catch (e) {}
                 window.addEventListener('DOMContentLoaded', function() {
                     requestAnimationFrame(function() {
                         document.documentElement.classList.remove('no-theme-transitions');
@@ -63,8 +62,7 @@
         <link rel="preload" href="{% static 'portfolio/fonts/space-grotesk-latin.woff2' %}" as="font" type="font/woff2" crossorigin>
         <link rel="stylesheet" href="{% static 'portfolio/css/fonts.css' %}">
 
-        <!-- Three.js, GSAP & Lenis for 3D Cryptographic Topology, Smooth Scrolling & Awwwards Choreographed Reveals -->
-        <script defer src="{% static 'portfolio/vendor/three.min.js' %}"></script>
+        <!-- GSAP & Lenis for smooth scrolling and scroll reveals -->
         <script defer src="{% static 'portfolio/vendor/gsap.min.js' %}"></script>
         <script defer src="{% static 'portfolio/vendor/ScrollTrigger.min.js' %}"></script>
         <script defer src="{% static 'portfolio/vendor/lenis.min.js' %}"></script>
@@ -84,175 +82,61 @@
     </head>
     <body class="antialiased">
         <a href="#main-content" class="skip-link">{% translate "Skip to content" %}</a>
-        <!-- Cinematic Boot Preloader (JS-driven; CSS failsafe auto-dismisses) -->
-        <div id="preloader" aria-hidden="true">
-            <div class="preloader-inner">
-                <span class="preloader-tag">F0UR13R // PORTFOLIO</span>
-                <span class="preloader-count"><span id="preloader-num">000</span><i>%</i></span>
-                <span class="preloader-bar"><span id="preloader-fill"></span></span>
-            </div>
-        </div>
-        <div id="cursor-dot" aria-hidden="true"></div>
-        <div id="cursor-ring" aria-hidden="true"><span id="cursor-label"></span></div>
         <div class="aura-bg">
-            <canvas id="em-telemetry-canvas" aria-hidden="true"></canvas>
             <div class="aura-layer-1" aria-hidden="true"></div>
             <div class="aura-layer-2" aria-hidden="true"></div>
             <div class="aura-layer-3" aria-hidden="true"></div>
             
             <div style="position: relative; z-index: 1;">
-                <div id="boot-loader-bar" class="fixed top-0 left-0 h-1 bg-brand-primary z-[10000] w-0 transition-all duration-500 ease-out"></div>
                 <div id="scroll-progress" class="fixed top-0 left-0 h-1 bg-brand-primary z-[9000] w-0 transition-all duration-100 ease-out"></div>
                 <div class="noise-overlay"></div>
-                <!-- Sticky Top Telemetry Bar with Continuous Data Carousel -->
                 <header id="top-telemetry-bar" class="sticky top-0 z-50 w-full h-12 border-b border-white/[0.08] bg-[#050506]/90 backdrop-blur-md">
-                    <div class="max-w-[1440px] mx-auto h-full px-3 sm:px-4 md:px-6 flex items-center justify-between font-mono text-[11px] gap-2 sm:gap-3 md:gap-4 overflow-hidden">
-                        <!-- Left: Identity Moniker + Live Pulse -->
-                        <div class="flex items-center gap-2 shrink-0">
-                            <a href="/" class="font-mono text-xs font-bold tracking-widest text-zinc-300 hover:text-emerald-400 flex items-center gap-2 transition-colors" title="{% translate 'Home' %}" aria-label="{% translate 'Home' %}">
-                                <span class="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse"></span>
-                                <span class="font-bold text-emerald-400">F0UR13R</span>
-                            </a>
-                            <span class="text-zinc-600 hidden md:inline">//</span>
-                        </div>
+                    <div class="max-w-[1440px] mx-auto h-full px-3 sm:px-4 md:px-6 flex items-center justify-between font-mono text-[11px] gap-3">
+                        <a href="/" class="font-mono text-xs font-bold tracking-widest text-zinc-300 hover:text-emerald-400 flex items-center gap-2 transition-colors shrink-0" title="{% translate 'Home' %}">
+                            <span class="w-1.5 h-1.5 bg-emerald-500 rounded-full"></span>
+                            <span class="font-bold text-emerald-400">F0UR13R</span>
+                        </a>
 
-                        <!-- Center: News-style Continuous Telemetry Carousel Tape -->
-                        <div class="telemetry-ticker-viewport flex-1 overflow-hidden relative mx-1 sm:mx-2 md:mx-3 select-none min-w-0" aria-label="{% translate 'Live Continuous Telemetry Stream' %}">
-                            <div class="telemetry-ticker-track flex items-center whitespace-nowrap">
-                                <!-- Group 1 -->
-                                <div class="telemetry-ticker-group flex items-center shrink-0">
-                                    <span class="inline-flex items-center gap-1.5 text-zinc-300">
-                                        <span class="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse"></span>
-                                        <span class="text-zinc-500 font-bold">SCL:</span>
-                                        <span id="santiago-clock" class="santiago-clock-display text-zinc-200">--:--:--</span>
-                                        <span id="santiago-weather-temp" class="santiago-weather-display text-emerald-400 font-semibold">--°C</span>
-                                    </span>
-                                    <span class="text-zinc-700 mx-2.5 sm:mx-3.5">//</span>
-
-                                    {% if node_heartbeat %}
-                                    <span class="inline-flex items-center gap-1.5 text-zinc-300">
-                                        <span class="text-emerald-400 font-bold">NODE:</span>
-                                        <span class="text-zinc-200">{{ node_heartbeat.node_name|default:"RPi" }} [{{ node_heartbeat.status }}]</span>
-                                        <span class="text-zinc-500 text-[10px]">({% blocktranslate with t=node_heartbeat.timestamp|short_timesince %}{{ t }} ago{% endblocktranslate %})</span>
-                                    </span>
-                                    {% else %}
-                                    <span class="inline-flex items-center gap-1.5 text-zinc-400">
-                                        <span class="text-zinc-500 font-bold">NODE:</span>
-                                        <span>RPi DAEMON // {% translate "STANDBY" %}</span>
-                                    </span>
-                                    {% endif %}
-                                    <span class="text-zinc-700 mx-2.5 sm:mx-3.5">//</span>
-
-                                    {% if ntfy_message or current_status %}
-                                    <span class="inline-flex items-center gap-1.5 text-zinc-300">
-                                        <span class="text-cyan-400 font-bold">NTFY:</span>
-                                        <span class="text-zinc-200 max-w-[160px] sm:max-w-[240px] md:max-w-[320px] truncate">"{% if ntfy_message %}{{ ntfy_message.message }}{% else %}{{ current_status.message }}{% endif %}"</span>
-                                        <span class="text-zinc-500 text-[10px]">({% if ntfy_message %}{% blocktranslate with t=ntfy_message.timestamp|short_timesince %}{{ t }} ago{% endblocktranslate %}{% else %}{% blocktranslate with t=current_status.timestamp|short_timesince %}{{ t }} ago{% endblocktranslate %}{% endif %})</span>
-                                    </span>
-                                    {% else %}
-                                    <span class="inline-flex items-center gap-1.5 text-zinc-400">
-                                        <span class="text-cyan-400 font-bold">NTFY:</span>
-                                        <span class="text-zinc-500">SYS_NOMINAL</span>
-                                    </span>
-                                    {% endif %}
-                                    <span class="text-zinc-700 mx-2.5 sm:mx-3.5">//</span>
-                                </div>
-
-                                <!-- Group 2 (Duplicate for Seamless Endless Loop) -->
-                                <div class="telemetry-ticker-group flex items-center shrink-0" aria-hidden="true">
-                                    <span class="inline-flex items-center gap-1.5 text-zinc-300">
-                                        <span class="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse"></span>
-                                        <span class="text-zinc-500 font-bold">SCL:</span>
-                                        <span class="santiago-clock-display text-zinc-200">--:--:--</span>
-                                        <span class="santiago-weather-display text-emerald-400 font-semibold">--°C</span>
-                                    </span>
-                                    <span class="text-zinc-700 mx-2.5 sm:mx-3.5">//</span>
-
-                                    {% if node_heartbeat %}
-                                    <span class="inline-flex items-center gap-1.5 text-zinc-300">
-                                        <span class="text-emerald-400 font-bold">NODE:</span>
-                                        <span class="text-zinc-200">{{ node_heartbeat.node_name|default:"RPi" }} [{{ node_heartbeat.status }}]</span>
-                                        <span class="text-zinc-500 text-[10px]">({% blocktranslate with t=node_heartbeat.timestamp|short_timesince %}{{ t }} ago{% endblocktranslate %})</span>
-                                    </span>
-                                    {% else %}
-                                    <span class="inline-flex items-center gap-1.5 text-zinc-400">
-                                        <span class="text-zinc-500 font-bold">NODE:</span>
-                                        <span>RPi DAEMON // {% translate "STANDBY" %}</span>
-                                    </span>
-                                    {% endif %}
-                                    <span class="text-zinc-700 mx-2.5 sm:mx-3.5">//</span>
-
-                                    {% if ntfy_message or current_status %}
-                                    <span class="inline-flex items-center gap-1.5 text-zinc-300">
-                                        <span class="text-cyan-400 font-bold">NTFY:</span>
-                                        <span class="text-zinc-200 max-w-[160px] sm:max-w-[240px] md:max-w-[320px] truncate">"{% if ntfy_message %}{{ ntfy_message.message }}{% else %}{{ current_status.message }}{% endif %}"</span>
-                                        <span class="text-zinc-500 text-[10px]">({% if ntfy_message %}{% blocktranslate with t=ntfy_message.timestamp|short_timesince %}{{ t }} ago{% endblocktranslate %}{% else %}{% blocktranslate with t=current_status.timestamp|short_timesince %}{{ t }} ago{% endblocktranslate %}{% endif %})</span>
-                                    </span>
-                                    {% else %}
-                                    <span class="inline-flex items-center gap-1.5 text-zinc-400">
-                                        <span class="text-cyan-400 font-bold">NTFY:</span>
-                                        <span class="text-zinc-500">SYS_NOMINAL</span>
-                                    </span>
-                                    {% endif %}
-                                    <span class="text-zinc-700 mx-2.5 sm:mx-3.5">//</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Right: Clean Anchor Links + Locale Switcher + Theme Switcher + CV Link -->
                         <div class="flex items-center gap-2 sm:gap-3 md:gap-4 shrink-0 text-zinc-400 text-[10px] sm:text-[11px]">
-                            <!-- Nav Links (large screens) -->
-                            <nav class="hidden xl:flex items-center gap-4 text-zinc-400 tracking-wider" aria-label="Main Navigation">
-                                <a href="/#chapter-01" class="hover:text-white transition-colors">{% translate "INDEX" %}</a>
-                                <a href="/#chapter-02" class="hover:text-white transition-colors">{% translate "BENCHMARKS" %}</a>
-                                <a href="/#chapter-03" class="hover:text-white transition-colors">{% translate "SYSTEMS" %}</a>
-                                <a href="/#chapter-04" class="hover:text-white transition-colors">{% translate "LOGS" %}</a>
+                            <nav class="hidden lg:flex items-center gap-4 text-zinc-400 tracking-wider uppercase" aria-label="{% translate 'Main navigation' %}">
+                                <a href="/#projects" class="hover:text-white transition-colors">{% translate "Projects" %}</a>
+                                <a href="/#experience" class="hover:text-white transition-colors">{% translate "Experience" %}</a>
+                                <a href="/#skills" class="hover:text-white transition-colors">{% translate "Skills" %}</a>
+                                <a href="/#logs" class="hover:text-white transition-colors">{% translate "Logs" %}</a>
                             </nav>
-                            <span class="hidden xl:inline text-zinc-700">|</span>
+                            <span class="hidden lg:inline text-zinc-700">|</span>
 
-                            <!-- Locale Switcher -->
-                            {% get_current_language as CURRENT_LANG %}
                             <form action="{% url 'set_language' %}" method="post" class="inline-flex items-center gap-1 font-mono text-[10px] sm:text-[11px] select-none">
                                 {% csrf_token %}
                                 <input name="next" type="hidden" value="{{ request.get_full_path }}">
                                 {% if CURRENT_LANG == 'es' %}
                                 <input name="language" type="hidden" value="en">
-                                <button type="submit" class="cursor-pointer flex items-center gap-0.5 sm:gap-1 tracking-wider hover:opacity-80 transition-opacity" title="Switch to English">
-                                    <span class="text-zinc-500 hover:text-white transition-colors font-bold">EN</span>
-                                    <span class="text-zinc-700">/</span>
-                                    <span class="text-emerald-400 font-bold">ES</span>
+                                <button type="submit" lang="en" class="cursor-pointer flex items-center gap-1 tracking-wider hover:opacity-80 transition-opacity" title="Switch to English">
+                                    <span class="text-zinc-400 font-bold">EN</span><span class="text-zinc-700">/</span><span class="text-emerald-400 font-bold">ES</span>
                                 </button>
                                 {% else %}
                                 <input name="language" type="hidden" value="es">
-                                <button type="submit" class="cursor-pointer flex items-center gap-0.5 sm:gap-1 tracking-wider hover:opacity-80 transition-opacity" title="Cambiar a Español">
-                                    <span class="text-emerald-400 font-bold">EN</span>
-                                    <span class="text-zinc-700">/</span>
-                                    <span class="text-zinc-500 hover:text-white transition-colors font-bold">ES</span>
+                                <button type="submit" lang="es" class="cursor-pointer flex items-center gap-1 tracking-wider hover:opacity-80 transition-opacity" title="Cambiar a español">
+                                    <span class="text-emerald-400 font-bold">EN</span><span class="text-zinc-700">/</span><span class="text-zinc-400 font-bold">ES</span>
                                 </button>
                                 {% endif %}
                             </form>
                             <span class="text-zinc-700">|</span>
 
-                            <!-- Theme Switcher -->
-                            <label id="theme-toggle-btn" class="cursor-pointer flex items-center gap-1 font-mono text-[10px] sm:text-[11px] text-zinc-400 hover:text-white transition-colors select-none" title="{% translate 'Toggle Dark / Light Cryptographic Theme' %}" aria-label="Toggle Theme">
-                                <input type="checkbox" class="theme-controller hidden" value="dracula" />
-                                <svg class="theme-icon-sun w-3.5 h-3.5 text-amber-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <label id="theme-toggle-btn" class="cursor-pointer flex items-center gap-1 font-mono text-[10px] sm:text-[11px] text-zinc-400 hover:text-white transition-colors select-none focus-within:outline focus-within:outline-2 focus-within:outline-emerald-500" title="{% translate 'Toggle dark / light theme' %}">
+                                <input type="checkbox" class="theme-controller sr-only" value="dracula" aria-label="{% translate 'Dark theme' %}" />
+                                <svg class="theme-icon-sun w-3.5 h-3.5 text-amber-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                                     <circle cx="12" cy="12" r="4"></circle>
                                     <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path>
                                 </svg>
-                                <svg class="theme-icon-moon w-3.5 h-3.5 text-emerald-400 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M12 3a6 6 0 0 0 9 9 9 0 1 1-9-9Z"></path>
+                                <svg class="theme-icon-moon w-3.5 h-3.5 text-emerald-400 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                    <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
                                 </svg>
-                                <span class="theme-text-label font-bold text-[10px] tracking-wider uppercase hidden sm:inline">LIGHT</span>
+                                <span class="theme-text-label font-bold text-[10px] tracking-wider uppercase hidden sm:inline" data-label-light="{% translate 'Light' %}" data-label-dark="{% translate 'Dark' %}">{% translate "Light" %}</span>
                             </label>
                             <span class="text-zinc-700">|</span>
 
-                            <!-- CV Link -->
-                            {% if CURRENT_LANG == "es" %}
-                            <a href="/cv-es" target="_blank" class="hover:text-emerald-400 transition-colors tracking-wider whitespace-nowrap"><span class="hidden sm:inline">CV.PDF ↗</span><span class="sm:hidden">CV ↗</span></a>
-                            {% else %}
-                            <a href="/cv-en" target="_blank" class="hover:text-emerald-400 transition-colors tracking-wider whitespace-nowrap"><span class="hidden sm:inline">CV.PDF ↗</span><span class="sm:hidden">CV ↗</span></a>
-                            {% endif %}
+                            <a href="/cv-{% if CURRENT_LANG == 'es' %}es{% else %}en{% endif %}" target="_blank" class="hover:text-emerald-400 transition-colors tracking-wider whitespace-nowrap" data-umami-event="cv-download" data-umami-event-location="header">CV ↗</a>
                         </div>
                     </div>
                 </header>
@@ -262,24 +146,22 @@
                 {% endblock %}
 
                 {% block footer %}
-                <!-- Swiss Brutalist Exposed Grid Footer -->
-                <footer class="max-w-[1440px] mx-auto border-x border-b border-white/[0.08] bg-[#050506] py-6 px-6 md:px-10 flex flex-col md:flex-row justify-between items-center gap-4 text-zinc-500 font-mono text-[11px]">
-                    <div class="flex items-center gap-2">
-                        <span>© {% now "Y" %} Josué Leiva. {% translate "All rights reserved." %}</span>
+                <footer class="max-w-[1440px] mx-auto border-x border-b border-white/[0.08] bg-[#050506] py-6 px-6 md:px-10 flex flex-col md:flex-row justify-between items-center gap-4 text-zinc-400 font-mono text-[11px]">
+                    <span>© {% now "Y" %} Josué Leiva Poblete</span>
+                    {% if current_status or node_heartbeat %}
+                    <div class="flex flex-col items-center md:items-start gap-1 text-zinc-500 text-[10px] max-w-md text-center md:text-left">
+                        {% if node_heartbeat %}
+                        <span><span class="text-emerald-400">●</span> {% translate "Node" %} {{ node_heartbeat.node_name }}: {{ node_heartbeat.status }} ({% blocktranslate with t=node_heartbeat.timestamp|short_timesince %}{{ t }} ago{% endblocktranslate %})</span>
+                        {% endif %}
+                        {% if current_status %}
+                        <span>{% translate "Latest note" %}: “{{ current_status.message }}” ({% blocktranslate with t=current_status.timestamp|short_timesince %}{{ t }} ago{% endblocktranslate %})</span>
+                        {% endif %}
                     </div>
+                    {% endif %}
                     <div class="flex items-center gap-6">
-                        <a href="https://github.com/josue-fourier" target="_blank" class="hover:text-emerald-400 transition-colors flex items-center gap-1.5" aria-label="GitHub">
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
-                            <span>GITHUB</span>
-                        </a>
-                        <a href="https://linkedin.com/in/josuenicolas" target="_blank" class="hover:text-emerald-400 transition-colors flex items-center gap-1.5" aria-label="LinkedIn">
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
-                            <span>LINKEDIN</span>
-                        </a>
-                    </div>
-                    <div class="flex items-center gap-2">
-                        <span class="w-1.5 h-1.5 bg-emerald-500 animate-pulse"></span>
-                        <span>{% translate "Frontend created with Antigravity" %}</span>
+                        <a href="#" class="js-email hover:text-emerald-400 transition-colors" data-u="josuenicolas" data-d="protonmail.com">{% translate "Email" %}</a>
+                        <a href="https://github.com/josue-fourier" target="_blank" rel="noopener noreferrer" class="hover:text-emerald-400 transition-colors">GitHub</a>
+                        <a href="https://linkedin.com/in/josuenicolas" target="_blank" rel="noopener noreferrer" class="hover:text-emerald-400 transition-colors">LinkedIn</a>
                     </div>
                 </footer>
                 {% endblock %}

@@ -803,16 +803,15 @@ class C2EngineeringPortfolioTests(TestCase):
         res = self.client.get("/")
         self.assertEqual(res.status_code, 200)
         content = res.content.decode("utf-8")
-        self.assertIn('id="chapter-02"', content)
-        self.assertIn('data-chapter="02"', content)
-        self.assertIn("02 // BENCHMARKS", content)
+        self.assertIn('id="hackerrank"', content)
+        self.assertIn('data-chapter="06"', content)
+        self.assertIn("C++", content)
 
     def test_5_core_identity_pillars_english(self):
         """Verify 5 Core Identity Pillars rendered in English."""
         res = self.client.get("/en/")
         self.assertEqual(res.status_code, 200)
         content = res.content.decode("utf-8")
-        self.assertIn("BACKEND AND SYSTEMS ENGINEERING", content)
         self.assertIn("Systems &amp; Low-Level", content)
         self.assertIn("Backend &amp; Data Architecture", content)
         self.assertIn("Hardened Infrastructure", content)
@@ -823,25 +822,21 @@ class C2EngineeringPortfolioTests(TestCase):
         res = self.client.get("/es/")
         self.assertEqual(res.status_code, 200)
         content = res.content.decode("utf-8")
-        self.assertIn("INGENIERÍA DE BACKEND Y SISTEMAS", content)
         self.assertIn("Sistemas y Bajo Nivel", content)
         self.assertIn("Arquitectura Backend y Datos", content)
         self.assertIn("Infraestructura Blindada", content)
         self.assertIn("Criptografía Aplicada y Telemática", content)
 
     def test_top_telemetry_bar_and_navigation(self):
-        """Verify top telemetry bar contains clean anchor links, moniker branding, and no personal name in navbar."""
+        """Top bar keeps the moniker and links to the main sections."""
         res = self.client.get("/en/")
         self.assertEqual(res.status_code, 200)
         content = res.content.decode("utf-8")
         self.assertIn('id="top-telemetry-bar"', content)
         top_bar_html = content.split('id="top-telemetry-bar"')[1].split('</header>')[0]
-        self.assertNotIn("JOSUÉ LEIVA", top_bar_html)
         self.assertIn("F0UR13R", top_bar_html)
-        self.assertIn("INDEX", content)
-        self.assertIn("BENCHMARKS", content)
-        self.assertIn("LOGS", content)
-        self.assertIn("SYSTEMS", content)
+        for anchor in ("/#projects", "/#experience", "/#skills", "/#logs"):
+            self.assertIn(anchor, top_bar_html)
 
     def test_anti_slop_no_custom_cursor_or_floating_hud(self):
         """Verify custom cursor and floating HUDs are removed in favor of native OS cursor."""
@@ -852,27 +847,26 @@ class C2EngineeringPortfolioTests(TestCase):
         self.assertNotIn('<aside id="c2-mission-hud"', content)
         self.assertNotIn('<button type="button" id="mobile-c2-hud"', content)
 
-    def test_top_telemetry_bar_locale_and_clock(self):
-        """Verify Top Telemetry Bar includes live clock and plain text weather temp in cyclic ticker."""
-        res = self.client.get("/en/")
-        self.assertEqual(res.status_code, 200)
-        content = res.content.decode("utf-8")
-        self.assertIn('id="santiago-clock"', content)
-        self.assertIn('id="santiago-weather-temp"', content)
-        self.assertIn("CV.PDF", content)
-        self.assertIn("telemetry-ticker-viewport", content)
-        self.assertIn("telemetry-ticker-track", content)
+    def test_language_metadata_and_no_placeholder_ticker(self):
+        """Pages declare their language and alternates; the clock/weather ticker is gone."""
+        en = self.client.get("/en/").content.decode("utf-8")
+        es = self.client.get("/es/").content.decode("utf-8")
+        self.assertIn('<html lang="en"', en)
+        self.assertIn('<html lang="es"', es)
+        self.assertIn('hreflang="es" href="http://testserver/es/"', en)
+        self.assertIn('hreflang="en" href="http://testserver/en/"', es)
+        for needle in ('id="santiago-clock"', "telemetry-ticker", "Antigravity"):
+            self.assertNotIn(needle, en)
 
-    def test_hero_icons_and_live_status_animations(self):
-        """Verify Hero social/CV buttons contain SVG icons and Live Status has radar scanline."""
+    def test_hero_ctas_and_obfuscated_email(self):
+        """Hero offers both CVs, GitHub, LinkedIn and an email link whose address is not in the HTML."""
         res = self.client.get("/en/")
         self.assertEqual(res.status_code, 200)
         content = res.content.decode("utf-8")
-        self.assertIn("GitHub", content)
-        self.assertIn("LinkedIn", content)
-        self.assertIn("Download CV", content)
-        self.assertIn("telemetry-radar-panel", content)
-        self.assertIn('class="w-4 h-4 text-zinc-300 group-hover:text-white', content)
+        for needle in ("GitHub", "LinkedIn", "Download CV", 'href="/cv-en"', 'href="/cv-es"', "js-email", "Open to:"):
+            self.assertIn(needle, content)
+        self.assertNotIn("josuenicolas@protonmail.com", content)
+        self.assertNotIn("telemetry-radar-panel", content)
 
     def test_swiss_brutalist_hairline_grid(self):
         """Verify Swiss Brutalist hairline grid container and deep carbon palette."""
@@ -883,20 +877,17 @@ class C2EngineeringPortfolioTests(TestCase):
         self.assertIn("border-white/[0.08]", content)
         self.assertIn("bg-[#070708]", content)
 
-    def test_threejs_packet_simulation_and_boundary_reflection(self):
-        """Verify main.js contains 110 spatial nodes, directional boundary clamping, and dynamic resize adaptation."""
+    def test_heavy_decorations_removed(self):
+        """three.js background, preloader and custom cursor are gone from pages and scripts."""
+        content = self.client.get("/en/").content.decode("utf-8")
+        for needle in ("three.min.js", "em-telemetry-canvas", 'id="preloader"', 'id="cursor-dot"'):
+            self.assertNotIn(needle, content)
         js_path = os.path.join(settings.BASE_DIR, "static", "portfolio", "js", "main.js")
         with open(js_path, "r", encoding="utf-8") as f:
-            js_code = f.read()
-        self.assertIn("const nodeCount = 110;", js_code)
-        self.assertIn("packetCount = 44;", js_code)
-        self.assertIn("-Math.abs(nodeVelocities[i].vx)", js_code)
-        self.assertIn("Math.abs(nodeVelocities[i].vx)", js_code)
-        self.assertIn("isMobile = newWidth < 768;", js_code)
-        self.assertIn("spreadX = isMobile ? 65 : 85;", js_code)
+            self.assertNotIn("THREE.", f.read())
 
     def test_po_and_mo_catalog_synchronization(self):
-        """Verify django.po contains all critical C2 translation keys matching django.mo."""
+        """Verify django.po contains the key UI translations and they are compiled into django.mo."""
         import gettext
         mo_path = os.path.join(settings.BASE_DIR, "locale", "es", "LC_MESSAGES", "django.mo")
         po_path = os.path.join(settings.BASE_DIR, "locale", "es", "LC_MESSAGES", "django.po")
@@ -905,22 +896,20 @@ class C2EngineeringPortfolioTests(TestCase):
         with open(mo_path, "rb") as f:
             t = gettext.GNUTranslations(f)
         critical_keys = [
-            "BACKEND AND SYSTEMS ENGINEERING",
-            "C2 // LIFECYCLE",
-            "Mission Lifecycle HUD",
-            "Scroll to top",
-            "Edge Hardware Telemetry",
-            "Hardened Ingestion Pipelines",
-            "Relational Data Modeling",
-            "Systems Craftsmanship",
-            "HackerRank Badges",
+            "Open to:",
+            "Download CV",
+            "Projects",
+            "Experience",
+            "In production",
+            "In development",
+            "Skip to content",
         ]
         for key in critical_keys:
             self.assertIn(f'msgid "{key}"', po_text)
             self.assertIn(key, t._catalog)
 
-    def test_calmed_threejs_and_snappy_scroll_engine(self):
-        """Verify calmed Three.js network configuration, clean chapter navigation, and visible sections."""
+    def test_snappy_scroll_engine(self):
+        """Verify clean chapter navigation and guaranteed-visible sections."""
         js_path = os.path.join(settings.BASE_DIR, "static", "portfolio", "js", "main.js")
         css_path = os.path.join(settings.BASE_DIR, "static", "portfolio", "css", "custom.css")
         with open(js_path, "r", encoding="utf-8") as f:
@@ -928,18 +917,11 @@ class C2EngineeringPortfolioTests(TestCase):
         with open(css_path, "r", encoding="utf-8") as f:
             css_code = f.read()
 
-        # Three.js calming assertions
-        self.assertIn("connectionThresholdSq = isMobile ? 55 : 75;", js_code)
-        self.assertIn("speed: 0.003 + Math.random() * 0.0045,", js_code)
-        self.assertIn("outerLattice.rotation.y += 0.0008;", js_code)
-
-        # Chapter navigation assertions
         self.assertIn("function initSnappyChapterNavigation()", js_code)
         self.assertIn("document.body.classList.add('c2-snapping-enabled');", js_code)
         self.assertIn("function goToChapter(targetIndex)", js_code)
         self.assertIn("function handleWheel(e)", js_code)
 
-        # CSS section transitions and guaranteed visibility
         self.assertIn(".c2-snapping-enabled .c2-chapter-section", css_code)
         self.assertIn(".c2-snapping-enabled .c2-chapter-section.c2-chapter-active", css_code)
         self.assertIn(".c2-snapping-enabled .c2-chapter-section.c2-chapter-transitioning", css_code)
@@ -957,7 +939,7 @@ class C2EngineeringPortfolioTests(TestCase):
             content = res.content.decode("utf-8")
             self.assertIn('data-theme="lofi"', content)
             self.assertIn('id="theme-toggle-btn"', content)
-            self.assertIn('class="theme-controller hidden"', content)
+            self.assertIn('class="theme-controller sr-only"', content)
             self.assertIn("theme-icon-sun", content)
             self.assertIn("theme-icon-moon", content)
             self.assertIn("theme-text-label", content)
@@ -996,20 +978,17 @@ class C2EngineeringPortfolioTests(TestCase):
         self.assertNotIn('id="fourier-waveform-canvas"', content)
 
         # Verify profile picture is rendered in Hero
-        self.assertIn("profile.jpg", content)
+        self.assertIn("profile.webp", content)
         self.assertIn("profile-portrait-frame", content)
 
         # Check responsive top telemetry bar elements
         self.assertIn('id="top-telemetry-bar"', content)
-        self.assertIn("telemetry-ticker-viewport", content)
         self.assertIn("theme-text-label", content)
         self.assertIn("hidden sm:inline", content)
 
-        # Check kinetic scrub tags on all 4 chapter headers
-        self.assertIn('data-kinetic-scrub="true" data-target-text="01 / ABOUT"', content)
-        self.assertIn('data-kinetic-scrub="true" data-target-text="02 // BENCHMARKS"', content)
-        self.assertIn('data-kinetic-scrub="true" data-target-text="03 // PRODUCTION SYSTEMS"', content)
-        self.assertIn('data-kinetic-scrub="true" data-target-text="04 // ENGINEERING FIELD LOGS"', content)
+        # Section order: projects before experience, skills, logs; HackerRank last
+        order = [content.index(f'id="{sid}"') for sid in ("about", "projects", "experience", "skills", "logs", "hackerrank")]
+        self.assertEqual(order, sorted(order))
 
         # Check main.js and custom.css
         js_path = os.path.join(settings.BASE_DIR, "static", "portfolio", "js", "main.js")
@@ -1024,12 +1003,8 @@ class C2EngineeringPortfolioTests(TestCase):
         self.assertIn("window.initScrollScrubKineticDecode =", js_code)
 
         # Check custom.css responsive hero title and canvas opacity
-        self.assertIn("font-size: clamp(2.75rem, 8vw, 8.5rem);", css_code)
+        self.assertIn("font-size: clamp(2.5rem, 6.5vw, 6rem);", css_code)
         self.assertNotIn("#fourier-harmonic-panel", css_code)
-        self.assertIn("#em-telemetry-canvas", css_code)
-        self.assertIn("opacity: 0.14;", css_code)
-        self.assertIn('[data-theme="lofi"] #em-telemetry-canvas', css_code)
-        self.assertIn("opacity: 0.06;", css_code)
 
 
 class RunTaskCommandTests(TestCase):

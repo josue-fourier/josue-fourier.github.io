@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: portfolio 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-21 12:00-0300\n"
+"POT-Creation-Date: 2026-10-23 18:07-0300\n"
 "PO-Revision-Date: 2026-10-21 12:00-0300\n"
 "Last-Translator: Josue Leiva <xmenmagnet@gmail.com>\n"
 "Language-Team: Spanish <es@example.com>\n"
@@ -17,347 +17,635 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-msgid "All rights reserved."
-msgstr "Todos los derechos reservados."
-
-msgid "Applied ElGamal asymmetric encryption, POSIX native C/C++ sockets, and zero-knowledge verification primitives."
-msgstr "Criptografía asimétrica ElGamal aplicada, sockets nativos POSIX C/C++ y primitivas de verificación de conocimiento cero."
-
-msgid "Automated daily verification of algorithmic problem solving, applied cryptography, and 5-Star C++ ranking."
-msgstr "Verificación diaria automatizada de resolución algorítmica de problemas, criptografía aplicada y clasificación C++ de 5 estrellas."
-
-msgid "Backend Systems, APIs & Automation"
-msgstr "Sistemas Backend, APIs y Automatización"
-
-msgid "C++ runtime telemetry daemon & low-latency heartbeats on Raspberry Pi edge nodes with custom UDP packet protocol."
-msgstr "Daemon de telemetría en tiempo de ejecución C++ y latidos de baja latencia en nodos perimetrales Raspberry Pi con protocolo UDP personalizado."
-
-msgid "C2 // LIFECYCLE"
-msgstr "C2 // CICLO DE MISIÓN"
-
-msgid "Core Competencies"
-msgstr "Competencias Principales"
-
-msgid "Designing resilient backend systems, automated data pipelines, and real-time operational telemetry."
-msgstr "Diseño de sistemas backend resilientes, pipelines de datos automatizados y telemetría operativa en tiempo real."
-
-msgid "Download_CV.pdf"
-msgstr "Descargar_CV.pdf"
-
-msgid "Edge Hardware Telemetry"
-msgstr "Telemetría de Hardware Edge"
-
-msgid "Engineering Logs"
-msgstr "Registros de Ingeniería"
-
-msgid "English"
-msgstr "Inglés"
-
-msgid "Frontend created with Antigravity"
-msgstr "Frontend creado con Antigravity"
-
-msgid "Github_Activity // Live"
-msgstr "Actividad_Github // En_Vivo"
-
-msgid "HACKERRANK // DOMAIN"
-msgstr "HACKERRANK // DOMINIO"
-
-msgid "HACKERRANK PROFILE"
-msgstr "PERFIL DE HACKERRANK"
-
-msgid "HackerRank Badges"
-msgstr "Insignias de HackerRank"
-
-msgid "Hardened Ingestion Pipelines"
-msgstr "Pipelines de Ingesta Blindados"
-
-msgid "High-integrity PostgreSQL schemas, foreign keys, and Huey task queues orchestrating daily automated synchronization."
-msgstr "Esquemas PostgreSQL de alta integridad, claves foráneas y colas de tareas Huey que orquestan la sincronización diaria automatizada."
-
-msgid "Independent Systems"
-msgstr "Sistemas Independientes"
-
-msgid "LVL"
-msgstr "NIV"
-
-msgid "Low-level rigor engineered for human workflows: operational order, student autonomy, and malware-isolated community platforms."
-msgstr "Rigor de bajo nivel diseñado para flujos humanos: orden operativo, autonomía estudiantil y plataformas comunitarias aisladas de malware."
-
-msgid "Malware-isolated file ingestion via Nginx reverse proxy, isolated Docker containers, and ClamAV daemon scan workers."
-msgstr "Ingesta de archivos aislada de malware mediante proxy inverso Nginx, contenedores Docker aislados y trabajadores ClamAV daemon."
-
-msgid "Mission Lifecycle HUD"
-msgstr "HUD de Ciclo de Misión"
-
-msgid "NOT_COURSE_PROJECTS // ACTIVE_WORK"
-msgstr "PROYECTOS_NO_UNIVERSITARIOS // TRABAJO_ACTIVO"
-
-msgid "Next Star Progress"
-msgstr "Progreso Próxima Estrella"
-
-msgid "Relational Data Modeling"
-msgstr "Modelado de Datos Relacionales"
-
-msgid "Reliable Architecture & Clear Documentation"
-msgstr "Arquitectura Confiable y Documentación Clara"
-
-msgid "Return Home"
-msgstr "Volver al Inicio"
-
-msgid "SEC—01 // DOSSIER & TELEMETRY"
-msgstr "SEC—01 // EXPEDIENTE Y TELEMETRÍA"
-
-msgid "SEC—02 // CAPABILITY MATRIX"
-msgstr "SEC—02 // MATRIZ DE CAPACIDADES"
-
-msgid "SEC—05 // STACK TELEMETRY FILTER"
-msgstr "SEC—05 // FILTRO DE STACK Y TELEMETRÍA"
-
-msgid "SELECT_LOG_RECORD"
-msgstr "SELECCIONAR_REGISTRO_LOG"
-
-msgid "SYSTEM_TELEMETRY // HACKERRANK_ACHIEVEMENTS"
-msgstr "TELEMETRÍA_DEL_SISTEMA // LOGROS_HACKERRANK"
-
-msgid "SYSTEM_TELEMETRY // LATEST_REPORTS"
-msgstr "TELEMETRÍA_SISTEMA // ÚLTIMOS_REPORTES"
-
-msgid "Scroll to top"
-msgstr "Volver arriba"
-
-msgid "Self-directed production software, hardware telemetry integrations, and distributed services."
-msgstr "Software de producción autodirigido, integraciones de telemetría de hardware y servicios distribuidos."
-
-msgid "Self-hosted telemetry logs, cryptographic implementation notes, and Linux infrastructure ownership field reports."
-msgstr "Registros de telemetría autohospedados, notas de implementación criptográfica e informes de campo de infraestructura Linux."
-
-msgid "Solved Challenges"
-msgstr "Desafíos Resueltos"
-
+#: djangoPortfolio/settings.py:149
 msgid "Spanish"
 msgstr "Español"
 
-msgid "Stars"
-msgstr "Estrellas"
-
-msgid "Structured overview of technical domains, infrastructure tooling, and engineering capabilities."
-msgstr "Descripción general estructurada de dominios técnicos, herramientas de infraestructura y capacidades de ingeniería."
-
-msgid "System: Online // Availability: Open"
-msgstr "Sistema: En Línea // Disponibilidad: Abierto"
-
-msgid "Systems Craftsmanship"
-msgstr "Artesanía de Sistemas y Criptografía"
-
-msgid "BACKEND AND SYSTEMS ENGINEERING"
-msgstr "INGENIERÍA DE BACKEND Y SISTEMAS"
-
-msgid "Technical Architecture"
-msgstr "Arquitectura Técnica"
-
-msgid "Telematics Engineering"
-msgstr "Ingeniería Civil Telemática"
-
-msgid "Telematics Engineering Student"
-msgstr "Estudiante de Ingeniería Telemática"
-
-msgid "Telematics Engineering student specializing in"
-msgstr "Estudiante de Ingeniería Civil Telemática especializándose en"
-
-msgid "Toggle Dark / Light Cryptographic Theme"
-msgstr "Alternar Tema Criptográfico Oscuro / Claro"
-
-msgid "View Domain"
-msgstr "Ver Dominio"
-
-msgid "and"
-msgstr "y"
-
-msgid "automation"
-msgstr "automatización"
-
-msgid "backend architecture"
-msgstr "arquitectura backend"
-
-msgid "distributed systems"
-msgstr "sistemas distribuidos"
-
-msgid "flows"
-msgstr "flujos"
-
-msgid "human impact"
-msgstr "impacto humano"
-
-msgid "real-time telemetry"
-msgstr "telemetría en tiempo real"
-
-msgid "Project Case Study"
-msgstr "Caso de Estudio del Proyecto"
-
-msgid "Select a log from the ledger"
-msgstr "Selecciona un registro de la lista"
-
-msgid "SWIPE"
-msgstr "DESLIZA"
-
-msgid "Live Demo"
-msgstr "Ver Demo"
-
-msgid "Production Evidence"
-msgstr "Evidencia en Producción"
-
-msgid "TECH STACK"
-msgstr "STACK TÉCNICO"
-
-msgid "Live Status"
-msgstr "Estado en Vivo"
-
-msgid "ONLINE"
-msgstr "EN LÍNEA"
-
-msgid "EDGE NODE OFFLINE"
-msgstr "NODO EDGE FUERA DE LÍNEA"
-
-msgid "No recent heartbeat"
-msgstr "Sin latido reciente"
-
-msgid "LATEST LOG"
-msgstr "ÚLTIMO REGISTRO"
-
-msgid "DOMAINS"
-msgstr "DOMINIOS"
-
-msgid "SKILLS"
-msgstr "HABILIDADES"
-
-msgid "Synced"
-msgstr "Sincronizado"
-
-msgid "PROJECTS"
-msgstr "PROYECTOS"
-
-msgid "in production"
-msgstr "en producción"
-
-msgid "No skills registered yet."
-msgstr "Aún no hay habilidades registradas."
-
-msgid "%(t)s ago"
-msgstr "hace %(t)s"
-
-msgid "LESS"
-msgstr "MENOS"
-
-msgid "MORE"
-msgstr "MÁS"
-
-msgid "INDEX"
-msgstr "ÍNDICE"
-
-msgid "CAPABILITIES"
-msgstr "CAPACIDADES"
-
-msgid "BENCHMARKS"
-msgstr "BENCHMARKS"
-
-msgid "LOGS"
-msgstr "REGISTROS"
-
-msgid "SYSTEMS"
-msgstr "SISTEMAS"
-
-msgid "SECTIONS"
-msgstr "SECCIONES"
-
-msgid "ABOUT"
-msgstr "ACERCA DE"
-
-msgid "01 / ABOUT"
-msgstr "01 / ACERCA DE"
-
-msgid "02 / CAPABILITY MATRIX"
-msgstr "02 / MATRIZ DE CAPACIDADES"
-
-msgid "GITHUB ACTIVITY // LIVE"
-msgstr "ACTIVIDAD EN GITHUB // EN VIVO"
-
-msgid "03 // BENCHMARKS"
-msgstr "03 // BENCHMARKS"
-
-msgid "SYNC: DAILY_0800_SCL // 5★ C++ RANK"
-msgstr "SINC: DIARIA_0800_SCL // RANGO C++ 5★"
-
-msgid "INGESTION CRON"
-msgstr "CRON DE INGESTA"
-
-msgid "ACTIVE DOMAINS"
-msgstr "DOMINIOS ACTIVOS"
-
-msgid "INDEPENDENT PRODUCTION SYSTEMS"
-msgstr "SISTEMAS INDEPENDIENTES EN PRODUCCIÓN"
-
-msgid "FILTER:"
-msgstr "FILTRAR:"
-
-msgid "DEPLOYED SYSTEM"
-msgstr "SISTEMA DESPLEGADO"
-
-msgid "VIEW PROJECT"
-msgstr "VER PROYECTO"
-
-msgid "SYS_RENDER // ARCHITECTURE DOCUMENTED"
-msgstr "SYS_RENDER // ARQUITECTURA DOCUMENTADA"
-
-msgid "05 // ENGINEERING FIELD LOGS"
-msgstr "05 // REGISTROS DE INGENIERÍA"
-
-msgid "ARCHIVE // CHRONOLOGICAL"
-msgstr "ARCHIVO // CRONOLÓGICO"
-
-msgid "FEATURED DEEP DIVE"
-msgstr "ANÁLISIS DESTACADO"
-
-msgid "READ LOG"
-msgstr "LEER REGISTRO"
-
-msgid "Download CV"
-msgstr "Descargar CV"
-
-msgid "View Case Study"
-msgstr "Ver Caso de Estudio"
-
-msgid "View All Logs"
-msgstr "Ver Todos los Registros"
-
-msgid "STACK"
-msgstr "STACK"
-
+#: djangoPortfolio/settings.py:150
+msgid "English"
+msgstr "Inglés"
+
+#: portfolio/models.py:21
+msgid "In production"
+msgstr "En producción"
+
+#: portfolio/models.py:22
+msgid "In development"
+msgstr "En desarrollo"
+
+#: portfolio/models.py:23
+msgid "Academic project"
+msgstr "Proyecto académico"
+
+#: portfolio/models.py:24
+msgid "Personal infrastructure"
+msgstr "Infraestructura personal"
+
+#: portfolio/templates/portfolio/_log.html:59
+#: portfolio/templates/portfolio/project.html:90
 msgid "IMAGES"
 msgstr "IMÁGENES"
 
+#: portfolio/templates/portfolio/_log_nav_partial.html:36
 msgid "Load more"
 msgstr "Cargar más"
 
+#: portfolio/templates/portfolio/base.html:12
+#: portfolio/templates/portfolio/base.html:14
+#: portfolio/templates/portfolio/base.html:21
+msgid "Josué Leiva | Telematics Engineering"
+msgstr "Josué Leiva | Ingeniería Civil Telemática"
+
+#: portfolio/templates/portfolio/base.html:13
+msgid ""
+"Josué Leiva, Telematics Engineering student at UTFSM (Chile). Edge runtime "
+"developer at LabOPT (C++17, Raspberry Pi 5), networking and self-hosted "
+"infrastructure. Open to a 320-hour industrial internship, Dec 2026 to Mar "
+"2027."
+msgstr "Josué Leiva, estudiante de Ingeniería Civil Telemática en la UTFSM (Chile). Desarrollador del runtime de borde en LabOPT (C++17, Raspberry Pi 5), redes e infraestructura self-hosted. Disponible para práctica industrial de 320 horas, dic 2026 a mar 2027."
+
+#: portfolio/templates/portfolio/base.html:15
+msgid ""
+"Telematics Engineering student at UTFSM. Edge/IoT runtimes, networking and "
+"self-hosted infrastructure."
+msgstr "Estudiante de Ingeniería Civil Telemática en la UTFSM. Runtimes de borde/IoT, redes e infraestructura self-hosted."
+
+#: portfolio/templates/portfolio/base.html:84
+msgid "Skip to content"
+msgstr "Saltar al contenido"
+
+#: portfolio/templates/portfolio/base.html:95
+msgid "Home"
+msgstr "Inicio"
+
+#: portfolio/templates/portfolio/base.html:101
+msgid "Main navigation"
+msgstr "Navegación principal"
+
+#: portfolio/templates/portfolio/base.html:102
+#: portfolio/templates/portfolio/index.html:69
+msgid "Projects"
+msgstr "Proyectos"
+
+#: portfolio/templates/portfolio/base.html:103
+#: portfolio/templates/portfolio/index.html:133
+msgid "Experience"
+msgstr "Experiencia"
+
+#: portfolio/templates/portfolio/base.html:104
+#: portfolio/templates/portfolio/index.html:169
+msgid "Skills"
+msgstr "Habilidades"
+
+#: portfolio/templates/portfolio/base.html:105
+msgid "Logs"
+msgstr "Registros"
+
+#: portfolio/templates/portfolio/base.html:126
+msgid "Toggle dark / light theme"
+msgstr "Cambiar tema oscuro / claro"
+
+#: portfolio/templates/portfolio/base.html:127
+msgid "Dark theme"
+msgstr "Tema oscuro"
+
+#: portfolio/templates/portfolio/base.html:135
+msgid "Light"
+msgstr "Claro"
+
+#: portfolio/templates/portfolio/base.html:135
+msgid "Dark"
+msgstr "Oscuro"
+
+#: portfolio/templates/portfolio/base.html:154
+msgid "Node"
+msgstr "Nodo"
+
+#: portfolio/templates/portfolio/base.html:154
+#: portfolio/templates/portfolio/base.html:157
+#, python-format
+msgid "%(t)s ago"
+msgstr "hace %(t)s"
+
+#: portfolio/templates/portfolio/base.html:157
+msgid "Latest note"
+msgstr "Última nota"
+
+#: portfolio/templates/portfolio/base.html:162
+#: portfolio/templates/portfolio/index.html:38
+msgid "Email"
+msgstr "Correo"
+
+#: portfolio/templates/portfolio/index.html:22
+msgid ""
+"Telematics Engineering student. I build edge runtimes for IoT gateways, and "
+"the networks and servers they run on."
+msgstr "Estudiante de Ingeniería Civil Telemática. Desarrollo runtimes de borde para gateways IoT, y las redes y servidores sobre los que funcionan."
+
+#: portfolio/templates/portfolio/index.html:26
+msgid "Open to:"
+msgstr "Busco:"
+
+#: portfolio/templates/portfolio/index.html:27
+msgid ""
+"a 320-hour industrial internship, December 2026 to March 2027, in telecom, "
+"data centers or IoT. Open to working abroad."
+msgstr "práctica industrial de 320 horas, de diciembre 2026 a marzo 2027, en telecomunicaciones, data centers o IoT. Abierto a trabajar en el extranjero."
+
+#: portfolio/templates/portfolio/index.html:32
+#: portfolio/templates/portfolio/index.html:35
+msgid "Download CV"
+msgstr "Descargar CV"
+
+#: portfolio/templates/portfolio/index.html:47
+msgid "Portrait of Josué Leiva"
+msgstr "Retrato de Josué Leiva"
+
+#: portfolio/templates/portfolio/index.html:49
+msgid ""
+"3rd-year Civil Telematics Engineering student at Universidad Técnica "
+"Federico Santa María."
+msgstr "Estudiante de 3er año de Ingeniería Civil Telemática en la Universidad Técnica Federico Santa María."
+
+#: portfolio/templates/portfolio/index.html:52
+msgid "Now"
+msgstr "Actualmente"
+
+#: portfolio/templates/portfolio/index.html:52
+msgid ""
+"Research assistant at LabOPT (UTFSM): edge runtime for Plazas Inteligentes"
+msgstr "Ayudante de investigación en LabOPT (UTFSM): runtime de borde para Plazas Inteligentes"
+
+#: portfolio/templates/portfolio/index.html:53
+msgid "Graduation"
+msgstr "Titulación"
+
+#: portfolio/templates/portfolio/index.html:53
+msgid "Expected December 2029"
+msgstr "Esperada en diciembre 2029"
+
+#: portfolio/templates/portfolio/index.html:54
+msgid "Awards"
+msgstr "Distinciones"
+
+#: portfolio/templates/portfolio/index.html:54
+msgid ""
+"Academic Merit Recognition (Reconocimiento al Mérito Académico), 2025 and "
+"2026"
+msgstr "Reconocimiento al Mérito Académico, 2025 y 2026"
+
+#: portfolio/templates/portfolio/index.html:55
+msgid "Languages"
+msgstr "Idiomas"
+
+#: portfolio/templates/portfolio/index.html:55
+msgid "Spanish (native), English C1 (Busuu certificate)"
+msgstr "Español (nativo), inglés C1 (certificado Busuu)"
+
+#: portfolio/templates/portfolio/index.html:72
+msgid "FILTER:"
+msgstr "FILTRAR:"
+
+#: portfolio/templates/portfolio/index.html:84
+msgid "Project"
+msgstr "Proyecto"
+
+#: portfolio/templates/portfolio/index.html:93
+msgid "Stack"
+msgstr "Stack"
+
+#: portfolio/templates/portfolio/index.html:100
+msgid "View Case Study"
+msgstr "Ver Caso de Estudio"
+
+#: portfolio/templates/portfolio/index.html:102
+#: portfolio/templates/portfolio/project.html:56
+msgid "Visit site"
+msgstr "Visitar sitio"
+
+#: portfolio/templates/portfolio/index.html:114
+msgid "Read the case study"
+msgstr "Leer el caso de estudio"
+
+#: portfolio/templates/portfolio/index.html:121
+msgid "No projects published yet."
+msgstr "Aún no hay proyectos publicados."
+
+#: portfolio/templates/portfolio/index.html:139
+msgid "Mar 2026 – Nov 2026"
+msgstr "Mar 2026 – Nov 2026"
+
+#: portfolio/templates/portfolio/index.html:141
+msgid "Research assistant, edge runtime developer"
+msgstr "Ayudante de investigación, desarrollador del runtime de borde"
+
+#: portfolio/templates/portfolio/index.html:142
+msgid ""
+"Plazas Inteligentes, a team of three. I own the C++17 runtime and the "
+"hardware assembly of 3 Raspberry Pi 5 gateways, each with 3 sensors, an ADC "
+"and a still-image camera; a colleague owns the cloud side. Multithreaded "
+"pipeline with thread-safe queues, HTTP multipart uploads, Server-Sent Events "
+"remote control and automatic restarts. Not yet deployed in the field."
+msgstr "Plazas Inteligentes, equipo de tres personas. Soy responsable del runtime en C++17 y del armado del hardware de 3 gateways Raspberry Pi 5, cada uno con 3 sensores, un ADC y una cámara de imágenes fijas; un compañero es responsable de la parte cloud. Pipeline multihilo con colas thread-safe, subidas HTTP multipart, control remoto por Server-Sent Events y reinicios automáticos. Aún no desplegado en terreno."
+
+#: portfolio/templates/portfolio/index.html:149
+msgid "Teaching assistant"
+msgstr "Ayudante docente"
+
+#: portfolio/templates/portfolio/index.html:150
+msgid "Programming Seminar TEL20125 (2026-1). Calculus I MAT071 (2025-2)."
+msgstr "Seminario de Programación TEL20125 (2026-1). Cálculo I MAT071 (2025-2)."
+
+#: portfolio/templates/portfolio/index.html:154
+msgid "Feb 2022 – Oct 2024"
+msgstr "Feb 2022 – Oct 2024"
+
+#: portfolio/templates/portfolio/index.html:156
+msgid "Volunteer translator"
+msgstr "Traductor voluntario"
+
+#: portfolio/templates/portfolio/index.html:186
+msgid "GitHub activity"
+msgstr "Actividad en GitHub"
+
+#: portfolio/templates/portfolio/index.html:187
+msgid "GitHub contribution chart for josue-fourier over the last year"
+msgstr "Gráfico de contribuciones en GitHub de josue-fourier del último año"
+
+#: portfolio/templates/portfolio/index.html:198
+msgid "Engineering logs"
+msgstr "Registros de ingeniería"
+
+#: portfolio/templates/portfolio/index.html:200
+msgid "LOGS"
+msgstr "REGISTROS"
+
+#: portfolio/templates/portfolio/index.html:213
+msgid "Engineering Logs"
+msgstr "Registros de Ingeniería"
+
+#: portfolio/templates/portfolio/index.html:215
+msgid "SWIPE"
+msgstr "DESLIZA"
+
+#: portfolio/templates/portfolio/index.html:231
+msgid "Select a log from the ledger"
+msgstr "Selecciona un registro de la lista"
+
+#: portfolio/templates/portfolio/index.html:261
+msgid "Profile"
+msgstr "Perfil"
+
+#: portfolio/templates/portfolio/index.html:269
+msgid "solved"
+msgstr "resueltos"
+
+#: portfolio/templates/portfolio/project.html:7
+#: portfolio/templates/portfolio/project.html:9
+#: portfolio/templates/portfolio/project.html:26
+msgid "Project Case Study"
+msgstr "Caso de Estudio del Proyecto"
+
+#: portfolio/templates/portfolio/project.html:30
+msgid "Return Home"
+msgstr "Volver al Inicio"
+
+#: portfolio/templates/portfolio/project.html:45
+msgid "STACK"
+msgstr "STACK"
+
+#: portfolio/templates/portfolio/project.html:64
+msgid "Project gallery"
+msgstr "Galería del proyecto"
+
+#: portfolio/templates/portfolio/project.html:82
+msgid "Previous image"
+msgstr "Imagen anterior"
+
+#: portfolio/templates/portfolio/project.html:85
+msgid "Next image"
+msgstr "Imagen siguiente"
+
+#: portfolio/templates/portfolio/project.html:101
 msgid "No detailed case study available yet."
 msgstr "Aún no hay un estudio de caso detallado disponible."
 
-msgid "01 / CORE SKILLS"
-msgstr "01 / HABILIDADES PRINCIPALES"
+#~ msgid "All rights reserved."
+#~ msgstr "Todos los derechos reservados."
 
-msgid "02 // BENCHMARKS"
-msgstr "02 // BENCHMARKS"
+#~ msgid ""
+#~ "Applied ElGamal asymmetric encryption, POSIX native C/C++ sockets, and "
+#~ "zero-knowledge verification primitives."
+#~ msgstr ""
+#~ "Criptografía asimétrica ElGamal aplicada, sockets nativos POSIX C/C++ y "
+#~ "primitivas de verificación de conocimiento cero."
 
-msgid "03 // PRODUCTION SYSTEMS"
-msgstr "03 // SISTEMAS EN PRODUCCIÓN"
+#~ msgid ""
+#~ "Automated daily verification of algorithmic problem solving, applied "
+#~ "cryptography, and 5-Star C++ ranking."
+#~ msgstr ""
+#~ "Verificación diaria automatizada de resolución algorítmica de problemas, "
+#~ "criptografía aplicada y clasificación C++ de 5 estrellas."
 
-msgid "04 // ENGINEERING FIELD LOGS"
-msgstr "04 // REGISTROS DE INGENIERÍA"
+#~ msgid "Backend Systems, APIs & Automation"
+#~ msgstr "Sistemas Backend, APIs y Automatización"
 
-msgid "COMPONENTS"
-msgstr "COMPONENTES"
+#~ msgid ""
+#~ "C++ runtime telemetry daemon & low-latency heartbeats on Raspberry Pi "
+#~ "edge nodes with custom UDP packet protocol."
+#~ msgstr ""
+#~ "Daemon de telemetría en tiempo de ejecución C++ y latidos de baja "
+#~ "latencia en nodos perimetrales Raspberry Pi con protocolo UDP "
+#~ "personalizado."
 
-msgid "LIVE CONSOLE"
-msgstr "CONSOLA EN VIVO"
+#~ msgid "C2 // LIFECYCLE"
+#~ msgstr "C2 // CICLO DE MISIÓN"
 
+#~ msgid "Core Competencies"
+#~ msgstr "Competencias Principales"
 
+#~ msgid ""
+#~ "Designing resilient backend systems, automated data pipelines, and real-"
+#~ "time operational telemetry."
+#~ msgstr ""
+#~ "Diseño de sistemas backend resilientes, pipelines de datos automatizados "
+#~ "y telemetría operativa en tiempo real."
 
+#~ msgid "Download_CV.pdf"
+#~ msgstr "Descargar_CV.pdf"
+
+#~ msgid "Edge Hardware Telemetry"
+#~ msgstr "Telemetría de Hardware Edge"
+
+#~ msgid "Frontend created with Antigravity"
+#~ msgstr "Frontend creado con Antigravity"
+
+#~ msgid "HACKERRANK // DOMAIN"
+#~ msgstr "HACKERRANK // DOMINIO"
+
+#~ msgid "HACKERRANK PROFILE"
+#~ msgstr "PERFIL DE HACKERRANK"
+
+#~ msgid "HackerRank Badges"
+#~ msgstr "Insignias de HackerRank"
+
+#~ msgid "Hardened Ingestion Pipelines"
+#~ msgstr "Pipelines de Ingesta Blindados"
+
+#~ msgid ""
+#~ "High-integrity PostgreSQL schemas, foreign keys, and Huey task queues "
+#~ "orchestrating daily automated synchronization."
+#~ msgstr ""
+#~ "Esquemas PostgreSQL de alta integridad, claves foráneas y colas de tareas "
+#~ "Huey que orquestan la sincronización diaria automatizada."
+
+#~ msgid "Independent Systems"
+#~ msgstr "Sistemas Independientes"
+
+#~ msgid "LVL"
+#~ msgstr "NIV"
+
+#~ msgid ""
+#~ "Low-level rigor engineered for human workflows: operational order, "
+#~ "student autonomy, and malware-isolated community platforms."
+#~ msgstr ""
+#~ "Rigor de bajo nivel diseñado para flujos humanos: orden operativo, "
+#~ "autonomía estudiantil y plataformas comunitarias aisladas de malware."
+
+#~ msgid ""
+#~ "Malware-isolated file ingestion via Nginx reverse proxy, isolated Docker "
+#~ "containers, and ClamAV daemon scan workers."
+#~ msgstr ""
+#~ "Ingesta de archivos aislada de malware mediante proxy inverso Nginx, "
+#~ "contenedores Docker aislados y trabajadores ClamAV daemon."
+
+#~ msgid "Mission Lifecycle HUD"
+#~ msgstr "HUD de Ciclo de Misión"
+
+#~ msgid "NOT_COURSE_PROJECTS // ACTIVE_WORK"
+#~ msgstr "PROYECTOS_NO_UNIVERSITARIOS // TRABAJO_ACTIVO"
+
+#~ msgid "Next Star Progress"
+#~ msgstr "Progreso Próxima Estrella"
+
+#~ msgid "Relational Data Modeling"
+#~ msgstr "Modelado de Datos Relacionales"
+
+#~ msgid "Reliable Architecture & Clear Documentation"
+#~ msgstr "Arquitectura Confiable y Documentación Clara"
+
+#~ msgid "SEC—01 // DOSSIER & TELEMETRY"
+#~ msgstr "SEC—01 // EXPEDIENTE Y TELEMETRÍA"
+
+#~ msgid "SEC—02 // CAPABILITY MATRIX"
+#~ msgstr "SEC—02 // MATRIZ DE CAPACIDADES"
+
+#~ msgid "SEC—05 // STACK TELEMETRY FILTER"
+#~ msgstr "SEC—05 // FILTRO DE STACK Y TELEMETRÍA"
+
+#~ msgid "SELECT_LOG_RECORD"
+#~ msgstr "SELECCIONAR_REGISTRO_LOG"
+
+#~ msgid "SYSTEM_TELEMETRY // HACKERRANK_ACHIEVEMENTS"
+#~ msgstr "TELEMETRÍA_DEL_SISTEMA // LOGROS_HACKERRANK"
+
+#~ msgid "SYSTEM_TELEMETRY // LATEST_REPORTS"
+#~ msgstr "TELEMETRÍA_SISTEMA // ÚLTIMOS_REPORTES"
+
+#~ msgid "Scroll to top"
+#~ msgstr "Volver arriba"
+
+#~ msgid ""
+#~ "Self-directed production software, hardware telemetry integrations, and "
+#~ "distributed services."
+#~ msgstr ""
+#~ "Software de producción autodirigido, integraciones de telemetría de "
+#~ "hardware y servicios distribuidos."
+
+#~ msgid ""
+#~ "Self-hosted telemetry logs, cryptographic implementation notes, and Linux "
+#~ "infrastructure ownership field reports."
+#~ msgstr ""
+#~ "Registros de telemetría autohospedados, notas de implementación "
+#~ "criptográfica e informes de campo de infraestructura Linux."
+
+#~ msgid "Solved Challenges"
+#~ msgstr "Desafíos Resueltos"
+
+#~ msgid "Stars"
+#~ msgstr "Estrellas"
+
+#~ msgid ""
+#~ "Structured overview of technical domains, infrastructure tooling, and "
+#~ "engineering capabilities."
+#~ msgstr ""
+#~ "Descripción general estructurada de dominios técnicos, herramientas de "
+#~ "infraestructura y capacidades de ingeniería."
+
+#~ msgid "System: Online // Availability: Open"
+#~ msgstr "Sistema: En Línea // Disponibilidad: Abierto"
+
+#~ msgid "Systems Craftsmanship"
+#~ msgstr "Artesanía de Sistemas y Criptografía"
+
+#~ msgid "BACKEND AND SYSTEMS ENGINEERING"
+#~ msgstr "INGENIERÍA DE BACKEND Y SISTEMAS"
+
+#~ msgid "Technical Architecture"
+#~ msgstr "Arquitectura Técnica"
+
+#~ msgid "Telematics Engineering Student"
+#~ msgstr "Estudiante de Ingeniería Telemática"
+
+#~ msgid "Telematics Engineering student specializing in"
+#~ msgstr "Estudiante de Ingeniería Civil Telemática especializándose en"
+
+#~ msgid "View Domain"
+#~ msgstr "Ver Dominio"
+
+#~ msgid "and"
+#~ msgstr "y"
+
+#~ msgid "backend architecture"
+#~ msgstr "arquitectura backend"
+
+#~ msgid "distributed systems"
+#~ msgstr "sistemas distribuidos"
+
+#~ msgid "flows"
+#~ msgstr "flujos"
+
+#~ msgid "human impact"
+#~ msgstr "impacto humano"
+
+#~ msgid "real-time telemetry"
+#~ msgstr "telemetría en tiempo real"
+
+#~ msgid "Live Demo"
+#~ msgstr "Ver Demo"
+
+#~ msgid "Production Evidence"
+#~ msgstr "Evidencia en Producción"
+
+#~ msgid "TECH STACK"
+#~ msgstr "STACK TÉCNICO"
+
+#~ msgid "Live Status"
+#~ msgstr "Estado en Vivo"
+
+#~ msgid "ONLINE"
+#~ msgstr "EN LÍNEA"
+
+#~ msgid "EDGE NODE OFFLINE"
+#~ msgstr "NODO EDGE FUERA DE LÍNEA"
+
+#~ msgid "No recent heartbeat"
+#~ msgstr "Sin latido reciente"
+
+#~ msgid "LATEST LOG"
+#~ msgstr "ÚLTIMO REGISTRO"
+
+#~ msgid "DOMAINS"
+#~ msgstr "DOMINIOS"
+
+#~ msgid "SKILLS"
+#~ msgstr "HABILIDADES"
+
+#~ msgid "Synced"
+#~ msgstr "Sincronizado"
+
+#~ msgid "PROJECTS"
+#~ msgstr "PROYECTOS"
+
+#~ msgid "No skills registered yet."
+#~ msgstr "Aún no hay habilidades registradas."
+
+#~ msgid "LESS"
+#~ msgstr "MENOS"
+
+#~ msgid "MORE"
+#~ msgstr "MÁS"
+
+#~ msgid "INDEX"
+#~ msgstr "ÍNDICE"
+
+#~ msgid "CAPABILITIES"
+#~ msgstr "CAPACIDADES"
+
+#~ msgid "BENCHMARKS"
+#~ msgstr "BENCHMARKS"
+
+#~ msgid "SYSTEMS"
+#~ msgstr "SISTEMAS"
+
+#~ msgid "SECTIONS"
+#~ msgstr "SECCIONES"
+
+#~ msgid "ABOUT"
+#~ msgstr "ACERCA DE"
+
+#~ msgid "01 / ABOUT"
+#~ msgstr "01 / ACERCA DE"
+
+#~ msgid "02 / CAPABILITY MATRIX"
+#~ msgstr "02 / MATRIZ DE CAPACIDADES"
+
+#~ msgid "GITHUB ACTIVITY // LIVE"
+#~ msgstr "ACTIVIDAD EN GITHUB // EN VIVO"
+
+#~ msgid "03 // BENCHMARKS"
+#~ msgstr "03 // BENCHMARKS"
+
+#~ msgid "SYNC: DAILY_0800_SCL // 5★ C++ RANK"
+#~ msgstr "SINC: DIARIA_0800_SCL // RANGO C++ 5★"
+
+#~ msgid "INGESTION CRON"
+#~ msgstr "CRON DE INGESTA"
+
+#~ msgid "ACTIVE DOMAINS"
+#~ msgstr "DOMINIOS ACTIVOS"
+
+#~ msgid "INDEPENDENT PRODUCTION SYSTEMS"
+#~ msgstr "SISTEMAS INDEPENDIENTES EN PRODUCCIÓN"
+
+#~ msgid "DEPLOYED SYSTEM"
+#~ msgstr "SISTEMA DESPLEGADO"
+
+#~ msgid "VIEW PROJECT"
+#~ msgstr "VER PROYECTO"
+
+#~ msgid "SYS_RENDER // ARCHITECTURE DOCUMENTED"
+#~ msgstr "SYS_RENDER // ARQUITECTURA DOCUMENTADA"
+
+#~ msgid "05 // ENGINEERING FIELD LOGS"
+#~ msgstr "05 // REGISTROS DE INGENIERÍA"
+
+#~ msgid "ARCHIVE // CHRONOLOGICAL"
+#~ msgstr "ARCHIVO // CRONOLÓGICO"
+
+#~ msgid "FEATURED DEEP DIVE"
+#~ msgstr "ANÁLISIS DESTACADO"
+
+#~ msgid "READ LOG"
+#~ msgstr "LEER REGISTRO"
+
+#~ msgid "View All Logs"
+#~ msgstr "Ver Todos los Registros"
+
+#~ msgid "01 / CORE SKILLS"
+#~ msgstr "01 / HABILIDADES PRINCIPALES"
+
+#~ msgid "02 // BENCHMARKS"
+#~ msgstr "02 // BENCHMARKS"
+
+#~ msgid "03 // PRODUCTION SYSTEMS"
+#~ msgstr "03 // SISTEMAS EN PRODUCCIÓN"
+
+#~ msgid "04 // ENGINEERING FIELD LOGS"
+#~ msgstr "04 // REGISTROS DE INGENIERÍA"
+
+#~ msgid "COMPONENTS"
+#~ msgstr "COMPONENTES"
+
+#~ msgid "LIVE CONSOLE"
+#~ msgstr "CONSOLA EN VIVO"

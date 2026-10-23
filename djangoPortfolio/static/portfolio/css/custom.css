@@ -93,7 +93,7 @@ body {
     font-family: var(--font-display, "Space Grotesk"), "PP Neue Montreal", "Inter", sans-serif;
     font-weight: 700;
     font-variation-settings: 'wght' 700;
-    font-size: clamp(2.75rem, 8vw, 8.5rem);
+    font-size: clamp(2.5rem, 6.5vw, 6rem);
     line-height: 0.9;
     letter-spacing: -0.04em;
     color: var(--ink);
@@ -588,7 +588,14 @@ body {
 }
 
 [data-theme="lofi"] .text-zinc-600 {
-    color: #94A3B8 !important;
+    color: #64748B !important;
+}
+
+/* WCAG AA contrast for small accent text on the light background */
+[data-theme="lofi"] .text-emerald-300,
+[data-theme="lofi"] .text-emerald-400,
+[data-theme="lofi"] .text-emerald-500 {
+    color: #047857 !important;
 }
 
 [data-theme="lofi"] .text-zinc-700 {
@@ -632,6 +639,11 @@ body {
 /* Button & Micro-interaction Overrides */
 [data-theme="lofi"] .btn-sweep {
     --sweep-bg: #0F172A;
+}
+
+/* Outlined buttons need a visible edge on the light background */
+[data-theme="lofi"] .btn-sweep.border-white\/20 {
+    border-color: rgba(15, 23, 42, 0.35) !important;
 }
 
 [data-theme="lofi"] .btn-sweep:hover {
@@ -684,7 +696,12 @@ body {
 }
 
 [data-theme="lofi"] .log-item.active .log-title {
-    color: #059669 !important;
+    color: #047857 !important;
+}
+
+[data-theme="lofi"] .log-item.active .text-zinc-500,
+[data-theme="lofi"] .log-item.active .text-zinc-600 {
+    color: #475569 !important;
 }
 
 /* Dark Mode Backward-Compatibility for Slate Helpers */
@@ -1340,3 +1357,7 @@ main#log-content-area.markdown-body {
     .profile-portrait-frame .portrait-aura { animation: none; }
     .profile-portrait-frame { transform: none !important; }
 }
+
+/* WCAG AA contrast for small muted text on the near-black background */
+[data-theme="dracula"] .text-zinc-500 { color: #8b8b94; }
+[data-theme="dracula"] .text-zinc-600 { color: #7c7c85; }

@@ -4,8 +4,9 @@
 {% load i18n %}
 
 {% block meta %}
-    <title>{{ project.name }} // Project Case Study</title>
-    <meta property="og:title" content="{{ project.name }} | Project Case Study">
+    <title>{{ project.name }} | {% translate "Project Case Study" %} | Josué Leiva</title>
+    <meta name="description" content="{{ project.description }}">
+    <meta property="og:title" content="{{ project.name }} | {% translate "Project Case Study" %}">
     <meta property="og:description" content="{{ project.description }}">
     <meta property="og:type" content="article">
 {% endblock %}
@@ -33,6 +34,7 @@
         <!-- Title Block -->
         <header class="grid grid-cols-1 lg:grid-cols-12 divide-y lg:divide-y-0 lg:divide-x divide-white/[0.08] border-b border-white/[0.08]">
             <div class="lg:col-span-8 p-8 md:p-14">
+                <p class="font-mono text-[11px] uppercase tracking-wider text-zinc-400 mb-4">{{ project.get_status_display }}</p>
                 <h1 class="font-display font-bold text-white tracking-[-0.03em] leading-[0.95] text-4xl md:text-6xl mb-6">{{ project.name }}</h1>
                 <p class="text-lg md:text-xl text-zinc-300 font-light leading-snug max-w-2xl">{{ project.description }}</p>
             </div>
@@ -51,7 +53,7 @@
 
                 {% if project.link %}
                 <a href="{{ project.link }}" target="_blank" rel="noopener noreferrer" class="btn-sweep btn-sweep-emerald px-5 py-3 border border-emerald-500/80 bg-emerald-500/15 hover:bg-emerald-400 text-emerald-300 hover:text-black uppercase tracking-wider font-bold inline-flex items-center justify-between gap-2 shadow-[0_4px_16px_rgba(16,185,129,0.25)] hover:shadow-[0_0_25px_rgba(16,185,129,0.55)] transition-all">
-                    <span>{% translate "Live Demo" %}</span>
+                    <span>{% translate "Visit site" %}</span>
                     <span>↗</span>
                 </a>
                 {% endif %}
@@ -59,7 +61,7 @@
         </header>
 
         {% if project.images.all %}
-        <section id="project-gallery" class="relative z-10 border-b border-white/[0.08]" aria-label="Project Gallery">
+        <section id="project-gallery" class="relative z-10 border-b border-white/[0.08]" aria-label="{% translate 'Project gallery' %}">
             <div class="glass-panel overflow-hidden relative group">
                 <!-- Scroll Snap Carousel Container -->
                 <div id="project-carousel-{{ project.id }}" data-lenis-prevent class="carousel w-full aspect-video max-h-[560px] bg-[#050506] overflow-x-auto flex snap-x snap-mandatory scroll-smooth">
@@ -77,10 +79,10 @@
 
                 {% if project.images.count > 1 %}
                 <!-- Prev/Next Controls -->
-                <button type="button" data-carousel-action="prev" data-carousel-target="project-carousel-{{ project.id }}" aria-label="Previous Image" class="carousel-ctl absolute left-0 top-1/2 -translate-y-1/2 w-12 h-14 flex items-center justify-center cursor-pointer z-20">
+                <button type="button" data-carousel-action="prev" data-carousel-target="project-carousel-{{ project.id }}" aria-label="{% translate 'Previous image' %}" class="carousel-ctl absolute left-0 top-1/2 -translate-y-1/2 w-12 h-14 flex items-center justify-center cursor-pointer z-20">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
                 </button>
-                <button type="button" data-carousel-action="next" data-carousel-target="project-carousel-{{ project.id }}" aria-label="Next Image" class="carousel-ctl absolute right-0 top-1/2 -translate-y-1/2 w-12 h-14 flex items-center justify-center cursor-pointer z-20">
+                <button type="button" data-carousel-action="next" data-carousel-target="project-carousel-{{ project.id }}" aria-label="{% translate 'Next image' %}" class="carousel-ctl absolute right-0 top-1/2 -translate-y-1/2 w-12 h-14 flex items-center justify-center cursor-pointer z-20">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
                 </button>
                 <!-- Slide Count Badge -->
