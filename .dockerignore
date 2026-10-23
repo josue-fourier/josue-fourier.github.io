@@ -27,7 +27,6 @@ huey.sqlite3
 node_modules/
 package.json
 package-lock.json
-.hugo_build.lock
 
 # Environment & local secrets (passed via docker-compose env_file at runtime)
 .env

@@ -13,3 +13,5 @@ djangoPortfolio/*/templatetags/__pycache__/
 *.sqlite3*
 *.jpg_original
 .agents/
+__pycache__/
+djangoPortfolio/staticfiles/
