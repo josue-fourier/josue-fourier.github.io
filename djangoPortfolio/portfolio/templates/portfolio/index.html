@@ -10,7 +10,9 @@
     <!-- ===================== HERO ===================== -->
     <section id="about" class="c2-chapter-section border-b border-white/[0.08] bg-[#050506]" data-chapter="01" data-chapter-title="ABOUT">
         <div class="grid grid-cols-1 lg:grid-cols-12 divide-y lg:divide-y-0 lg:divide-x divide-white/[0.08]">
-            <div class="lg:col-span-7 p-5 sm:p-8 md:p-12 lg:p-14 flex flex-col gap-6 sm:gap-8 bg-[#050506]">
+            <div class="lg:col-span-7 relative overflow-hidden bg-[#050506]">
+              <canvas id="ecc-canvas" class="absolute inset-0 w-full h-full pointer-events-none" role="img" aria-label="{% translate 'Animation: elliptic-curve scalar multiplication d·P computed by double-and-add over a finite field' %}"></canvas>
+              <div class="relative z-10 p-5 sm:p-8 md:p-12 lg:p-14 flex flex-col gap-6 sm:gap-8">
                 <p class="font-mono text-[11px] text-zinc-400 uppercase tracking-wider flex items-center gap-2">
                     <span class="w-1.5 h-1.5 bg-emerald-500"></span>
                     <span>Santiago, Chile</span><span class="text-zinc-700">//</span><span>UTFSM</span>
@@ -37,8 +39,10 @@
                     {% endif %}
                     <a href="#" class="js-email btn-sweep px-4 sm:px-5 py-2.5 sm:py-3 font-mono text-[11px] sm:text-xs uppercase tracking-wider flex items-center gap-2 transition-all duration-300 font-semibold border border-white/20 bg-white/[0.06] text-zinc-100 hover:text-black" data-u="josuenicolas" data-d="protonmail.com" data-umami-event="email-click">{% translate "Email" %}</a>
                     <a href="https://github.com/josue-fourier" target="_blank" rel="noopener noreferrer" data-umami-event="social-click" data-umami-event-network="github" data-umami-event-location="hero" class="btn-sweep px-4 sm:px-5 py-2.5 sm:py-3 font-mono text-[11px] sm:text-xs uppercase tracking-wider flex items-center gap-2 transition-all duration-300 font-semibold border border-white/20 bg-white/[0.06] text-zinc-100 hover:text-black">GitHub ↗</a>
-                    <a href="https://linkedin.com/in/josuenicolas" target="_blank" rel="noopener noreferrer" data-umami-event="social-click" data-umami-event-network="linkedin" data-umami-event-location="hero" class="btn-sweep btn-sweep-sky px-4 sm:px-5 py-2.5 sm:py-3 font-mono text-[11px] sm:text-xs uppercase tracking-wider flex items-center gap-2 transition-all duration-300 font-semibold border border-[#0A66C2]/60 bg-[#0A66C2]/15 hover:bg-[#0A66C2] text-[#70B5F9] hover:text-white">LinkedIn ↗</a>
+                    <a href="https://linkedin.com/in/josuenicolas" target="_blank" rel="noopener noreferrer" data-umami-event="social-click" data-umami-event-network="linkedin" data-umami-event-location="hero" class="btn-sweep px-4 sm:px-5 py-2.5 sm:py-3 font-mono text-[11px] sm:text-xs uppercase tracking-wider flex items-center gap-2 transition-all duration-300 font-semibold border border-white/20 bg-white/[0.06] text-zinc-100 hover:text-black">LinkedIn ↗</a>
                 </div>
+                <p id="ecc-caption" class="font-mono text-[10px] text-zinc-500 tracking-wide pt-4 sm:pt-8 lg:pt-12" aria-hidden="true"></p>
+              </div>
             </div>
 
             <div class="lg:col-span-5 p-5 sm:p-8 md:p-10 bg-[#08080B] flex flex-col gap-6">
@@ -80,15 +84,15 @@
         <div class="p-4 sm:p-6 md:p-8 lg:p-10 flex flex-col gap-6 md:gap-8 bg-[#050506]">
             {% for project in projects %}
             <article class="project-card filter-transition kinetic-block border border-white/[0.12] hover:border-emerald-500/40 bg-[#070709] transition-all duration-300 flex flex-col overflow-hidden group" data-techs="{% for item in project.stack.all %}{{ item.technology }},{% endfor %}">
-                <div class="px-5 py-3 border-b border-white/[0.08] bg-[#0A0A0E]/90 flex items-center justify-between font-mono text-[11px] text-zinc-400">
+                <div class="px-6 md:px-8 pt-5 flex items-center justify-between font-mono text-[11px] text-zinc-400">
                     <span class="text-zinc-400 font-bold">{% translate "Project" %} {{ forloop.counter|stringformat:"02d" }}</span>
                     <span class="px-2 py-0.5 border uppercase tracking-wider font-semibold text-[10px] {% if project.status == 'production' %}border-emerald-500/40 text-emerald-400{% else %}border-white/20 text-zinc-300{% endif %}">{{ project.get_status_display }}</span>
                 </div>
 
-                <div class="grid grid-cols-1 lg:grid-cols-12 divide-y lg:divide-y-0 lg:divide-x divide-white/[0.08]">
-                    <div class="lg:col-span-5 p-6 md:p-8 flex flex-col justify-between gap-6 bg-[#07070A]">
+                <div class="grid grid-cols-1 lg:grid-cols-12">
+                    <div class="lg:col-span-5 p-6 md:p-8 flex flex-col justify-between gap-6">
                         <div>
-                            <h3 class="text-xl md:text-2xl font-display font-bold text-white group-hover:text-emerald-400 transition-colors mb-3">{{ project.name }}</h3>
+                            <h3 class="text-xl md:text-2xl font-display font-bold text-white group-hover:text-emerald-400 transition-colors mb-3" style="view-transition-name: project-title-{{ project.id }}">{{ project.name }}</h3>
                             <p class="text-sm text-zinc-300 leading-relaxed mb-6">{{ project.description }}</p>
                             <ul class="flex flex-wrap gap-1.5" aria-label="{% translate 'Stack' %}">
                                 {% for item in project.stack.all %}
@@ -96,7 +100,7 @@
                                 {% endfor %}
                             </ul>
                         </div>
-                        <div class="flex flex-wrap items-center gap-3 pt-4 border-t border-white/[0.08] font-mono text-xs">
+                        <div class="flex flex-wrap items-center gap-3 font-mono text-xs">
                             <a href="{% url 'project_detail' project.id %}" data-umami-event="project-open" data-umami-event-project="{{ project.name }}" data-umami-event-source="card-button" class="btn-sweep btn-sweep-emerald px-5 py-2.5 border border-emerald-500/80 bg-emerald-500/15 hover:bg-emerald-400 text-emerald-300 hover:text-black uppercase tracking-wider inline-flex items-center gap-2.5 font-bold transition-all duration-300">{% translate "View Case Study" %} →</a>
                             {% if project.link %}
                             <a href="{{ project.link }}" target="_blank" rel="noopener noreferrer" data-umami-event="project-external-link" data-umami-event-project="{{ project.name }}" class="px-3.5 py-2 border border-white/10 hover:border-white/30 text-zinc-300 hover:text-white transition-all uppercase tracking-wider text-[11px]">{% translate "Visit site" %} ↗</a>
@@ -104,11 +108,11 @@
                         </div>
                     </div>
 
-                    <div class="lg:col-span-7 p-6 md:p-8 bg-[#050507] flex items-center justify-center">
+                    <div class="lg:col-span-7 p-6 md:p-8 flex items-center justify-center">
                         {% with img=project.preview_image %}
                         {% if img %}
                         <a href="{% url 'project_detail' project.id %}" data-umami-event="project-open" data-umami-event-project="{{ project.name }}" data-umami-event-source="card-image" class="w-full aspect-video border border-white/10 overflow-hidden block bg-[#050506]">
-                            <img src="{{ img.file.url }}" alt="{{ img.alt_text|default:project.name }}" loading="lazy" width="1280" height="720" class="w-full h-full object-cover">
+                            <img src="{{ img.file.url }}" alt="{{ img.alt_text|default:project.name }}" loading="lazy" width="1280" height="720" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.03]" style="view-transition-name: project-img-{{ project.id }}">
                         </a>
                         {% else %}
                         <a href="{% url 'project_detail' project.id %}" class="w-full aspect-video border border-white/10 bg-[#0A0A0D] flex items-center justify-center font-mono text-xs text-zinc-400 uppercase tracking-widest hover:border-emerald-500/40 transition-colors">{% translate "Read the case study" %} →</a>
@@ -172,7 +176,7 @@
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
             {% for category in core_competencies %}
-            <div class="bg-[#050506] p-6 border-b border-r border-white/[0.08]">
+            <div class="bg-[#050506] p-6">
                 <h3 class="font-display font-bold text-white text-base mb-3">{{ category.name }}</h3>
                 <ul class="flex flex-wrap gap-1.5">
                     {% for skill in category.skills.all %}
@@ -278,6 +282,7 @@
 {% endblock %}
 
 {% block extra_js %}
+<script defer src="{% static 'portfolio/js/ecc-signature.js' %}"></script>
 <script>
     // --- Interactive Engineering Logs Console (SPA) ---
     function initLoggingConsole() {

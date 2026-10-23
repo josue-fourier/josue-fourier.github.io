@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: portfolio 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-23 18:07-0300\n"
+"POT-Creation-Date: 2026-10-23 19:47-0300\n"
 "PO-Revision-Date: 2026-10-21 12:00-0300\n"
 "Last-Translator: Josue Leiva <xmenmagnet@gmail.com>\n"
 "Language-Team: Spanish <es@example.com>\n"
@@ -41,6 +41,24 @@ msgstr "Proyecto académico"
 msgid "Personal infrastructure"
 msgstr "Infraestructura personal"
 
+#: portfolio/templates/404.html:11
+msgid "Point at infinity"
+msgstr "Punto en el infinito"
+
+#: portfolio/templates/404.html:12
+msgid "This page does not exist."
+msgstr "Esta página no existe."
+
+#: portfolio/templates/404.html:13
+msgid ""
+"Like P + (−P) on an elliptic curve, this address leads nowhere. The home "
+"page has everything else."
+msgstr "Como P + (−P) en una curva elíptica, esta dirección no lleva a ninguna parte. En la página de inicio está todo lo demás."
+
+#: portfolio/templates/404.html:14
+msgid "Back to home"
+msgstr "Volver al inicio"
+
 #: portfolio/templates/portfolio/_log.html:59
 #: portfolio/templates/portfolio/project.html:90
 msgid "IMAGES"
@@ -62,13 +80,19 @@ msgid ""
 "developer at LabOPT (C++17, Raspberry Pi 5), networking and self-hosted "
 "infrastructure. Open to a 320-hour industrial internship, Dec 2026 to Mar "
 "2027."
-msgstr "Josué Leiva, estudiante de Ingeniería Civil Telemática en la UTFSM (Chile). Desarrollador del runtime de borde en LabOPT (C++17, Raspberry Pi 5), redes e infraestructura self-hosted. Disponible para práctica industrial de 320 horas, dic 2026 a mar 2027."
+msgstr ""
+"Josué Leiva, estudiante de Ingeniería Civil Telemática en la UTFSM (Chile). "
+"Desarrollador del runtime de borde en LabOPT (C++17, Raspberry Pi 5), redes "
+"e infraestructura self-hosted. Disponible para práctica industrial de 320 "
+"horas, dic 2026 a mar 2027."
 
 #: portfolio/templates/portfolio/base.html:15
 msgid ""
 "Telematics Engineering student at UTFSM. Edge/IoT runtimes, networking and "
 "self-hosted infrastructure."
-msgstr "Estudiante de Ingeniería Civil Telemática en la UTFSM. Runtimes de borde/IoT, redes e infraestructura self-hosted."
+msgstr ""
+"Estudiante de Ingeniería Civil Telemática en la UTFSM. Runtimes de borde/"
+"IoT, redes e infraestructura self-hosted."
 
 #: portfolio/templates/portfolio/base.html:84
 msgid "Skip to content"
@@ -83,17 +107,17 @@ msgid "Main navigation"
 msgstr "Navegación principal"
 
 #: portfolio/templates/portfolio/base.html:102
-#: portfolio/templates/portfolio/index.html:69
+#: portfolio/templates/portfolio/index.html:73
 msgid "Projects"
 msgstr "Proyectos"
 
 #: portfolio/templates/portfolio/base.html:103
-#: portfolio/templates/portfolio/index.html:133
+#: portfolio/templates/portfolio/index.html:137
 msgid "Experience"
 msgstr "Experiencia"
 
 #: portfolio/templates/portfolio/base.html:104
-#: portfolio/templates/portfolio/index.html:169
+#: portfolio/templates/portfolio/index.html:173
 msgid "Skills"
 msgstr "Habilidades"
 
@@ -132,171 +156,192 @@ msgid "Latest note"
 msgstr "Última nota"
 
 #: portfolio/templates/portfolio/base.html:162
-#: portfolio/templates/portfolio/index.html:38
+#: portfolio/templates/portfolio/index.html:40
 msgid "Email"
 msgstr "Correo"
 
-#: portfolio/templates/portfolio/index.html:22
+#: portfolio/templates/portfolio/index.html:14
+msgid ""
+"Animation: elliptic-curve scalar multiplication d·P computed by double-and-"
+"add over a finite field"
+msgstr "Animación: multiplicación escalar d·P en una curva elíptica, calculada con double-and-add sobre un cuerpo finito"
+
+#: portfolio/templates/portfolio/index.html:24
 msgid ""
 "Telematics Engineering student. I build edge runtimes for IoT gateways, and "
 "the networks and servers they run on."
-msgstr "Estudiante de Ingeniería Civil Telemática. Desarrollo runtimes de borde para gateways IoT, y las redes y servidores sobre los que funcionan."
+msgstr ""
+"Estudiante de Ingeniería Civil Telemática. Desarrollo runtimes de borde para "
+"gateways IoT, y las redes y servidores sobre los que funcionan."
 
-#: portfolio/templates/portfolio/index.html:26
+#: portfolio/templates/portfolio/index.html:28
 msgid "Open to:"
 msgstr "Busco:"
 
-#: portfolio/templates/portfolio/index.html:27
+#: portfolio/templates/portfolio/index.html:29
 msgid ""
 "a 320-hour industrial internship, December 2026 to March 2027, in telecom, "
 "data centers or IoT. Open to working abroad."
-msgstr "práctica industrial de 320 horas, de diciembre 2026 a marzo 2027, en telecomunicaciones, data centers o IoT. Abierto a trabajar en el extranjero."
+msgstr ""
+"práctica industrial de 320 horas, de diciembre 2026 a marzo 2027, en "
+"telecomunicaciones, data centers o IoT. Abierto a trabajar en el extranjero."
 
-#: portfolio/templates/portfolio/index.html:32
-#: portfolio/templates/portfolio/index.html:35
+#: portfolio/templates/portfolio/index.html:34
+#: portfolio/templates/portfolio/index.html:37
 msgid "Download CV"
 msgstr "Descargar CV"
 
-#: portfolio/templates/portfolio/index.html:47
+#: portfolio/templates/portfolio/index.html:51
 msgid "Portrait of Josué Leiva"
 msgstr "Retrato de Josué Leiva"
 
-#: portfolio/templates/portfolio/index.html:49
+#: portfolio/templates/portfolio/index.html:53
 msgid ""
 "3rd-year Civil Telematics Engineering student at Universidad Técnica "
 "Federico Santa María."
-msgstr "Estudiante de 3er año de Ingeniería Civil Telemática en la Universidad Técnica Federico Santa María."
+msgstr ""
+"Estudiante de 3er año de Ingeniería Civil Telemática en la Universidad "
+"Técnica Federico Santa María."
 
-#: portfolio/templates/portfolio/index.html:52
+#: portfolio/templates/portfolio/index.html:56
 msgid "Now"
 msgstr "Actualmente"
 
-#: portfolio/templates/portfolio/index.html:52
+#: portfolio/templates/portfolio/index.html:56
 msgid ""
 "Research assistant at LabOPT (UTFSM): edge runtime for Plazas Inteligentes"
-msgstr "Ayudante de investigación en LabOPT (UTFSM): runtime de borde para Plazas Inteligentes"
+msgstr ""
+"Ayudante de investigación en LabOPT (UTFSM): runtime de borde para Plazas "
+"Inteligentes"
 
-#: portfolio/templates/portfolio/index.html:53
+#: portfolio/templates/portfolio/index.html:57
 msgid "Graduation"
 msgstr "Titulación"
 
-#: portfolio/templates/portfolio/index.html:53
+#: portfolio/templates/portfolio/index.html:57
 msgid "Expected December 2029"
 msgstr "Esperada en diciembre 2029"
 
-#: portfolio/templates/portfolio/index.html:54
+#: portfolio/templates/portfolio/index.html:58
 msgid "Awards"
 msgstr "Distinciones"
 
-#: portfolio/templates/portfolio/index.html:54
+#: portfolio/templates/portfolio/index.html:58
 msgid ""
 "Academic Merit Recognition (Reconocimiento al Mérito Académico), 2025 and "
 "2026"
 msgstr "Reconocimiento al Mérito Académico, 2025 y 2026"
 
-#: portfolio/templates/portfolio/index.html:55
+#: portfolio/templates/portfolio/index.html:59
 msgid "Languages"
 msgstr "Idiomas"
 
-#: portfolio/templates/portfolio/index.html:55
+#: portfolio/templates/portfolio/index.html:59
 msgid "Spanish (native), English C1 (Busuu certificate)"
 msgstr "Español (nativo), inglés C1 (certificado Busuu)"
 
-#: portfolio/templates/portfolio/index.html:72
+#: portfolio/templates/portfolio/index.html:76
 msgid "FILTER:"
 msgstr "FILTRAR:"
 
-#: portfolio/templates/portfolio/index.html:84
+#: portfolio/templates/portfolio/index.html:88
 msgid "Project"
 msgstr "Proyecto"
 
-#: portfolio/templates/portfolio/index.html:93
+#: portfolio/templates/portfolio/index.html:97
 msgid "Stack"
 msgstr "Stack"
 
-#: portfolio/templates/portfolio/index.html:100
+#: portfolio/templates/portfolio/index.html:104
 msgid "View Case Study"
 msgstr "Ver Caso de Estudio"
 
-#: portfolio/templates/portfolio/index.html:102
+#: portfolio/templates/portfolio/index.html:106
 #: portfolio/templates/portfolio/project.html:56
 msgid "Visit site"
 msgstr "Visitar sitio"
 
-#: portfolio/templates/portfolio/index.html:114
+#: portfolio/templates/portfolio/index.html:118
 msgid "Read the case study"
 msgstr "Leer el caso de estudio"
 
-#: portfolio/templates/portfolio/index.html:121
+#: portfolio/templates/portfolio/index.html:125
 msgid "No projects published yet."
 msgstr "Aún no hay proyectos publicados."
 
-#: portfolio/templates/portfolio/index.html:139
+#: portfolio/templates/portfolio/index.html:143
 msgid "Mar 2026 – Nov 2026"
 msgstr "Mar 2026 – Nov 2026"
 
-#: portfolio/templates/portfolio/index.html:141
+#: portfolio/templates/portfolio/index.html:145
 msgid "Research assistant, edge runtime developer"
 msgstr "Ayudante de investigación, desarrollador del runtime de borde"
 
-#: portfolio/templates/portfolio/index.html:142
+#: portfolio/templates/portfolio/index.html:146
 msgid ""
 "Plazas Inteligentes, a team of three. I own the C++17 runtime and the "
 "hardware assembly of 3 Raspberry Pi 5 gateways, each with 3 sensors, an ADC "
 "and a still-image camera; a colleague owns the cloud side. Multithreaded "
 "pipeline with thread-safe queues, HTTP multipart uploads, Server-Sent Events "
 "remote control and automatic restarts. Not yet deployed in the field."
-msgstr "Plazas Inteligentes, equipo de tres personas. Soy responsable del runtime en C++17 y del armado del hardware de 3 gateways Raspberry Pi 5, cada uno con 3 sensores, un ADC y una cámara de imágenes fijas; un compañero es responsable de la parte cloud. Pipeline multihilo con colas thread-safe, subidas HTTP multipart, control remoto por Server-Sent Events y reinicios automáticos. Aún no desplegado en terreno."
+msgstr ""
+"Plazas Inteligentes, equipo de tres personas. Soy responsable del runtime en "
+"C++17 y del armado del hardware de 3 gateways Raspberry Pi 5, cada uno con 3 "
+"sensores, un ADC y una cámara de imágenes fijas; un compañero es responsable "
+"de la parte cloud. Pipeline multihilo con colas thread-safe, subidas HTTP "
+"multipart, control remoto por Server-Sent Events y reinicios automáticos. "
+"Aún no desplegado en terreno."
 
-#: portfolio/templates/portfolio/index.html:149
+#: portfolio/templates/portfolio/index.html:153
 msgid "Teaching assistant"
 msgstr "Ayudante docente"
 
-#: portfolio/templates/portfolio/index.html:150
-msgid "Programming Seminar TEL20125 (2026-1). Calculus I MAT071 (2025-2)."
-msgstr "Seminario de Programación TEL20125 (2026-1). Cálculo I MAT071 (2025-2)."
-
 #: portfolio/templates/portfolio/index.html:154
+msgid "Programming Seminar TEL20125 (2026-1). Calculus I MAT071 (2025-2)."
+msgstr ""
+"Seminario de Programación TEL20125 (2026-1). Cálculo I MAT071 (2025-2)."
+
+#: portfolio/templates/portfolio/index.html:158
 msgid "Feb 2022 – Oct 2024"
 msgstr "Feb 2022 – Oct 2024"
 
-#: portfolio/templates/portfolio/index.html:156
+#: portfolio/templates/portfolio/index.html:160
 msgid "Volunteer translator"
 msgstr "Traductor voluntario"
 
-#: portfolio/templates/portfolio/index.html:186
+#: portfolio/templates/portfolio/index.html:190
 msgid "GitHub activity"
 msgstr "Actividad en GitHub"
 
-#: portfolio/templates/portfolio/index.html:187
+#: portfolio/templates/portfolio/index.html:191
 msgid "GitHub contribution chart for josue-fourier over the last year"
 msgstr "Gráfico de contribuciones en GitHub de josue-fourier del último año"
 
-#: portfolio/templates/portfolio/index.html:198
+#: portfolio/templates/portfolio/index.html:202
 msgid "Engineering logs"
 msgstr "Registros de ingeniería"
 
-#: portfolio/templates/portfolio/index.html:200
+#: portfolio/templates/portfolio/index.html:204
 msgid "LOGS"
 msgstr "REGISTROS"
 
-#: portfolio/templates/portfolio/index.html:213
+#: portfolio/templates/portfolio/index.html:217
 msgid "Engineering Logs"
 msgstr "Registros de Ingeniería"
 
-#: portfolio/templates/portfolio/index.html:215
+#: portfolio/templates/portfolio/index.html:219
 msgid "SWIPE"
 msgstr "DESLIZA"
 
-#: portfolio/templates/portfolio/index.html:231
+#: portfolio/templates/portfolio/index.html:235
 msgid "Select a log from the ledger"
 msgstr "Selecciona un registro de la lista"
 
-#: portfolio/templates/portfolio/index.html:261
+#: portfolio/templates/portfolio/index.html:265
 msgid "Profile"
 msgstr "Perfil"
 
-#: portfolio/templates/portfolio/index.html:269
+#: portfolio/templates/portfolio/index.html:273
 msgid "solved"
 msgstr "resueltos"
 
