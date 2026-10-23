@@ -80,8 +80,11 @@ class Command(BaseCommand):
                         from decouple import config
                         ntfy_url = config("NTFY_URL", default="").strip()
                         ntfy_topic = config("NTFY_TOPIC", default="").strip()
+                        last_err = getattr(task_wrapper, "last_error", None) or getattr(check_ntfy_status_updates, "last_error", None)
                         if not ntfy_url or not ntfy_topic:
                             self.stdout.write(self.style.WARNING("  ⚠️  Notice: NTFY_URL or NTFY_TOPIC is not configured in .env!"))
+                        elif last_err:
+                            self.stderr.write(self.style.ERROR(f"  ✗ NTFY HTTP request failed: {last_err}"))
                         elif result:
                             msg = getattr(result, "message", str(result))
                             self.stdout.write(self.style.SUCCESS(f"  ✓ Ingested new status: '{msg}'"))

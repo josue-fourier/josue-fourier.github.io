@@ -193,7 +193,11 @@ def check_ntfy_status_updates():
         return None
 
     ntfy_token = config("NTFY_TOKEN", default="").strip()
-    poll_url = f"{ntfy_url.rstrip('/')}/{ntfy_topic}/json?poll=1&since=10m"
+    ntfy_since = config("NTFY_SINCE", default="all").strip()
+    since_param = f"&since={ntfy_since}" if ntfy_since else ""
+    poll_url = f"{ntfy_url.rstrip('/')}/{ntfy_topic}/json?poll=1{since_param}"
+
+    check_ntfy_status_updates.last_error = None
 
     raw_verify = config("NTFY_VERIFY_SSL", default="true").strip()
     if raw_verify.lower() in ("false", "0", "no"):
@@ -216,7 +220,8 @@ def check_ntfy_status_updates():
         r = requests.get(poll_url, headers=headers, timeout=10, verify=ntfy_verify_ssl)
         r.raise_for_status()
     except Exception as e:
-        logger.warning("ntfy poll skipped/failed: %s", e)
+        check_ntfy_status_updates.last_error = e
+        logger.warning("ntfy poll skipped/failed (%s): %s", poll_url, e)
         return None
 
     created_status = None
