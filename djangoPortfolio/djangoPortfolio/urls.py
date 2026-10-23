@@ -48,30 +48,6 @@ urlpatterns = [
     path("project/<int:project_id>", portfolio_views.project_detail, name="project_detail_fallback_no_slash"),
     path("api/telemetry/heartbeat/", portfolio_views.telemetry_heartbeat, name="telemetry_heartbeat"),
     path("api/telemetry/heartbeat", portfolio_views.telemetry_heartbeat, name="telemetry_heartbeat_no_slash"),
-    path("api/images/upload/", portfolio_views.image_upload, name="image_upload"),
-    path("api/images/upload", portfolio_views.image_upload, name="image_upload_no_slash"),
-    path("api/images/<uuid:image_id>/", portfolio_views.image_detail, name="image_detail"),
-    path("api/images/<uuid:image_id>", portfolio_views.image_detail, name="image_detail_no_slash"),
-    path(
-        "api/projects/<int:project_id>/images/",
-        portfolio_views.project_images,
-        name="project_images",
-    ),
-    path(
-        "api/projects/<int:project_id>/images",
-        portfolio_views.project_images,
-        name="project_images_no_slash",
-    ),
-    path(
-        "api/logs/<uuid:log_id>/images/",
-        portfolio_views.log_images,
-        name="log_images",
-    ),
-    path(
-        "api/logs/<uuid:log_id>/images",
-        portfolio_views.log_images,
-        name="log_images_no_slash",
-    ),
 ]
 
 if settings.DEBUG:

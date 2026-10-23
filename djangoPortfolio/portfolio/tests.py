@@ -63,12 +63,11 @@ class MockRequest:
     pass
 
 
-TEST_IMAGE_TOKEN = "test-image-token"
-
-
 # ---------------------------------------------------------------------------
 # Base Test Case providing isolated media directory
 # ---------------------------------------------------------------------------
+
+
 class MediaIsolatedTestCase(TestCase):
     @classmethod
     def setUpClass(cls):
@@ -76,24 +75,24 @@ class MediaIsolatedTestCase(TestCase):
         cls.temp_media = tempfile.mkdtemp(prefix="portfolio_test_media_")
         cls.override = override_settings(MEDIA_ROOT=cls.temp_media)
         cls.override.enable()
-        cls.env_patch = patch.dict(os.environ, {"IMAGE_API_TOKEN": TEST_IMAGE_TOKEN})
-        cls.env_patch.start()
 
     @classmethod
     def tearDownClass(cls):
-        cls.env_patch.stop()
         cls.override.disable()
         shutil.rmtree(cls.temp_media, ignore_errors=True)
         super().tearDownClass()
 
     def setUp(self):
         super().setUp()
-        self.client = Client(HTTP_AUTHORIZATION=f"Bearer {TEST_IMAGE_TOKEN}")
+        self.client = Client()
 
 
 # ===========================================================================
 # TIER 1: Feature Coverage
+
+
 # ===========================================================================
+
 
 class Tier1FeatureF1UUIDIdentificationTests(MediaIsolatedTestCase):
     """F1: UUID Identification - Every image is assigned a unique UUID PK."""
@@ -319,7 +318,7 @@ class Tier1FeatureF6AdminManagementTests(MediaIsolatedTestCase):
 
 
 class Tier1FeatureF7APIEndpointsTests(MediaIsolatedTestCase):
-    """F7: API Upload & Retrieval Endpoints."""
+    """F7: Health check endpoint."""
 
     def setUp(self):
         super().setUp()
@@ -332,62 +331,6 @@ class Tier1FeatureF7APIEndpointsTests(MediaIsolatedTestCase):
         self.assertEqual(res1.status_code, 200)
         self.assertEqual(res2.status_code, 200)
         self.assertEqual(res1.json().get("status"), "healthy")
-
-    def test_api_image_upload_standalone(self):
-        upload = make_test_image(format="JPEG")
-        res = self.client.post("/api/images/upload/", {"file": upload})
-        self.assertEqual(res.status_code, 201)
-        data = res.json()
-        self.assertTrue(uuid.UUID(data["id"]))
-        self.assertTrue(data["url"].startswith("/media/images/"))
-
-    def test_api_image_upload_with_project_and_preview(self):
-        upload = make_test_image(format="PNG")
-        res = self.client.post("/api/images/upload/", {
-            "file": upload,
-            "project_id": self.project.id,
-            "is_main_preview": "true",
-            "alt_text": "Sample alt",
-            "caption": "Sample caption",
-        })
-        self.assertEqual(res.status_code, 201)
-        data = res.json()
-        self.assertEqual(data["project_id"], self.project.id)
-        self.assertTrue(data["is_main_preview"])
-
-    def test_api_image_detail_get_and_patch(self):
-        img = Image.objects.create(project=self.project, file=make_test_image())
-        get_res = self.client.get(f"/api/images/{img.id}/")
-        self.assertEqual(get_res.status_code, 200)
-        self.assertEqual(get_res.json()["id"], str(img.id))
-
-        patch_res = self.client.patch(
-            f"/api/images/{img.id}/",
-            data=json.dumps({"caption": "Updated Caption"}),
-            content_type="application/json",
-        )
-        self.assertEqual(patch_res.status_code, 200)
-        self.assertEqual(patch_res.json()["caption"], "Updated Caption")
-
-    def test_api_project_images_list_and_post(self):
-        img = Image.objects.create(project=self.project, file=make_test_image())
-        list_res = self.client.get(f"/api/projects/{self.project.id}/images/")
-        self.assertEqual(list_res.status_code, 200)
-        images = list_res.json().get("images", [])
-        self.assertEqual(len(images), 1)
-
-        upload2 = make_test_image(format="JPEG")
-        post_res = self.client.post(f"/api/projects/{self.project.id}/images/", {"file": upload2})
-        self.assertEqual(post_res.status_code, 201)
-
-    def test_api_log_images_list_and_post(self):
-        upload = make_test_image(format="WEBP")
-        post_res = self.client.post(f"/api/logs/{self.log.id}/images/", {"file": upload})
-        self.assertEqual(post_res.status_code, 201)
-
-        list_res = self.client.get(f"/api/logs/{self.log.id}/images/")
-        self.assertEqual(list_res.status_code, 200)
-        self.assertEqual(len(list_res.json().get("images", [])), 1)
 
 
 class Tier1FeatureF8IndexPreviewDisplayTests(MediaIsolatedTestCase):
@@ -585,14 +528,6 @@ class Tier1FeatureF11ZeroImageCleanRenderingTests(MediaIsolatedTestCase):
         self.assertEqual(res_en.status_code, 200)
         self.assertEqual(res_es.status_code, 200)
 
-    def test_zero_image_api_empty_lists(self):
-        p_res = self.client.get(f"/api/projects/{self.empty_project.id}/images/")
-        l_res = self.client.get(f"/api/logs/{self.empty_log.id}/images/")
-        self.assertEqual(p_res.status_code, 200)
-        self.assertEqual(l_res.status_code, 200)
-        self.assertEqual(p_res.json()["images"], [])
-        self.assertEqual(l_res.json()["images"], [])
-
 
 class Tier1FeatureF14ResponsiveDesignAttributesTests(MediaIsolatedTestCase):
     """F14: Responsive Viewport Design Attributes."""
@@ -602,22 +537,6 @@ class Tier1FeatureF14ResponsiveDesignAttributesTests(MediaIsolatedTestCase):
         self.assertEqual(res.status_code, 200)
         html = res.content.decode("utf-8")
         self.assertTrue("grid-cols-1" in html or "grid" in html)
-
-    def test_api_returns_structured_dimensions(self):
-        proj = Project.objects.create(name="Resp Proj", description="D", active=True)
-        img = Image.objects.create(project=proj, file=make_test_image(size=(800, 600)))
-        res = self.client.get(f"/api/images/{img.id}/")
-        self.assertEqual(res.status_code, 200)
-        self.assertIn("url", res.json())
-
-    def test_multiple_images_maintain_order_attribute(self):
-        proj = Project.objects.create(name="Ordered", description="D", active=True)
-        for i in range(4):
-            Image.objects.create(project=proj, file=make_test_image(), order=i * 10)
-        res = self.client.get(f"/api/projects/{proj.id}/images/")
-        images = res.json()["images"]
-        orders = [item["order"] for item in images]
-        self.assertEqual(orders, [0, 10, 20, 30])
 
     def test_carousel_controls_prev_next_data_attributes(self):
         proj = Project.objects.create(name="Controls Proj", description="D", active=True)
@@ -662,52 +581,12 @@ class Tier1FeatureF15StrictLocalVerificationIsolationTests(MediaIsolatedTestCase
         self.assertTrue(os.path.isabs(str(settings.MEDIA_ROOT)))
 
 
-class ImageAPIAuthTests(MediaIsolatedTestCase):
-    """Image API writes require IMAGE_API_TOKEN or a staff session; reads stay public."""
-
-    def setUp(self):
-        super().setUp()
-        self.anon = Client()
-        self.project = Project.objects.create(name="Auth", description="d")
-        self.log = LogEntry.objects.create(title="Auth log", content="c")
-        self.img = Image.objects.create(file=make_test_image())
-
-    def test_anonymous_writes_rejected(self):
-        self.assertEqual(self.anon.post("/api/images/upload/", {"file": make_test_image()}).status_code, 401)
-        self.assertEqual(self.anon.patch(f"/api/images/{self.img.id}/", data=json.dumps({"caption": "x"}), content_type="application/json").status_code, 401)
-        self.assertEqual(self.anon.delete(f"/api/images/{self.img.id}/").status_code, 401)
-        self.assertEqual(self.anon.post(f"/api/projects/{self.project.id}/images/", {"file": make_test_image()}).status_code, 401)
-        self.assertEqual(self.anon.post(f"/api/logs/{self.log.id}/images/", {"file": make_test_image()}).status_code, 401)
-        self.assertTrue(Image.objects.filter(id=self.img.id).exists())
-        self.assertEqual(Image.objects.count(), 1)
-
-    def test_wrong_token_rejected(self):
-        res = self.anon.delete(f"/api/images/{self.img.id}/", HTTP_AUTHORIZATION="Bearer nope")
-        self.assertEqual(res.status_code, 401)
-
-    def test_x_api_token_header_accepted(self):
-        res = self.anon.delete(f"/api/images/{self.img.id}/", HTTP_X_API_TOKEN=TEST_IMAGE_TOKEN)
-        self.assertEqual(res.status_code, 204)
-
-    def test_unconfigured_token_fails_closed(self):
-        with patch.dict(os.environ, {"IMAGE_API_TOKEN": ""}):
-            res = self.client.delete(f"/api/images/{self.img.id}/")
-        self.assertEqual(res.status_code, 401)
-
-    def test_staff_session_allowed(self):
-        from django.contrib.auth.models import User
-        staff = User.objects.create_user("staff", password="pw", is_staff=True)
-        self.anon.force_login(staff)
-        self.assertEqual(self.anon.delete(f"/api/images/{self.img.id}/").status_code, 204)
-
-    def test_reads_stay_public(self):
-        self.assertEqual(self.anon.get(f"/api/images/{self.img.id}/").status_code, 200)
-        self.assertEqual(self.anon.get(f"/api/projects/{self.project.id}/images/").status_code, 200)
-
-
 # ===========================================================================
 # TIER 2: Boundary & Corner Cases
+
+
 # ===========================================================================
+
 
 class Tier2BoundaryCornerCaseTests(MediaIsolatedTestCase):
     """Tier 2: Boundary Value Analysis & Edge Cases."""
@@ -738,38 +617,6 @@ class Tier2BoundaryCornerCaseTests(MediaIsolatedTestCase):
         res = self.client.get("/en/")
         self.assertNotContains(res, p.name)
         self.assertNotContains(res, img.file.url)
-
-    def test_invalid_file_upload_rejected_plain_text(self):
-        bad_file = SimpleUploadedFile("script.sh", b"#!/bin/bash\necho hacked", content_type="text/plain")
-        res = self.client.post("/api/images/upload/", {"file": bad_file})
-        self.assertEqual(res.status_code, 400)
-        self.assertIn("error", res.json())
-
-    def test_invalid_file_upload_rejected_empty_file(self):
-        empty_file = SimpleUploadedFile("empty.jpg", b"", content_type="image/jpeg")
-        res = self.client.post("/api/images/upload/", {"file": empty_file})
-        self.assertEqual(res.status_code, 400)
-
-    def test_invalid_file_upload_rejected_corrupted_header(self):
-        corrupt = SimpleUploadedFile("corrupt.png", b"\x89PNG\r\n\x1a\nCorrupted binary payload", content_type="image/png")
-        res = self.client.post("/api/images/upload/", {"file": corrupt})
-        self.assertEqual(res.status_code, 400)
-
-    def test_unicode_special_chars_in_alt_text_and_caption(self):
-        p = Project.objects.create(name="Unicode Test", description="D", active=True)
-        special_alt = 'Diagram: "Overview" & <script>alert(1)</script> 🚀 ñ 日本語'
-        special_caption = "Café & Crème brûlée: 100% test coverage — ‘quoted’"
-        img = Image.objects.create(
-            project=p,
-            file=make_test_image(),
-            alt_text=special_alt,
-            caption=special_caption,
-        )
-        res = self.client.get(f"/api/images/{img.id}/")
-        self.assertEqual(res.status_code, 200)
-        data = res.json()
-        self.assertEqual(data["alt_text"], special_alt)
-        self.assertEqual(data["caption"], special_caption)
 
     def test_rapid_main_preview_toggling(self):
         p = Project.objects.create(name="Toggle Test", description="D", active=True)
@@ -812,7 +659,10 @@ class Tier2BoundaryCornerCaseTests(MediaIsolatedTestCase):
 
 # ===========================================================================
 # TIER 3: Pairwise Combinations
+
+
 # ===========================================================================
+
 
 class Tier3PairwiseCombinationsTests(MediaIsolatedTestCase):
     """Tier 3: Combinatorial & Cross-Feature interaction tests."""
@@ -834,93 +684,16 @@ class Tier3PairwiseCombinationsTests(MediaIsolatedTestCase):
         self.assertEqual(direct_res.status_code, 200)
         self.assertEqual(htmx_res.status_code, 200)
 
-    def test_image_format_matrix_png_jpeg_webp(self):
-        formats = ["JPEG", "PNG", "WEBP"]
-        p = Project.objects.create(name="Formats Proj", description="D", active=True)
-        for fmt in formats:
-            upload = make_test_image(format=fmt)
-            res = self.client.post(f"/api/projects/{p.id}/images/", {"file": upload})
-            self.assertEqual(res.status_code, 201)
-            self.assertTrue(res.json()["url"].endswith(fmt.lower() if fmt != "JPEG" else "jpg"))
-
-    def test_api_patch_and_retrieve_roundtrip(self):
-        img = Image.objects.create(file=make_test_image(), alt_text="Initial Alt")
-        patch_res = self.client.patch(
-            f"/api/images/{img.id}/",
-            data=json.dumps({"alt_text": "Modified Alt", "order": 99}),
-            content_type="application/json",
-        )
-        self.assertEqual(patch_res.status_code, 200)
-        self.assertEqual(patch_res.json()["alt_text"], "Modified Alt")
-        self.assertEqual(patch_res.json()["order"], 99)
-
-    def test_delete_api_removes_file_and_record(self):
-        img = Image.objects.create(file=make_test_image())
-        path = img.file.path
-        self.assertTrue(os.path.exists(path))
-        del_res = self.client.delete(f"/api/images/{img.id}/")
-        self.assertEqual(del_res.status_code, 204)
-        self.assertFalse(Image.objects.filter(id=img.id).exists())
-        self.assertFalse(os.path.exists(path))
-
 
 # ===========================================================================
 # TIER 4: Real-World Application Scenarios
+
+
 # ===========================================================================
+
 
 class Tier4RealWorldWorkloadScenariosTests(MediaIsolatedTestCase):
     """Tier 4: Realistic End-to-End Application Scenarios."""
-
-    def test_scenario_1_full_project_lifecycle(self):
-        # 1. Create project
-        p = Project.objects.create(name="Lifecycle Project", description="Full lifecycle", active=True)
-        self.assertIsNone(p.preview_image)
-
-        # 2. Upload 3 images via API
-        img_ids = []
-        for i in range(3):
-            upload = make_test_image(format="JPEG" if i == 0 else "PNG")
-            res = self.client.post("/api/images/upload/", {
-                "file": upload,
-                "project_id": p.id,
-                "order": i,
-                "is_main_preview": "true" if i == 1 else "false",
-            })
-            self.assertEqual(res.status_code, 201)
-            img_ids.append(res.json()["id"])
-
-        # 3. Verify preview image is image 1
-        p.refresh_from_db()
-        self.assertEqual(str(p.preview_image.id), img_ids[1])
-
-        # 4. Detail view status 200
-        detail_res = self.client.get(f"/project/{p.id}/")
-        self.assertEqual(detail_res.status_code, 200)
-
-        # 5. Clean up
-        p.delete()
-        self.assertEqual(Image.objects.filter(id__in=img_ids).count(), 0)
-
-    def test_scenario_2_full_log_lifecycle(self):
-        # 1. Create log
-        log = LogEntry.objects.create(title="Lifecycle Log", content="# Log entry with attachments")
-
-        # 2. Attach 2 images
-        res1 = self.client.post(f"/api/logs/{log.id}/images/", {"file": make_test_image(format="JPEG")})
-        res2 = self.client.post(f"/api/logs/{log.id}/images/", {"file": make_test_image(format="WEBP")})
-        self.assertEqual(res1.status_code, 201)
-        self.assertEqual(res2.status_code, 201)
-
-        # 3. Direct load and HTMX load
-        direct = self.client.get(f"/?log_id={log.id}")
-        htmx = self.client.get(f"/api/logs/{log.id}")
-        self.assertEqual(direct.status_code, 200)
-        self.assertEqual(htmx.status_code, 200)
-
-        # 4. Clean up
-        log_id = log.id
-        log.delete()
-        self.assertEqual(Image.objects.filter(log_id=log_id).count(), 0)
 
     def test_scenario_3_zero_image_clean_fallback_all_routes(self):
         empty_p = Project.objects.create(name="Empty Fallback Proj", description="Desc", active=True)
@@ -954,23 +727,6 @@ class Tier4RealWorldWorkloadScenariosTests(MediaIsolatedTestCase):
         path1 = img1.file.path
         p.delete()
         self.assertFalse(os.path.exists(path1))
-
-    def test_scenario_5_mixed_batch_workload(self):
-        projects = []
-        for i in range(5):
-            proj = Project.objects.create(name=f"Batch Project {i}", description="Desc", active=True)
-            for j in range(i):  # 0, 1, 2, 3, 4 images
-                Image.objects.create(project=proj, file=make_test_image(), is_main_preview=(j == 0))
-            projects.append(proj)
-
-        res_en = self.client.get("/en/")
-        self.assertEqual(res_en.status_code, 200)
-        for proj in projects:
-            det = self.client.get(f"/project/{proj.id}/")
-            self.assertEqual(det.status_code, 200)
-            img_api = self.client.get(f"/api/projects/{proj.id}/images/")
-            self.assertEqual(img_api.status_code, 200)
-            self.assertEqual(len(img_api.json()["images"]), proj.images.count())
 
 
 class C2EngineeringPortfolioTests(TestCase):
