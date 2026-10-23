@@ -23,6 +23,7 @@ sitemaps = {
 }
 
 urlpatterns = [
+    path("_track/<str:name>", portfolio_views.track_download, name="track_download"),
     path("favicon.ico", RedirectView.as_view(url=settings.STATIC_URL + "portfolio/icons/favicon.ico", permanent=True)),
     path("health", portfolio_views.health_check, name="health_no_slash"),
     path("health/", portfolio_views.health_check, name="health"),

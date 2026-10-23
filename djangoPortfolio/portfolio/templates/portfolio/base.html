@@ -76,7 +76,7 @@
         <!-- Mermaid (~3MB) is lazy-loaded on demand by window.renderMermaid() in awwwards.js -->
 
         <!-- Analytics -->
-        <script defer src="https://analytics.proyectosos.cl/script.js" data-website-id="31434b15-eee1-4168-8f9f-bd302c62124a"></script>
+        <script defer src="https://analytics.proyectosos.cl/script.js" data-website-id="31434b15-eee1-4168-8f9f-bd302c62124a" data-domains="josnic.cl,www.josnic.cl"></script>
 
         {% block extra_head %}{% endblock %}
     </head>
@@ -111,12 +111,12 @@
                                 <input name="next" type="hidden" value="{{ request.get_full_path }}">
                                 {% if CURRENT_LANG == 'es' %}
                                 <input name="language" type="hidden" value="en">
-                                <button type="submit" lang="en" class="cursor-pointer flex items-center gap-1 tracking-wider hover:opacity-80 transition-opacity" title="Switch to English">
+                                <button type="submit" lang="en" data-umami-event="lang-switch" data-umami-event-to="en" class="cursor-pointer flex items-center gap-1 tracking-wider hover:opacity-80 transition-opacity" title="Switch to English">
                                     <span class="text-zinc-400 font-bold">EN</span><span class="text-zinc-700">/</span><span class="text-emerald-400 font-bold">ES</span>
                                 </button>
                                 {% else %}
                                 <input name="language" type="hidden" value="es">
-                                <button type="submit" lang="es" class="cursor-pointer flex items-center gap-1 tracking-wider hover:opacity-80 transition-opacity" title="Cambiar a español">
+                                <button type="submit" lang="es" data-umami-event="lang-switch" data-umami-event-to="es" class="cursor-pointer flex items-center gap-1 tracking-wider hover:opacity-80 transition-opacity" title="Cambiar a español">
                                     <span class="text-emerald-400 font-bold">EN</span><span class="text-zinc-700">/</span><span class="text-zinc-400 font-bold">ES</span>
                                 </button>
                                 {% endif %}

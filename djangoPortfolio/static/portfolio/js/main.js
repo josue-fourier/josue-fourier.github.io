@@ -550,7 +550,23 @@ if (typeof gsap !== 'undefined') {
         if (nav) track('chapter-nav-click', { target: nav.dataset.sectionTarget || '' });
         const theme = e.target.closest('[data-theme-toggle], #theme-toggle');
         if (theme) track('theme-toggle');
+        // Fallback for external/mailto links with no explicit data-umami-event (e.g. footer)
+        const a = e.target.closest('a[href]');
+        if (a && !a.hasAttribute('data-umami-event') && /^(https?:|mailto:)/.test(a.href) && a.host !== location.host) {
+            track('outbound-click', { url: a.href.replace(/^mailto:.*/, 'mailto'), location: a.closest('footer') ? 'footer' : 'page' });
+        }
     });
+
+    // Engaged time: only counts while the tab is visible; shows who actually reads vs bounces
+    (function () {
+        let secs = 0;
+        const marks = new Set([15, 30, 60, 120, 300]);
+        setInterval(() => {
+            if (document.hidden) return;
+            secs++;
+            if (marks.has(secs)) track('engaged-time', { seconds: secs });
+        }, 1000);
+    })();
 
     // 2l. Skills Progressive Disclosure (+N MORE / LESS)
     function initSkillExpander() {

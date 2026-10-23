@@ -1,5 +1,7 @@
 import hmac
 import json
+import threading
+import urllib.request
 from typing import override
 
 from django.core.exceptions import ValidationError
@@ -302,3 +304,31 @@ def telemetry_heartbeat(request):
         status=200,
     )
 
+
+
+def track_download(request, name):
+    """Receives nginx's mirrored PDF requests and reports them to Umami as events, preserving visitor UA/IP/referrer."""
+    if name not in ("cv-en", "cv-es"):
+        raise Http404
+    host = request.get_host().split(":")[0]
+    body = json.dumps({"type": "event", "payload": {
+        "website": config("UMAMI_WEBSITE_ID", default="31434b15-eee1-4168-8f9f-bd302c62124a"),
+        "hostname": host,
+        "url": f"/{name}",
+        "name": "cv-pdf-served",
+        "data": {"lang": name[-2:], "source": "direct-url"},
+        "referrer": request.headers.get("Referer", ""),
+        "language": request.headers.get("Accept-Language", "").split(",")[0],
+    }}).encode()
+    headers = {"Content-Type": "application/json", "User-Agent": request.headers.get("User-Agent", "")}
+    if xff := request.headers.get("X-Forwarded-For"):
+        headers["X-Forwarded-For"] = xff
+
+    def send():
+        try:
+            urllib.request.urlopen(urllib.request.Request(config("UMAMI_SEND_URL", default="https://analytics.proyectosos.cl/api/send"), body, headers), timeout=5)
+        except Exception:
+            pass  # analytics must never break the site
+
+    threading.Thread(target=send, daemon=True).start()
+    return HttpResponse(status=204)
