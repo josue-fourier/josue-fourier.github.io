@@ -46,8 +46,9 @@ class LogImageInline(admin.TabularInline):
 
 @admin.register(Project)
 class ProjectAdmin(admin.ModelAdmin):
-    list_display = ("name", "active", "preview_thumbnail", "image_count", "link")
-    list_filter = ("active",)
+    list_display = ("name", "active", "status", "order", "preview_thumbnail", "image_count", "link")
+    list_editable = ("active", "status", "order")
+    list_filter = ("active", "status")
     search_fields = ("name", "description")
     inlines = [ProjectImageInline]
 

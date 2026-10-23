@@ -6,6 +6,7 @@ from django.db import models
 from django.db.models.signals import post_delete, pre_save
 from django.dispatch import receiver
 from django.utils import timezone
+from django.utils.translation import gettext_lazy as _
 
 
 class TechnicalStrength(models.Model):
@@ -16,8 +17,17 @@ class TechnicalStrength(models.Model):
 
 
 class Project(models.Model):
+    STATUS_CHOICES = [
+        ("production", _("In production")),
+        ("development", _("In development")),
+        ("academic", _("Academic project")),
+        ("personal", _("Personal infrastructure")),
+    ]
+
     name = models.CharField(null=False, max_length=100)
     active = models.BooleanField(default=False)
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default="development")
+    order = models.PositiveIntegerField(default=0, help_text="Lower shows first on the home page")
     description = models.TextField(null=False)
     content = models.TextField(null=True, blank=True, help_text="Markdown content for the project case study")
     stack = models.ManyToManyField(TechnicalStrength, related_name="projects", related_query_name="project")

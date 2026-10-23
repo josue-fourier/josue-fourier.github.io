@@ -4,7 +4,7 @@ from typing import override
 
 from django.core.exceptions import ValidationError
 from django.core.paginator import Paginator
-from django.db.models import Count, F
+from django.db.models import Count, F, Q
 from django.http import Http404, HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, render
 from django.views.decorators.csrf import csrf_exempt
@@ -34,12 +34,11 @@ class RootPage(TemplateView):
         context["projects"] = (
             Project.objects.filter(active=True)
             .prefetch_related("stack", "images")
-            .annotate(stack_count=Count("stack"))
-            .order_by("-stack_count")
+            .order_by("order", "id")
         )
         context["technical_strengths"] = (
             TechnicalStrength.objects.all()
-            .annotate(project_count=Count("project"))
+            .annotate(project_count=Count("project", filter=Q(project__active=True)))
             .filter(project_count__gt=0)
             .order_by("-project_count")
         )
@@ -69,8 +68,6 @@ class RootPage(TemplateView):
                 .prefetch_related("stack", "images")
                 .order_by("-date")[:3]
             )
-
-        context["total_projects"] = Project.objects.filter(active=True).count()
 
         # HackerRank Badges: latest available snapshot
         latest_badge = HackerRankBadge.objects.order_by("-timestamp").first()

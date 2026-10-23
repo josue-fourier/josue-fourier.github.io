@@ -5,7 +5,7 @@ from .models import Project, LogEntry, SkillCategory, CoreSkill
 
 @register(Project)
 class ProjectTranslationOptions(TranslationOptions):
-    fields = ('description', )
+    fields = ('description', 'content')
 
 @register(LogEntry)
 class LogEntryTranslationOptions(TranslationOptions):
