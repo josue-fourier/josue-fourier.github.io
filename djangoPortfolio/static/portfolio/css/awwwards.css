@@ -17,12 +17,6 @@ main:focus { outline: none; }
 /* ---- Selection ---- */
 ::selection { background: #10B981; color: #050506; }
 
-/* ---- Hero signature: elliptic-curve caption ---- */
-#ecc-caption .ecc-bit-on { color: #34d399; text-decoration: underline; text-underline-offset: 3px; }
-#ecc-caption .ecc-bit-done { color: #a1a1aa; }
-[data-theme="lofi"] #ecc-caption .ecc-bit-on { color: #047857; }
-[data-theme="lofi"] #ecc-caption .ecc-bit-done { color: #334155; }
-
 /* ---- Cross-document transitions: project title/image morph into the case study ---- */
 ::view-transition-group(*) { animation-duration: .45s; animation-timing-function: cubic-bezier(.22, 1, .36, 1); }
 

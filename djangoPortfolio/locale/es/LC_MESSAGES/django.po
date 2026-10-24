@@ -144,11 +144,11 @@ msgstr "Correo"
 
 #: portfolio/templates/portfolio/index.html:14
 msgid ""
-"Animation: elliptic-curve scalar multiplication d·P computed by double-and-"
-"add over a finite field"
+"Animation: a network of nodes with data packets travelling between them, "
+"including live status from a Raspberry Pi node and ntfy notifications"
 msgstr ""
-"Animación: multiplicación escalar d·P en una curva elíptica, calculada con "
-"double-and-add sobre un cuerpo finito"
+"Animación: una red de nodos con paquetes de datos que viajan entre ellos, "
+"incluyendo el estado en vivo de un nodo Raspberry Pi y notificaciones de ntfy"
 
 #: portfolio/templates/portfolio/index.html:24
 msgid ""

@@ -40,10 +40,12 @@ body{width:1200px;height:630px;background:#050506;color:#fff;font-family:'Space 
 .mono{font-family:'JetBrains Mono';letter-spacing:.18em;text-transform:uppercase}
 .tag{position:absolute;left:84px;top:78px;font-size:17px;color:#a1a1aa;display:flex;gap:14px;align-items:center}
 .dot{width:10px;height:10px;background:#10B981;box-shadow:0 0 14px #10B981}
-h1{position:absolute;left:80px;top:136px;font-size:136px;line-height:.9;letter-spacing:-.045em;text-transform:uppercase;font-weight:700}
+h1{position:absolute;left:80px;top:122px;font-size:120px;line-height:.9;letter-spacing:-.045em;text-transform:uppercase;font-weight:700}
 h1 span{color:#10B981}
-.sub{position:absolute;left:84px;top:418px;width:620px;font-size:25px;font-weight:300;font-family:Inter;color:#d4d4d8;line-height:1.35}
-.sub b{color:#fff;font-weight:500}
+.sub{position:absolute;left:84px;top:364px;width:600px;font-size:23px;font-weight:300;font-family:Inter;color:#d4d4d8;line-height:1.35}
+.open{position:absolute;left:84px;top:470px;width:600px;border-left:2px solid #10B981;padding-left:14px;font-size:17px;font-family:Inter;color:#d4d4d8;line-height:1.4}
+.open b{color:#fff;font-weight:600}
+svg.ecc{position:absolute;left:0;top:0;width:760px;height:630px}
 .foot{position:absolute;left:84px;bottom:64px;font-size:16px;color:#71717a;display:flex;gap:18px}
 .foot em{font-style:normal;color:#10B981}
 .ph{position:absolute;right:92px;top:128px;width:360px;height:360px;border:1px solid rgba(255,255,255,.25)}
@@ -54,12 +56,31 @@ h1 span{color:#10B981}
 </style></head><body><div class="grid"></div><div class="glow"></div><div class="glow2"></div><div class="frame"></div>
 <div class="tag mono"><span class="dot"></span>__LOCATION__</div>
 <h1>__NAME__<span>.</span></h1>
+__ECC__
 <div class="sub">__SUBTITLE__</div>
+<div class="open">__OPEN__</div>
 <div class="foot mono"><em>__HANDLE__</em><span>//</span><span>__TAGLINE__</span></div>
 <div class="ph"><img src="__PHOTO__"></div>
 <div class="badge mono">__BADGE__</div>
 </body></html>
 """
+
+
+def mesh_svg():
+    """Static version of the home hero mesh (same layout as hero-network.js): nodes, links, one packet chain."""
+    N = [(.1, .86), (.44, .7), (.8, .8), (.08, .5), (.3, .42), (.6, .5), (.9, .55), (.2, .15),
+         (.5, .2), (.75, .12), (.95, .3), (.36, .92), (.62, .94)]
+    E = {(0, 1), (1, 2)}
+    for i, n in enumerate(N):
+        for j in sorted(range(len(N)), key=lambda j: (n[0] - N[j][0]) ** 2 + (n[1] - N[j][1]) ** 2)[1:3]:
+            E.add((min(i, j), max(i, j)))
+    xy = lambda n: (40 + n[0] * 680, 40 + n[1] * 550)
+    line = lambda a, b, col, w: '<line x1="%.1f" y1="%.1f" x2="%.1f" y2="%.1f" stroke="%s" stroke-width="%s"/>' % (*xy(N[a]), *xy(N[b]), col, w)
+    links = "".join(line(a, b, "rgba(255,255,255,.07)", 1) for a, b in sorted(E))
+    chain = line(0, 1, "rgba(16,185,129,.5)", 1.5) + line(1, 2, "rgba(16,185,129,.5)", 1.5)
+    dots = "".join('<circle cx="%.1f" cy="%.1f" r="%d" fill="rgba(255,255,255,.22)"/>' % (*xy(n), 3 if k < 3 else 2) for k, n in enumerate(N))
+    rings = "".join('<circle cx="%.1f" cy="%.1f" r="6" fill="none" stroke="rgba(16,185,129,.5)"/>' % xy(N[k]) for k in (0, 2))
+    return '<svg class="ecc" viewBox="0 0 760 630">%s%s%s%s</svg>' % (links, chain, dots, rings)
 
 
 def find_chrome():
@@ -80,12 +101,13 @@ def main():
     ap.add_argument("--focus", default="center")
     ap.add_argument("--grayscale", type=float, default=0.85)
     ap.add_argument("--name", default="Josué<br>Leiva")
-    ap.add_argument("--location", default="Santiago, CL")
+    ap.add_argument("--open", default="<b>Open to:</b> a 320-hour industrial internship, Dec 2026 to Mar 2027, in telecom, data centers or IoT. Open to working abroad.")
+    ap.add_argument("--location", default="Santiago, Chile // UTFSM")
     ap.add_argument("--handle", default="F0UR13R")
     ap.add_argument("--tagline", default="Backend and systems engineering")
     ap.add_argument("--badge", default="[ Portfolio ]")
     ap.add_argument("--subtitle",
-                    default="Telematics Engineering student specializing in <b>backend architecture</b>, <b>automation</b> and <b>human impact</b>.",
+                    default="Telematics Engineering student. I build edge runtimes for IoT gateways, and the networks and servers they run on.",
                     help="HTML allowed (use <b> for emphasis)")
     ap.add_argument("--keep-html", action="store_true")
     a = ap.parse_args()
@@ -101,6 +123,8 @@ def main():
             .replace("__LOCATION__", html.escape(a.location))
             .replace("__NAME__", a.name)
             .replace("__SUBTITLE__", a.subtitle)
+            .replace("__OPEN__", a.open)
+            .replace("__ECC__", mesh_svg())
             .replace("__HANDLE__", html.escape(a.handle))
             .replace("__TAGLINE__", html.escape(a.tagline))
             .replace("__PHOTO__", photo.as_uri())

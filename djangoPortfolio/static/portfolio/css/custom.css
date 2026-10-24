@@ -1361,3 +1361,13 @@ main#log-content-area.markdown-body {
 /* WCAG AA contrast for small muted text on the near-black background */
 [data-theme="dracula"] .text-zinc-500 { color: #8b8b94; }
 [data-theme="dracula"] .text-zinc-600 { color: #7c7c85; }
+
+/* "Open to" callout: a slow emerald-to-cyan light travels down the left rule. */
+.open-to::before {
+    content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 2px;
+    background: linear-gradient(180deg, #10b981, #22d3ee, #10b981, #22d3ee);
+    background-size: 100% 300%;
+    animation: open-to-flow 6s linear infinite;
+}
+@keyframes open-to-flow { to { background-position: 0 300%; } }
+@media (prefers-reduced-motion: reduce) { .open-to::before { animation: none; } }
