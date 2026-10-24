@@ -67,6 +67,8 @@
         <script defer src="{% static 'portfolio/vendor/ScrollTrigger.min.js' %}"></script>
         <script defer src="{% static 'portfolio/vendor/lenis.min.js' %}"></script>
 
+        <script defer src="{% static 'portfolio/js/bg-shader.js' %}"></script>
+
         <!-- HTMX -->
         <script defer src="{% static 'portfolio/vendor/htmx.min.js' %}"></script>
         <script defer src="{% static 'portfolio/vendor/htmx-preload.js' %}"></script>
@@ -86,6 +88,8 @@
             <div class="aura-layer-1" aria-hidden="true"></div>
             <div class="aura-layer-2" aria-hidden="true"></div>
             <div class="aura-layer-3" aria-hidden="true"></div>
+            <canvas id="bg-shader" aria-hidden="true"></canvas>
+            <div class="pblur pblur-bottom" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
             
             <div style="position: relative; z-index: 1;">
                 <div id="scroll-progress" class="fixed top-0 left-0 h-1 bg-brand-primary z-[9000] w-0 transition-all duration-100 ease-out"></div>

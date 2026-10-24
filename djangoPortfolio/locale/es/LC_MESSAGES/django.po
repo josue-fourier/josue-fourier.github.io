@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: portfolio 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-23 20:24-0300\n"
+"POT-Creation-Date: 2026-10-24 15:36-0300\n"
 "PO-Revision-Date: 2026-10-21 12:00-0300\n"
 "Last-Translator: Josue Leiva <xmenmagnet@gmail.com>\n"
 "Language-Team: Spanish <es@example.com>\n"
@@ -76,81 +76,73 @@ msgstr ""
 "Estudiante de Ingeniería Civil Telemática en la UTFSM. Runtimes de borde/"
 "IoT, redes e infraestructura self-hosted."
 
-#: portfolio/templates/portfolio/base.html:84
+#: portfolio/templates/portfolio/base.html:86
 msgid "Skip to content"
 msgstr "Saltar al contenido"
 
-#: portfolio/templates/portfolio/base.html:95
+#: portfolio/templates/portfolio/base.html:100
 msgid "Home"
 msgstr "Inicio"
 
-#: portfolio/templates/portfolio/base.html:101
+#: portfolio/templates/portfolio/base.html:106
 msgid "Main navigation"
 msgstr "Navegación principal"
 
-#: portfolio/templates/portfolio/base.html:102
-#: portfolio/templates/portfolio/index.html:73
+#: portfolio/templates/portfolio/base.html:107
+#: portfolio/templates/portfolio/index.html:72
 msgid "Projects"
 msgstr "Proyectos"
 
-#: portfolio/templates/portfolio/base.html:103
-#: portfolio/templates/portfolio/index.html:137
+#: portfolio/templates/portfolio/base.html:108
+#: portfolio/templates/portfolio/index.html:136
 msgid "Experience"
 msgstr "Experiencia"
 
-#: portfolio/templates/portfolio/base.html:104
-#: portfolio/templates/portfolio/index.html:173
+#: portfolio/templates/portfolio/base.html:109
+#: portfolio/templates/portfolio/index.html:172
 msgid "Skills"
 msgstr "Habilidades"
 
-#: portfolio/templates/portfolio/base.html:105
+#: portfolio/templates/portfolio/base.html:110
 msgid "Logs"
 msgstr "Registros"
 
-#: portfolio/templates/portfolio/base.html:126
+#: portfolio/templates/portfolio/base.html:131
 msgid "Toggle dark / light theme"
 msgstr "Cambiar tema oscuro / claro"
 
-#: portfolio/templates/portfolio/base.html:127
+#: portfolio/templates/portfolio/base.html:132
 msgid "Dark theme"
 msgstr "Tema oscuro"
 
-#: portfolio/templates/portfolio/base.html:135
+#: portfolio/templates/portfolio/base.html:140
 msgid "Light"
 msgstr "Claro"
 
-#: portfolio/templates/portfolio/base.html:135
+#: portfolio/templates/portfolio/base.html:140
 msgid "Dark"
 msgstr "Oscuro"
 
-#: portfolio/templates/portfolio/base.html:154
+#: portfolio/templates/portfolio/base.html:159
 msgid "Node"
 msgstr "Nodo"
 
-#: portfolio/templates/portfolio/base.html:154
-#: portfolio/templates/portfolio/base.html:157
+#: portfolio/templates/portfolio/base.html:159
+#: portfolio/templates/portfolio/base.html:162
 #, python-format
 msgid "%(t)s ago"
 msgstr "hace %(t)s"
 
-#: portfolio/templates/portfolio/base.html:157
+#: portfolio/templates/portfolio/base.html:162
 msgid "Latest note"
 msgstr "Última nota"
 
-#: portfolio/templates/portfolio/base.html:162
-#: portfolio/templates/portfolio/index.html:40
+#: portfolio/templates/portfolio/base.html:167
+#: portfolio/templates/portfolio/index.html:39
 msgid "Email"
 msgstr "Correo"
 
-#: portfolio/templates/portfolio/index.html:14
-msgid ""
-"Animation: a network of nodes with data packets travelling between them, "
-"including live status from a Raspberry Pi node and ntfy notifications"
-msgstr ""
-"Animación: una red de nodos con paquetes de datos que viajan entre ellos, "
-"incluyendo el estado en vivo de un nodo Raspberry Pi y notificaciones de ntfy"
-
-#: portfolio/templates/portfolio/index.html:24
+#: portfolio/templates/portfolio/index.html:23
 msgid ""
 "Telematics Engineering student. I build edge runtimes for IoT gateways, and "
 "the networks and servers they run on."
@@ -158,28 +150,28 @@ msgstr ""
 "Estudiante de Ingeniería Civil Telemática. Desarrollo runtimes de borde para "
 "gateways IoT, y las redes y servidores sobre los que funcionan."
 
-#: portfolio/templates/portfolio/index.html:28
+#: portfolio/templates/portfolio/index.html:27
 msgid "Open to:"
 msgstr "Busco:"
 
-#: portfolio/templates/portfolio/index.html:29
+#: portfolio/templates/portfolio/index.html:28
 msgid ""
-"a 320-hour industrial internship, December 2026 to March 2027, in telecom, "
-"data centers or IoT. Open to working abroad."
+"a 320-hour industrial internship, December 2026 to March 2027, in software "
+"development, telecom, data centers or IoT. Open to working abroad."
 msgstr ""
-"práctica industrial de 320 horas, de diciembre 2026 a marzo 2027, en "
+"práctica industrial de 320 horas, de diciembre 2026 a marzo 2027, en desarrollo de software, "
 "telecomunicaciones, data centers o IoT. Abierto a trabajar en el extranjero."
 
-#: portfolio/templates/portfolio/index.html:34
-#: portfolio/templates/portfolio/index.html:37
+#: portfolio/templates/portfolio/index.html:33
+#: portfolio/templates/portfolio/index.html:36
 msgid "Download CV"
 msgstr "Descargar CV"
 
-#: portfolio/templates/portfolio/index.html:51
+#: portfolio/templates/portfolio/index.html:50
 msgid "Portrait of Josué Leiva"
 msgstr "Retrato de Josué Leiva"
 
-#: portfolio/templates/portfolio/index.html:53
+#: portfolio/templates/portfolio/index.html:52
 msgid ""
 "3rd-year Civil Telematics Engineering student at Universidad Técnica "
 "Federico Santa María."
@@ -187,81 +179,81 @@ msgstr ""
 "Estudiante de 3er año de Ingeniería Civil Telemática en la Universidad "
 "Técnica Federico Santa María."
 
-#: portfolio/templates/portfolio/index.html:56
+#: portfolio/templates/portfolio/index.html:55
 msgid "Now"
 msgstr "Actualmente"
 
-#: portfolio/templates/portfolio/index.html:56
+#: portfolio/templates/portfolio/index.html:55
 msgid ""
 "Research assistant at LabOPT (UTFSM): edge runtime for Plazas Inteligentes"
 msgstr ""
 "Ayudante de investigación en LabOPT (UTFSM): runtime de borde para Plazas "
 "Inteligentes"
 
-#: portfolio/templates/portfolio/index.html:57
+#: portfolio/templates/portfolio/index.html:56
 msgid "Graduation"
 msgstr "Titulación"
 
-#: portfolio/templates/portfolio/index.html:57
+#: portfolio/templates/portfolio/index.html:56
 msgid "Expected December 2029"
 msgstr "Esperada en diciembre 2029"
 
-#: portfolio/templates/portfolio/index.html:58
+#: portfolio/templates/portfolio/index.html:57
 msgid "Awards"
 msgstr "Distinciones"
 
-#: portfolio/templates/portfolio/index.html:58
+#: portfolio/templates/portfolio/index.html:57
 msgid ""
 "Academic Merit Recognition (Reconocimiento al Mérito Académico), 2025 and "
 "2026"
 msgstr "Reconocimiento al Mérito Académico, 2025 y 2026"
 
-#: portfolio/templates/portfolio/index.html:59
+#: portfolio/templates/portfolio/index.html:58
 msgid "Languages"
 msgstr "Idiomas"
 
-#: portfolio/templates/portfolio/index.html:59
+#: portfolio/templates/portfolio/index.html:58
 msgid "Spanish (native), English C1 (Busuu certificate)"
 msgstr "Español (nativo), inglés C1 (certificado Busuu)"
 
-#: portfolio/templates/portfolio/index.html:76
+#: portfolio/templates/portfolio/index.html:75
 msgid "FILTER:"
 msgstr "FILTRAR:"
 
-#: portfolio/templates/portfolio/index.html:88
+#: portfolio/templates/portfolio/index.html:87
 msgid "Project"
 msgstr "Proyecto"
 
-#: portfolio/templates/portfolio/index.html:97
+#: portfolio/templates/portfolio/index.html:96
 msgid "Stack"
 msgstr "Stack"
 
-#: portfolio/templates/portfolio/index.html:104
+#: portfolio/templates/portfolio/index.html:103
 msgid "View Case Study"
 msgstr "Ver Caso de Estudio"
 
-#: portfolio/templates/portfolio/index.html:106
+#: portfolio/templates/portfolio/index.html:105
 #: portfolio/templates/portfolio/project.html:56
 msgid "Visit site"
 msgstr "Visitar sitio"
 
-#: portfolio/templates/portfolio/index.html:118
+#: portfolio/templates/portfolio/index.html:117
 msgid "Read the case study"
 msgstr "Leer el caso de estudio"
 
-#: portfolio/templates/portfolio/index.html:125
+#: portfolio/templates/portfolio/index.html:124
 msgid "No projects published yet."
 msgstr "Aún no hay proyectos publicados."
 
-#: portfolio/templates/portfolio/index.html:143
+#: portfolio/templates/portfolio/index.html:142
 msgid "Mar 2026 – Nov 2026"
 msgstr "Mar 2026 – Nov 2026"
 
-#: portfolio/templates/portfolio/index.html:145
+#: portfolio/templates/portfolio/index.html:144
 msgid "Research assistant, edge runtime developer"
 msgstr "Ayudante de investigación, desarrollador del runtime de borde"
 
-#: portfolio/templates/portfolio/index.html:146
+#: portfolio/templates/portfolio/index.html:145
 msgid ""
 "Plazas Inteligentes, a team of three. I own the C++17 runtime and the "
 "hardware assembly of 3 Raspberry Pi 5 gateways, each with 3 sensors, an ADC "
@@ -276,56 +268,56 @@ msgstr ""
 "multipart, control remoto por Server-Sent Events y reinicios automáticos. "
 "Aún no desplegado en terreno."
 
-#: portfolio/templates/portfolio/index.html:153
+#: portfolio/templates/portfolio/index.html:152
 msgid "Teaching assistant"
 msgstr "Ayudante docente"
 
-#: portfolio/templates/portfolio/index.html:154
+#: portfolio/templates/portfolio/index.html:153
 msgid "Programming Seminar TEL20125 (2026-1). Calculus I MAT071 (2025-2)."
 msgstr ""
 "Seminario de Programación TEL20125 (2026-1). Cálculo I MAT071 (2025-2)."
 
-#: portfolio/templates/portfolio/index.html:158
+#: portfolio/templates/portfolio/index.html:157
 msgid "Feb 2022 – Oct 2024"
 msgstr "Feb 2022 – Oct 2024"
 
-#: portfolio/templates/portfolio/index.html:160
+#: portfolio/templates/portfolio/index.html:159
 msgid "Volunteer translator"
 msgstr "Traductor voluntario"
 
-#: portfolio/templates/portfolio/index.html:190
+#: portfolio/templates/portfolio/index.html:189
 msgid "GitHub activity"
 msgstr "Actividad en GitHub"
 
-#: portfolio/templates/portfolio/index.html:191
+#: portfolio/templates/portfolio/index.html:190
 msgid "GitHub contribution chart for josue-fourier over the last year"
 msgstr "Gráfico de contribuciones en GitHub de josue-fourier del último año"
 
-#: portfolio/templates/portfolio/index.html:202
+#: portfolio/templates/portfolio/index.html:201
 msgid "Engineering logs"
 msgstr "Registros de ingeniería"
 
-#: portfolio/templates/portfolio/index.html:204
+#: portfolio/templates/portfolio/index.html:203
 msgid "LOGS"
 msgstr "REGISTROS"
 
-#: portfolio/templates/portfolio/index.html:217
+#: portfolio/templates/portfolio/index.html:216
 msgid "Engineering Logs"
 msgstr "Registros de Ingeniería"
 
-#: portfolio/templates/portfolio/index.html:219
+#: portfolio/templates/portfolio/index.html:218
 msgid "SWIPE"
 msgstr "DESLIZA"
 
-#: portfolio/templates/portfolio/index.html:235
+#: portfolio/templates/portfolio/index.html:234
 msgid "Select a log from the ledger"
 msgstr "Selecciona un registro de la lista"
 
-#: portfolio/templates/portfolio/index.html:265
+#: portfolio/templates/portfolio/index.html:264
 msgid "Profile"
 msgstr "Perfil"
 
-#: portfolio/templates/portfolio/index.html:273
+#: portfolio/templates/portfolio/index.html:272
 msgid "solved"
 msgstr "resueltos"
 
@@ -358,6 +350,14 @@ msgstr "Imagen siguiente"
 #: portfolio/templates/portfolio/project.html:101
 msgid "No detailed case study available yet."
 msgstr "Aún no hay un estudio de caso detallado disponible."
+
+#~ msgid ""
+#~ "Animation: a network of nodes with data packets travelling between them, "
+#~ "including live status from a Raspberry Pi node and ntfy notifications"
+#~ msgstr ""
+#~ "Animación: una red de nodos con paquetes de datos que viajan entre ellos, "
+#~ "incluyendo el estado en vivo de un nodo Raspberry Pi y notificaciones de "
+#~ "ntfy"
 
 #~ msgid "Point at infinity"
 #~ msgstr "Punto en el infinito"

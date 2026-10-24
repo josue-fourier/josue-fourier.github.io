@@ -1371,3 +1371,94 @@ main#log-content-area.markdown-body {
 }
 @keyframes open-to-flow { to { background-position: 0 300%; } }
 @media (prefers-reduced-motion: reduce) { .open-to::before { animation: none; } }
+
+/* Hero status bar under the CTAs: chips for mesh stats, then the full ntfy message (wraps, never clipped). */
+.net-status { max-width: 42rem; font: 11px/1.5 "JetBrains Mono", monospace; letter-spacing: .02em; color: #a1a1aa; }
+.net-status-row { display: flex; flex-wrap: wrap; align-items: center; gap: .375rem; }
+.net-status-label { text-transform: uppercase; letter-spacing: .14em; font-weight: 700; color: #e4e4e7; margin-right: .25rem; }
+.net-chip { display: inline-flex; align-items: center; gap: .4rem; padding: .2rem .55rem; border: 1px solid rgba(255,255,255,.1); background: rgba(255,255,255,.03); font-variant-numeric: tabular-nums; }
+.net-chip-on { border-color: rgba(16,185,129,.4); color: #6ee7b7; background: rgba(16,185,129,.08); }
+
+.net-dot { width: 6px; height: 6px; background: #52525b; flex: none; }
+.net-dot-live { background: #10b981; box-shadow: 0 0 0 0 rgba(16,185,129,.6); animation: net-ping 2s ease-out infinite; }
+@keyframes net-ping { to { box-shadow: 0 0 0 7px rgba(16,185,129,0); } }
+.net-ntfy { display: flex; gap: .75rem; align-items: baseline; margin-top: .6rem; padding: .6rem .8rem; border-left: 2px solid #10b981; background: rgba(16,185,129,.06); }
+.net-ntfy-tag { flex: none; text-transform: uppercase; letter-spacing: .14em; font-weight: 700; font-size: 10px; color: #34d399; }
+.net-ntfy-msg { min-width: 0; overflow-wrap: anywhere; font-size: 12px; color: #d4d4d8; }
+[data-theme="lofi"] .net-status { color: #475569; }
+[data-theme="lofi"] .net-status-label { color: #0f172a; }
+[data-theme="lofi"] .net-chip { border-color: rgba(15,23,42,.14); background: rgba(15,23,42,.03); }
+[data-theme="lofi"] .net-chip-on { border-color: rgba(4,120,87,.45); color: #047857; background: rgba(4,120,87,.08); }
+[data-theme="lofi"] .net-ntfy-tag { color: #047857; }
+[data-theme="lofi"] .net-ntfy-msg { color: #1e293b; }
+@media (prefers-reduced-motion: reduce) { .net-dot-live { animation: none; } }
+
+/* Background shader sits behind everything; page surfaces become see-through so it shows between the cards. */
+#bg-shader { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; opacity: 0; transition: opacity 1.6s ease; }
+#bg-shader.ready { opacity: 1; }
+#main-content, #main-content > section, #main-content .bg-\[\#050506\], #about .hero-open { background-color: var(--veil) !important; }
+:root, [data-theme="lofi"] { --veil: rgba(255, 255, 255, 0.55); }
+[data-theme="dracula"] { --veil: rgba(5, 5, 8, 0.45); }
+
+/* Soft hero entrance: children rise, unblur and fade in sequence. `backwards` so the scroll-drift inline styles take over afterwards. */
+.hero-in > * { animation: hero-in 1.2s cubic-bezier(.22, 1, .36, 1) backwards; animation-delay: calc(var(--i, 0) * 120ms + 100ms); }
+.hero-in > :nth-child(1) { --i: 0; } .hero-in > :nth-child(2) { --i: 1; } .hero-in > :nth-child(3) { --i: 2; }
+.hero-in > :nth-child(4) { --i: 3; } .hero-in > :nth-child(5) { --i: 4; } .hero-in > :nth-child(6) { --i: 5; }
+@keyframes hero-in { from { opacity: 0; transform: translate3d(0, 20px, 0); filter: blur(6px); } }
+@media (prefers-reduced-motion: reduce) { .hero-in > * { animation: none; } #bg-shader { transition: none; } }
+
+/* ---- Colour pass: emerald stays the lead, cyan / violet / rose join as supporting hues ---- */
+:root { --hue-a: #10b981; --hue-b: #06b6d4; --hue-c: #8b5cf6; --hue-d: #f43f5e; }
+[data-theme="lofi"] { --hue-a: #059669; --hue-b: #0891b2; --hue-c: #7c3aed; --hue-d: #e11d48; }
+
+/* Name: ink that melts into the accent hues on its last letters. */
+#hero-title.hero-title {
+    align-self: flex-start;
+    background-image: linear-gradient(100deg, var(--ink) 0%, var(--ink) 52%, var(--hue-a) 72%, var(--hue-b) 88%, var(--hue-c) 100%);
+    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent;
+}
+
+/* Hero side panel becomes frosted glass so the background shows through. */
+#about .lg\:col-span-5 { background-color: rgba(8, 8, 11, .55) !important; backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); }
+[data-theme="lofi"] #about .lg\:col-span-5 { background-color: rgba(255, 255, 255, .62) !important; }
+
+/* Section markers */
+.sec-led { background: linear-gradient(135deg, var(--hue-a), var(--hue-b)) !important; }
+.sec-sticky-header .text-emerald-400 { background: linear-gradient(90deg, var(--hue-a), var(--hue-b)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+
+/* Project cards: a gradient rule draws across the top on hover. */
+.project-card { position: relative; }
+.project-card::before {
+    content: ""; position: absolute; left: 0; right: 0; top: 0; height: 2px; z-index: 2;
+    background: linear-gradient(90deg, var(--hue-a), var(--hue-b), var(--hue-c), var(--hue-d));
+    transform: scaleX(0); transform-origin: left; transition: transform .6s cubic-bezier(.22, 1, .36, 1);
+}
+.project-card:hover::before { transform: scaleX(1); }
+
+/* Tech chips cycle through the palette instead of all being grey. */
+.project-card ul li, .tech-filter-btn { --c: var(--hue-a); border-color: color-mix(in srgb, var(--c) 38%, transparent); color: color-mix(in srgb, var(--c) 70%, var(--ink)); background: color-mix(in srgb, var(--c) 8%, transparent); }
+.project-card ul li:nth-child(4n+2), .tech-filter-btn:nth-of-type(4n+2) { --c: var(--hue-b); }
+.project-card ul li:nth-child(4n+3), .tech-filter-btn:nth-of-type(4n+3) { --c: var(--hue-c); }
+.project-card ul li:nth-child(4n+4), .tech-filter-btn:nth-of-type(4n+4) { --c: var(--hue-d); }
+
+/* Portrait ASCII overlay sits over the photo and fades out to reveal it. */
+.profile-portrait-frame .portrait-ascii { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 3; pointer-events: none; }
+
+/* Progressive blur at the viewport edges: stacked backdrop blurs, each masked to a narrower band, so content softens as it nears the edge. */
+.pblur { position: fixed; left: 0; right: 0; z-index: 40; height: 72px; pointer-events: none; }
+.pblur-top { top: 3rem; }
+.pblur-bottom { bottom: 0; }
+.pblur i { position: absolute; inset: 0; }
+.pblur-top i { --dir: to bottom; }
+.pblur-bottom i { --dir: to top; }
+.pblur i:nth-child(1) { backdrop-filter: blur(1px); -webkit-backdrop-filter: blur(1px); mask-image: linear-gradient(var(--dir), #000 0%, #000 50%, transparent 75%); -webkit-mask-image: linear-gradient(var(--dir), #000 0%, #000 50%, transparent 75%); }
+.pblur i:nth-child(2) { backdrop-filter: blur(2px); -webkit-backdrop-filter: blur(2px); mask-image: linear-gradient(var(--dir), #000 0%, #000 35%, transparent 60%); -webkit-mask-image: linear-gradient(var(--dir), #000 0%, #000 35%, transparent 60%); }
+.pblur i:nth-child(3) { backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); mask-image: linear-gradient(var(--dir), #000 0%, #000 20%, transparent 45%); -webkit-mask-image: linear-gradient(var(--dir), #000 0%, #000 20%, transparent 45%); }
+.pblur i:nth-child(4) { backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); mask-image: linear-gradient(var(--dir), #000 0%, transparent 30%); -webkit-mask-image: linear-gradient(var(--dir), #000 0%, transparent 30%); }
+
+/* Portrait size (plain CSS: the Tailwind bundle is prebuilt and doesn't include new size utilities). */
+.profile-portrait-frame { width: 8rem; height: 8rem; }
+@media (min-width: 640px) { .profile-portrait-frame { width: 10rem; height: 10rem; } }
+.pblur { height: 56px; }
+.pblur i:nth-child(4) { backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+@media (max-width: 767px) { .pblur-top { display: none; } }
