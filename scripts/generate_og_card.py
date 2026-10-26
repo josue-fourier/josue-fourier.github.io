@@ -7,7 +7,7 @@ Usage (from the repo root):
     python scripts/generate_og_card.py --photo me.png --focus "50% 20%" --grayscale 0
 
 Options:
-    --photo      Portrait to use (default: static/portfolio/images/profile.webp)
+    --photo      Portrait to use (default: static/portfolio/images/profile.jpg)
     --output     Output PNG (default: static/portfolio/images/og-card.png)
     --focus      CSS object-position for cropping the square portrait (default "center")
     --grayscale  0.0 (full colour, default) .. 1.0 (black & white)
@@ -109,7 +109,7 @@ def find_chrome():
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("--photo", default=str(STATIC / "images" / "profile.webp"))
+    ap.add_argument("--photo", default=str(STATIC / "images" / "profile.jpg"))
     ap.add_argument("--output", default=str(STATIC / "images" / "og-card.png"))
     ap.add_argument("--focus", default="center")
     ap.add_argument("--grayscale", type=float, default=0.0)
