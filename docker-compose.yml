@@ -36,7 +36,7 @@ services:
         condition: service_healthy
     networks:
       - default
-      #- red_n8n
+      - red_n8n
     healthcheck:
       test: ["CMD-SHELL", "curl -f http://localhost:8000/health"]
 
@@ -65,7 +65,7 @@ services:
         condition: service_started
     networks:
       - default
-      #- red_n8n
+      - red_n8n
 
   cloudflared:
     image: cloudflare/cloudflared:latest
@@ -88,10 +88,10 @@ services:
       - media_volume:/app/media
       - ./serve:/app/serve
 
-#networks:
-#  red_n8n:
-#    external: True
-#    name: n8n_default
+networks:
+  red_n8n:
+    external: True
+    name: n8n_default
 
 volumes:
   pgdata:
