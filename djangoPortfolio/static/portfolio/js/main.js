@@ -548,6 +548,11 @@ if (typeof gsap !== 'undefined') {
     document.addEventListener('click', (e) => {
         const nav = e.target.closest('.sec-nav-link');
         if (nav) track('chapter-nav-click', { target: nav.dataset.sectionTarget || '' });
+        const car = e.target.closest('[data-carousel-action]');
+        if (car) {
+            const t = car.dataset.carouselTarget || '';
+            track('carousel-nav', { direction: car.dataset.carouselAction, kind: t.split('-')[0], title: car.dataset.carouselTitle || '' });
+        }
         const theme = e.target.closest('[data-theme-toggle], #theme-toggle');
         if (theme) track('theme-toggle');
         // Fallback for external/mailto links with no explicit data-umami-event (e.g. footer)

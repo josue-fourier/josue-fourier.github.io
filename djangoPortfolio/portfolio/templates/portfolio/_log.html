@@ -49,10 +49,10 @@
             {% endfor %}
         </div>
         <!-- Prev/Next Controls -->
-        <button type="button" data-carousel-action="prev" data-carousel-target="log-carousel-{{ log.id }}" aria-label="Previous Image" class="carousel-ctl absolute left-0 top-1/2 -translate-y-1/2 w-10 h-12 flex items-center justify-center cursor-pointer z-20">
+        <button type="button" data-carousel-title="{{ log.title }}" data-carousel-action="prev" data-carousel-target="log-carousel-{{ log.id }}" aria-label="Previous Image" class="carousel-ctl absolute left-0 top-1/2 -translate-y-1/2 w-10 h-12 flex items-center justify-center cursor-pointer z-20">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
         </button>
-        <button type="button" data-carousel-action="next" data-carousel-target="log-carousel-{{ log.id }}" aria-label="Next Image" class="carousel-ctl absolute right-0 top-1/2 -translate-y-1/2 w-10 h-12 flex items-center justify-center cursor-pointer z-20">
+        <button type="button" data-carousel-title="{{ log.title }}" data-carousel-action="next" data-carousel-target="log-carousel-{{ log.id }}" aria-label="Next Image" class="carousel-ctl absolute right-0 top-1/2 -translate-y-1/2 w-10 h-12 flex items-center justify-center cursor-pointer z-20">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
         </button>
         <div class="absolute top-0 right-0 px-3 py-1.5 bg-[#050506]/90 border-b border-l border-white/[0.12] font-mono text-[10px] text-emerald-400 uppercase tracking-widest z-20 pointer-events-none">

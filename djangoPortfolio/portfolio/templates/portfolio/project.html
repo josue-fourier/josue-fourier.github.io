@@ -79,10 +79,10 @@
 
                 {% if project.images.count > 1 %}
                 <!-- Prev/Next Controls -->
-                <button type="button" data-carousel-action="prev" data-carousel-target="project-carousel-{{ project.id }}" aria-label="{% translate 'Previous image' %}" class="carousel-ctl absolute left-0 top-1/2 -translate-y-1/2 w-12 h-14 flex items-center justify-center cursor-pointer z-20">
+                <button type="button" data-carousel-title="{{ project.name }}" data-carousel-action="prev" data-carousel-target="project-carousel-{{ project.id }}" aria-label="{% translate 'Previous image' %}" class="carousel-ctl absolute left-0 top-1/2 -translate-y-1/2 w-12 h-14 flex items-center justify-center cursor-pointer z-20">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
                 </button>
-                <button type="button" data-carousel-action="next" data-carousel-target="project-carousel-{{ project.id }}" aria-label="{% translate 'Next image' %}" class="carousel-ctl absolute right-0 top-1/2 -translate-y-1/2 w-12 h-14 flex items-center justify-center cursor-pointer z-20">
+                <button type="button" data-carousel-title="{{ project.name }}" data-carousel-action="next" data-carousel-target="project-carousel-{{ project.id }}" aria-label="{% translate 'Next image' %}" class="carousel-ctl absolute right-0 top-1/2 -translate-y-1/2 w-12 h-14 flex items-center justify-center cursor-pointer z-20">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
                 </button>
                 <!-- Slide Count Badge -->
